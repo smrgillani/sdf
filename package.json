@@ -92,7 +92,7 @@
     "quill-emoji": "^0.1.7",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.12",
-    "sequelize": "^3.30.4",
+    "sequelize": "^5.15.1",
     "systemjs": "^0.20.18",
     "typings": "^2.1.1",
     "web-animations-js": "^2.3.1",
