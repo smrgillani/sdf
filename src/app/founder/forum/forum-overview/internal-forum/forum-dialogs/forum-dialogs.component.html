@@ -1,0 +1,139 @@
+<div class="row topheading">
+  <div class="col-sm-3">
+    <div class="form-group">
+      <p-dropdown class="form-control" [options]="internalCategoryList" optionLabel="name"
+        [(ngModel)]="forumInfoModel.selectedCategoryId" placeholder="Category"
+        (onChange)="onCalegorySelect($event.value)"></p-dropdown>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="form-group">
+      <p-dropdown class="form-control" [options]="internalTopicList" optionLabel="name"
+        [(ngModel)]="forumInfoModel.selectedTopicId" placeholder="Topic" (onChange)="onTopicSelect($event.value)">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="projects-search form-group pull-right">
+      <div class="search-icon"></div>
+      <input class="form-control" type="text" placeholder="Start typing to search"
+        [(ngModel)]="forumInfoModel.searchText" (input)="valueChange()" />
+      <div class="newThread_btn" [routerLink]="['../../new-thread']">New Thread</div>
+    </div>
+  </div>
+</div>
+
+<div class="cardwrap">
+  <div class="cardheading">
+    <div class="row">
+      <div class="col-6">
+        <h3>Dialogs</h3>
+      </div>
+      <div class="col-6">
+        <div class="form-group pull-right">
+          <p-dropdown class="form-control" [options]="internalSortByList" optionLabel="name"
+            [(ngModel)]="forumInfoModel.isMostView" (onChange)="onSortBySelect($event.value)"></p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cardbody">
+
+    <!-- <perfect-scrollbar> -->
+    <div class="media" *ngFor="let item of forumInfoModel?.threadInfoList; let index = index">
+      <div class="media-left">
+        <div class="mediaimg">
+          <img class="mr-3" *ngIf="item?.image && item?.image != null; else showTitle" [src]="item?.image">
+        </div>
+      </div>
+
+      <ng-template #showTitle>
+        <div class="project-title">
+          <div class="project-icon">{{item?.title[0]}}</div>
+        </div>
+      </ng-template>
+
+      <div class="media-body">
+        <h5 class="mt-0" class="cursor" (click)="selectedThreadId(item.id)">{{item?.title}}</h5><a *ngIf="item?.is_edit"
+          [routerLink]="['../../', item.id,'update-thread']" class="thread-edit-btn"></a>
+        <div class="action-time">{{item?.created_date | formatRelativeTime}}</div>
+        <div class="mediapara" [innerHTML]="item?.description"></div>
+
+        <!-- <div class="reply-items" *ngIf="item?.comment_thread && selectedThreadIndex == index">
+            <div class="media mt-3" *ngFor="let subItem of item.comment_thread">
+              <a class="pr-3" href="#" *ngIf="subItem?.comment_by?.photo_crop && subItem?.comment_by?.photo_crop != null; else showSubTitle">
+                <img [src]="subItem?.comment_by?.photo_crop">
+              </a>
+              <ng-template #showSubTitle>
+                  <div class="project-title">
+                    <div class="project-icon">{{subItem?.comment_by?.first_name[0]}}</div>
+                  </div>
+              </ng-template>
+              <div class="media-body">
+                <h5 class="mt-0">{{subItem?.comment_by?.first_name}} {{subItem?.comment_by?.last_name}}</h5>
+                <div class="action-time">{{subItem?.created_date | formatRelativeTime}}</div>
+                <div [innerHTML]="subItem?.text"></div>
+
+                <div class="reply-items" *ngIf="subItem?.subcomments">
+                  <div class="media mt-3" *ngFor="let subSubItem of subItem?.subcomments">
+                    <a class="pr-3" href="#" *ngIf="subSubItem?.comment_by?.photo_crop && subSubItem?.comment_by?.photo_crop != null; else showSubSubTitle">
+                      <img [src]="subSubItem?.comment_by?.photo_crop">
+                    </a>
+                    <ng-template #showSubSubTitle>
+                      <div class="project-title">
+                        <div class="project-icon">{{subSubItem?.comment_by?.first_name[0]}}</div>
+                      </div>
+                    </ng-template>
+                    <div class="media-body">
+                      <h5 class="mt-0">{{subSubItem?.comment_by?.first_name}} {{subSubItem?.comment_by?.last_name}}</h5>
+                      <div class="action-time">{{subSubItem?.created_date | formatRelativeTime}}</div>
+                      <div [innerHTML]="subSubItem?.text"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="pull-right">
+                <span (click)="replyAgainstPost(item?.id, subItem?.id)">Reply</span>
+              </div>
+            </div>
+            <div class="document" *ngIf="replyAgainstForumId != 0 && replyAgainstPostId != 0">
+              <app-text-editor [(ngModel)]="description"></app-text-editor>
+              <div class="post-buttons">
+                <button type="button" class="saffron_btn orange_btn" (click)="replyAgainstForumId = 0 && replyAgainstPostId = 0">Cancel</button>
+                <button type="button" class="saffron_btn skyblue_btn" (click)="saveReply()">Post</button>
+              </div>
+            </div>
+
+          </div> -->
+
+      </div>
+      <div class="postcounts">
+        <span>{{item?.posts_count}} Posts</span>
+        <span>{{item?.reply_count}} Reply</span>
+        <!-- <span (click)="replyAgainstThread(item?.id)">Reply</span> -->
+      </div>
+    </div>
+    <div class="document" *ngIf="replyAgainstForumId != 0 && replyAgainstPostId == 0">
+      <app-text-editor [(ngModel)]="description"></app-text-editor>
+      <div class="post-buttons">
+        <button type="button" class="saffron_btn orange_btn"
+          (click)="replyAgainstForumId = 0 && replyAgainstPostId = 0">Cancel</button>
+        <button type="button" class="saffron_btn skyblue_btn" (click)="saveReply()">Post</button>
+      </div>
+    </div>
+    <!-- </perfect-scrollbar> -->
+
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count"
+      (pageChanged)="getThreadInfoList($event)"></app-pagination>
+
+
+
+
+
+
+
+
+
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-header class="position-absolute" [backNavOptions]="{ route: ['/founder'] }"></app-header> -->
+      <app-header class="position-absolute" [backNavOptions]="{ route: ['/founder'] }"></app-header>
+      <div class="projects-container">
+        <div class="projects-header">
+          <div class="project-header-text">
+            <span class="projects-header-caption">My Projects</span>
+
+          </div>
+          <div class="projects-filter">
+            <span class="projects-filter-caption">Filter by stage</span>
+            <!-- <select class="form-control" [(ngModel)]="stage"> (change)="getNewProjectList($event)"-->
+            <p-dropdown class="form-control" [(ngModel)]="stage" [options]="projectType" (onChange)="getNewProjectList(1)"></p-dropdown>
+          </div>
+        </div>
+        <div class="projects-search">
+          <div class="search-icon"></div>
+          <input class="form-control" type="text" placeholder="Start typing to search projects" [(ngModel)]="searchText" (input)="valueChange()"/>
+        </div>
+        <table class="table table-hover projects-table">
+          <tbody>
+          <!-- <tr *ngFor="let project of projects | filterVisible | filterProjectStage:stage | searchProject:searchText"> -->
+          <tr *ngFor="let project of projects">
+            <td>
+              <div class="project-title">
+                <div class="project-icon">{{project.title[0]}}</div>
+                <div class="project-name" (click)="openSummary(project)">{{project.title}}</div>
+              </div>
+            </td>
+            <td>
+              <div class="project-visibility">
+                <div [class.project-is-not-visible]="!project.is_visible" [class.project-is-visible]="project.is_visible" (click)="setVisibility(project, !project.is_visible)"></div>
+              </div>
+            </td>
+            <td>
+              <div class="project-stage">
+                <div class="project-stage-caption">{{projectStages[project.stage]}}</div>
+                <div class="project-stage-progress-bar">
+                  <div class="project-stage-completed" [style.width.%]="project.progress">
+                    {{project.progress}}%
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="project-actions">
+                <div class="btn-border register" *ngIf="!project.is_registered">
+                  <div class="btn register-btn" (click)="openRegister(project)">Register</div>
+                </div>
+                <div class="btn-border notarize" *ngIf="project.is_registered">
+                  <div class="btn register-btn" (click)="openNotarize(project)">Notarize</div>
+                </div>
+                <div class="btn-border inside">
+                  <div class="btn inside-btn" (click)="openSummary(project)">Inside</div>
+                </div>
+                <div class="btn-border service">
+                  <div class="btn service-btn" (click)="openProject(project)">Services</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- <app-pagination class="my-pagination" [pageReset]="paginationReset" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination> -->
+        <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination>
+      </div>
+    </div>
+  </div>
+</div>

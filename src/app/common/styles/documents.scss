@@ -1,0 +1,42 @@
+.app-document-explorer {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: inherit;
+}
+
+.work-timer {
+  position: absolute;
+  text-align: right;
+  padding: 6px;
+  z-index: 0;
+  right: 241px;
+  top: 0;
+
+  button {
+    font-size: 14px;
+    padding: 3px 10px;
+  }
+
+  span.icon-clock {
+    font-size: 32px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+}
+
+.work-timer-error {
+  padding: 5px;
+
+  .errorwrap {
+    background: #fff;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .work-timer {
+    padding: 3px;
+  }
+}

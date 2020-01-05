@@ -1,0 +1,86 @@
+<table class="table table-hover employee-table">
+  <tbody>
+    <tr *ngFor="let appliedJob of myJobApply">
+      <td>
+        <div class="Employee-title">
+          <div class="employee-name">{{appliedJob.job_title}}</div>
+          <div class="employee-details">
+            <div class="employee_des">{{appliedJob.job_description}}</div>
+
+            
+            <div class="ava" *ngIf="appliedJob.job_availability != undefined && appliedJob.job_availability.length > 0; else otherAvailability">Availability : {{appliedJob.job_availability[0].title}}/ day</div>
+            <ng-template #otherAvailability>
+                <div class="ava" >Availability : 0 hrs/ day</div>
+            </ng-template>
+          </div>
+        
+          <div class="pad-right-adjust"  [ngClass]="(appliedJob.status=='reject') ? 'text-orange':'text-blue'">{{appliedJob.job_application_status}}</div>
+        </div>
+      </td>
+<td class="employee-budget-td">
+  <div class="employee-budget-wrap">
+  <div class="employee-budget" *ngIf="appliedJob.job_hourlybudget != undefined && appliedJob.job_hourlybudget.length > 0; else otherHB">
+     {{appliedJob.job_hourlybudget[0].title}}</div>
+          <ng-template #otherHB>
+              <div class="employee-budget" >$ 0/hr</div>
+          </ng-template>
+        </div>
+</td>
+      <td>
+        <div class="project-actions">
+          <div class="btn-border blue" (click)="Message(appliedJob.project)">
+            <div class="btn blue-btn">Message</div>
+          </div>
+
+          <div class="btn-border orange" *ngIf="(appliedJob.interview_details.status == 'schedule'  || appliedJob.interview_details.status == 'accept') && (appliedJob.offer_details.status == undefined)" (click)="RescheduledInterview(appliedJob.id)">
+            <div class="btn orange-btn">Interview</div>
+          </div>
+
+          <div class="btn-border red" *ngIf="(appliedJob.interview_details.status == 'schedule'  || appliedJob.interview_details.status == 'accept') && (appliedJob.offer_details.status == undefined)" (click)="RejectInterview(appliedJob.id)">
+            <div class="btn red-btn">Reject</div>
+          </div>
+
+          <div class="btn-border skyblue" *ngIf="appliedJob.offer_details.status == 'draft'" (click)="joinForAppointment(appliedJob, popUpForDocuSignMessage)">
+            <div class="btn skyblue-btn">Join</div>
+          </div>
+
+          <div class="btn-border skyblue" *ngIf="appliedJob.offer_details.status == 'accept'" (click)="joinForAppointment(appliedJob, popUpForDocuSignMessage)">
+            <div class="btn skyblue-btn">Appointment</div>
+          </div>
+
+          <div class="btn-border red" *ngIf="appliedJob.offer_details.status == 'draft'" (click)="rejectForAppointment(appliedJob.id)">
+            <div class="btn red-btn">Reject</div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getJobApply($event)"></app-pagination>
+
+<ng-template #popUpForDocuSignMessage>
+  <div class="modal-body">DocuSign is pending on either side, please check your Email.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForDocuSignModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+      <div class="buttons">
+          <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+      </div>
+  </div>
+</ng-template>
+<ng-template #popUpForCommonMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+      <div class="buttons">
+          <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+      </div>
+  </div>
+</ng-template>

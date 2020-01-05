@@ -1,0 +1,37 @@
+<div class="container-fluid bg-gradient mainhome">
+  <div class="container-main bg-image">
+    <div class="container-border">
+      <div class="mainhomecontent">
+      <!-- <app-navbar [isLoggedIn]="false" class="hidden-sm-down"></app-navbar> -->
+      <app-header class="no-bg position-absolute" [showBackButton]="false" [isLoggedIn]="false"></app-header>
+      <div class="home-container-title">
+        <h1 class="hero-title">
+          IDEATE.<br class="hidden-md-down">
+          STARTUP.<br>
+          COLLABORATE.
+        </h1>
+        <h3 class="hero-subtitle">Easy to use ideation, startup and <br> project management platform</h3>
+      </div>
+
+      <div class="container-buttons">
+        <div class="home-page-btn join-btn circle-first" (click)="navigateTo('signup')" [@pageState]="pageState"
+             (@pageState.done)="animationDone($event)">
+          <div class="button-inner">Join</div>
+        </div>
+
+        <div class="home-page-btn sign-in-btn  circle-second" (click)="navigateTo('login')" [@pageState]="pageState"
+             (@pageState.done)="animationDone($event)">
+          <div class="button-inner">Sign In</div>
+        </div>
+
+        <div class="home-page-btn sign-in-later-btn  circle-third" (click)="signUpLater()" [@pageState]="pageState"
+             (@pageState.done)="animationDone($event)">
+          <div class="button-inner">Continue as Guest</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+</div>

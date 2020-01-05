@@ -1,0 +1,146 @@
+<div class="container-fluid" *ngIf="!selectedPlatform">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header class="position-absolute no-bg" [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header>
+
+      <h1>{{project.title}}</h1>
+
+      <div class="project-buttons">
+        <div
+          class="big-btn"
+          *ngFor="let platform of platforms"
+          appPopoverAutoPosition
+          [popOverName]="manageFunding"
+          [placement]="{desktop:'right', tablet:'top', mobile:'none'}"
+          (click)="selectPlatform(platform, manageFunding)"
+          [triggers]="'none'"
+          [container]="'body'"
+          [ngbPopover]="manageFundingPopup"
+          #manageFunding="ngbPopover"
+        >
+          <app-wheel [color]="getColor(platform.title)" [icon]="getIcon(platform.title)"></app-wheel>
+          <div>{{platform.title}}</div>
+
+          <ng-template #manageFundingPopup>
+            <div class="message">
+              {{popoverMessage}}
+            </div>
+            <div class="buttons">
+              <button class="saffron_btn red_btn" (click)="manageFunding.close()">Ok</button>
+            </div>
+          </ng-template>
+        </div>
+
+        <div
+          class="big-btn"
+          appPopoverAutoPosition
+          [popOverName]="manageFunding"
+          [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+          (click)="selectManageFunding(manageFunding)"
+          [triggers]="'none'"
+          [container]="'body'"
+          [ngbPopover]="manageFundingPopup"
+          #manageFunding="ngbPopover"
+        >
+          <app-wheel color="#FF6C24" icon="/assets/img/project/x.png"></app-wheel>
+          <div>Manage Funding</div>
+
+          <ng-template #manageFundingPopup>
+            <div class="message">
+              {{popoverMessage}}
+            </div>
+            <div class="buttons">
+              <button class="saffron_btn red_btn" (click)="manageFunding.close()">Ok</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <!-- <div class="projects-footer">
+          <div class="back-button" (click)="_location.back()">Back</div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedPlatform" class="lunchpage">
+  <!-- <app-header [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header> -->
+  <app-header class="position-static" (onBackClicked)="backToSelection()"></app-header>
+  <main>
+    <div class="container saf_blue_theme">
+      <div class="heading">
+        <h1>{{project.title}}</h1>
+      </div>
+      <div class="cardwrap">
+        <div *ngIf="!isSuccess">
+          <h2>{{selectedPlatform.title}}</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Min. Total Amount</label>
+                <input class="form-control" disabled [ngModel]="selectedPlatformData.fund_amount.amount"
+                       placeholder="Required Fund Amount">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Share Percentage</label>
+                <input class="form-control" disabled [ngModel]="selectedPlatformData.percentage"
+                       placeholder="Percentage %">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Price per Share</label>
+                <input class="form-control" disabled [ngModel]="selectedPlatformData.price_per_share.amount"
+                       placeholder="Share Price">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Review Period</label>
+                <div class="datetime-container">
+                  <input type="date" class="form-control" disabled [ngModel]="selectedPlatformData.due_date"
+                         placeholder="Review Date">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form [formGroup]="frmLaunch" (ngSubmit)="launchProject(frmLaunch.value)">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Min Quantity</label>
+                  <input class="form-control" [(formControl)]="frmLaunch.controls['quantity']"
+                         placeholder="Quantity">
+                  <div
+                    *ngIf="frmLaunch.controls['quantity'].hasError('required') && frmLaunch.controls['quantity'].touched"
+                    class="errorwrap"
+                  >Quantity is required.</div>
+                  <div
+                    *ngIf="frmLaunch.controls['quantity'].hasError('invalidNumber') && frmLaunch.controls['quantity'].touched"
+                    class="errorwrap"
+                  >Invalid input, enter number only.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="post-buttons">
+              <!-- <button type="button" class="saffron_btn red_btn" (click)="backToSelection()">Back</button> -->
+              <button class="saffron_btn skyblue_btn" type="submit">Submit</button>
+            </div>
+
+            <div *ngFor="let errors of serverSideErrors">
+              <div class="errorwrap">{{errors}}</div>
+            </div>
+          </form>
+        </div>
+
+        <app-purchase-success (onDone)="backToSelection()" *ngIf="isSuccess"></app-purchase-success>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,42 @@
+<div class="presentation"  [ngClass]="{'collapseSidebar':collapseSidebar}">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group form-inline pull-right">
+        <label>Theme: &nbsp; </label>
+        <p-dropdown class="form-control themeClass" [options]="themeList" (onChange)="onThemeChange($event.value)" [(ngModel)]="selectedTheme" placeholder="-- Select --" required></p-dropdown>
+      </div>
+      <button *ngIf="!isBacker" class="saffron_btn blue_btn pull-right mr-5" (click)="toggleEditMode()" title="{{!showTextEditor?'Edit':'View'}}" ><span *ngIf="!showTextEditor"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span><span *ngIf="showTextEditor"><i class="fa fa-television" aria-hidden="true"></i></span></button>
+    </div>
+  </div>
+  <div class="slidesidebar"  [ngClass]="selectedTheme ? selectedTheme : 'beige'">
+    <div class="sidebar">
+        <button class="collapseSidebarBtn" (click)="collapseSideBar()"><i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+
+      <div class="boxwrap">
+      <div class="box" *ngFor="let thumb of slideThumbnails;let index = index" (click)="moveOnSlideIndex(index)">
+          <section [innerHTML]="thumb" ></section>
+      </div>
+    </div>
+    </div>
+    <div class="reveal" >
+      <div class="slideswrap" #sliderWrapElement >
+      <div class="slides" #sliderElement [ngStyle]="{'width':screenMainWidth,'height':screenMainHeight}">
+      </div>
+      </div>
+      <div data-direction="right" *ngIf="showTextEditor" (click)="addNewSlide()" class="add-slide add-slide--right js-handler--add-slide-right noselect"><i class="fa fa-plus-circle" aria-hidden="true"></i></div>
+      <div data-direction="bottom" *ngIf="(totalSectionCount-1) != 0 && showTextEditor" (click)="deleteSlide()" class="add-slide add-slide--bottom js-handler--add-slide-down noselect"><i class="fa fa-minus-circle" aria-hidden="true"></i></div>
+    
+      <div *ngIf="showTextEditor" class="sliderEditor" [ngClass]="{'active':showTextEditor}"  >
+        <app-text-editor [(ngModel)]="internalContent" (forceSave)="onForceSave()" (blur)="onEditorBlured($event)"></app-text-editor>
+        <!-- <button class="saffron_btn blue_btn saveppt" (click)="changeContentDone()">Done</button> -->
+      </div>    
+    </div>    
+  </div>
+  <div  class="left-right-btn">
+      <button (click)="slideLeft()" class="btn" [ngClass]="{'active': currentPostionIndex > 0}"><i class="fa fa-caret-left" aria-hidden="true"></i>
+      </button>
+      <button (click)="slideRight()" class="btn" [ngClass]="{'active': currentPostionIndex < (totalSectionCount-1)}"><i class="fa fa-caret-right" aria-hidden="true"></i>
+      </button>
+  </div>
+</div>

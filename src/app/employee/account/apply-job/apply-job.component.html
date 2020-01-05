@@ -1,0 +1,32 @@
+
+    <!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+    <!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+    <app-header [backNavOptions]="{caption: 'Job List', route: ['employee', 'account']}"></app-header>
+
+<main>
+
+<div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+        <h1>Apply</h1>          
+    </div>
+    <div class="cardwrap">
+     
+        <div class="form-group">
+            <label>Add Cover Letter</label>
+            <textarea [(ngModel)]="cover_letter" class="form-control" placeholder="Type cover letter"></textarea>
+            <div [hidden]="cover_letter != ''" class="errorwrap">Please enter cover letter.</div>
+        </div>
+
+        <p class="clicableitem" [routerLink]="['/employee/account/'+id+ '/snapshort']"><span class="circlebox bg-purple"><span class="icomoon icon-eye"></span></span> <u>Snapshot of profile as displayed to creator</u></p>
+        <p class="clicableitem" [routerLink]="['/employee/account/profile']"><span class="circlebox bg-skyblue"><span class="icomoon icon-draw"></span></span> <u>Update profile before sharing</u></p>
+
+        <div  class="post-buttons">
+            <button  class="button skyblue" [disabled]="!cover_letter != ''" (click)="applyMyJob()">Confirm</button>
+        </div>
+    </div>
+</div>
+</main>
+
+
+
+

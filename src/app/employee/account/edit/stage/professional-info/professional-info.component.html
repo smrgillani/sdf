@@ -1,0 +1,287 @@
+<div class="scrollbar-container">
+  <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+
+  <div class="form-container container">
+    <div class="row form-row drop_files ">
+      <div class="col-12">
+        <div class="close" *ngIf='flagResume'>
+          <a (click)="removeID()">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <app-file-droppa
+            #fileDroppa
+            [dropZoneTemplate]="dropZonePassportTemplate"
+            [url]=""
+            [multiple]="false"
+            [autoUpload]="false"
+            [showFilesList]="false"
+            (filesUpdated)="filesUpdated($event)"
+            [openTriggerId]="'passportTrigger'"
+        >
+          <p class="dropzone-help-text">Drop your Resume file to the file area</p>
+          <div class="profile-buttons">
+            <div class="trigger" id="passportTrigger">
+              <!-- <span class="icon upload"></span>Upload <br> new file -->
+            </div>
+
+            <!-- <div class="trigger"
+               (click)="takePhotoPopover.open()"
+               (shown)="closePopoverpWithDelay(10000, takePhotoPopover, 'projectTimer')"
+               [triggers]="'none'"
+               [container]="'body'"
+               [ngbPopover]="takePhotoNotification"
+               #takePhotoPopover="ngbPopover"
+               placement="top"
+          >
+            <span class="icon take"></span>Take <br> a photo
+          </div> -->
+          </div>
+        </app-file-droppa>
+        <!-- <div class="profile-buttons" (click)=updateResume()>Upload Resume</div> -->
+
+        <div class="text-center resume-action" *ngIf="resumeDetail.file_name && resumeDetail.uploaded">
+          <button type="button" class="saffron_btn red_btn" (click)="downloadResume()">Download {{resumeDetail.file_name}}</button>
+        </div>
+
+        <div class="text-center resume-action" *ngIf="resumeDetail.file_name && !resumeDetail.uploaded">
+          <button type="button" class="saffron_btn blue_btn" (click)="uploadResume()">Upload {{resumeDetail.file_name}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-container container professionalinfo">
+    <div class="row cardwrap" myMatchHeight="cards">
+      <div class="col-md-6" *ngFor="let c of arrayProfessionalInfo">
+        <div class="cards" [class.selected]="professionalInfo && professionalInfo === c">
+          <div class="headings">{{c.highest_qualification_name}} | {{c.programs_name}}</div>
+
+          <div class="row" *ngIf="c.university_name != undefined && c.university_name != ''">
+            <div class="col-sm-5">
+              <strong>University:</strong>
+            </div>
+            <div class="col-sm-7 value">{{c.university_name}}</div>
+          </div>
+
+          <div class="row" *ngIf="c.duration != undefined && c.duration != ''">
+            <div class="col-sm-5">
+              <strong>Duration:</strong>
+            </div>
+            <div class="col-sm-7 value">{{c.duration}}</div>
+          </div>
+
+          <div class="btnwrap">
+            <button type="text" (click)="editEntry(c)" class="btn btn-info">
+              <span class="fa fa-pencil"></span>
+            </button>
+
+            <button type="text" (click)="deleteEntry(c)" class="btn btn-danger">
+              <span class="fa fa-trash-o"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <form [formGroup]="complexForm" (ngSubmit)="submitEmploymentInfo(complexForm.value)">
+      <input type="text" class="form-control" [(formControl)]="complexForm.controls['id']" hidden>
+      <input type="text" class="form-control" [(formControl)]="complexForm.controls['tempId']" hidden>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Highest Qualification</label>
+
+            <p-dropdown
+              class="form-control"
+              [options]="highestQualificationList"
+              placeholder="Choose"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['highest_qualification']"
+              (onChange)="onHighestQualificationSelect($event.value)"
+              [required]="validateHighestQualification()"
+            ></p-dropdown>
+            <!-- <div *ngIf="complexForm.controls['highest_qualification'].hasError('required') && complexForm.controls['highest_qualification'].touched" class="errorwrap">Highest Qualification is required.</div>
+           -->
+            <!-- <div [hidden]="complexForm.controls['highest_qualification']?.status !== 'INVALID' " class="errorwrap">Highest Qualification is required.</div> -->
+            <div *ngIf="complexForm.controls['highest_qualification'].hasError('required') && complexForm.controls['highest_qualification'].touched"
+                 class="errorwrap">Highest Qualification is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <!-- <button class="btn btn-link addqualification"><span class="icomoon icon-add-song"></span>Add More Qualification </button>  -->
+          <div class="form-group">
+            <label>Programs</label>
+
+            <p-dropdown
+              class="form-control"
+              [options]="programList"
+              placeholder="Choose"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['programs']"
+              (onChange)="onProgramSelect($event.value)"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <label>University</label>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <p-autoComplete
+              class="form-control"
+              [suggestions]="filteredUniversityList"
+              #acUniversity
+              [(formControl)]="complexForm.controls['university']"
+              forceSelection="true"
+              (completeMethod)="search($event)"
+              (onSelect)="universityACSelect($event)"
+              field="title"
+              (onBlur)="universityACBlur(acUniversity)"
+              placeholder="start typing name"
+            ></p-autoComplete>
+
+            <!-- <p-dropdown class="form-control" [options]="universityList" placeholder="Choose" optionLabel="title" [(formControl)]="complexForm.controls['university']"
+              (onChange)="onUniversitySelect($event.value)" [lazy]="true" [filter]="true"></p-dropdown> -->
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div *ngIf="flagOtherUniversity">
+            <div class="form-group">
+              <input type="text" class="form-control" [(formControl)]="complexForm.controls['other_university']">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <label>Campus</label>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <p-multiSelect
+              class="form-control"
+              [options]="campusList"
+              optionLabel="title"
+              (onChange)="onCampusSelect($event.value)"
+              [(formControl)]="complexForm.controls['campus']"
+            >
+              <ng-template let-role pTemplate="item">
+                <div style="font-size:14px;float:right;margin-top:4px">{{role.title}}</div>
+              </ng-template>
+            </p-multiSelect>
+            <!-- <p-dropdown [options]="campusList"  optionLabel="title"
+             [(formControl)]="complexForm.controls['campus']" (onChange)="onCampusSelect($event)" ></p-dropdown> -->
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div *ngIf="flagOtherCampus">
+            <div class="form-group">
+              <input type="text" class="form-control" [(formControl)]="complexForm.controls['other_campus']">
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="">Duration</label>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>From</label>
+
+            <p-calendar
+              class="form-control"
+              [(formControl)]="complexForm.controls['from_date']"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2030"
+              #fromDate
+              (onClose)="checkDateValidation(fromDate,toDate)"
+            ></p-calendar>
+
+            <div *ngIf="flagFromDate" class="errorwrap">From date must not be greater than today.</div>
+            <div [hidden]="complexForm.controls['from_date']?.status !== 'INVALID' " class="errorwrap">
+              From Date is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 col-6">
+          <div class="form-group">
+            <label>To</label>
+            <p-calendar
+              class="form-control"
+              [(formControl)]="complexForm.controls['to_date']"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2030"
+              [disabled]="professionalInfo.present"
+              #toDate
+              (onClose)="checkDateValidation(fromDate,toDate)"
+            ></p-calendar>
+
+            <div *ngIf="flagToDate" class="errorwrap">To Date must be greater than From date.</div>
+            <!-- <div [hidden]="complexForm.controls['to_date']?.status !== 'INVALID' ||
+            complexForm.controls['present']=='true'" class="errorwrap">To Date is required.</div> -->
+            <div
+              [hidden]="complexForm.controls['to_date']?.status !== 'INVALID' || professionalInfo.present"
+              class="errorwrap"
+            >
+              To Date is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4 col-6">
+          <div class="form-group">
+            <br>
+            <label class="custom-control custom-checkbox">
+              <input
+                class="custom-control-input"
+                name="present"
+                type="checkbox"
+                [checked]="professionalInfo.present"
+                [(formControl)]="complexForm.controls['present']"
+                #checkboxID
+                (change)="onCheckedItemChanged(checkboxID.checked,fromDate)"
+              >
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Present</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-link addqualification" type="button" (click)="addMore(complexForm.value)">
+        <span class="icomoon icon-add-song"></span> Save &amp; Reset
+      </button>
+      <button class="btn btn-link reset-qualification" type="button" (click)="resetForm()">
+        <span class="fa fa-refresh"></span> Reset
+      </button>
+      <!-- <div id="done" class="done-container"  [class.disabled]="!complexForm.valid"> -->
+      <!-- <div id="done" class="done-container">
+        <button class="done-btn" type="submit" [ngClass]="{processing: processing}">
+          <img src="/assets/img/hourglass.svg">
+        </button>
+        <button class="done-btn-caption" type="submit">Done</button>
+        <div class="done-note">Click "Done" to go next step</div>
+      </div> -->
+
+      <div id="done" class="done-container">
+        <button class="done-btn" [ngClass]="{processing: processing}" type="submit">
+          Next
+        </button>
+        <div class="done-note">
+          Click "Next" to save
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

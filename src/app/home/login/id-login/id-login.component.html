@@ -1,0 +1,82 @@
+<div class="login-box container idsignup" [ngClass]="{'capturePhotoStage':isStage=='capturePhoto'}">
+  <div class="close-btn hidden-sm-up" [routerLink]="['/']"></div>
+
+  <div *ngIf="isStage=='faceVerification'">
+    <div class="container-title">Face Verification</div>
+    <form name="form" (ngSubmit)="f.form.valid && verifyFaceWithDocumentInfo(f)" #f="ngForm" novalidate>
+      <div class="row">
+        <!-- <div class="col-sm-6 pad30">
+          <div class="form-group form-inputs">
+            <img class="selectedimage" [src]="selectedphoto">
+          </div>
+        </div> -->
+        <div class="col-sm-12 pad30">
+          <div class="form-group">
+            <div class="photowrapper">
+              <img *ngIf="capturedImage && capturedImage != ''; else defaultImg" [src]="capturedImage">
+              <ng-template #defaultImg>
+                <img src="">
+              </ng-template>
+              <button class="btn" (click)="isStage='capturePhoto'"></button>
+            </div>
+            <input type="hidden" [(ngModel)]="capturedImage" name="capturedImage1" #capturedImage1="ngModel" required>
+            <div *ngIf="f.submitted && capturedImage.errors?.required" class="errorwrap">Take a photo for verification.</div>
+            <div *ngIf="f.submitted && capturedImage.errors && objKeyMessage['capturedImage1']" class="errorwrap">{{objKeyMessage['capturedImage1']}}</div>
+          </div>
+          <div *ngIf="isVerified" class="verificationStatus text-center success">
+            Verified
+          </div>
+          <div *ngIf="isVerifiedError" class="verificationStatus text-center error">
+              Not Verified
+          </div>
+        </div>
+      </div>
+      <div class="row mt-20">
+        <div class="col-12">
+          <div *ngIf="!isVerified else verified" class="btn-border pull-right">
+            <button class="enter-btn" type="submit">Verify</button>
+          </div>
+          <ng-template #verified>
+            <div class="btn-border pull-right">
+              <button class="enter-btn" type="button" (click)="senddata()">Next</button>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="edit-photo" *ngIf="isStage=='capturePhoto'">
+    <div class="edit-photo-header">Take a Photo
+      <span (click)="backToEdit()">&times;</span>
+    </div>
+    <div class="edit-photo-body">
+      <div class="row">
+        <div class="col-12 pad30">
+
+          <div class="webcampicture">
+            <div [ngClass]="{'imageselected':flagPassportID}">
+              <ack-webcam *ngIf="!makeImage" [(ref)]="webcam" [options]="options" (onSuccess)="onCamSuccess($event)" (onError)="onCamError($event)"></ack-webcam>
+              <img [src]="capturedImage" *ngIf="makeImage && capturedImage && capturedImage != ''">
+              <div class="webcambtns" *ngIf="!webCamMissing">
+                <button class="btn capturepic" *ngIf="!makeImage" (click)="makeWebCameraPhoto()"></button>&nbsp;
+                <button class="btn deletepic" *ngIf="makeImage" (click)="deleteCameraPhoto()"></button>
+                <button class="btn savepic" *ngIf="makeImage" (click)="savepic()">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="webcamerro" *ngIf="webCamMissing">
+              <div class="errorwrap"> Please Check your Web Camera</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

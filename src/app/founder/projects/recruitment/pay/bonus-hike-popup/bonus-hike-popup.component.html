@@ -1,0 +1,58 @@
+<main>
+
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">      
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover projects-table transaction-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>{{type}}</th>
+            <th>Status</th>
+
+          </tr>
+        </thead>
+        <tbody *ngIf="type == 'Bonus'">
+          <tr *ngFor="let item of bonusRequestInfoList">
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [(ngModel)]="item.selected">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            <td>{{item.create_date}}</td>
+            <td>
+              ${{item.bonus.amount}}
+            </td>
+            <td>
+              {{item.status}}
+            </td>
+          </tr>
+
+        </tbody>
+
+        <tbody *ngIf="type == 'Hike'">
+          <tr *ngFor="let item of hikeRequestInfoList">
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [(ngModel)]="item.selected">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            <td>{{item.create_date}}</td>
+            <td>
+              ${{item.hike.amount}}
+            </td>
+            <td>
+              {{item.status}}
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <button class="saffron_btn skyblue_btn" (click)="onDone()">Ok</button>
+  </div>
+</main>

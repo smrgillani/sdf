@@ -1,0 +1,29 @@
+<div class="container-fluid bg-gradient selectrole">
+  <div class="container-main bg-image">
+    <div class="container-border">
+      <div class="selectrolecontent">
+      <div class="container-center">
+        <app-navbar [isLoggedIn]="false"></app-navbar>
+        <div class="container-title" [@pageState]="pageState">Are you a...</div>
+        <div class="container-buttons">
+          <div class="container-button border-blue" (click)="setRole(Roles.Employee)" [@pageState]="pageState"
+               (@pageState.done)="animationDone($event)">
+            <div class="button-inner back-blue">Employee</div>
+          </div>
+          <div class="container-button border-orange" (click)="setRole(Roles.Creator)" [@pageState]="pageState"
+               (@pageState.done)="animationDone($event)">
+            <div class="button-inner back-orange">Creator</div>
+          </div>
+          <!-- <div class="container-button border-green" (click)="setRole(Roles.Backer)" [@pageState]="pageState"
+               (@pageState.done)="animationDone($event)">
+            <div class="button-inner back-green">Backer</div>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="container-footer choose-role-footer" [@pageState]="pageState">Your here to create something special</div>
+    </div>
+    </div>
+  </div>
+
+</div>

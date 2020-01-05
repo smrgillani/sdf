@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <!-- <app-header class="position-absolute no-bg"></app-header> -->
+      <app-header class="position-absolute no-bg" [backNavOptions]="{ route: ['/backer/my-projects'] }"></app-header>
+      <h1>{{project.title}}</h1>
+      <div class="activity-group">
+        <h3>Activity feed <button (click)="goTo('activity-feed')" class="pull-right btn-link" style="color: #fff; cursor: pointer;">
+            View More </button></h3>
+        <div class="project-action with-icon" *ngFor="let action of (project.feed | filterLast:3)">
+          <div class="action-user-icon">
+            <img *ngIf="action.actor.photo_crop" [src]="action.actor.photo_crop" alt="">
+          </div>
+          <div class="action-message">
+            <span class="action-user-name">{{action.actor.first_name}} {{action.actor.last_name}}</span>
+            {{action.message}}
+          </div>
+          <div class="action-time">{{action.timestamp | formatRelativeTime}}</div>
+        </div>
+      </div>
+      <div class="activity-group">
+        <h3>Processes due soon <button (click)="goTo('processesdue-soon')" class="pull-right btn-link" style="color: #fff; cursor: pointer;">
+            View More </button></h3>
+        <div class="project-action" *ngFor="let process of (project.processes | filterLast:3)">
+          <div class="action-message">{{process.message}}</div>
+          <div class="action-time">{{process.timestamp | formatRelativeTime}}</div>
+        </div>
+      </div>
+      <div class="project-buttons">
+          <!-- [ngbTooltip]="button.disabled ? notImplementedMessage : null" -->
+        <div class="big-btn" *ngFor="let button of buttons"
+          (click)="goTo(button.link, button.disabled)">
+          <app-wheel [color]="button.color" [icon]="getIcon(button.icon)"></app-wheel>
+          <div>{{button.caption}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notification>
+  <!-- <div class="message">{{notImplementedMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+  </div> -->
+  <div class="modal-body">{{notImplementedMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

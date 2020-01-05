@@ -1,0 +1,42 @@
+<app-header class="position-static"></app-header>
+<main>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Budget</h1>
+        </div>
+        <div class="cardwrap">
+            <div class="card">
+                <!-- <div class="projects-search">
+                    <div class="search-icon"></div>
+                    <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+                </div> -->
+                <div>ISX / LSX fund list</div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Share Holder</th>
+                                <th>Percentage</th>
+                                <th>Price per Share</th>
+                                <th>Quantity</th>
+                                <th width="125px">Amount</th>
+                                <th width="150px">Funding date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let fund of fundsList">
+                                <td>{{fund.share_holder}}</td>
+                                <td>{{fund.percentage}}</td>
+                                <td>{{fund.price_per_share}}</td>
+                                <td>{{fund.quantity}}</td>
+                                <td>{{fund.amount}}</td>
+                                <td>{{fund.create_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getfunds($event)"></app-pagination>
+            </div>
+        </div>
+    </div>
+</main>

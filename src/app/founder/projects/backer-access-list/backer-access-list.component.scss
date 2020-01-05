@@ -1,0 +1,26 @@
+main {
+  background-color: #f9f5f0;
+  height: calc(100% - 60px);
+}
+
+.card-wrapper {
+  background-color: #fff;
+}
+
+.table {
+  td {
+    vertical-align: middle;
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+}
+
+ngb-rating {
+  font-size: 30px;
+}
+
+input[type="checkbox"]:disabled {
+  opacity: 0
+}

@@ -1,0 +1,51 @@
+.import-toolbar {
+  padding: 9px 0;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+
+  h4 {
+    margin-bottom: 0;
+    color: #4342e6;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+  }
+
+  div {
+    margin-left: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 22px;
+    border: 1px solid #7c7bf4;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .7;
+    }
+
+    &.device {
+      background: url('/assets/img/founder/fromLocal.png') no-repeat center;
+      position: relative;
+      overflow: hidden;
+
+      input {
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+      }
+    }
+
+    &.dropbox {
+      background: url('/assets/img/founder/fromDropbox.png') no-repeat center;
+    }
+
+    &.google-drive {
+      background: url('/assets/img/founder/fromGoogleDrive.png') no-repeat center;
+    }
+  }
+}

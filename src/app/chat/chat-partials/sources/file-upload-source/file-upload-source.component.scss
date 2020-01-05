@@ -1,0 +1,32 @@
+:host ::ng-deep {
+  .file-droppa-container {
+    height: 100%;
+    width: 100%;
+
+    div {
+      height: 100%;
+
+      .file-droppa-document-image {
+        height: 100%;
+        justify-content: left;
+        padding-left: 24px;
+        border-left: none;
+        font-size: 18px;
+
+        &:before {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+app-file-droppa {
+  width: 100%;
+  display: block;
+}
+
+.new-message {
+  display: flex;
+  height: 40px;
+}

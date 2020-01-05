@@ -1,0 +1,40 @@
+<div class=" table-responsive">
+  <table class="table table-hover projects-table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>User Name</th>
+        <th>Task Name</th>
+        <th>Created Date</th>
+        <th>Time</th>
+        <th>Message Type</th>
+        <th>Message</th>
+        <th>Voting</th>
+        <th>Agree Count</th>
+        <th>Disagree Count</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of actionButtonListInfo">
+        <td>{{item.data.project_name}}</td>
+        <td>{{item.data.user_name}}</td>
+        <td>{{item.data.task_name}}</td>
+        <td *ngIf="item.data.create_datetime != 'None'; else date">{{item.data.create_datetime | date: 'd MMM yyyy'}}</td>
+        <ng-template #date>
+            <td>-</td>
+        </ng-template>
+        <td *ngIf="item.data.create_datetime != 'None'; else time">{{item.data.create_datetime | date: 'shortTime'}}</td>
+        <ng-template #time>
+            <td>-</td>
+        </ng-template>
+        <td>{{item._message_type}}</td>
+        <td><div [innerHTML]=item.data.message></div></td>
+        <td>{{item.data.voting}}</td>
+        <td>{{item.data.agree_count}}</td>
+        <td>{{item.data.disagree_count}}</td>
+        <td>{{item.data.options}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

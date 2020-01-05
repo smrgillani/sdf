@@ -1,0 +1,265 @@
+.bubbles {
+    flex-grow: 1;
+  
+    display: flex;
+    flex-flow: row wrap;
+  
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .activated {
+    opacity: 1;
+  }
+  
+  .deactivated {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  
+  .bubble {
+    display: flex;
+    flex-direction: column;
+  
+    align-items: center;
+  
+    margin: 10px;
+  
+    .caption {
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: normal;
+  
+      &.next {
+        color: #679BF9;
+      }
+    }
+  
+    &.selector {
+      cursor: pointer;
+    }
+  }
+  
+  .button-border {
+    height: 66px;
+    width: 66px;
+    border-radius: 33px;
+    background: transparent;
+    border: 2px solid transparent;
+  
+    padding: 1px;
+  
+    &.active {
+      border-color: #fc585c;
+    }
+  }
+  
+  .button-icon {
+    width: 60px;
+    height: 60px;
+  
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: initial;
+  
+    border-radius: 30px;
+  }
+  
+  .bg-incomplete {
+    background-color: #fc585c;
+  }
+  
+  .bg-blue {
+    background-color: #5585f7;
+  }
+  
+
+  .icomoon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .button-icon
+  {
+    padding: 12px;
+    font-size: 33px;
+  }
+  .bg-about-business{
+    @extend .bg-incomplete;
+    text-align: center;
+   
+    span:before
+    {
+        content: "\e94c";
+    }
+    // background-image: url('/assets/img/idea/express_sm.png');
+  }
+  .bg-name-address{
+    @extend .bg-incomplete;
+    text-align: center;
+   
+    span:before
+    {
+        content: "\e94a";
+    }
+    // background-image: url('/assets/img/idea/develop_sm.png');
+  }
+  .bg-owner-management{
+    @extend .bg-incomplete;
+    text-align: center;
+  
+    span:before
+    {
+        content: "\e948";
+    }
+    // background-image: url('/assets/img/idea/visual_sm.png');
+  }
+  .bg-tax-setup{
+    @extend .bg-incomplete;
+    text-align: center;
+ 
+    span:before
+    {
+        content: "\e945";
+    }
+    // background-image: url('/assets/img/idea/target_sm.png');
+  }
+  .bg-business-setup{
+    @extend .bg-incomplete;
+    text-align: center;
+   
+    span:before
+    {
+        content: "\e900";
+    }
+    // background-image: url('/assets/img/idea/plan_sm.png');
+  }
+  .bg-placeorder{
+    @extend .bg-incomplete;
+    text-align: center;
+   
+    span:before
+    {
+        content: "\e926";
+    }
+    // background-image: url('/assets/img/idea/plan_sm.png');
+  }
+  .bg-next{
+     background-image: url('/assets/img/idea/next_sm.png');
+  }
+  .bg-back{
+     background-image: url('/assets/img/idea/back_button_icon.png');
+  }
+
+
+
+  
+  .done{
+    .button-icon {
+      background-color: rgb(27, 209, 188);
+      background-image: url('/assets/img/idea/done_sm.png');
+      span{
+        display: none;
+      }
+    }
+  
+    .button-border.active {
+      border-color: rgb(27, 209, 188);
+    }
+  }
+  
+  @media only screen and (max-width: 767px) {
+    .bubbles {
+      width: 100%;
+     // padding-top: 15px;
+    }
+  
+    .bubble {
+      margin: 5px 3px;
+  
+      .caption {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: normal;
+      }
+    }
+  
+    .button-border {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 1px;
+    }
+  
+    .button-icon {
+      width: 40px;
+      height: 40px;
+      background-size: 50%;
+     
+        padding: 7px;
+        font-size: 24px;
+      
+    }
+  
+    .bg-next {
+     // margin: 4px 0;
+      background-size: 30%;
+    }
+    .bg-back {
+     // margin: 4px 0;
+      background-size: 30%;
+    }
+  
+    .disabled-mobile {
+      display: none;
+    }
+  }
+  
+  
+  @media only screen and (max-width: 375px) {
+    .button-border {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1px;
+    }
+  
+    .button-icon {
+      width: 34px;
+      height: 34px;
+      padding: 5px;
+      font-size: 21px;
+  
+      background-size: 50%;
+    }
+  
+     .bg-next {
+       background-size: 30%;
+     }
+     .bg-back {
+       background-size: 30%;
+     }
+  }
+  @media only screen  and (min-width: 768px) and (max-width: 992px){
+    .bubble .caption{font-size: 13px; font-weight: 500; }
+    .button-icon  { font-size: 24px;     width: 44px;
+      height: 44px; padding: 9px;
+      font-size: 24px;}
+    .button-border   { height: 50px;
+      width: 50px;padding: 1px; }
+  
+      .hero-title { font-size: 45px;}
+      .bubbles { margin-top: 15px;}
+  }
+  
+  

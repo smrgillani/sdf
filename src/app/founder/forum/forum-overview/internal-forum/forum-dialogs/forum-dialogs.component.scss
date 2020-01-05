@@ -1,0 +1,92 @@
+
+.newThread_btn{
+  color: #ffffff;
+    font-size: 18px;
+    border: 2px solid #dddddd;
+    background-color: #dddddd;
+    transition: border-color .2s;
+    /* padding: 3px 18px; */
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px #fff inset;
+    margin: 2px 0;
+    min-width: 7.222em;
+    text-align: center
+}
+
+// .saffron_btn{
+//   min-width: 7.222em;
+//   text-align: center;
+// }
+// .cardwrap{
+//   background: #fff;
+//   .cardheading{
+//     border-bottom: 1px solid #eaeaea;
+//     padding: 20px 40px; 
+//     h3{
+//       margin: 0; font-size: 30px;
+//     }
+//   }
+//   .cardbody {
+//     padding: 20px 40px; 
+//   }
+// }
+
+.cardheading {
+  p-dropdown{
+    min-width: 9.444em;
+    
+  }
+  .form-group{
+    margin-bottom: 0;
+  }
+}
+.topheading
+{ p-dropdown{
+  max-width: 9.444em;
+  margin-top: 1em;
+}
+.form-group{
+  margin-bottom: 1.563em;
+}
+.form-control{
+  background: transparent;
+}
+.projects-search{
+  min-width: 16.667em;
+  border-bottom: 1px solid #eaeaea;
+  padding: 0;
+}
+.mediapara{
+  h3 { font-size: 1.75em;}
+}
+
+}
+
+
+
+@media only screen and (max-width: 576px) {
+  .topheading .form-group
+  {
+    margin-bottom: 0.563em;
+    font-size: 16px;
+  }
+  .topheading .projects-search{
+    float: none;
+  }
+  .cardwrap .cardheading h3{
+    margin-top: 0.5em;
+  }
+  .cardheading p-dropdown{
+     min-width: auto;
+     font-size: 14px;
+  }
+}
+
+
+@media only screen and (max-width: 360px) {
+  .topheading .projects-search{
+    float: none;
+  }
+}
+

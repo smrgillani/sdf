@@ -1,0 +1,72 @@
+<app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> 
+<main>
+  
+  <div class="container saf_blue_theme">
+      <div class="heading">
+          <h1>Equity crowdfunding / exchangeable equity</h1>                    
+      </div>
+      <div class="cardwrap">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Minimum Target Offering Amount ($)</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+            <label>Maximum Target Offering Amount ($)</label>
+            <input type="text" class="form-control">
+        </div>
+      </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+              <label>Due by</label>
+              <p-calendar [(ngModel)]="value" class="form-control"></p-calendar>
+          </div>
+
+        </div>
+    
+          <div class="col-md-6">
+              <div class="form-group">
+            <label>Amount of equity (%)</label>
+            <input type="text" class="form-control">
+        </div>
+      </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+              <label>Return in form</label>
+              <p-dropdown  class="form-control"></p-dropdown>
+
+          </div>
+        </div>
+          <div class="col-md-6">
+              <div class="form-group">
+            <label>Price/ Security ($)</label>
+            <input type="text" class="form-control">
+        </div>
+      </div>
+        </div>
+
+        <h5>T&Cs</h5>
+        <p>Terms and Conditions</p>
+
+
+        <div class="post-buttons">
+          <div class="saffron_btn skyblue_btn"  [routerLink]="['../selectedfunding']">Next</div>
+        </div>
+   
+      </div>
+
+
+
+        <div class="projects-footer">
+          <div class="back-button" (click)="_location.back()">Back</div>
+        </div>
+   </div>
+</main>

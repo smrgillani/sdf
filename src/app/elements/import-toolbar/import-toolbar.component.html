@@ -1,0 +1,15 @@
+<div class="import-toolbar">
+  <span>Import from</span>
+
+  <div class="device">
+    <input
+      type="file"
+      [accept]="accept"
+      (change)="getLocalFile($event)"
+    >
+  </div>
+
+  <div class="dropbox" id="dropbox-container"></div>
+
+  <div class="google-drive" id="pick"></div>
+</div>

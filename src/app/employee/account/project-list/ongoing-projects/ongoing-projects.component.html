@@ -1,0 +1,63 @@
+<table class="table table-hover  employee-table">
+  <tbody>
+  <tr *ngFor="let project of projectList">
+    <td>
+      <div class="Employee-title">
+        <div class="employee-name">{{project.title}}</div>
+        <div class="employee-details">
+          <div class="employee_des">{{project.goal}}/{{project.process}}</div>
+          <div class="text-blue">Start Date: {{project.date_start}} End Date: {{project.date_end}}</div>
+        </div>
+      </div>
+    </td>
+    <td class="projectmember">
+      <div>
+        <ul>
+          <li>
+              <span class="rounded-circle">
+                <img src=""/>
+              </span>
+          </li>
+          <li>
+            <span class="rounded-circle"></span>
+          </li>
+        </ul>
+      </div>
+    </td>
+    <td>
+      <div class="project-actions">
+        <div class="btn-border blue" (click)="projectMessage(project.id)">
+          <div class="btn blue-btn">Message</div>
+        </div>
+        <div class="btn-border skyblue" (click)="metrices(project.id)">
+          <div class="btn skyblue-btn">Metrics</div>
+        </div>
+        <div class="btn-border orange" (click)="onWork(project.id)">
+          <div class="btn orange-btn">Work</div>
+        </div>
+
+      </div>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getOngoingProjects($event)"></app-pagination>
+
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #popUpForCommonMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

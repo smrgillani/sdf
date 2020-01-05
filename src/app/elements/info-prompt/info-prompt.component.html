@@ -1,0 +1,10 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+  <div class="popheading"><i class="material-icons">info</i> <span>Info</span></div>
+  <div class="cardwrap" [innerHTML]="message"></div>
+  <div class="button-container">
+      <button class="saffron_btn maya-blue waves-effect waves-light"  (click)="activeModal.dismiss('Cross click')">
+          Okay
+      </button>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+$bg-color: #ff6c24;
+$bg-color-2: #f9f5f0;
+$header-height: 270px;
+
+.container-fluid {
+  background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 300px, $bg-color-2 300px, $bg-color-2 100%);
+}
+
+.container-main::after {
+  border-color: #404040;
+}
+
+.container-header {
+  position: absolute;
+  top: 60px;
+  height: 210px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-title {
+  letter-spacing: 0;
+}
+
+app-idea-qa {
+  width: 100%;
+  position: absolute;
+  top: 275px;
+  bottom: 0;
+}
+
+.sectionheadings {
+  width: 60%;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 992px) {
+  .sectionheadings {
+    width: calc(100% - 48px);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  app-idea-qa {
+    top: 213px;
+  }
+
+  .container-fluid {
+    background-image: linear-gradient($bg-color, $bg-color 213px, $bg-color-2 213px, $bg-color-2 100%);
+  }
+
+  .container-border {
+    // border: none;
+  }
+
+  .container-header {
+    // width: auto;
+    height: 153px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+    line-height: 28px;
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    line-height: 16px;
+    max-width: 166px;
+    vertical-align: bottom;
+    margin-left: 10px;
+    font-weight: normal;
+    display: none !important;
+  }
+}
+
+/** New Styles */
+@media only screen and (max-width: 767px) {
+  .container-header .sectionheadings {
+    top: -10px;
+    position: relative;
+  }
+}
+
+@media only screen and (max-width: 389px) {
+  .container-header .sectionheadings .hero-title {
+    font-size: 23px;
+  }
+}
+
+@media only screen and (max-width: 333px) {
+  .container-header .sectionheadings .hero-title {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 329px) {
+  app-founder-startup-bubble-toolbar /deep/ .bubble.selector {
+    margin: 5px 2px;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  app-founder-startup-bubble-toolbar /deep/ .bubble.selector {
+    width: 50px;
+  }
+}

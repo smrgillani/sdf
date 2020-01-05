@@ -1,0 +1,24 @@
+<div class="work-item" [class.selected]="selected">
+  <div class="work-title">
+    <span class="title" (click)="openWork.next(work)">{{work.title}}</span>
+
+    <div *ngIf="allowEdit" class="edit-btn" (click)="editWork.next(work)">
+      <i class="fa fa-pencil"></i>
+    </div>
+
+    <div class="activity-btn" (click)="showWorkActivity.next(work)">
+      &nbsp;&nbsp;<span class="icon-clock"></span>
+    </div>
+  </div>
+
+  <div class="work-progress" [class.draggable]="allowEdit" (click)="openWork.next(work)">
+<!--    <div class="drag-trigger left"></div>-->
+
+    <div class="work-progress-completed"
+         [style.width]="work.progress + '%'">
+      <div class="percents">{{work.progress}}%</div>
+    </div>
+
+<!--    <div class="drag-trigger right"></div>-->
+  </div>
+</div>

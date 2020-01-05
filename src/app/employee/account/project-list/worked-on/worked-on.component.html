@@ -1,0 +1,99 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Project List', route: ['employee', 'account', 'project-list']}"></app-header>
+
+<main>
+  <div class="container saf_blue_theme">
+    <!-- <div class="profile-imgwrap">
+      <div class="profilebox">
+        <div class="profile-img">
+          <img *ngIf="metricesModel.basicInfo?.photo" [src]="metricesModel.basicInfo?.photo" alt="">
+        </div>
+        <div class="profilename">{{metricesModel.basicInfo?.employee}}</div>
+        <div class="profilepost">( {{metricesModel.basicInfo?.current_designation}} ) </div>
+        <div class="starrate">
+          <ngb-rating [rate]="metricesModel.basicInfo?.rating"></ngb-rating>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="processesworked">
+      <h3>Processes worked on </h3>
+      <div class="hashtags" *ngIf="metricesModel.basicInfo.processes && metricesModel.basicInfo.processes.length > 0">
+        <button class="btn btn-link" *ngFor="let process of metricesModel.basicInfo.processes" [ngClass]="{'active' : process.process_id == selectedProcessId}"
+          (click)="getProcessSelected(process.process_id)">#{{process.title}} </button>
+      </div>
+    </div>
+
+    <div class="worktable boxtable">
+      <h3>Marketing work log</h3>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Work hours</th>
+            <th>Work log</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let processItem of mouseflowVideoList">
+            <td>{{processItem.created}}</td>
+            <td>{{processItem.startTime}}</td>
+            <td>{{processItem.endTime}}</td>
+            <td class="text-organge">{{processItem.duration}} hr</td>
+            <td>
+              <div class="actionbtn">
+                <a class="playaction" (click)="geMouseFlowAuthId(processItem)">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!--<app-pagination
+        class="my-pagination"
+        [pageSize]="pageSize"
+        [pagesQuantity]="count"
+        (pageChanged)="getProcessSelectedList($event)"
+      ></app-pagination>-->
+      <app-pagination
+        class="my-pagination"
+        [pageSize]="pageSize"
+        [pagesQuantity]="count"
+        (pageChanged)="getProcessSelectedList(null)"
+      ></app-pagination>
+    </div>
+
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>
+
+<ng-template #popUpForVideo>
+  <div class="modal-body">
+    <div class="cardwrapper">
+      <div class="videowrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="videos">
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" [src]="url | safeUrl" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Close</div>
+    </div>
+  </div>
+</ng-template>

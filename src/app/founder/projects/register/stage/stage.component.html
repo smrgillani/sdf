@@ -1,0 +1,27 @@
+<div class="container-fluid saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border">
+      <app-header class="position-absolute no-bg" [backNavOptions]="{ route: ['founder', 'projects', projectId, 'register', 'register']}"></app-header>
+      <div class="container-header">
+        <div class="app-founder-register-bubble-toolbar">
+        <app-founder-register-bubble-toolbar *ngIf="stageState"
+                                         [currentStage]="stageState.stage"
+                                         [projectId]="projectId"></app-founder-register-bubble-toolbar>
+        </div>
+        <div class="sectionheadings">
+          <h1 class="d-inline hero-title">{{title}}</h1>
+          <h3 class="d-inline hero-subtitle">{{subtitle}}</h3>
+        </div>
+      </div>
+
+      <app-registration-qa
+        [stageState]="stageState"
+        *ngIf="loadStage"
+        [projectId]="projectId"
+        [entityType] = "entityType"
+        (done)="onDone($event)"
+        >
+      </app-registration-qa>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<!-- <div class="projects-search">
+  <div class="search-icon"></div>
+  <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+  <button (click)="searchBlockTxAddress()" class="saffron_btn orange_btn">Search</button>
+</div>
+<div *ngIf="errorMessage" class="errorwrap">{{errorMessage}}</div> -->
+<div class=" table-responsive">
+  <table class="table table-hover projects-table">
+    <thead>
+      <tr>
+        <th>Package #</th>
+        <th>Owner Name</th>
+        <th>Registration Date</th>
+        <th>Time</th>
+        <th>Registration Type</th>
+        <th>Status</th>
+        <th>Project Stage</th>
+        <th>Project Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of projectRegInfoList">
+        <td>{{item.package}}</td>
+        <td>{{item.ownerName}}</td>
+        <td *ngIf="item.data.registration_date != 'None'; else date">{{item.data.registration_date | date: 'd MMM yyyy'}}</td>
+        <ng-template #date>
+            <td>-</td>
+        </ng-template>
+        <td *ngIf="item.data.registration_date != 'None'; else time">{{item.data.registration_date | date: 'shortTime'}}</td>
+        <ng-template #time>
+            <td>-</td>
+        </ng-template>
+        <!-- <td>{{item.ownerId}}</td> -->
+        <td>{{item.registration_type}}</td>
+        <td>{{item.data.status}}</td>
+        <td>{{item.project_Stage}}</td>
+        <td>{{item.project_Title}}</td>
+        <!-- <td>{{item._projectId}}</td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getProjectRegList($event)"></app-pagination> -->

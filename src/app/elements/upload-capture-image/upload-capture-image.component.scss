@@ -1,0 +1,57 @@
+// .profile-buttons {
+//     text-align: center;
+
+//     .trigger {
+//       display: inline-block;
+//       position: relative;
+//       margin: 0 33px;
+//       color: #4342E6;
+//       font-size: 16px;
+//       line-height: 16px;
+//       text-align: center;
+//       text-decoration: underline;
+//       cursor: pointer;
+//     }
+
+//     &:hover {
+//       text-decoration: none;
+//     }
+
+//     .icon {
+//       display: block;
+//       width: 48px;
+//       height: 48px;
+//       border-radius: 50%;
+//       margin: 0 auto 6px;
+//       box-shadow: 0 1px 4px 0 rgba(0,0,0,0.35);
+//       cursor: pointer;
+
+//       &.upload {
+//         background: #6A9DF6 url(/assets/img/upload_new_photo.png) no-repeat center;
+//       }
+
+//       &.take {
+//         background: #24D7C8 url(/assets/img/take_photo.png) no-repeat center;
+//       }
+//     }
+//   }
+
+//   .remove-image-icon {
+//     position: absolute;
+//     display: block;
+//     width: 40px;
+//     height: 40px;
+//     border-radius: 50%;
+//     background: #FE5F5B url('/assets/img/trash-icon.png') no-repeat center;
+//     top: -20px;
+//     right: -20px;
+//     color: #FE5F5B;
+//     transform: scale(1);
+//     transition-duration: .3s;
+//     cursor: pointer;
+  
+//     &:hover {
+//       transform: scale(1.05);
+//       transition-duration: .3s;
+//     }
+//   }

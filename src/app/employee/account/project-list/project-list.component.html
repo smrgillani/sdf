@@ -1,0 +1,38 @@
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+<!-- <app-header [backNavOptions]="{caption: 'Find Work', route: ['employee', 'account']}"></app-header> -->
+<app-header class="position-static" [backNavOptions]="{caption: 'Dashboard', route: ['employee']}"></app-header>
+
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Project List</h1>
+    </div>
+
+    <div class="cardwrap">
+      <span class="icon-tool" [routerLink]="['../founder-list']"></span>
+      <ngb-tabset>
+        <!-- <ngb-tab>
+          <ng-template ngbTabTitle>Ongoing Project</ng-template>
+          <ng-template ngbTabContent>
+            <app-ongoing-projects></app-ongoing-projects>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Past Project</ng-template>
+          <ng-template ngbTabContent>
+            <app-past-projects></app-past-projects>
+          </ng-template>
+        </ngb-tab>
+        -->
+        <ngb-tab>
+          <ng-template ngbTabTitle>Assignments</ng-template>
+          <ng-template ngbTabContent>
+            <app-assignments></app-assignments>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

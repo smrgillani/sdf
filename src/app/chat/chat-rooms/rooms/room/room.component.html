@@ -1,0 +1,69 @@
+<div class="chat-room-name">
+  {{groupName}}
+  <div class="btn videocall-btn" (click)="startVideoCall()"></div>
+  <app-chat-filters class="chat-filters" (filtersChanged)="onChatFiltersChanged($event)"></app-chat-filters>
+</div>
+
+<div class="chat-messages">
+  <perfect-scrollbar>
+    <div class="scrollingcontent">
+      <ng-container *ngFor="let message of messages">
+        <div class="message" *ngIf="!showOnlyStarred || isStarred(message)" [ngClass]="{'currentuser':message.flag}">
+          <span class="user-photo" *ngIf="message.user">
+            <img *ngIf="message.user.photo_crop" [src]="message.user.photo_crop" alt="">
+
+            <div class="user-status-indicator" [ngClass]="'user-status-' + roomHandler?.usersList[message.userId]?.status"></div>
+          </span>
+
+          <div class="user" *ngIf="message.user">
+            <span class="user-name" [attr.title]="getUsername(message.user)">
+              <a class="star-message" (click)="starToggle(message)">
+                <i
+                  class="fa"
+                  [class.fa-star]="isStarred(message)"
+                  [class.fa-star-o]="!isStarred(message)"
+                ></i>
+              </a>
+
+              <span class="username">{{getUsername(message.user)}}</span>
+            </span>
+            <span class="message-time">{{message.time | date:'shortTime'}}</span>
+          </div>
+
+          <div class="message-action-buttons" *ngIf="message.editable">
+            <i class="fa fa-trash pull-right" aria-hidden="true" (click)="deleteMessage(message.id, message)"></i>
+            <i *ngIf="message.text" class="fa fa-pencil pull-right" aria-hidden="true" (click)="setEditMessage(message)"></i>
+          </div>
+
+          <div class="message-body">
+            <div *ngFor="let attachment of message.attachments" class="replyfor">
+              <small>{{attachment.title}}</small>
+              <img *ngIf="attachment.image_url" [src]="attachment.image_url | safeUrl" alt="" height="200">
+              <a *ngIf="attachment.image_url" [href]="attachment.image_url | safeUrl" target="_blank">Download</a>
+              <!-- <p *ngIf="message.text" class="message-body" [innerHTML]="message.text"></p> -->
+            </div>
+
+            <div [innerHTML]="message.text"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </perfect-scrollbar>
+
+  <div class="typing">
+    <p *ngFor="let user of roomHandler?.chatTypingUsers">{{user.name}} is typing...</p>
+  </div>
+</div>
+
+<app-chat-action-bar
+  class="chat-action-bar"
+  [enableMessageTypes]="false"
+  [editMessage]="editMessage"
+  [fileUploadErrors]="fileUploadErrors"
+  (typingOccurred)="onTypingOccurred()"
+  (typingStarted)="onTypingStarted()"
+  (typingEnded)="onTypingEnded()"
+  (messageSent)="sendMessage($event)"
+  (fileSent)="sendFile($event)"
+  (resetEditMessage)="editMessage = null"
+></app-chat-action-bar>

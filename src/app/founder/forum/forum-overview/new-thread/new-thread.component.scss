@@ -1,0 +1,54 @@
+.cardwrap{
+  padding: 0 2.500em;
+  background: transparent;
+}
+// .saffron_btn{
+//     min-width: 130px;
+//     text-align: center;
+//     & + .saffron_btn{
+//         margin-left: 15px;
+//     }
+//   }
+//   .cardwrap{
+    
+//     padding: 0 40px;
+//     .cardheading{
+//       border-bottom: 1px solid #eaeaea;
+//       padding: 20px 0; 
+//       h3{
+//         margin: 0; font-size: 30px;
+//       }
+//     }
+//     .cardbody {
+//         background: #fff;
+//       padding: 20px 40px; 
+//     }
+//   }
+
+.cardheading{
+  padding: 1.250em 0 !important; 
+}
+  .projects-footer {
+    margin: 1.250em 0;
+  }
+  .saffron_btn {    
+    min-width: 7.222em;
+    font-size: 1.125em;
+    padding: 0.167em 1em;
+    margin: 0.111em 0;
+    text-align: center;
+    white-space: nowrap;
+    &+.saffron_btn {         
+     margin-left: 1.389em;
+   }
+  }
+  @media only screen and (max-width: 576px) {
+    
+    .cardwrap{
+      padding: 0 0.5em;
+      background: transparent;
+      .cardheading{
+        padding: 1.250em 0 !important; 
+      }
+    }
+  }

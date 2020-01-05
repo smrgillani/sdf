@@ -1,0 +1,49 @@
+<div class="hire_employees">
+
+
+    <div class="projects-search">
+        <div class="search-icon"></div>
+        <input class="form-control" type="text" placeholder="Start typing to search" [(ngModel)]="searchText" (input)="valueChange()" />
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover projects-table transaction-table">
+            <thead>
+                <tr>
+                    <th>Transaction Ref No.</th>
+                    <th>Added on</th>
+                    <th>Time</th>
+                    <th>Amount</th>
+                    <th>Remark</th>
+                    <th>Mode</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Account no, if any</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of transactionInfoList">
+                    <td>{{item.reference_no}}</td>
+                    <td>{{item.create_datetime | date:'d MMM yyyy'}}</td>
+                    <td>{{item.create_datetime | date:'shortTime'}}</td>
+                    <td>${{item.amount.amount}}</td>
+                    <td>
+                        {{item.remark}}
+                    </td>
+                    <td>{{item.mode}} </td>
+                    <td>{{item.next_user_name}} </td>
+                    <td>{{item.type}} </td>
+                    <td>{{item.account_no}}</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getTransactionList($event)"></app-pagination>
+
+</div>

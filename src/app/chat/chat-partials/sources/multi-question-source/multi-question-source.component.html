@@ -1,0 +1,14 @@
+<div #questions_elements *ngFor="let question of questions; let i = index">
+  <label>
+    <strong>{{question}}</strong>
+  </label>
+
+  <div class="new-message">
+    <textarea
+      placeholder="Type your answer here"
+      [(ngModel)]="answers[i]"
+      (keydown)="onTextInputKeyDown($event)"
+      (keyup)="onTextInputKeyUp()"
+    ></textarea>
+  </div>
+</div>

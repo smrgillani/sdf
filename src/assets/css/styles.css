@@ -1,0 +1,84 @@
+html, body {
+    min-width: 300px;
+    min-height: 600px;
+}
+
+nav {
+    background-color:transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    height: initial;
+    line-height: initial;
+}
+
+nav i {
+    height: initial;
+    line-height: initial;
+}
+
+.btn i, .btn-large i, .btn-small i, .btn-floating i, .btn-large i, .btn-small i, .btn-flat i {
+    font-size: inherit;
+}
+
+app-phone-input .input-group-addon {
+    padding-right: 0 !important;
+}
+
+/** --------------------- Forum --------------------- */
+
+#forum-section .navbar-menu {
+    display:none;
+}
+
+#employee-menuitems {
+    margin-top:7px;
+}
+
+@media only screen and (max-width: 768px) {
+    ._hj-f5b2a1eb-9b07_icon._hj-f5b2a1eb-9b07_icon_emotion_default {
+        font-size: x-small !important;
+        margin: 4px 0 0 -3px !important;
+    }
+    
+    ._hj-f5b2a1eb-9b07_feedback_minimized_label {
+        font-size: 9px !important;
+        width: 27px !important;
+        height: 71px !important;
+        padding: 8px !important;
+    }
+}
+
+/**
+* Media query for Height
+*/
+
+@media only screen and (max-height: 640px) {
+    .modal-dialog {
+        margin-top: 30px;
+    }
+}
+
+@media only screen and (max-height: 330px) {
+    .modal-dialog {
+        margin-top: 30px;
+    }
+}
+
+
+
+/** --------------------- Forum > Internal Forum --------------------- */
+@media only screen and (max-width: 576px) {
+    app-forum-dialogs .row.topheading {
+        margin-bottom: 0;
+    }
+    
+    app-forum-dialogs .row.topheading > div {
+        width:50%;
+    }
+
+
+    /* #forum-content app-forum-dialogs .projects-search {
+        margin-top: 5px;
+    } */
+}
+

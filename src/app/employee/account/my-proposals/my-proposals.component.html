@@ -1,0 +1,38 @@
+
+    <!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+    <!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+    <!-- <app-header [backNavOptions]="{caption: 'Find Work', route: ['employee', 'account']}"></app-header> -->
+    <app-header class="position-static" [backNavOptions]="{caption: 'Dashboard', route: ['employee']}"></app-header>
+
+
+<main>
+
+    <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+        <div class="heading">
+            <h1>My Proposals</h1>
+        </div>
+        <div class="cardwrap">
+            <ngb-tabset>
+                <!-- <ngb-tab>
+                    <ng-template ngbTabTitle>Apply For</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-apply-for></app-apply-for>
+
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Interview request from recruiter</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-recruiter-interview-request></app-recruiter-interview-request>
+                    </ng-template>
+                </ngb-tab> -->
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Direct Hire</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-direct-hire></app-direct-hire>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+</main>

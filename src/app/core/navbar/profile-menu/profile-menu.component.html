@@ -1,0 +1,115 @@
+<ng-template #notification>
+  <div class="message">{{message}}</div>
+  <div class="buttons">
+    <div class="btn btn-cancel" (click)="popover.close()">Do it later</div>
+    <div class="btn btn-ok" (click)="editProfile()">Ok</div>
+  </div>
+</ng-template>
+
+<ng-template #errormsg>
+  <div class="message">{{message}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="popover.close()">Ok</div>
+  </div>
+</ng-template>
+
+<!--
+<a class="menulinks" (click)="goChatRoom(role)">
+  <span class="icon-chat-conversation waves-effect waves-light"></span>
+  <span class="badge">{{ messagesCount > 0 ? messagesCount : '' }}</span>
+</a>
+-->
+<a class="menulinks" (click)="goNotifications()">
+  <span class="icon-notifications waves-effect waves-light"></span>
+  <span class="badge">{{ notificationsCount > 0 ? notificationsCount : '' }}</span>
+</a>
+
+<a class="menulinks" (click)="goToWallet()">
+  <i class="material-icons">account_balance_wallet</i>
+</a>
+
+<div class="profile-caption" *ngIf="isEditMode">
+  <div class="form-group">
+    <input type="text" class="form-control" [(ngModel)]="name">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" [(ngModel)]="tempPassword">
+  </div>
+
+  <div class="form-group text-right">
+    <button class="btn btn-sm btn-primary" (click)="convertToPermanent()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    </button>
+
+    <button class="btn btn-sm btn-danger" (click)="unEditTempUser()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+
+    <div [ngbPopover]="errormsg" triggers="" (shown)="onPopoverShown()"></div>
+  </div>
+</div>
+
+<div *ngIf="!isEditMode" ngbDropdown class="d-inline-block" #menu="ngbDropdown">
+  <div class="btn profile-menu-btn" ngbDropdownToggle>
+    <div class="profile-icon" [ngbPopover]="notification" triggers="" (shown)="onPopoverShown()">
+      <img *ngIf="photo" [src]="photo">
+      <i *ngIf="is_kyc_complete" class="icon-check2 verified"></i>
+    </div>
+
+    <div class="profile-caption">
+      <div class="profile-name">{{name}}</div>
+      <div class="profile-role">{{role}}</div>
+      <div class="profile-role" *ngIf="isTemporaryUser">
+        Password: {{tempPassword}}
+        <i class="fa fa-pencil-square-o profileeditbtn" aria-hidden="true" (click)="editTempUser()"></i>
+      </div>
+    </div>
+
+    <i class="fa toggle-icon"
+       [class.fa-caret-up]="menu.isOpen()"
+       [class.fa-caret-down]="!menu.isOpen()"
+    ></i>
+  </div>
+
+  <div class="dropdown-menu" ngbDropdownMenu>
+    <div class="profile-item dropdown-item" (click)="openProfile()">
+      <div class="profile-icon">
+        <img *ngIf="photo" [src]="photo">
+        <i class="icon-check2 verified"></i>
+      </div>
+
+      <div class="profile-item-caption">
+        <div class="profile-item-name">{{name}}</div>
+        <div class="profile-item-subtitle">My Profile</div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <button class="dropdown-item" (click)="setRole(Roles.Employee)">
+      <i class="fa fa-check" *ngIf="role == Roles.Employee"></i>
+      <i class="fa fa-circle menu-icon employee"></i>
+      Employee
+    </button>
+
+    <button class="dropdown-item" (click)="setRole(Roles.Creator)">
+      <i class="fa fa-check" *ngIf="role == Roles.Creator"></i>
+      <i class="fa fa-circle menu-icon creator"></i>
+      Creator
+    </button>
+
+    <!-- <button class="dropdown-item" (click)="setRole(Roles.Backer)">
+      <i class="fa fa-check" *ngIf="role == Roles.Backer"></i>
+      <i class="fa fa-circle menu-icon backer"></i>
+      Backer
+    </button> -->
+
+    <div class="separator"></div>
+
+    <button class="dropdown-item" (click)="signOut()">
+      <i class="fa fa-sign-out menu-icon"></i>
+      Sign out
+    </button>
+  </div>
+</div>

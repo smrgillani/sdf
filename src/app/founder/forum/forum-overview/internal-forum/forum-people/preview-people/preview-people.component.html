@@ -1,0 +1,53 @@
+<div class="cardwrap">
+  <div class="heading">
+    <div class="personimg">
+      <div class="profileimgwrap">
+        <img *ngIf="ownerInfo?.photo_crop && ownerInfo?.photo_crop != null; else showTitle"
+             [src]="ownerInfo?.photo_crop" alt=""
+        >
+
+        <ng-template #showTitle>
+          <div class="project-title">
+            <div class="project-icon" *ngIf="ownerInfo?.first_name">{{ownerInfo?.first_name[0]}}</div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="persondetails">
+      <h4>{{ownerInfo?.first_name}} {{ownerInfo?.last_name}}</h4>
+
+      <div class="address">
+        {{ownerInfo?.address}}
+      </div>
+
+      <div class="contactbox">
+        <span class="icon-talk" (click)="selectedChat()"></span>
+        <!-- <span class="icon-phone-receiver"></span> -->
+        <span class="icon-video" (click)="startVideoCall()"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cardbody" *ngIf="userThreadInfoList">
+    <div class="media" *ngFor="let item of userThreadInfoList">
+      <div class="media-left">
+        <div class="mediaimg">
+          <img class="mr-3" *ngIf="item?.image && item?.image != null" [src]="item?.image">
+        </div>
+      </div>
+
+      <div class="media-body">
+        <h5 class="mt-0" class="cursor" (click)="selectedThreadId(item.id)">{{item?.title}}</h5>
+        <div class="action-time">{{item?.created_date | formatRelativeTime}}</div>
+        <div [innerHTML]="item?.description"></div>
+      </div>
+
+      <div class="postcounts">
+        <span class="cursor" (click)="selectedThreadId(item.id)">See Posts <span class="icon-media-play-symbol"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getThreadInfoList($event)"></app-pagination>
+</div>

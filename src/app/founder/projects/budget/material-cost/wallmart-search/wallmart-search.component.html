@@ -1,0 +1,54 @@
+<div class="projects-search">
+    <div class="search-icon"></div>
+    <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (ngModelChange)="modelchange()"
+    />
+</div>
+<div *ngIf="searchResult" class="product-dropdown">
+    <perfect-scrollbar class="productlist">
+    <ul>
+        <li *ngFor="let product of searchResult">
+               
+            <div class="">
+                <div class="productimg">
+                    <img *ngIf="product.thumbnailImage" [src]='product.thumbnailImage'>
+                </div>
+                <div class="productinfo">
+                    <div class="productname">{{product.name}}</div>
+                    <div class="productprice"><strong>${{product.price}}</strong></div>
+                    <!-- <div> <input *ngIf="product.isSelected" type="number" [(ngModel)]="product.quantity" > </div> -->
+                </div>
+                <div class="productoptions">
+                    <div class="radiogroup">
+                        <label class="custom-control custom-radio">
+                            <input type="radio" 
+                                attr.name="radiogroupwallmartproducts" 
+                                name="radiogroupwallmartproducts" 
+                                class="custom-control-input"
+                                (change)=onSelect(product)>
+                            <span class="custom-control-indicator"></span>
+                        </label>
+                    </div>
+                    <button class="btn-circle text-blue" [ngClass]="{'active':product.product_id==showdesc}" (click)="showdescfun(product.product_id)">
+                        <i class="icon-scroll-arrow-to-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="collasablediv" *ngIf="product.product_id==showdesc">
+                <div class="prod_desc">
+                    {{product.shortDescription}}
+                </div>
+
+                <div class="qtywrap">
+                Qty : 
+                <p-spinner  [(ngModel)]="product.quantity" class="form-control"></p-spinner>
+                </div>
+
+
+            </div>
+        </li>
+    </ul>
+</perfect-scrollbar>
+    <div class="text-right pad-25">
+        <button class="saffron_btn skyblue_btn" (click)="ReturnSelectedProduct()">Confirm</button>
+    </div>
+</div>

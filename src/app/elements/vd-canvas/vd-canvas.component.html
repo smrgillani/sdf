@@ -1,0 +1,67 @@
+<div class="canvas_toolbar" *ngIf="!viewOnly">
+  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+      <button type="button" class="btn btn-canvastool" *ngIf="colorPickerEnabled">
+        <vd-canvas-colorpicker [selectedColor]="strokeColor" (onColorSelected)="changeColor($event)"></vd-canvas-colorpicker>
+      </button>
+      <button type="button" class="btn btn-canvastool" *ngIf="enableCanvasText">
+        <vd-canvas-text-toolbar (onToolbarSettingsChange)="onToolbarSettingsChange($event)"></vd-canvas-text-toolbar>
+      </button>
+    </div>
+
+    <div class="btn-group mr-2" role="group" aria-label="Third group">
+      <button type="button" class="btn btn-default btn-sm" (click)="toggleShouldDraw()" title="{{drawButtonText}}"
+              *ngIf="drawButtonEnabled && !enableCanvasText" [ngClass]="{'active':pencilActive && getShouldDraw()}">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-sm" (click)="toggleShouldDrawbrush()"
+              title="Brush" *ngIf="drawButtonEnabled && !enableCanvasText" [ngClass]="{'active':brushActive && getShouldDraw()}">
+        <i class="fa fa-paint-brush" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-sm" (click)="toggleShouldErase()"
+              title="Brush" *ngIf="drawButtonEnabled && !enableCanvasText" [ngClass]="{'active':enableEraser && getShouldDraw()}">
+        <i class="fa fa-eraser" aria-hidden="true"></i>
+      </button>
+      <div *ngIf="brushActive && !enableCanvasText" class="btn-group mr-2 brushbox" role="group"
+           aria-label="First group">
+        <button type="button" class="btn btn-canvastool  btn-sm">
+          <vd-canvas-brush-toolbar [brushSize]="lineWidth"
+                                   (onBrushToolbarSettingsChange)="onBrushToolbarSettingsChange($event)"></vd-canvas-brush-toolbar>
+        </button>
+      </div>
+      <button type="button" class="btn btn-default  btn-sm" (click)="canvasTextClick()" title="Text">
+        <i class="fa fa-font" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="btn-group mr-2" role="group" aria-label="Second group">
+      <button type="button" class="btn btn-default  btn-sm" (click)="undoLocal()" title="{{undoButtonText}}"
+              *ngIf="undoButtonEnabled && !enableCanvasText">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-sm" (click)="redoLocal()" title="{{redoButtonText}}"
+              *ngIf="redoButtonEnabled && !enableCanvasText">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn btn-default btn-sm" (click)="clearCanvasLocal()" title="{{clearButtonText}}"
+              *ngIf="clearButtonEnabled && !enableCanvasText">
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Forth group">
+      <button type="button" class="btn btn-default btn-sm" (click)="saveLocal()" title="{{saveDataButtonText}}"
+              *ngIf="saveDataButtonEnabled && !enableCanvasText">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div class="canvas_wrapper">
+  <div class="canvas_body" [class.collab]="isCollab">
+    <canvas #canvas (mousedown)="canvasUserEvents($event)" (mouseup)="canvasUserEvents($event)" (mousemove)="canvasUserEvents($event)"
+            (mouseout)="canvasUserEvents($event)" (touchstart)="canvasUserEvents($event)" (touchmove)="canvasUserEvents($event)"
+            (touchend)="canvasUserEvents($event)" (touchcancel)="canvasUserEvents($event)">
+    </canvas>
+  </div>
+</div>

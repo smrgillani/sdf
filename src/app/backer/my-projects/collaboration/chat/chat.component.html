@@ -1,0 +1,65 @@
+<aside
+  #process_details
+  class="process_details"
+  [class.closed]="isProcessesOpen"
+  [class.mobile_open]="activeMobileView === 'chat'"
+  [style.width.px]="chatWidth"
+>
+  <app-element-resize class="resize-trigger" [externalSize]="chatWidth" (sizeChanged)="setChatWidth($event)"
+                   (resizeBegin)="fixChatWidth()" (resizeEnd)="fixChatWidth($event)"></app-element-resize>
+
+  <div class="chatwrap">
+    <div class="switcher">
+      <div class="open-chat" [class.hidden]="isChatOpen" (click)="openChat()">Go to
+        <b>Discussion &rarr;</b>
+      </div>
+
+      <div class="open-details" [class.hidden]="!isChatOpen" (click)="isChatOpen = !isChatOpen">
+        <b>&larr;</b> Back to
+        <b>Details</b>
+      </div>
+    </div>
+
+    <div class="top-bar">
+      <div class="btn videocall-btn" (click)="startVideoCall()"></div>
+      <app-chat-filters *ngIf="isChatOpen" (filtersChanged)="onChatFiltersChanged($event)"></app-chat-filters>
+    </div>
+
+    <div class="details" [class.open]="!isChatOpen" [class.open]="activeMobileView === 'details'">
+      <h4>Details</h4>
+      <div class="users">
+        <a href="#" (click)="$event.preventDefault()" *ngFor="let user of users">
+          <img *ngIf="user.photo_crop" src="{{user.photo_crop}}" alt="">
+        </a>
+      </div>
+      <app-chat-participants *ngIf="process.participants" [process]="process" showActivity="false"></app-chat-participants>
+
+      <!-- <div class="details-text">
+        <p>Photographs are a way of preserving a moment in our lives for the rest of our lives.</p>
+      </div> -->
+
+      <div class="details-date">
+        <b>Due on</b>{{process.due_date | date: 'MMM dd, yyyy HH:mm'}}
+      </div>
+
+      <div class="details-rules">
+        <h4>Rules</h4>
+        <ul *ngIf="process.rules && process.rules.length > 0">
+          <li *ngFor="let rule of process?.rules">{{rule.title}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chat" [class.open]="isChatOpen" [class.open]="activeMobileView === 'chat'">
+      <div class="chat-section">
+        <app-chat-messages-list
+          class="chat-messages-list"
+          *ngIf="chatRoom"
+          [overDoubleWidth]="chatWidth >= 600"
+          [chatRoom]="chatRoom"
+          [isChatOpen]="isChatOpen"
+        ></app-chat-messages-list>
+      </div>
+    </div>
+  </div>
+</aside>

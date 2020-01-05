@@ -1,0 +1,18 @@
+<div
+  class="trigger"
+  (mousedown)="beginResize($event)"
+  (touchstart)="beginResizeTouch()"
+  (touchmove)="resizeTouch($event)"
+  (touchend)="endResize()"
+  (touchcancel)="endResize(false)"
+>
+  <i class="icomoon icon-menu2" [class.vertical]="isVertical"></i>
+</div>
+
+<div
+  class="trigger-overlay"
+  [class.open]="isMouseDown && !isTouch"
+  (mousemove)="resize($event)"
+  (mouseup)="endResize()"
+  (mouseleave)="endResize(false)"
+></div>

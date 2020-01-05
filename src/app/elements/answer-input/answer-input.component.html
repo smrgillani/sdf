@@ -1,0 +1,265 @@
+<!--suppress XmlDuplicatedId -->
+<div [ngSwitch]="getCardType()">
+  <div *ngSwitchCase="'text-multiline'">
+    <textarea
+      *ngIf="!isViewOnly"
+      rows="5"
+      class="form-control"
+      [(ngModel)]="question.answer"
+      id="input-{{question.pk}}"
+    ></textarea>
+
+    <p *ngIf="!isViewOnly">SHIFT+ENTER to make a line break</p>
+    <p *ngIf="isViewOnly">{{question.answer}}</p>
+  </div>
+
+  <div *ngSwitchCase="'text-number'">
+    <input *ngIf="!isViewOnly" type="number" class="form-control" [(ngModel)]="question.answer" id="input-{{question.pk}}"/>
+    <p *ngIf="isViewOnly">{{question.answer}}</p>
+  </div>
+
+  <div *ngSwitchCase="'text-email'">
+    <input *ngIf="!isViewOnly" type="email" class="form-control" [(ngModel)]="question.answer" id="input-{{question.pk}}"/>
+    <p *ngIf="isViewOnly">{{question.answer}}</p>
+  </div>
+
+  <div *ngSwitchCase="'text-tel'">
+    <input *ngIf="!isViewOnly" type="tel" class="form-control" [(ngModel)]="question.answer" id="input-{{question.pk}}"/>
+    <p *ngIf="isViewOnly">{{question.answer}}</p>
+  </div>
+
+  <div *ngSwitchCase="'text'">
+    <!--<input type="text" class="form-control" [(ngModel)]="question.answer.response_text" (blur)="onBlur.emit()" id="input-{{question.pk}}" />-->
+    <textarea
+      *ngIf="!isViewOnly"
+      id="input-{{question.pk}}"
+      class="form-control"
+      [(ngModel)]="question.answer.response_text"
+      (blur)="onBlur.emit()"
+      (keydown)="changeHeight()"
+    ></textarea>
+    {{updateHeight()}}
+    <p *ngIf="isViewOnly">{{question.answer.response_text}}</p>
+  </div>
+
+  <div *ngSwitchCase="'list'">
+    <!-- <pre>{{question.option_list |json}}</pre> -->
+    <p-dropdown
+      [options]="question.vals | formatSelectItem:'id':'value'"
+      [(ngModel)]="question.answer.option_id"
+      [lazy]="true"
+      [filter]="true"
+      placeholder="Please Select"
+      (ngModelChange)="onBlur.emit()"
+      [appendTo]="body"
+      [disabled]="isViewOnly"
+    ></p-dropdown>
+  </div>
+
+  <div *ngSwitchCase="'date'">
+    <app-date-input [(date)]="date" (dateChange)="onDateChange($event)"></app-date-input>
+  </div>
+
+  <div *ngSwitchCase="'ppt'" class="idea_files nobg">
+    <app-file-droppa
+      *ngIf="!isViewOnly"
+      id="input-{{question.pk}}"
+      [dropZoneTemplate]="dropZoneFileTemplate"
+      [url]=""
+      [multiple]="false"
+      [autoUpload]="false"
+      [showFilesList]="false"
+      (filesUpdated)="filesUpdated($event)"
+      [openTriggerId]="'droppa-' + question.pk"
+    >
+      <span *ngIf="question.answer.powerpoint" (click)="removeFile()" class="remove-image-icon"></span>
+      <p class="dropzone-help-text">Drop your PPT(x) file to the file area</p>
+      <div class="profile-buttons">
+        <div class="trigger" id="droppa-{{question.pk}}">
+          <!-- <span class="icon upload"></span>Upload <br> new file -->
+        </div>
+      </div>
+    </app-file-droppa>
+
+    <span *ngIf="isViewOnly">
+        <a *ngIf="question.answer.powerpoint" [href]="question.answer.powerpoint" target="_blank">Presentation</a>
+        <p *ngIf="!question.answer.powerpoint">Presentation not added</p>
+    </span>
+  </div>
+
+  <div *ngSwitchCase="'image'" class="idea_files inline-div">
+    <app-upload-capture-image
+      *ngIf="!isViewOnly"
+      [withFileDroppa]="true"
+      [imageSrc]="question.answer.image"
+      [dropTriggerId]="'droppa-' + question.pk"
+      (filechanged)="imageChangeListener($event)"
+    ></app-upload-capture-image>
+
+    <p class="image_answer" *ngIf="isViewOnly">
+      <img [src]="question.answer.image" alt="">
+    </p>
+  </div>
+
+  <div *ngSwitchCase="'doc_drawing'">
+    <app-vd-canvas
+        #vdCanvas
+        [options]="canvasOptions"
+        [viewOnly]="isViewOnly"
+        (onSave)="onCanvasSave($event)"
+        [(ngModel)]="question.answer.diagram"
+    ></app-vd-canvas>
+  </div>
+
+  <div *ngSwitchCase="'diagram'">
+    <app-edit-drawing
+      id="input-{{question.pk}}"
+      class="doc_drawing"
+      [enabled]="!isViewOnly"
+      [(ngModel)]="question.answer.response_text"
+      (forceSave)="onForceSave()"
+    ></app-edit-drawing>
+  </div>
+
+  <div *ngSwitchCase="'doc_spreadsheet'" class="spreadsheet">
+    <app-spreadsheet
+      id="input-{{question.pk}}"
+      class="doc_spreadsheet"
+      [isReadOnly]="isViewOnly"
+      [(ngModel)]="question.answer.spreadsheet"
+    ></app-spreadsheet>
+  </div>
+
+  <ul *ngSwitchCase="'radio'" class="radiogroup">
+    <li class="" *ngFor="let val of question.vals; let subindex = index; trackBy: trackByIndex;">
+      <label class="custom-control custom-radio">
+        <input
+          type="radio"
+          attr.name="radioGroup{{question.pk}}"
+          name="radioGroup{{question.pk}}"
+          (ngModelChange)="onBlur.emit()"
+          class="custom-control-input"
+          [(ngModel)]="question.answer.radio"
+          [value]="val.id"
+          [disabled]="isViewOnly"
+        >
+
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{val.value}}</span>
+      </label>
+    </li>
+  </ul>
+
+  <ul *ngSwitchCase="'boolean'" class="radiogroup">
+    <li class="">
+      <label class="custom-control custom-radio">
+        <input
+          type="radio"
+          attr.name="radioGroup{{question.pk}}"
+          name="radioGroup{{question.pk}}"
+          (ngModelChange)="onBlur.emit()"
+          class="custom-control-input" [(ngModel)]="question.answer.boolean_text"
+          [value]="true"
+          [disabled]="isViewOnly"
+        >
+
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Yes</span>
+      </label>
+    </li>
+    <li class="">
+      <label class="custom-control custom-radio">
+        <input
+          type="radio"
+          attr.name="radioGroup{{question.pk}}"
+          name="radioGroup{{question.pk}}"
+          (ngModelChange)="onBlur.emit()"
+          class="custom-control-input"
+          [(ngModel)]="question.answer.boolean_text"
+          [value]="false"
+          [disabled]="isViewOnly"
+        >
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">No</span>
+      </label>
+    </li>
+  </ul>
+
+  <ul *ngSwitchCase="'checkbox'" class="radiogroup">
+    <li class="" *ngFor="let val of question.vals; let subindex = index; trackBy: trackByIndex;">
+      <label class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          [disabled]="isViewOnly"
+          (click)="chooseCheckbox(val, $event.target.checked)"
+          [checked]="val.checked"
+        >
+
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{val.value}}</span>
+      </label>
+    </li>
+  </ul>
+
+  <div *ngSwitchCase="'swot'" class="swot_analysis">
+    <app-swot-analysis
+      [isViewOnly]="isViewOnly"
+      [(ngModel)]="question.answer.swot_answer"
+      [isSummary]="isSummary"
+      (ngModelChange)="onSwotDataChange()"
+    ></app-swot-analysis>
+  </div>
+
+  <div *ngSwitchCase="'productcomp'" class="searchinput">
+    <app-search-product
+      [readOnly]="isViewOnly"
+      id="input-{{question.pk}}"
+      [(ngModel)]="question.answer.productcompare_answer"
+      (ngModelChange)="onProductChange()"
+    ></app-search-product>
+    <!-- <div class="searchwith radiogroup">
+      <h3>Search with </h3>
+      <label class="custom-control custom-radio">
+        <input type="radio" [(ngModel)]="question.answer.answer_type" (change)="checkTypeChange()" class="custom-control-input" attr.name="radioGroup{{question.pk}}" name="radioGroup{{question.pk}}" value="company">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Company</span>
+      </label>
+
+      <label class="custom-control custom-radio">
+        <input type="radio" [(ngModel)]="question.answer.answer_type" (change)="checkTypeChange()" attr.name="radioGroup{{question.pk}}" name="radioGroup{{question.pk}}" class="custom-control-input" value="product">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Product</span>
+      </label>
+    </div>
+    <app-search-product *ngIf="question.answer.answer_type === 'product'; else compserch" id="input-{{question.pk}}" [(ngModel)]="question.answer.productcompare_answer" (ngModelChange)="onProductChange($event)"></app-search-product>
+    <ng-template #compserch>
+      <app-search-company-compare *ngIf="question.answer.answer_type === 'company'" id="input-{{question.pk}}" [(ngModel)]="question.answer.productcompare_answer" (ngModelChange)="onProductChange($event)"></app-search-company-compare>
+    </ng-template>     -->
+  </div>
+
+  <div *ngSwitchCase="'companycomp'" class="searchinput">
+    <app-search-company-compare
+      [readOnly]="isViewOnly"
+      id="input-{{question.pk}}"
+      [(ngModel)]="question.answer.productcompare_answer"
+      (ngModelChange)="onProductChange()"
+    ></app-search-company-compare>
+  </div>
+
+  <div *ngSwitchCase="'ocr'" class="">
+    <app-ocr-input
+      [viewOnly]="isViewOnly"
+      id="input-{{question.pk}}"
+      [(ngModel)]="question.answer.ocr"
+      (ngModelChange)="onOcrDataChange()"
+      [isWorkArea]="false"
+    ></app-ocr-input>
+  </div>
+
+  <div *ngSwitchDefault>
+    <div id="input-{{question.pk}}">
+      Sorry, but question type '{{question.question_type}}' is not implemented yet.
+    </div>
+  </div>
+</div>

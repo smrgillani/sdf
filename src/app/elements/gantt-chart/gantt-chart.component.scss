@@ -1,0 +1,60 @@
+.gantt-chart-body {
+  margin-left: 24px;
+  margin-right: 24px;
+  overflow-x: auto;
+  position: relative;
+  background-color: #ffffff;
+  padding-bottom: 15px;
+
+  .day-cursor {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: #FF6C24;
+    z-index: 1000;
+  }
+
+  &.dragging {
+    cursor: move;
+  }
+}
+
+.work-sequence {
+  position: relative;
+  height: 65px;
+  display: flex;
+  align-items: center;
+
+  .work {
+    position: absolute;
+  }
+
+  .work-separator {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-bottom: 1px dashed #DDDDDD;
+  }
+}
+
+.gantt-chart-x-labels {
+  position: relative;
+  height: 29px;
+  display: flex;
+  align-items: center;
+
+  .x-label {
+    position: absolute;
+    color: #666666;
+    font-size: 14px;
+    line-height: 17px;
+    white-space: nowrap;
+  }
+
+  .x-labels-separator {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border-bottom: 1px solid #DDDDDD;
+  }
+}

@@ -1,0 +1,89 @@
+<!-- <div class="projects-filter">
+  <select class="form-control">
+    <option value="">All</option>
+  </select>
+</div> -->
+
+<div class="projects-search">
+  <div class="search-icon"></div>
+  <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()"/>
+</div>
+
+<div class=" table-responsive">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Company</th>
+      <th>Project</th>
+      <th>Process worked on</th>
+      <th>Start Date</th>
+      <th>End date</th>
+      <th>Hours invested</th>
+      <th>Bonus</th>
+      <th>Payment Received</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- <tr>
+      <td>Skaters</td>
+      <td>Skateboard.com</td>
+      <td>UI Design</td>
+      <td>Dec 27, 2017</td>
+      <td>Dec 30, 2017</td>
+      <td>24</td>
+      <td>$500</td>
+      <td>$2000</td>
+      <td>
+        <button class="button blue">Resolve</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Skaters</td>
+      <td>Skateboard.com</td>
+      <td>UI Design</td>
+      <td>Dec 27, 2017</td>
+      <td>Dec 30, 2017</td>
+      <td>24</td>
+      <td>$500</td>
+      <td>$2000</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Skaters</td>
+      <td>Skateboard.com</td>
+      <td>UI Design</td>
+      <td>Dec 27, 2017</td>
+      <td>Dec 30, 2017</td>
+      <td>24</td>
+      <td>$500</td>
+      <td>$2000</td>
+      <td></td>
+    </tr> -->
+    <tr *ngFor="let project of projectList">
+      <td>{{project.owner.name}}</td>
+      <td>{{project.title}}</td>
+      <td>{{project.process}}</td>
+      <td>{{project.date_start}}</td>
+      <td>{{project.date_end}}</td>
+      <td>{{project.hours}}</td>
+      <td>{{project.bonus}}</td>
+      <td>{{project.recived_payment}}</td>
+      <td>
+        <div class="project-actions">
+          <div class="btn-border skyblue" (click)="metrics(project.id)">
+            <div class="btn skyblue-btn">Metrics</div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-pagination
+  class="my-pagination"
+  [pageSize]="pageSize"
+  [pagesQuantity]="count"
+  (pageChanged)="getOngoingProjects($event)"
+></app-pagination>

@@ -1,0 +1,230 @@
+<app-header class="position-static" (onBackClicked)="onBack()"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Bank Accounts</h1>
+    </div>
+    <div class="cardwrap">
+      <div class="form-group">
+        <div class="row" myMatchHeight="cards">
+          <div class="col-md-6 offercardwrap" *ngFor="let item of bankAccountInfoList">
+            <div class="offercard">
+              <h2 class="bankname">{{item.bank_name}}</h2>
+              <table>
+                <tr>
+                  <td>
+                    <label>IBAN:</label>
+                  </td>
+                  <td>
+                    <span>{{item.iban}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Account Holder Name:</label>
+                  </td>
+                  <td>
+                    <span>{{item.account_holder}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Branch Address:</label>
+                  </td>
+                  <td>
+                    <span>{{item.branch_address}}</span>
+                  </td>
+                </tr>
+
+              </table>
+              <div class="btnwrap">
+                <button type="text" class="btn skyblue" (click)="editBankAccount(item)">
+                  <span class="icomoon icon-draw"></span>
+                </button>
+                <button type="text" class="btn red" (click)="deleteBankAccount(item)">
+                  <span class="icomoon icon-delete_btn"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="updateMode">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name of Bank</label>
+              <input type="text" class="form-control" readonly value="{{bankAccountInfo.bank_name}}">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Holder Name</label>
+              <input type="text" class="form-control" readonly value="{{bankAccountInfo.account_holder}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Type</label>
+              <input type="text" class="form-control" readonly value="{{bankAccountInfo.account_type}}">
+            </div>
+          </div>
+        </div>
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="cancel()">Cancel</button>
+          <input *ngIf="updateMode" type="button" linkInitialize [userToken]="publicToken" class="saffron_btn orange_btn" id="link-button"
+            value="Update Plaid Account" (successEvent)="callbackSuccess($event)">
+        </div>
+      </div>
+
+      <!-- <div class="row" *ngIf="!addManually && !updateMode">
+        <div class="col-6 text-right">
+          <input type="button" linkInitialize class="saffron_btn orange_btn" id="link-button" value="Add Account with Plaid" (successEvent)="callbackSuccess($event)">
+        </div>
+        <div class="col-6 text-left">
+          <input type="button" class="saffron_btn skyblue_btn pull-left" value="Add Account Manually" (click)="addManually = true">
+        </div>
+      </div> -->
+
+      <div class="post-buttons text-center" *ngIf="!addManually && !updateMode">
+        <input type="button" linkInitialize class="saffron_btn orange_btn" id="link-button" value="Add Account with Plaid" (successEvent)="callbackSuccess($event)">
+        <input type="button" class="saffron_btn skyblue_btn" value="Add Account Manually" (click)="addManually = true">
+
+      </div>
+
+
+      <form *ngIf="addManually" name="form" (ngSubmit)="f.form.valid && saveBankInfo(f)" #f="ngForm" novalidate>
+        <input type="hidden" [(ngModel)]="bankAccountInfo.id" name="bankId" #bankId="ngModel">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name of Bank</label>
+              <!-- <input type="text" class="form-control"> -->
+              <p-dropdown class="form-control" [options]="bankInfoList" [(ngModel)]="bankAccountInfo.bank" name="bank" #bank="ngModel"
+                placeholder="-- Select --" required></p-dropdown>
+              <div *ngIf="f.submitted && bank.errors?.required" class="errorwrap">Name of Bank is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Type</label>
+              <p-dropdown class="form-control" placeholder="-- Select --" [options]="accountTypeList" [(ngModel)]="bankAccountInfo.account_type"
+                name="account_type" #account_type="ngModel" required></p-dropdown>
+              <div *ngIf="f.submitted && account_type.errors?.required" class="errorwrap">Account type is required</div>
+              <div *ngIf="f.submitted && account_type.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['account_type'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Routing Number</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.routing_number" name="routing_number" #routing_number="ngModel"
+                required>
+              <div *ngIf="f.submitted && routing_number.errors?.required" class="errorwrap">Routing Number is required</div>
+              <div *ngIf="f.submitted && routing_number.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['routing_number'][0]}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Number</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.bank_account_no" name="bank_account_no" #bank_account_no="ngModel"
+                required>
+              <div *ngIf="f.submitted && bank_account_no.errors?.required" class="errorwrap">Account Number required</div>
+              <div *ngIf="f.submitted && bank_account_no.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['bank_account_no'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>IBAN</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.iban" name="iban" #ibna="ngModel" required>
+              <div *ngIf="f.submitted && ibna.errors?.required" class="errorwrap">Name of Bank is required</div>
+              <div *ngIf="f.submitted && ibna.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['iban'][0]}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Holder Name</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.account_holder" name="account_holder" #account_holder="ngModel"
+                required>
+              <div *ngIf="f.submitted && account_holder.errors?.required" class="errorwrap">Account holderis required</div>
+              <div *ngIf="f.submitted && account_holder.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['account_holder'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Branch Identifier</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.branch_identifier" name="branch_identifier" #branch_identifier="ngModel"
+                required>
+              <div *ngIf="f.submitted && branch_identifier.errors?.required" class="errorwrap">Branch Identifier is required</div>
+              <div *ngIf="f.submitted && branch_identifier.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['branch_identifier'][0]}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Branch Address</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.branch_address" name="branch_address" #branch_address="ngModel"
+                required>
+              <div *ngIf="f.submitted && branch_address.errors?.required" class="errorwrap">Branch Address is required</div>
+              <div *ngIf="f.submitted && branch_address.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['branch_address'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Currency</label>
+              <p-dropdown class="form-control" [options]="currencyList" [(ngModel)]="bankAccountInfo.currency" name="currency" #currency="ngModel"
+                placeholder="-- Select --" [lazy]="true" [filter]="true" required></p-dropdown>
+              <div *ngIf="f.submitted && currency.errors?.required" class="errorwrap">Currency is required</div>
+              <div *ngIf="f.submitted && currency.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['currency'][0]}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Code, If any</label>
+              <input type="text" class="form-control" [(ngModel)]="bankAccountInfo.bank_code" name="bank_code" #bank_code="ngModel">
+              <div *ngIf="f.submitted && bank_code.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['bank_code'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group private-question">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [(ngModel)]="bankAccountInfo.is_default" name="is_default"
+                  #is_default="ngModel">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Make default</span>
+                <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+
+          </div>
+        </div>
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="cancelManual(f)">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" type="submit">Add Bank Details</button>
+        </div>
+      </form>
+      <div *ngFor="let errors of serverSideErrors">
+        <div *ngIf="isArray(errors); else nonArray">
+          <div *ngFor="let msg of errors.non_field_errors">
+            <div class="errorwrap">{{msg}}</div>
+          </div>
+        </div>
+        <ng-template #nonArray>
+          <div class="errorwrap">{{errors}}</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,40 @@
+<div class="callscr bg-gradient" [ngClass]="{'active': isCallStarted}">
+  <div class="callerInfo">
+    <div class="callerpic"></div>
+
+    <h5>{{callData.incomingMessage}}</h5>
+
+    <div class="call_btns">
+      <button class="btn recording" *ngIf="isCallStarted && !isRecordingStart" (click)="startRecording()" title="Start Recording">
+        <i class="icon-film" aria-hidden="true"></i>
+      </button>
+
+      <button class="btn recordingstop" *ngIf="isCallStarted && isRecordingStart" (click)="stopRecording()" title="End Recording">
+        <i class="icon-film" aria-hidden="true"></i>
+      </button>
+
+      <button class="btn screenshare" *ngIf="isCallStarted && !isScreenShareStart" (click)="startScreenShare()" title="Start Sceen Sharing">
+        <i class="icon-flatscreen-tv" aria-hidden="true"></i>
+      </button>
+
+      <button class="btn screensharestop" *ngIf="isCallStarted && isScreenShareStart" (click)="stopScreenShare()" title="End Sceen Sharing">
+        <i class="icon-flatscreen-tv" aria-hidden="true"></i>
+      </button>
+
+      <button class="btn startcall" *ngIf="!isCallStarted" (click)="startCall()" title="Start Call">
+        <i class="icon-end-call-button" aria-hidden="true"></i>
+      </button>
+
+      <button class="btn endcall" *ngIf="isCallStarted" (click)="endCall()" title="End Call">
+        <i class="icon-end-call-button" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div id="videos" *ngIf="isCallStarted">
+    <div id="subscriber"></div>
+    <div id="screen-publisher"></div>
+    <div id="publisher"></div>
+    <div id="screen-subscriber"></div>
+  </div>
+</div>

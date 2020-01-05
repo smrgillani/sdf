@@ -1,0 +1,130 @@
+$bg-color: #4342e6;
+$bg-color-2: #f9f5f0;
+$header-height: 270px;
+
+.container-fluid {
+  // background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 300px, $bg-color-2 300px, $bg-color-2 100%);
+  background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat;
+  background-size: 100% 255px;
+}
+
+
+.container-main::after {
+  border-color: #333;
+}
+
+.container-header {
+  position: absolute;
+  top: 60px;
+  height: 165px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sectionheadings {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.hero-title {
+  letter-spacing: 0;
+}
+
+app-idea-qa {
+  width: 100%;
+  position: absolute;
+  top: 225px;
+  bottom: 0;
+  left: 0;
+}
+
+app-registration-qa {
+  width: 100%;
+  position: absolute;
+  top: 275px;
+  bottom: 0;
+  left: 0;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .sectionheadings {
+    width: calc(100% - 48px);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  app-idea-qa {
+    top: 170px;
+  }
+
+  .container-fluid {
+    // background: linear-gradient(#4342E6, #4342E6 229px, #f9f5f0 229px, #f9f5f0 100%);
+    // background: -webkit-linear-gradient(top, #4342E6, #4342E6 79%, #f9f5f0 78%, #f9f5f0 100%);
+    background-size: 100% 185px;
+  }
+  .container-header {
+    // width: auto;
+    height: 110px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+    line-height: 37px;
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    line-height: 16px;
+    max-width: 166px;
+    vertical-align: bottom;
+    margin-left: 10px;
+    font-weight: normal;
+    display: none !important;
+  }
+}
+
+
+app-header {
+  position: absolute;
+}
+
+/** New Styles */
+@media only screen and (max-width: 991px) {
+  .container-header {
+    height: 150px;
+  }
+
+  .container-fluid {
+    background-size: 100% 242px;
+  }
+
+  app-idea-qa {
+    top: 212px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .container-header {
+    height: 110px;
+  }
+
+  .container-fluid {
+    background-size: 100% 183px;
+  }
+
+  app-idea-qa {
+    top: 168px;
+  }
+}
+
+@media only screen and (max-width: 311px) {
+  app-founder-idea-bubble-toolbar /deep/ .bubbles .bubble:last-child {
+    margin-top: 0;
+  }
+}

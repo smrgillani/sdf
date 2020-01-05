@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="23px" viewBox="0 0 18 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>docs copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Process" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Messenger-Create-New-Doc" transform="translate(-915.000000, -545.000000)" fill-rule="nonzero" fill="#4342E6">
+            <g id="docs-copy" transform="translate(915.000000, 545.000000)">
+                <polygon id="Shape" points="11.9902836 0.438044776 11.9902836 5.98052239 17.5327612 5.98052239"></polygon>
+                <path d="M11.2427015,7.47568657 C10.83,7.47568657 10.4951194,7.14080597 10.4951194,6.72810448 L10.4951194,0 L0.776776119,0 C0.364074627,0 0.0291940299,0.334880597 0.0291940299,0.74758209 L0.0291940299,22.1778358 C0.0291940299,22.5905373 0.364074627,22.9254179 0.776776119,22.9254179 L17.2232239,22.9254179 C17.6359254,22.9254179 17.970806,22.5905373 17.970806,22.1778358 L17.970806,7.47568657 L11.2427015,7.47568657 Z M2,9 L16,9 L16,13 L2,13 L2,9 Z M3,18 L8,18 L8,20 L3,20 L3,18 Z M10,18 L15,18 L15,20 L10,20 L10,18 Z M8.5,13 L9.5,13 L9.5,15 L8.5,15 L8.5,13 Z M5,15 L13,15 L13,16 L5,16 L5,15 Z M5,16 L6,16 L6,18 L5,18 L5,16 Z M12,16 L13,16 L13,18 L12,18 L12,16 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,48 @@
+<div class="container-fluid overview-component saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border overviewidea">
+      <app-header (onBackClicked)="onBack()"></app-header>
+      <div class="container-header">
+        <h1 class="hero-title">IDEA REALISATION</h1>
+        <h3 class="hero-subtitle">Firstly, we need to express this idea use our tools to help you do so. They
+          will take you through a process that help you explain, define, and refine it.</h3>
+      </div>
+
+      <div class="container-buttons">
+        <div *ngFor="let stage of stages;  let i = index" class="container-button {{stage.enabled? 'selector' : ''}}"
+             (shown)="ideaPopover.closePopoverpWithDelay(5000, stagePopover, 'stageTimer-' + stage.title)"
+             [triggers]="'none'"
+             [container]="'body'"
+             [ngbPopover]="stagePopoverTemplate"
+             #stagePopover="ngbPopover"
+             appPopoverAutoPosition [popOverName]="stagePopover"
+             [placement]="{desktop:'bottom', tablet:'bottom', mobile:'none'}"
+             (click)="navigateToIfComplete(stage, i, stagePopover)">
+          <div class="button-icon {{stage.state.done ? 'bg-checked' : stage.icon}}"></div>
+          <div class="caption {{stage.enabled ? '' : 'disabled'}}">{{stage.title}}</div>
+
+          <ng-template #stagePopoverTemplate>
+            <div class="message">
+              Please complete the
+              <span class="text-capitalize">"{{ideaPopover.uncompletedStage}}"</span>
+              before you go next.
+            </div>
+            <div class="buttons">
+              <div class="btn btn-ok" (click)="stagePopover.close()">Ok</div>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="container-button">
+          <div class="button-icon bg-next"
+               [class.done]="done"
+               (click)="nextStage()"></div>
+          <div class="caption next"
+               [class.done]="done"
+               (click)="nextStage()">Next Stage
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.saffron_btn {
+    font-size: 1.125em;
+    padding: 0.167em 1em;
+}
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  
+    h1 {
+      color: #2929e4;
+      font-size: 2.250em;
+      font-weight: 500;
+      line-height: 1.194em;
+      margin: 2px;
+    }
+  
+    
+  }
+main {
+    padding: 0.625em 0 3.750em 0;
+    background-color: #f9f5f0;
+    min-height: calc(100% - 67px);
+}
+.cardwrap {
+    background: #fff;
+    padding: 2.188em  2.500em;
+    margin-bottom: 1.875em;
+}
+.btn_wrap { margin: 1.250em 0; text-align: center; }
+.card { border: 0; padding-bottom: 1.250em;  } 
+.card + .card { border-top:1px solid #e4e4e3;  padding-top: 2.500em;  }
+h2 { color:#4342e6; font-size:1.500em;// 24px;
+ }
+
+ .valuewrap { position: relative;
+    width: calc(100% - 7.25em);
+    top: -2.813em;
+    height: 2.313em;
+    margin-top: -2.313em;}
+.valuewrap span { color:#2c2be5; font-size:1.125em;// 18px; 
+    position: absolute; display: inline-block;   min-width: 3.556em; line-height: 2.056em;     max-width: 7.556em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+.valuewrap .value{
+    left: 60%;    
+    bottom: 100%;
+    margin-left: -2.778em;
+    text-align: center;   color:#4342e6;
+}
+.valuewrap .totalvalue{
+    left: 100%;
+    text-align: right;
+}
+
+.progress{
+    height: 3.083em; width:calc(100% - 10.333em); margin: 3.750em 0; font-size: 0.750em;
+    &.bg-voilet { background: #8583ee; }
+    &.bg-lightvoilet { background: #c8c7f4; }
+    .progress-bar { height: 100%; }
+    .bg-danger { background: #fe5f5b; }
+    .bg-voilet { background: #8583ee; }
+
+}
+
+@media (max-width: 360px){
+    .cardwrap { padding: 2.188em 1.5em; }
+}

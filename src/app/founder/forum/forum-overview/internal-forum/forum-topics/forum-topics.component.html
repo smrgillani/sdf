@@ -1,0 +1,194 @@
+
+  <div class="row topheading">
+      <div class="col-sm-5">
+        <div class="form-group">
+          <p-dropdown class="form-control" [options]="internalCategoryList" optionLabel="name" [(ngModel)]="forumInfoModel.selectedCategoryId"
+            placeholder="Category" (onChange)="onCalegorySelect($event.value)"></p-dropdown>
+        </div>
+      </div>
+     <!--  <div class="col-sm-5">
+
+        <div class="projects-search form-group pull-right">
+          <div class="search-icon"></div>
+          <input class="form-control" type="text" placeholder="Start typing to search" [(ngModel)]="forumInfoModel.searchText" (input)="valueChange()"
+          />
+        </div>
+      </div> -->
+    </div>
+
+
+<div class="cardwrap">
+  <div class="cardheading">
+    <div class="row">
+      <div class="col6">
+        <h3 *ngIf="!topic; else topicName">Topics</h3>
+        <ng-template #topicName>
+          <h3>{{topic}}</h3>
+        </ng-template>
+      </div>
+      <div class="col6">
+        <div class="saffron_btn purple_btn" *ngIf="!threadId; else newThread" [routerLink]="['../../new-thread']">New Thread</div>
+        <ng-template #newThread>
+          <div class="saffron_btn purple_btn" [routerLink]="['../../../new-thread']">New Thread</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="cardbody">
+
+
+    <div class="cardwrapper" *ngIf="threadId">
+      <div class="media">
+        <div class="media-left">
+          <div class="mediaimg">
+            <img class="mr-3" *ngIf="commentsAgainstThread?.image && commentsAgainstThread?.image != null; else showTitle" [src]="commentsAgainstThread?.image">
+          </div>
+        </div>
+        <ng-template #showTitle>
+          <div class="project-title">
+            <div class="project-icon" *ngIf="commentsAgainstThread?.title">{{commentsAgainstThread?.title[0]}}</div>
+          </div>
+        </ng-template>
+        <div class="media-body">
+          <div class="media-body-inner">
+            <div>
+              <h5 class="mt-0">{{commentsAgainstThread?.title}}</h5><a *ngIf="commentsAgainstThread?.is_edit" [routerLink]="['../../../', commentsAgainstThread.id,'update-thread']" class="thread-edit-btn"></a>
+              <div class="action-time">{{commentsAgainstThread?.created_date | formatRelativeTime}}</div>
+              <div [innerHTML]="commentsAgainstThread?.description"></div>
+            </div>
+            <div class="postcounts">
+              <span class="cursor" (click)="replyAgainstThread(commentsAgainstThread?.id)">Reply</span>
+            </div>
+          </div>
+          <div class="reply-items" *ngIf="commentThreadInfoList">
+            <div class="media mt-3" *ngFor="let subItem of commentThreadInfoList">
+              <div class="media-left">
+                <div class="mediaimg">
+                  <img class="mr-3" *ngIf="subItem?.comment_by?.photo_crop && subItem?.comment_by?.photo_crop != null; else showSubTitle" [src]="subItem?.comment_by?.photo_crop">
+                </div>
+              </div>
+              <ng-template #showSubTitle>
+                <div class="project-title">
+                  <div class="project-icon">{{subItem?.comment_by?.first_name[0]}}</div>
+                </div>
+              </ng-template>
+              <div class="media-body">
+                <div class="media-body-inner">
+                  <div>
+                    <h5 class="mt-0">{{subItem?.comment_by?.first_name}} {{subItem?.comment_by?.last_name}}</h5>
+                    <div class="action-time">{{subItem?.created_date | formatRelativeTime}}</div>
+                    <div [innerHTML]="subItem?.text"></div>
+                  </div>
+                  <div class="postcounts">
+                    <span class="cursor" (click)="replyAgainstPost(commentsAgainstThread?.id, subItem?.id)">Reply</span>
+                  </div>
+                </div>
+                <div class="reply-items" *ngIf="subItem?.subcomments">
+                  <div class="media mt-3" *ngFor="let subSubItem of subItem?.subcomments">
+                    <div class="media-left">
+                      <div class="mediaimg">
+                        <img class="mr-3" *ngIf="subSubItem?.comment_by?.photo_crop && subSubItem?.comment_by?.photo_crop != null; else showSubSubTitle"
+                          [src]="subSubItem?.comment_by?.photo_crop">
+                      </div>
+                    </div>
+                    <ng-template #showSubSubTitle>
+                      <div class="project-title">
+                        <div class="project-icon">{{subSubItem?.comment_by?.first_name[0]}}</div>
+                      </div>
+                    </ng-template>
+                    <div class="media-body">
+                      <div class="media-body-inner">
+                        <div>
+                          <h5 class="mt-0">{{subSubItem?.comment_by?.first_name}} {{subSubItem?.comment_by?.last_name}}</h5>
+                          <div class="action-time">{{subSubItem?.created_date | formatRelativeTime}}</div>
+                          <div [innerHTML]="subSubItem?.text"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="document" *ngIf="replyAgainstForumId != 0 && replyAgainstPostId != 0">
+              <app-text-editor [(ngModel)]="description"></app-text-editor>
+              <div class="post-buttons">
+                <button type="button" class="saffron_btn orange_btn" (click)="replyAgainstForumId = 0 && replyAgainstPostId = 0">Cancel</button>
+                <button type="button" class="saffron_btn skyblue_btn" (click)="saveReply()">Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="pull-right">{{commentsAgainstThread?.posts_count}} Posts |
+                <span (click)="replyAgainstThread(commentsAgainstThread?.id)">Reply</span>
+              </div> -->
+      </div>
+      <div class="document" *ngIf="replyAgainstForumId != 0 && replyAgainstPostId == 0">
+        <app-text-editor [(ngModel)]="description"></app-text-editor>
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="replyAgainstForumId = 0 && replyAgainstPostId = 0">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" (click)="saveReply()">Post</button>
+        </div>
+      </div>
+      <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getThreadInfoList($event)"></app-pagination>
+    </div>
+
+
+
+    <div class="cardwrapper" *ngIf="!threadId">
+      <div class="topicwrap" *ngIf="!forumInfoModel.selectedTopicId">
+        <div class="topicbox" *ngFor="let item of forumInfoModel?.topicInfoList">
+          <div class="topicclickbox" (click)="selectedTopic(item.id)">
+            <div class="topicimgbox" [ngStyle]="{'background':item.colortext}">
+              <img [src]="item.image" alt="">
+              <div class="overlaywrap">
+                <div class="topicdetails">
+                  <div class="count">{{item.thread_count}}</div>
+                  <div class="countname">Threads</div>
+                </div>
+                <div class="topicdetails">
+                  <div class="count">{{item.posts_count}}</div>
+                  <div class="countname">Posts</div>
+                </div>
+              </div>
+            </div>
+            <h4>{{item.title}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="media" *ngFor="let item of forumInfoModel?.threadInfoList; let index = index">
+        <div class="media-left">
+          <div class="mediaimg">
+            <img class="mr-3" *ngIf="item?.image && item?.image != null; else showTitle" [src]="item?.image">
+          </div>
+        </div>
+        <ng-template #showTitle>
+          <div class="project-title">
+            <div class="project-icon">{{item?.title[0]}}</div>
+          </div>
+        </ng-template>
+        <div class="media-body" (click)="selectedThreadId(item.id)">
+          <div class="media-body-inner">
+            <div>
+              <h5 class="mt-0">{{item?.title}}</h5>
+              <div class="action-time">{{item?.created_date | formatRelativeTime}}</div>
+              <div [innerHTML]="item?.description"></div>
+            </div>
+            <div class="postcounts">
+              <span>{{item?.posts_count}} Posts</span>
+              <span class="cursor" (click)="replyAgainstThread(item?.id)">Reply</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="document" *ngIf="replyAgainstForumId != 0 && replyAgainstPostId == 0">
+        <app-text-editor [(ngModel)]="description"></app-text-editor>
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="replyAgainstForumId = 0 && replyAgainstPostId = 0">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" (click)="saveReply()">Post</button>
+        </div>
+      </div>
+      <app-pagination *ngIf="!threadId && forumInfoModel.selectedTopicId" class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count"
+        (pageChanged)="getThreadInfoList($event)"></app-pagination>
+    </div>
+  </div>
+</div>

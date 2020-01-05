@@ -1,0 +1,97 @@
+<label class="custom-control lg-checkbox custom-checkbox" *ngIf="!showNextButton">
+    <input type="checkbox" class="custom-control-input" checked disabled>
+    <span class="custom-control-indicator"></span>
+</label>
+<div class="heading">
+    <h1 (click)="isCollapsesplit=togglecollapse(isCollapsesplit)">Split equity with new founders / request to join a startup</h1>
+</div>
+<form [formGroup]="frmFundDetails">
+    <div class="cardwrap" *ngIf="isCollapsesplit">
+            <div class="form-group">
+        <div class="row" myMatchHeight="cards" *ngIf="fundData.company_shares">
+            <div class="col-md-6 offercardwrap" *ngFor="let c of fundData.company_shares; let index = index">
+                <div class="offercard">
+                    <h2>${{c.amount.amount}}</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <label>Role:</label>
+                            </td>
+                            <td>
+                                <span>{{c.roleString}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Percentage:</label>
+                            </td>
+                            <td>
+                                <span>{{c.percentage}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnwrap">
+                        <button type="text" (click)="editData(index)" class="btn skyblue">
+                            <span class="icomoon icon-draw"></span>
+                        </button>
+                        <button type="text" (click)="confirm(index)" class="btn red">
+                            <span class="icomoon icon-delete_btn"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Amount ($)</label>
+                    <!-- <input type="text" class="form-control" formControlName="amount"> -->
+                    <p-spinner size="30" class="form-control" formControlName="amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="amount.errors && (amount.touched || amount.dirty)">
+                        <div class="errorwrap" *ngIf="amount.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="amount.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Role</label>
+                    <p-dropdown class="form-control" [options]="roles" formControlName="role" placeholder="-- Select --"></p-dropdown>
+                    <div class="form-control-feedback" *ngIf="role.errors && (role.touched || role.dirty)">
+                        <div class="errorwrap" *ngIf="role.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Percentage(%) of share</label>
+                    <!-- <input type="text" class="form-control" formControlName="percentage"> -->
+                    <p-spinner size="30" class="form-control" formControlName="percentage"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="percentage.errors && (percentage.touched || percentage.dirty)">
+                        <div class="errorwrap" *ngIf="percentage.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="percentage.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button class="btn btn-link addqualification" type="button" (click)="addMore(false)">
+                        <span class="icomoon icon-add-song"></span>Add More </button>
+                    <button class="btn btn-link reset-qualification" type="button" (click)="resetForm()">
+                        <span class="fa fa-refresh"></span> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <h5>T&Cs</h5>
+        <app-text-editor class="wrappertexteditor" [(ngModel)]="fundData.terms_condition" [ngModelOptions]="{standalone: true}" height="125px"></app-text-editor>
+
+        <div class="post-buttons" *ngIf="showNextButton">
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">{{nextButtonText}}</button>
+        </div>
+    </div>
+</form>

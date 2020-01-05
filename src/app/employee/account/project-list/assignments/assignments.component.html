@@ -1,0 +1,110 @@
+<table class="table table-hover  employee-table">
+  <tbody>
+  <tr *ngFor="let item of orderServiceList">
+    <td>
+      <div class="Employee-title">
+        <div class="employee-name">{{item.title}}</div>
+        <div class="employee-details">
+          <div class="employee_des">Assigned on: {{item.create_date | date:'d MMM yyyy'}}</div>
+          <div class="employee_des">Last action on: {{item.action_date | date:'d MMM yyyy'}}</div>
+          <div class="employee_des" *ngIf="item.expected_complete_date">Expected
+            Complete: {{item.expected_complete_date}}</div>
+          <div class="employee_des">Order no.: {{item.id}}</div>
+          <div class="employee_des" *ngIf="item.extension_status">Extension.: {{item.extension_status}}</div>
+          <div class="text-blue">Amount: ${{item?.employee_amount?.amount || 0}}</div>
+          <div class="text-blue" *ngIf="item.status == 'conflict'">Remark: {{item?.conflict_remark}}</div>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="project-actions">
+        <div class="btn-border blue" [routerLink]="['../',item.id,'assignment-details']">
+          <div class="btn blue-btn">Details</div>
+        </div>
+
+        <div class="btn-border orange" *ngIf="item.status == 'open'" (click)="updateStatus('work', item.id)">
+          <div class="btn orange-btn">Accept</div>
+        </div>
+
+        <div class="btn-border skyblue" *ngIf="item.status == 'open'" (click)="updateStatus('reject', item.id)">
+          <div class="btn skyblue-btn">Reject</div>
+        </div>
+
+        <div
+          class="btn-border orange"
+          *ngIf="item.status != 'open' && (item.sample_attachments && item.sample_attachments.length > 0)"
+          (click)="downloadSample(item.id)"
+        >
+          <div class="btn orange-btn">Review Doc</div>
+        </div>
+
+        <div
+          class="btn-border skyblue"
+          *ngIf="item.status != 'open' && item.status != 'complete'"
+          (click)="showFileDroppa(item.id)"
+        >
+          <div class="btn skyblue-btn">Final Doc</div>
+        </div>
+
+        <div
+          class="btn-border blue"
+          *ngIf="item.status != 'open' && item.status != 'complete'"
+          [routerLink]="['../',item.id,'work-area']"
+        >
+          <div class="btn blue-btn">Work</div>
+        </div>
+
+        <div
+          class="btn-border orange"
+          *ngIf="item.status != 'open' && item.status != 'complete'"
+          (click)="showExtensionPopUp(item)"
+        >
+          <div class="btn orange-btn">Extension</div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="showFD">
+  <h5>For Order {{updateOrderServiceInfo?.id}}</h5>
+  <div class="close" *ngIf='flagResume'>
+    <a (click)="removeID()">
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </a>
+  </div>
+  <app-file-droppa
+    class="pdfwithdoc"
+    id="filedroppatemplate"
+    [dropZoneTemplate]="dropZoneChartTemplate"
+    [url]=""
+    [multiple]="true"
+    [autoUpload]="false"
+    [showFilesList]="true"
+    [beforeAddFile]="beforeAddFile"
+    (filesUpdated)="FilesUpdated($event)"
+    [openTriggerId]="'passportTrigger'"
+  >
+    <div class="profile-buttons">
+      <div class="trigger" id="passportTrigger">
+      </div>
+    </div>
+  </app-file-droppa>
+  <div class="errorwrap" *ngIf="isFileSizeExceed">The file size exceeds the limit.</div>
+
+  <button
+    *ngIf="showFD && updateOrderServiceInfo?.work_documents && updateOrderServiceInfo?.work_documents.length > 0"
+    class="saffron_btn skyblue_btn"
+    (click)="putOrderServiceInfo()"
+  >
+    Save
+  </button>
+</div>
+
+<app-pagination
+  class="my-pagination"
+  [pageSize]="pageSize"
+  [pagesQuantity]="count"
+  (pageChanged)="getOrderServiceList($event)"
+></app-pagination>

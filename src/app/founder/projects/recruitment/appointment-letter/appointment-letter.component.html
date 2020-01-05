@@ -1,0 +1,241 @@
+<form name="form" (ngSubmit)="f.form.valid && sendAppointment()" #f="ngForm" novalidate>
+
+
+  <div class="appoitmentpage saf_blue_theme" #content>
+
+
+    <div *ngIf="!isEmailHide" class="close_popup" (click)="activeModal.dismiss('Cross click')">
+      <i class="icomoon icon-multiply" aria-hidden="true"></i>
+    </div>
+    <div class="conpanyinfo">
+      <div class="companylogo">
+        <img src="/assets/img/company-logo.jpg">
+      </div>
+      <div class="companyname">
+        <h1>{{companyName}}</h1>
+        <span>your slogan or tag line</span>
+      </div>
+    </div>
+    <div class="contactbox">
+      <input type="text" class="form-control" placeholder="(Insert Date)" name="onDate" [(ngModel)]="hireEmployee.onDate" #onDate="ngModel"
+        readonly>
+      <div *ngIf="!isEmailHide"> Email
+        <span>
+          <input type="text" class="form-control" name="email" [(ngModel)]="hireEmployee.creator_email" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+          />
+          <div *ngIf="f.submitted && email.errors?.required" class="errorwrap">Email is required</div>
+          <div *ngIf="email.errors?.pattern && email.touched" class="errorwrap">
+            Invalid Email
+          </div>
+        </span>
+      </div>
+      <div class="mt-20 mb-10">To,</div>
+      <input type="text" class="form-control" placeholder="(Name)" name="name" [(ngModel)]="hireEmployee.name" #name="ngModel"
+        readonly>
+      <input type="text" class="form-control" placeholder="(Address)" name="address" [(ngModel)]="hireEmployee.address" #address="ngModel"
+        readonly>
+      <div>
+        <span [ngClass]="{'sm':hireEmployee.department != undefined && hireEmployee.department.length<20}">{{hireEmployee.address1}}</span>
+      </div>
+      <input type="text" class="form-control" placeholder="(City, State & Zip)" [(ngModel)]="hireEmployee.city || ' '|| hireEmployee.state || ' '|| hireEmployee.zip"
+        name="CityStateZip" #CityStateZip="ngModel" readonly>
+    </div>
+    <div class="text-center heading-text" myEditorabletext="texteditable" style="font-weight: 500; font-size: 24px; margin: 20px 0; text-align:center;">Appointment Letter</div>
+    <div class="appointmentcontent">
+      <div class="personname">Dear
+        <input type="text" class="form-control" placeholder="(Insert Name)" name="name" #name="ngModel" readonly [(ngModel)]="hireEmployee.name">
+      </div>
+
+      <p>Thank you for agreeing to serve as the
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[0] && hireEmployee.workingTitle.length==0" [ngClass]="{'sm':hireEmployee.workingTitle != undefined && hireEmployee.workingTitle.length<20}">
+            <span spellcheck="false" contenteditable="true" #workingTitle (blur)="editablemode[0]=false" [textContent]="hireEmployee.workingTitle"
+              (input)="hireEmployee.workingTitle=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.workingTitle.length>0 || editablemode[0]==true" (click)="togglefocus($event,workingTitle,0)">(Insert Working Title, e.g., director of graduate programs, curriculum coordinator, director of undergraduate advising)</span>
+          <input type="hidden" name="working_Title" #working_Title="ngModel" [(ngModel)]="hireEmployee.workingTitle">
+        </span>
+
+
+
+        for the
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[1] && hireEmployee.department.length==0" [ngClass]="{'sm':hireEmployee.department != undefined && hireEmployee.department.length<20}">
+            <span spellcheck="false" contenteditable="true" #department (blur)="editablemode[1]=false" [textContent]="hireEmployee.department"
+              (input)="hireEmployee.department=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.department.length>0 || editablemode[1]==true" (click)="togglefocus($event,department,1)">(Insert Department)</span>
+          <input type="hidden" name="Department" #Department="ngModel" [(ngModel)]="hireEmployee.department">
+        </span>
+
+        This administrative appointment is your secondary appointment and is on an “at-will” basis, for
+
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[3] && hireEmployee.duration.length==0" [ngClass]="{'sm':hireEmployee.duration != undefined && hireEmployee.duration.length<20}">
+            <span spellcheck="false" contenteditable="true" #duration (blur)="editablemode[3]=false" [textContent]="hireEmployee.duration"
+              (input)="hireEmployee.duration=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.duration.length>0 || editablemode[3]==true" (click)="togglefocus($event,duration,3)">(Insert duration)</span>
+          <input type="hidden" name="Duration" #Duration="ngModel" [(ngModel)]="hireEmployee.duration">
+        </span>
+
+
+
+
+        position, beginning
+
+
+
+
+        <span class="datetimetextbox">
+          <p-calendar class="form-control" [(ngModel)]="hireEmployee.beginningDate" name="beginningDate" #beginningDate="ngModel" [monthNavigator]="true"
+            [yearNavigator]="true" yearRange="1980:2030"></p-calendar>
+
+          <i class="iconmoon icon-menu"></i>
+          <i class="iconmoon icon-close" (click)="hireEmployee.beginningDate=''"></i>
+        </span>
+      </p>
+
+      <p>Your performance and responsibilities will be reviewed periodically according to established university requirements
+        and college/department evaluation criteria.</p>
+
+      <p>As compensation for your responsibilities as the
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[0] && hireEmployee.workingTitle.length==0" [ngClass]="{'sm':hireEmployee.workingTitle != undefined && hireEmployee.workingTitle.length<20}">
+            <span spellcheck="false" contenteditable="true" #workingTitle1 (blur)="editablemode[0]=false" [textContent]="hireEmployee.workingTitle"
+              (input)="hireEmployee.workingTitle=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.workingTitle.length>0 || editablemode[0]==true" (click)="togglefocus($event,workingTitle1,0)">(Insert Working Title)</span>
+          <input type="hidden" name="working_title" #working_title="ngModel" [(ngModel)]="hireEmployee.workingTitle">
+        </span>
+
+
+        , you will receive
+
+
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[4] && hireEmployee.salaryParameters.length==0" [ngClass]="{'sm':hireEmployee.salaryParameters != undefined && hireEmployee.salaryParameters.length<20}">
+            <span spellcheck="false" contenteditable="true" #salaryParameters (blur)="editablemode[4]=false" [textContent]="hireEmployee.salaryParameters"
+              (input)="hireEmployee.salaryParameters=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.salaryParameters.length>0 || editablemode[4]==true" (click)="togglefocus($event,salaryParameters,4)">(salary/hour)</span>
+          <input type="hidden" name="salary_Parameters" #salary_Parameters="ngModel" [(ngModel)]="hireEmployee.salaryParameters">
+        </span>
+
+        for agreed association of
+        
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[5] && hireEmployee.availability.length==0" [ngClass]="{'sm':hireEmployee.availability != undefined && hireEmployee.availability.length<20}">
+            <span spellcheck="false" contenteditable="true" #availability (blur)="editablemode[5]=false" [textContent]="hireEmployee.availability"
+              (input)="hireEmployee.availability=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.availability.length>0 || editablemode[5]==true" (click)="togglefocus($event,availability,5)">(hrs/day)</span>
+          <input type="hidden" name="Availability" #Availability="ngModel" [(ngModel)]="hireEmployee.availability">
+        </span> hrs/day working span.
+        <br>
+
+       
+
+        <p>
+          <strong>Your duties and responsibilities as the
+
+
+            <span>
+              <span class="editabletext" [hidden]="!editablemode[0] && hireEmployee.workingTitle.length==0" [ngClass]="{'sm':hireEmployee.workingTitle != undefined && hireEmployee.workingTitle.length<20}">
+                <span spellcheck="false" contenteditable="true" #workingTitle2 (blur)="editablemode[0]=false" [textContent]="hireEmployee.workingTitle"
+                  (input)="hireEmployee.workingTitle=$event.target.textContent"></span>
+              </span>
+              <span class="editabletext" [hidden]="hireEmployee.workingTitle.length>0 || editablemode[0]==true" (click)="togglefocus($event,workingTitle2,0)">(Insert Working Title)</span>
+              <input type="hidden" name="WorkingTitle" #WorkingTitle="ngModel" [(ngModel)]="hireEmployee.workingTitle">
+            </span>
+
+
+            include:</strong>
+        </p>
+
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[6] && hireEmployee.responsibilities1.length==0" [ngClass]="{'sm':hireEmployee.responsibilities1 != undefined && hireEmployee.responsibilities1.length<20}">
+            <span spellcheck="false" contenteditable="true" (keydown)="maxlength($event,20)" #responsibilities1 (blur)="editablemode[6]=false"
+              [textContent]="hireEmployee.responsibilities1" (input)="hireEmployee.responsibilities1=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.responsibilities1.length>0 || editablemode[6]==true" (click)="togglefocus($event,responsibilities1,6)">(Insert Duties/Responsibilities)</span>
+          <input type="hidden" name="Responsibilities1" #Responsibilities1="ngModel" [(ngModel)]="hireEmployee.responsibilities1">
+        </span>
+
+        <br>
+        
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[7] && hireEmployee.responsibilities2.length==0" [ngClass]="{'sm':hireEmployee.responsibilities2 != undefined && hireEmployee.responsibilities2.length<20}">
+            <span spellcheck="false" contenteditable="true" (keydown)="maxlength($event,20)" #responsibilities2 (blur)="editablemode[7]=false"
+              [textContent]="hireEmployee.responsibilities2" (input)="hireEmployee.responsibilities2=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.responsibilities2.length>0 || editablemode[7]==true" (click)="togglefocus($event,responsibilities2,7)">(Insert Duties/Responsibilities)</span>
+          <input type="hidden" name="Responsibilities2" #Responsibilities2="ngModel" [(ngModel)]="hireEmployee.responsibilities2">
+        </span>
+        <br>
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[8] && hireEmployee.responsibilities3.length==0" [ngClass]="{'sm':hireEmployee.responsibilities3 != undefined && hireEmployee.responsibilities3.length<20}">
+            <span spellcheck="false" contenteditable="true" (keydown)="maxlength($event,20)" #responsibilities3 (blur)="editablemode[8]=false"
+              [textContent]="hireEmployee.responsibilities3" (input)="hireEmployee.responsibilities3=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="hireEmployee.responsibilities3.length>0 || editablemode[8]==true" (click)="togglefocus($event,responsibilities3,8)">(Insert Duties/Responsibilities)</span>
+          <input type="hidden" name="Responsibilities3" #Responsibilities3="ngModel" [(ngModel)]="hireEmployee.responsibilities3">
+        </span>
+        <br>
+
+
+
+
+
+        <p>This letter constitutes the full terms of your assignment as the
+
+          <span>
+            <span class="editabletext" [hidden]="!editablemode[0] && hireEmployee.workingTitle.length==0" [ngClass]="{'sm':hireEmployee.workingTitle != undefined && hireEmployee.workingTitle.length<20}">
+              <span spellcheck="false" contenteditable="true" #workingTitle3 (blur)="editablemode[0]=false" [textContent]="hireEmployee.workingTitle"
+                (input)="hireEmployee.workingTitle=$event.target.textContent"></span>
+            </span>
+            <span class="editabletext" [hidden]="hireEmployee.workingTitle.length>0 || editablemode[0]==true" (click)="togglefocus($event,workingTitle3,0)">(Insert Working Title)</span>
+            <input type="hidden" name="Working_Title" #Working_Title="ngModel" [(ngModel)]="hireEmployee.workingTitle">
+          </span>
+
+
+          and supersedes all other offers, either written or verbal, that may have been made to you. Should you have questions concerning
+          this administrative assignment, please contact me.</p>
+
+        <div>
+          <strong>Regards</strong>
+          <div class="signaturebox">
+            <br>
+            <br>
+            <br>
+
+          </div>
+          <strong>Signature and stamp</strong>
+
+        </div>
+
+        <div>
+
+          <div class="project-actions" *ngIf="!isEmailHide">
+            <div class="btn-border skyblue">
+              <button class="btn skyblue-btn" type="submit">Send</button>
+            </div>
+          </div>
+
+
+        </div>
+    </div>
+  </div>
+
+</form>

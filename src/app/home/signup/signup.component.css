@@ -1,0 +1,129 @@
+@media (min-width: 500px) {
+  .container-title {
+    font-size: 2em;
+    color: #fff
+  }
+
+  .btn {
+    min-width: 140px;
+    height: 40px;
+    margin: 10px;
+  }
+
+  input {
+    width: 250px;
+    height: 40px;
+    margin: 10px;
+  }
+
+  div.separator {
+    background-color: rgba(255, 255, 255, 0.25);
+    width: 400px;
+    height: 1px;
+    margin: 20px;
+  }
+
+  .container-other-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+}
+
+.container-main {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.bg-image {
+  background-image: url('/assets/img/circle1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.container-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/** New Styles */
+:host ::ng-deep app-header .logo {
+  width: 11em;
+}
+
+@media screen and (max-height:600px) {
+  .login-box {
+    margin-top: 45px !important;
+  }
+}
+
+@media screen and (max-height:568px) {
+  .login-box {
+    margin-top: 30px !important;
+  }
+}
+
+.saf_blue_theme .form-group {
+  margin-bottom: 5px;
+}
+
+
+/** Material Form */
+
+.mat-form-field {
+  width: 100%;
+  font-size: 18px;
+  font-family: ProximaNova, sans-serif;
+  font-weight: 400;
+}
+
+.mat-form-field .mat-form-field-underline {
+  height: 2px;
+  background-color: rgb(136, 136, 136);
+  bottom: .8em;
+}
+
+.mat-form-field .mat-form-field-ripple {
+  background-color: #888888;
+}
+
+.mat-form-field mat-placeholder {
+  color: rgb(155, 138, 206);
+}
+
+.mat-form-field .mat-form-field-infix {
+  padding: 0.65em 0;
+}
+
+.mat-form-field input {
+  color:#ffffff;
+  height: initial !important;
+  margin-top: 0;
+}
+
+.mat-form-field .mat-placeholder-required {
+  display:none;
+}
+
+.mat-form-field mat-icon {
+  color:#9988cd;
+}
+
+.mat-form-field .mat-form-field-placeholder {
+  top: 1.3em;
+}
+
+.mat-form-field .mat-input-placeholder-wrapper {
+  top: -.6em;
+}
+
+/** End Material Form */

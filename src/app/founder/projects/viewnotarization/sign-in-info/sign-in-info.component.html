@@ -1,0 +1,72 @@
+<div class="cardbody">
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>First Name </label>
+            <input type="text" class="form-control" value="{{notarizeResponse.first_name}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.last_name}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Address line 1</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.address_line1}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Address line 2</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.address_line2}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>City</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.city}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>State</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.state}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label>Country</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.country}}" readonly>
+        </div>
+    </div>
+    <div class="col-md-5">
+            <div class="form-group">
+                <label>Pin Code</label>
+                <input type="text" class="form-control" value="{{notarizeResponse.pincode}}" readonly>
+            </div>
+        </div>
+
+</div>
+
+
+<div id="filedroppatemplate">
+    <div class="file-list">
+        <div class="file-container" *ngFor="let doc of notarizeResponse.notarised_documents">
+            <div class="flex-block file-preview">
+                <div class="flex-block file-preview-ext ">file</div>
+                <a class="flex-block file-name" href="{{doc.document}}" target="_blank">{{doc.document_name}}</a>
+                <progress class="file-progress" max="100" value="0"></progress>
+            </div>
+            <!-- <div class="file-remove">
+                <span class="remove">
+                    <a href="#"></a>
+                </span>
+            </div>
+            <div class="flex-block">0 Byte</div> -->
+        </div>        
+    </div>
+</div>
+</div>

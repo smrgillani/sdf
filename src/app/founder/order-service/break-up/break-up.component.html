@@ -1,0 +1,37 @@
+<main>
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+    <i class="icomoon icon-multiply" aria-hidden="true"></i>
+  </div>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Break-up</h1>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <div class="cardwrap">
+        <div class="s-box">
+          <div class="s-box-body">
+              <div class="table-responsive">
+            <table class="table">
+              <tbody *ngIf="rateSlabModel.id">
+                <tr>
+                  <td>Subject: {{rateSlabModel?.subject?.title}}</td>
+                  <td>Expertise: {{rateSlabModel?.expertise}}</td>
+                  <td>Extensiveness: {{rateSlabModel?.extensiveness?.title}}</td>
+                </tr>
+                <tr>
+                  <td>Charge Amount: {{rateSlabModel?.fee.amount}}</td>
+                  <td>Commission: {{rateSlabModel?.commission}}%</td>
+                  <td>Total Amount: {{rateSlabModel?.total_amount?.amount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>

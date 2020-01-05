@@ -1,0 +1,299 @@
+@import "../common/styles/version-control";
+
+.wj-flexsheet {
+  height: 400px;
+  background-color: white;
+  // box-shadow: 4px 4px 10px 0px rgba(50, 50, 50, 0.75);
+  // margin-bottom: 12px;
+}
+
+app-spreadsheet {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: block;
+
+  .spreadsheet-panel {
+    position: relative;
+    width: 100%;
+    height: 70px;
+  }
+
+  .spreadsheet {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    .spreadsheet-ok-btn {
+      background-color: #679bf9;
+      width: 130px;
+      min-width: 50px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      border-left: solid 1px rgba(0, 0, 0, 0.05);
+      box-sizing: content-box;
+
+    }
+
+    .spreadsheet-result-show {
+      border-left: solid 1px rgba(0, 0, 0, .2);
+      width: 150px;
+      height: 100%;
+      padding: 5px 10px;
+    }
+
+    .spreadsheet-statusbar-for-sum {
+      display: flex;
+      height: 35px;
+      background: white;
+      position: relative;
+
+      .formula-value {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+
+        input {
+          width: 100%;
+          height: 100%;
+          outline: none;
+          padding: 1px 5px;
+          text-transform: uppercase;
+          border: 0;
+        }
+
+        input:focus {
+          border: 1px solid rgba(102, 149, 243, 0.3);
+        }
+      }
+    }
+
+    .spreadsheet-statusbar-for-import {
+      padding: 9px 0;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+
+      span {
+        margin-bottom: 0;
+        color: #4342e6;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15px;
+      }
+
+      .sheeticon {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        border: solid 1px #4342e6;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0 3px;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .fromLocal {
+        background-image: url('/assets/img/founder/fromLocal.png');
+        background-size: 12px;
+
+      }
+
+      .fromDropbox {
+        background-image: url('/assets/img/founder/fromDropbox.png');
+        background-size: 15px;
+      }
+
+      .fromGoogleDrive {
+        background-image: url('/assets/img/founder/fromGoogleDrive.png');
+        background-size: 15px;
+      }
+
+      .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .box {
+        width: 25px;
+        height: 25px;
+        padding: 0px;
+        margin-left: 10px;
+      }
+
+      .inputfile + label {
+        max-width: 80%;
+        font-size: 1.25rem;
+        /* 20px */
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        display: inline;
+        overflow: hidden;
+
+      }
+
+      .inputfile {
+        display: none;
+      }
+
+    }
+
+    .sum-mark-logo {
+      background: url(/assets/img/founder/summark.svg);
+      width: 40px;
+      height: 100%;
+      background-size: auto 50%;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-right: 1px solid rgba(0, 0, 0, .2);
+      cursor: pointer;
+
+      &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+        transition: background-color 0.5s ease-out;
+      }
+    }
+
+    select {
+      position: absolute;
+      top: 37px;
+      z-index: 99999;
+      width: 130px;
+      padding: 5px;
+      font-size: 0.8rem;
+      outline: none;
+
+      option {
+        padding: 5px;
+      }
+
+      option:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .show-as-block {
+      display: block;
+    }
+
+    .show-as-flex {
+      display: flex;
+    }
+
+    .dropbox-dropin-btn {
+      width: 25px !important;
+      height: 25px !important;
+      overflow: hidden;
+      padding: 1px !important;
+      margin: 0;
+      display: block;
+      position: relative;
+      top: -2px;
+      left: -2px;
+      background: white;
+      border: 0;
+    }
+
+
+    .dropbox-dropin-btn::before {
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      border: solid 1px #4342e6;
+      background-repeat: no-repeat;
+      background-position: center;
+      /* margin: 0 3px; */
+      cursor: pointer;
+      background-image: url(/assets/img/founder/fromDropbox.png);
+      background-size: 15px;
+      top: 0;
+      left: 0;
+      content: '';
+      display: block;
+    }
+
+    .dropin-btn-status {
+      display: none !important;
+    }
+  }
+
+  .spreadsheetcomponent {
+    width: 100%;
+    // height: 100%;
+    position: relative;
+    border: 1px solid #ddd;
+  }
+
+  .flexSheet {
+    // height: 100vh;
+    max-height: 99%;
+    position: relative;
+    top: 0;
+    left: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    overflow: scroll;
+    background-color: #f9f5f0;
+  }
+
+  div[wj-part='tab-holder'] {
+    display: none;
+  }
+
+  .undo-redo-wrapper {
+    width: auto;
+    height: 40px;
+    float: right;
+    margin: 10px;
+    border-radius: 3px;
+    opacity: .9;
+    background-color: #888888;
+
+    button {
+      &:focus {
+        box-shadow: none;
+      }
+
+      cursor: pointer;
+      background-color: transparent;
+      padding: 10px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0 5px;
+
+      &:nth-of-type(1) {
+        background-image: url('/assets/img/undo.png');
+      }
+
+      &:nth-of-type(2) {
+        background-image: url('/assets/img/redo.png');
+      }
+    }
+  }
+
+  @media (max-width: 759px) {
+    .container {
+      padding: 0;
+    }
+  }
+}

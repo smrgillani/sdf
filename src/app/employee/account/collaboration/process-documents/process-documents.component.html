@@ -1,0 +1,19 @@
+<div class="work-timer">
+  <!-- <span class="icon-clock"></span>
+  <button class="saffron_btn blue_btn" (click)="startTimer()" *ngIf="!timerstart">Start Work</button>
+  {{timer}}
+  <button class="saffron_btn orange_btn" (click)="stopTimer()"  *ngIf="timerstart">Stop Work</button> -->
+  <app-screen-recording [taskId]="resourceId()"></app-screen-recording>
+</div>
+<div class="work-timer-error" *ngIf="errorMessage"><span class="errorwrap">{{errorMessage}}</span></div>
+<app-document-explorer
+  *ngIf="process"
+  class="app-document-explorer"
+  [items]="documents | filterDocumentType: process.documentTypeFilter"
+  (open)="openDocument($event)"
+  (export)="exportDocument($event)"
+  (createDocument)="createDocument($event)"
+  (renameDocument)="renameDocument($event.item, $event.name)"
+  (percentageDocument)="percentageDocument($event.item, $event.percentage)"
+  (deleteDocument)="deleteDocument($event)">
+</app-document-explorer>

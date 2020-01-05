@@ -1,0 +1,314 @@
+<div class="scrollbar-container">
+  <div class="profile-subheader container">
+    <div class="profile-buttons">
+      <!-- <a class="fa fa-google-wallet" [routerLink]="['wallet']"></a>
+    <a [routerLink]="['../']" class="decline"></a>
+    <a class="accept"></a> -->
+    </div>
+    <!-- <a [routerLink]="['photo']"
+     class="user-avatar"
+     [class.white]="profile.photo_crop">
+    <img *ngIf="profile.photo_crop"
+         [src]="profile.photo_crop" alt="">
+    <span>
+      Edit
+    </span>
+  </a> -->
+    <!-- <a [routerLink]="['../photo']" class="user-avatar" [class.white]="basicinfo.photo_crop"> -->
+    <a (click)="edit(complexForm.value)" class="user-avatar" [class.white]="basicinfo.photo_crop">
+      <img *ngIf="basicinfo.photo_crop" [src]="basicinfo.photo_crop" alt="">
+      <span>
+        Edit
+      </span>
+    </a>
+  </div>
+  <!-- <form novalidate [formGroup]="forgotForm" (ngSubmit)="resetPassword()" #lForm="ngForm"></form> -->
+  <div class="form-container container">
+    <!-- <form [formGroup]="complexForm" (ngSubmit)="submitBasicInfo(complexForm.value)"> -->
+    <form [formGroup]="complexForm" (ngSubmit)="submitBasicInfo(complexForm.value)">
+      <div class="row form-row">
+        <div class="col-6">
+          <label>First Name*</label>
+          <input type="text" class="form-control" [(formControl)]="complexForm.controls['first_name']" required>  <!-- pattern="^[a-zA-Z0-9. ',-_]+$" -->
+          <div *ngIf="complexForm.controls['first_name'].hasError('required') && complexForm.controls['first_name'].touched" class="errorwrap">First Name is required.</div>
+          <div *ngIf="complexForm.controls['first_name'].hasError('pattern')" class="errorwrap">Alphanumeric characters only.</div>
+          <!-- <div [hidden]="!complexForm.controls['first_name'].hasError('required') && complexForm.controls['first_name'].touched" class="errorwrap">First Name is required.</div>
+        <div [hidden]="!complexForm.controls['first_name'].hasError('pattern')" class="errorwrap">Alphanumeric characters only.</div> -->
+          <!-- <div class="error" *ngIf="basicinfo.first_name.touched && basicinfo.first_name.invalid">Enter alpha characters name!</div> -->
+        </div>
+        <div class="col-6">
+          <label>Last Name*</label>
+          <input type="text" class="form-control" [(formControl)]="complexForm.controls['last_name']" required> <!-- pattern="^[a-zA-Z0-9.',]+$" -->
+          <div *ngIf="complexForm.controls['last_name'].hasError('required') && complexForm.controls['last_name'].touched" class="errorwrap">Last Name is required.</div>
+          <div *ngIf="complexForm.controls['last_name'].hasError('pattern')" class="errorwrap">Alphanumeric characters only.</div>
+          <!-- <div [hidden]="!complexForm.controls['last_name'].hasError('required') && complexForm.controls['last_name'].touched" class="errorwrap">Last Name is required.</div>
+        <div [hidden]="!complexForm.controls['last_name'].hasError('pattern')" class="errorwrap">Alphanumeric characters only.</div> -->
+        </div>
+      </div>
+      <div class="row form-row">
+        <div class="col-6">
+          <label>Date of Birth</label>
+          <!-- <input type="text" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker [(formControl)]="complexForm.controls['date_of_birth']" required> -->
+          <div class="datetime-container">
+            <!-- <app-date-input [(date)]="basicinfo.date_of_birth" (dateChange)="onDOBChange($event)">
+            </app-date-input> -->
+            <p-calendar class="form-control" [(formControl)]="complexForm.controls['date_of_birth']" [monthNavigator]="true" [yearNavigator]="true"
+              yearRange="1900:2050" required="true" #birthDate (onClose)="checkFromDate(birthDate)"></p-calendar>
+            <div *ngIf="flagFromDate" class="errorwrap">Date of Birth must not be greater than today.</div>
+            <div *ngIf="complexForm.controls['date_of_birth'].errors" class="errorwrap">{{messages['date_of_birth']}}</div>
+
+            <!-- <app-time-input [(ngModel)]="baseInfo.date_of_birth"
+                            [ngModelOptions]="{standalone: true}"></app-time-input> -->
+          </div>
+          <div [hidden]="complexForm.controls['date_of_birth']?.status !== 'INVALID' " class="errorwrap">Date of Birth is required.</div>
+          <!-- <div [hidden]="complexForm.controls['date_of_birth'].hasError('required')"  class="errorwrap">Date of Birth is required.</div> -->
+        </div>
+        <div class="col-6">
+          <label>Gender</label>
+
+          <div class="radiogroup">
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="gender" type="radio" [checked]="basicinfo.gender == '' || basicinfo.gender == 'male'"
+                [(formControl)]="complexForm.controls['gender']" value="male">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Male</span>
+            </label>
+
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="gender" type="radio" [checked]="basicinfo.gender == 'female'" [(formControl)]="complexForm.controls['gender']"
+                value="female">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Female</span>
+            </label>
+
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="gender" type="radio" [checked]="basicinfo.gender == 'other'" [(formControl)]="complexForm.controls['gender']"
+                value="other">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Other</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row form-row">
+        <div class="col-6">
+          <label>Marital Status</label>
+          <div class="radiogroup">
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="marital_status" type="radio" [checked]="basicinfo.marital_status == '' || basicinfo.marital_status == 'single'"
+                checked [(formControl)]="complexForm.controls['marital_status']" value="single">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Single</span>
+            </label>
+
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="marital_status" type="radio" [checked]="basicinfo.marital_status == 'married'"
+                [(formControl)]="complexForm.controls['marital_status']" value="married">
+
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Married</span>
+            </label>
+
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="marital_status" type="radio" [checked]="basicinfo.marital_status == 'divorced'"
+                [(formControl)]="complexForm.controls['marital_status']" value="divorced">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Divorced</span>
+            </label>
+
+          </div>
+
+        </div>
+        <div class="col-6">
+          <label>Email</label>
+          <input type="text" class="form-control" [(formControl)]="complexForm.controls['email']" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+            required [readonly]="changeEmail">
+          <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="errorwrap">Email is required.</div>
+          <div *ngIf="complexForm.controls['email'].hasError('pattern')" class="errorwrap">Invalid Email.</div>
+        </div>
+        <!-- <div class="col-6">
+        <label>Interests</label>
+        <input type="text" class="form-control" [(formControl)]="complexForm.controls['interests']">
+      </div> -->
+      </div>
+      <div class="row form-row">
+        <div class="col-6">
+          <label>Hobbies</label>
+          <input type="text" class="form-control" [(formControl)]="complexForm.controls['hobbies']">
+
+          <!-- <p-autoComplete [(formControl)]="complexForm.controls['hobbies']" [suggestions]="filteredCountriesMultiple" (completeMethod)="filterCountryMultiple($event)" styleClass="wid100"
+        [minLength]="1" placeholder="Hobbies" field="name" [multiple]="true">
+    </p-autoComplete> -->
+
+          <!-- <p-autoComplete [(formControl)]="complexForm.controls['hobbies']"  [suggestions]="hobbiesSearch" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete> -->
+
+          <!-- <span class="ui-fluid">
+      <p-autoComplete [(ngModel)]="hobbyAll" [suggestions]="hobbiesSearch" (completeMethod)="search($event)" styleClass="wid100"
+          [minLength]="1"  field="name" [multiple]="true">
+      </p-autoComplete>
+  </span>
+  <ul>
+      <li *ngFor="let c of hobbyAll">{{c.name}}</li>
+  </ul> -->
+
+          <!--start** Address name="address"  [(ngModel)]="profile.address" -->
+          <!-- <div class="profile-address"
+        [class.hasError]="profileErrors['address']"
+   >
+     
+     <input
+       type="text"       
+       [(formControl)]="complexForm.controls['hobbies']"      
+       [ngbTypeahead]="searchHobbies"
+       [resultFormatter]="hobbiesFormatter"
+       (selectItem)="selectHobbies($event)"
+     >
+     <span class="searching" *ngIf="searching">searching...</span>
+     <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+   </div> -->
+          <!--end -->
+
+
+
+          <!-- <div class="search-icon"></div>
+          <input class="form-control" type="text"
+                 placeholder="search here"
+                [(formControl)]="complexForm.controls['hobbies']"          
+                 (input)="valueChange()"/> -->
+          <!--  [(ngModel)]="searchText"   -->
+        </div>
+        <div class="col-6">
+          <label>Total experience*</label>
+          <p-dropdown class="form-control" [options]="experienceList" placeholder="Choose" optionLabel="title" [(formControl)]="complexForm.controls['experience']"
+            required></p-dropdown>
+          <div *ngIf="complexForm.controls['experience'].hasError('required') && complexForm.controls['experience'].touched" class="errorwrap">Total experience is required.</div>
+          <!-- <div [hidden]="!complexForm.controls['experience'].hasError('required') && complexForm.controls['last_name'].touched" class="errorwrap">Total experience is required.</div> -->
+        </div>
+      </div>
+      <div class="row">
+        <!-- <div class="col-sm-12">
+          <div class="form-group">
+              <label for="">Current Address line 1</label>
+              <input type="text" class="form-control" [(formControl)]="complexForm.controls['address_line1']" maxlength="200">
+              <small class="form-text text-muted">Max 200. Alphanumeric + special characters</small>
+
+            </div>
+      </div> -->
+
+        <div class="col-12">
+          <div class="form-group">
+            <div class="profile-address" [class.hasError]="profileErrors['address_line1']">
+              <label>Address</label>
+              <ng-template #rt let-r="result" let-t="term">
+                {{ r.address}}
+              </ng-template>
+              <input type="text" name="address" [(formControl)]="complexForm.controls['address_line1']" [ngbTypeahead]="searchAddress"
+                [resultTemplate]="rt" [resultTemplate]="rt" [resultFormatter]="addressFormatter" (selectItem)="selectAddress($event)">
+              <span class="searching" *ngIf="searching">searching...</span>
+              <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="">Current Address line 2</label>
+                <input type="text" class="form-control" [(formControl)]="complexForm.controls['address_line2']"  maxlength="200">
+                <small class="form-text text-muted">Max 200. Alphanumeric + special characters</small>
+              </div>
+        </div>      
+      </div> -->
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Country</label>
+            <p-dropdown class="form-control" [options]="countryList" placeholder="Choose" (onChange)="onCountrySelect($event.value)"
+              filter="true" optionLabel="title" [(formControl)]="complexForm.controls['country']">
+            </p-dropdown>
+            <!--required="true"-->
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">State</label>
+
+            <p-dropdown class="form-control" [options]="stateList" placeholder="Choose" (onChange)="onStateSelect($event.value)" filter="true"
+              optionLabel="title" [(formControl)]="complexForm.controls['state']"></p-dropdown>
+            <!--required="true"-->
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">City</label>
+            <input type="text" class="form-control" [(formControl)]="complexForm.controls['city']" maxlength="200">
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Pin Code</label>
+            <input type="text" class="form-control" [(formControl)]="complexForm.controls['pin_code']" maxlength="10">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Contact Details</label>
+            <!-- <input type="text" class="form-control"  [(formControl)]="complexForm.controls['contact_details']" maxlength="10"> -->
+            <app-phone-input [(formControl)]="complexForm.controls['contact_details']"></app-phone-input>
+            <div *ngIf="complexForm.controls['contact_details'].errors" class="errorwrap">{{messages['contact_details']}}</div>
+            <!-- <div *ngIf="complexForm.controls['contact_details'].errors" class="errorwrap">{{messages[getErrors(complexForm.controls['contact_details'].errors)]}}</div> -->
+            <!-- <div *ngIf="complexForm.controls['contact_details'].errors" class="errorwrap">demo print</div> -->
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Alternate contact details</label>
+            <!-- <input type="text" class="form-control" [(formControl)]="complexForm.controls['alternate_contact_details']" maxlength="10"> -->
+            <app-phone-input [(formControl)]="complexForm.controls['alternate_contact_details']"></app-phone-input>
+            <div *ngIf="complexForm.controls['alternate_contact_details'].errors" class="errorwrap">{{messages['alternate_contact_details']}}</div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="done" class="done-container">
+        <button class="done-btn" [ngClass]="{processing: processing}" type="submit">
+          Next
+        </button>
+        <div class="done-note">
+          Click "Next" to save
+        </div>
+      </div>
+
+      <!-- <div id="done" class="done-container">
+        <button class="done-btn" [ngClass]="{processing: processing}" type="submit">
+          <img src="/assets/img/hourglass.svg">
+        </button>
+        <button class="done-btn-caption" type="submit">Done</button>
+        <div class="done-note">
+          Click "Done" to go next step
+        </div>
+      </div> -->
+
+      <!-- <div id="done" class="done-container" [class.disabled]="isSubmitting">
+      <div class="done-btn" (click)="onSubmit($event)"></div>
+      <div class="done-btn-caption" (click)="onSubmit($event)">Done</div>
+      <div class="done-note">
+        Click "Done" to go next step<br/>
+        or <a (click)="changeAnswers($event)">Change answers</a>
+      </div>
+    </div> -->
+
+
+    </form>
+  </div>
+</div>

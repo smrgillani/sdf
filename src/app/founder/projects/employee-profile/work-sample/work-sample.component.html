@@ -1,0 +1,56 @@
+<div class="acc_content">
+  <div *ngFor="let item of worksampleInfo">
+    <div class="p_wrap">
+      <div class="p_question">Client</div>
+      <div class="p_answer">{{item.client}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Project Title </div>
+      <!-- <div class="p_answer">{{item.from_date | date: 'MMMM dd, yyyy'}} - {{item.to_date | date: 'MMMM dd, yyyy'}}</div> -->
+      <div class="p_answer">{{item.project_title}}</div>
+    </div>
+
+    <!-- <div class="p_wrap">
+          <div class="p_question">Duration</div>
+          <div class="p_answer">{{SPAN Infotech (India) Pvt. Ltd}}</div>
+        </div> -->
+
+    <div class="p_wrap">
+      <div class="p_question">Project Location</div>
+      <div class="p_answer">{{item.project_location}} </div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Employment Type</div>
+      <div class="p_answer">{{item.employment_type}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Project Details</div>
+      <div class="p_answer">{{item.project_details}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Role</div>
+      <div *ngFor="let roles of item?.role">
+        <div class="p_answer">{{roles.title}}</div>
+      </div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Role Description</div>
+      <div class="p_answer">{{item.role_description}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Team Size</div>
+      <div class="p_answer">{{item.team_size.title}} people </div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Skils Used</div>
+      <div class="p_answer">{{item.skill_used}}</div>
+    </div>
+  </div>
+</div>

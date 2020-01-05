@@ -1,0 +1,45 @@
+.contextmenu-body {
+  position: absolute;
+  box-shadow: rgba(0,0,0,0.2) 0 1px 2px 1px;
+  background-color: #666;
+  width: 130px;
+  height: 35px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+
+}
+
+.contextmenu-body .copy {
+  background-image: url(/assets/img/founder/copy.png);
+  background-repeat: no-repeat;
+  background-size: 16px;
+  flex: 1;
+  height: 20px;
+  background-position: center;
+  border-right: 2px solid white;
+  cursor: pointer;
+}
+
+.contextmenu-body .cut {
+  background-image: url(/assets/img/founder/cut.png);
+  border-right: 2px solid white;
+  background-repeat: no-repeat;
+  background-size: 16px 21px;
+  flex: 1;
+  height: 20px;
+  background-position: center;
+  cursor: pointer;
+}
+.contextmenu-body .paste {
+  background-image: url(/assets/img/founder/paste.png);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  flex: 1;
+  height: 100%;
+  background-position: center;
+  cursor: pointer;
+
+}

@@ -1,0 +1,36 @@
+<div class="assigned-users">
+    <div *ngFor="let user of assignedUsers">
+        <img class="user" [ngbPopover]="unassign" #myProjectPopover="ngbPopover" placement="bottom" [src]="user.userImage || ''" />
+        <ng-template #unassign>
+            <div class="user-unassign" (click)="myProjectPopover.close()" (click)="confirmDeleteTask(confirmDeletingMessage)">Unassign</div>
+        </ng-template>
+        <ng-template #confirmDeletingMessage>
+            <div class="modal-body">Are you sure you want to un-assign employee?</div>
+            <div class="modal-footer">
+                <div class="buttons">
+                    <div class="btn btn-cancel" (click)="confirmDelete.close()">Cancel</div>
+                    <div class="btn btn-ok" (click)="unassignUser(user.user_id)">Ok</div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<div class="users">
+    <div class="dot-border-empty-add-btn" *ngIf="!searchInputActive" (click)="showSearchInput()">+</div>
+    <div *ngIf="searchInputActive" style="width: 100%; min-width: 100px;">
+        <input type="text" (focusout)="hideSearchInput()" [(ngModel)]="searchText" #searchInput>
+        <ul class="users-list-dropdown">
+            <li *ngFor="let user of users | searchEmployees:searchText:assignedUsers">
+                <div class="userbox">
+                    <span (mousedown)="assignUser(user)">
+                        <img [src]="user.photo_crop || ''" alt=""> {{user.first_name}} {{user.last_name}}
+                        <!-- <span><a href=""><img [src]="user.photo_crop || ''" alt=""></a></span> -->
+                    </span>
+                    <span class="profileicon" (mousedown)="getParticipentProfile(user.user_id)">
+
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container-fluid bg-gradient">
+<div class="container-main bg-image">
+  <div class="container-border">
+    <!-- <app-navbar></app-navbar> -->
+    <app-header class="position-absolute no-bg" [backNavOptions]="{ route: ['/founder/projects']}"></app-header>
+    <div class="pass-update-box container">
+      <div class="close-btn hidden-sm-up" [routerLink]="['/founder/projects']"></div>
+      <div class="col-12 column text-center">            
+        <span class="fa-stack fa-3x fa-icon">
+          <i class="fa fa-check fa-stack-1x"></i>
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+        </span>
+        <div class="container-title">Project Registered <span>Successfully</span>.</div>
+        <div class="text-center">
+        <div class="btn-border" >
+          <button type="submit" class="enter-btn" [routerLink]="['/founder/projects']">OK</button>
+        </div>
+        <div class="btn-border notarize" >
+          <button type="submit" class="enter-btn" (click)="openNotarize(project)">Notarize</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!-- <div class="container-other-buttons row">
+      <div class="link text-left col-4 mobile-hidden" [routerLink]="['/founder/projects']"><i class="fa fa-arrow-left"></i> Back</div>
+    </div> -->
+  </div>
+</div>
+</div>

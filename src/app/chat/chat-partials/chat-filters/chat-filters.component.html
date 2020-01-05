@@ -1,0 +1,8 @@
+<div class="chat-filters">
+  <i
+    class="filter fa"
+    [class.fa-star]="getFilterValue('starred')"
+    [class.fa-star-half-empty]="!getFilterValue('starred')"
+    (click)="toggleFilterValue('starred')"
+  ></i>
+</div>

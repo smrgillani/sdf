@@ -1,0 +1,21 @@
+<div class="container-fluid bg-gradient selectcountry">
+    <div class="container-main bg-image">
+        <div class="container-border">
+            <div class="selectcountrycontent">
+                <div class="container-center">
+                    <app-header class="no-bg position-absolute" [showBackButton]="false" [isLoggedIn]="false"></app-header>
+                    <div class="container-title" [@pageState]="pageState">You are from...</div>
+                    <div class="container-buttons">
+                        <div *ngFor="let country of availableCountries" class="container-button border-blue" (click)="setCountry(country.id)" [@pageState]="pageState"
+                            (@pageState.done)="animationDone($event)">
+
+                            <div *ngIf="country.title == 'United States'" class="button-inner back-blue flag-us" [title]="country.title"></div>
+                            <div *ngIf="country.title == 'United Kingdom'" class="button-inner back-blue flag-uk" [title]="country.title"></div>
+                            <div *ngIf="country.title !== 'United States' && country.title !== 'United Kingdom'" class="button-inner back-blue">{{country.title}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

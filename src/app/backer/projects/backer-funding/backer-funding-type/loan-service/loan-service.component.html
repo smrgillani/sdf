@@ -1,0 +1,61 @@
+<div class="heading">
+    <h1 (click)="isCollapse=togglecollapse(isCollapse)">Loan Services</h1>
+</div>
+<div class="cardwrap" *ngIf="isCollapse">
+    <div class="showinterest text-right" *ngIf="showActions">
+        <button class="saffron_btn orange_btn" (click)="showInterest(popUpForShowInterestMessage)">Show Interest</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Amount of Loan ($)</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.loan_amount.amount">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Type of Payment</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.payment_type">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Interest rate, which you wish to pay (%)</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.interest_rate">
+            </div>
+        </div>
+    </div>
+    <h5>T&Cs</h5>
+    <div class="terms_n_condition" [innerHTML]="fundData.creatorFundData.terms_condition"></div>
+
+    <!-- <app-text-editor [readOnly]="true" class="wrappertexteditor" [ngModel]="fundData.creatorFundData.terms_condition" height="125px"></app-text-editor> -->
+    <!-- <hr> -->
+    <form [formGroup]="frmFundDetails">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Enter Amount($)</label>
+                    <input type="text" class="form-control" formControlName="loan_amount" [(ngModel)]="fundData.loan_amount.amount">
+                    <div class="form-control-feedback" *ngIf="loan_amount.errors && (loan_amount.touched || loan_amount.dirty)">
+                        <div class="errorwrap" *ngIf="loan_amount.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="post-buttons" *ngIf="showActions">
+            <button type="button" class="saffron_btn red_btn" (click)="skip()">Skip</button>
+
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">Next</button>
+        </div>
+    </form>
+</div>
+<ng-template #popUpForShowInterestMessage>
+    <div class="modal-body">Your request is send successfully.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

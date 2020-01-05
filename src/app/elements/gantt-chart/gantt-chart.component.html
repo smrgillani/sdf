@@ -1,0 +1,39 @@
+<div class="gantt-chart-body"
+     id="gantt-chart-body"
+     [class.dragging]="dragging"
+>
+
+  <div class="gantt-chart-x-labels" *ngFor="let generator of scaleModes[mode].xLabels">
+    <div class="x-label"
+        *ngFor="let label of getXLabels(generator)"
+        [style.left]="getTimeOffset(label.time)">
+      {{label.caption}}
+    </div>
+    <div class="x-labels-separator"
+        [style.width]="scale * getTimeDiff(startDate, endDate) + '%'"></div>
+  </div>
+  <div class="work-sequence" *ngFor="let work of dataSource">
+    <div class="day-cursor" id="day-cursor"
+         [style.left]="getTimeOffset()">
+    </div>
+    <app-gantt-chart-work-item
+      class="work"
+      id="milestone-{{work.milestone.id}}"
+      [work]="work"
+      [style.left]="getTimeOffset(work.startDate)"
+      [style.width]="getWorkLength(work) + '%'"
+      [selected]="selectedWork === work"
+      [allowEdit]="allowEdit"
+      (selectedChange)="onSelectionChange(work, $event)"
+      (openWork)="onOpenWork($event)"
+      (editWork)="onEditWork($event)"
+      (showWorkActivity)="onShowWorkActivity($event)">
+<!--      draggable="true"-->
+<!--      (dragStart)="onMilestoneDragStart($event)">-->
+    </app-gantt-chart-work-item>
+    <div
+      class="work-separator"
+      [style.width]="scale * getTimeDiff(startDate, endDate) + '%'"
+    ></div>
+  </div>
+</div>

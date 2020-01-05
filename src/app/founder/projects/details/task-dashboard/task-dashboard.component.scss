@@ -1,0 +1,218 @@
+.selectrole{
+    .container-main {
+     
+      display: flex;
+      flex-direction:column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+    .container-border
+    {  
+      flex-direction: column;
+    }
+    .container-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      
+      
+    }
+  
+    .container-title {
+      color: #f9f5f0;
+      font-size:3.000em;//    48px;
+      font-weight: 300;
+    }
+  .container-buttons{
+    //margin-bottom: 6.250em;
+    flex-direction: row;
+    display: flex;
+  }
+  
+    .container-button {
+      margin: 0px;
+      width:10.625em;// 170px;
+      height:10.625em;//  170px;
+      border-width: 2px;
+      border-radius: 360px;-moz-border-radius: 360px;-webkit-border-radius: 360px;-ms-border-radius: 360px;
+      border-style: solid;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
+      transition: .2s ease-in-out;
+      cursor: pointer;
+      flex-direction: row; 
+      margin:1.375em;// 22px;
+      
+    }
+  
+  
+    .container-footer {
+      color: #f9f5f0;
+      font-size:1.625em;// 26px;
+      letter-spacing:-0.077em;// -2px;
+      text-align: center;
+    }
+    .button-inner {
+      width: calc(100% - 4px);
+      height:  calc(100% - 4px);
+      border-radius: 360px;-webkit-border-radius: 360px;-moz-border-radius: 360px;-ms-border-radius: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f9f5f0;
+      font-size:1.8em;
+      font-weight: bold;
+      text-align: center;
+    }
+  
+    .border-green {
+      border-color: #00d8c9;
+    }
+  
+    .border-blue {
+      border-color: #679bf9;
+    }
+  
+    .border-orange {
+      border-color: #ff6c24;
+    }
+  
+    .back-green {
+      background-color: #00d8c9;
+    }
+  
+    .back-blue {
+      background-color: #679bf9;
+    }
+  
+    .back-orange {
+      background-color: #ff6c24;
+    }
+    .container-button:hover
+    {
+      -webkit-filter:  blur(0px);
+     filter:  blur(0px);
+       -webkit-transform: scale(1.1);
+     -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  
+    transition: .2s ease-in-out;
+    }
+  }
+  
+  
+  
+  
+  @media (max-width: 992px) {
+    .selectrole{
+    .bg-image{
+      background-size: contain;
+  
+    }
+  }
+  }
+  
+  @media (max-width: 767px) {
+    .selectrole{
+      .container-button{
+          padding: 0;
+      }
+    .container-center{
+      flex-direction: row; 
+      .container-buttons{
+        flex-direction:column;
+        margin: 0;
+  
+      }
+    }
+    .bg-image {
+      background-image: url(/assets/img/circle_flip.png);
+      background-size: contain;
+      background-position: 50%;
+    }
+  }
+  }
+  @media (max-width: 480px) {
+    .selectrolecontent{
+      font-size: 75%;    
+    }
+  }
+  
+  
+  // @media (max-width: 500px) {
+    
+  //   .selectrole{
+  //     font-size: 75%;
+  //   .container-buttons {
+  //     display: flex;
+  //     flex-direction: row;
+      
+  //   }
+  //   .container-button{
+  //   padding: 0;
+  // }
+    
+  //   .container-button:hover
+  //   {
+  //     -webkit-filter:  blur(0px);
+  //     filter:  blur(0px);
+  //     -webkit-transform: scale(1.1);
+  //     -ms-transform: scale(1.1);
+  //     transform: scale(1.1);
+  
+  //     transition: .2s ease-in-out;
+  //   }
+  //   }
+  // }
+  
+  
+  
+  
+  
+  @media screen and (min-width:768px) and (max-height: 800px) {
+    .selectrolecontent  { 
+        font-size: 90%;}
+  }
+  @media screen and (min-width: 768px) and (max-height: 600px) {
+    .selectrolecontent  { 
+      font-size: 75%;}
+  }
+  @media screen and (min-width: 768px) and (max-height: 480px) {
+  .selectrolecontent  { 
+    font-size: 55%;
+  }
+  }
+  
+  
+  
+  @media screen and (max-width: 767px) and (max-height: 700px) {
+    .selectrolecontent  { 
+        font-size: 85%;}
+  }
+  @media screen and (max-width: 767px) and (max-height: 576px) {
+    .selectrolecontent  { 
+      font-size:70%;    
+    }
+  }
+  @media screen and (max-width: 767px) and (max-height: 480px) {
+  .selectrole  {
+    .selectrolecontent{
+      font-size: 60%;
+    }
+   
+    .container-center{
+      flex-direction:column; 
+      .container-buttons{
+        flex-direction:row;
+        margin: 1.250em;
+  
+      }
+    }
+    .home-page-btn.circle-second,
+    .home-page-btn.circle-third  { margin-left: 2.875em; }
+  }
+  }

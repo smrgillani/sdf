@@ -1,0 +1,26 @@
+<div class="saffron_model saf_blue_theme">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+    <i class="icon-close"></i>
+  </div>
+
+  <div class="popheading">Confirm </div>
+  <div class="form-group">
+    <p>You are already subscribed to a plan. However, if you proceed, it will override the previous plan and you will be charged as per the new plan details.</p>    
+  </div>
+
+
+  <div class="post-buttons">
+      <button class="saffron_btn skyblue_btn" (click)="subscribe()" type="button">Yes</button>
+      <button class="saffron_btn red_btn"  (click)="activeModal.dismiss('Cross click')" type="button">No</button>
+    </div>
+
+<!-- 
+  <div class="project-actions">
+    <div class="btn-border skyblue" >
+      <div class="btn skyblue-btn">Yes</div>
+    </div>
+    <div class="btn-border skyblue">
+        <div class="btn skyblue-btn">NO</div>
+      </div>
+  </div> -->
+</div>

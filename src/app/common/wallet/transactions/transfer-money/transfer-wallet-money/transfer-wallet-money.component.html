@@ -1,0 +1,62 @@
+<form name="form" action="." #f="ngForm" novalidate>
+    <!-- (ngSubmit)="f.form.valid && saveTransferInfo(f)" -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>User</label>
+        {{userInfo?.name}}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Wallet Type</label>
+        <div class="radiogroup">
+          <label class="custom-control custom-radio" *ngFor="let item of walletList; let index = index">
+            <input class="custom-control-input" [(ngModel)]="transactionInfo.wallet" name="wallet" #wallet="ngModel"
+              type="radio" [value]="item">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">{{item}}</span>
+          </label>
+          <div *ngIf="f.submitted && wallet?.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['wallet'][0]}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Amount</label>
+        <p-spinner size="30" class="form-control" [min]="1" [(ngModel)]="transactionInfo.amount.amount" [step]="1" name="amount"
+          #amount="ngModel" required></p-spinner>
+        <div *ngIf="f.submitted && amount?.errors?.required" class="errorwrap">Amount is required</div>
+        <div *ngIf="f.submitted && amount?.errors?.min" class="errorwrap"> Amount must be greater
+          than 0</div>
+        <div *ngIf="amount?.errors && objKeyMessage && objKeyMessage['amount']" class="errorwrap">{{objKeyMessage['amount'][0]}}</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Remark</label>
+        <input type="text" class="form-control" [(ngModel)]="transactionInfo.remark" name="remark" #remark="ngModel">
+      </div>
+    </div>
+  </div>
+
+  <div class="post-buttons">
+    <!-- <button type="button" class="saffron_btn orange_btn" (click)="cancel()">Cancel</button> -->
+    <!-- <button type="button" class="saffron_btn skyblue_btn" type="submit">send</button> -->
+    <button type="button" class="saffron_btn skyblue_btn" (click)="confirmWalletTransfer(f)">send</button>
+  </div>
+  <ng-template #confirmPopUp>
+    <div class="modal-body">Are you sure you want to Transfer amount?</div>
+    <div class="modal-footer">
+      <div class="buttons">
+        <!-- <div class="btn btn-ok" (click)="isComplete()">Yes</div> -->
+        <button class="btn btn-ok" type="button" (click)="preCallSubmit($event)">Yes</button>
+      </div>
+      <div class="buttons">
+        <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">No</div>
+      </div>
+    </div>
+  </ng-template>
+</form>

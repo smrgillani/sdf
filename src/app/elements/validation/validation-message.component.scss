@@ -1,0 +1,44 @@
+$error-color: #FE5F5B;
+
+.error-notification{
+  position: relative;
+  display: flex;
+  align-items: center;
+  float: left;
+  width: 100%;
+  min-height: 62px;
+  height: auto;
+  margin: 5px 0;
+  background-color: #fff;
+  border-left: 5px solid rgba(254,95,91,0.8);
+  .error-message-wrapper{
+    display: flex;
+    align-items: center;
+    color: #4342E6;
+    min-height: 62px;
+    width: calc(100% - 60px);
+    padding: 5px;
+    height: auto;
+    line-height: 17px;
+  }
+  .alert-badge-border {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid $error-color;
+    margin: 10px;
+    border-radius: 100%;
+    .alert-badge{
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      background-color: $error-color;
+      background-image: url("/assets/img/alert-badge.png");
+      background-size: 2px 16px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}

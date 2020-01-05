@@ -1,0 +1,109 @@
+$side-padding: 12px;
+$primary-color: #4342e6;
+  header {
+  height: 67px;
+  background-color:$primary-color;
+}
+  
+main {
+ // padding: 10px 60px 60px 60px;  
+ padding: 0 0 3.750em 0;
+  background-color: #f9f5f0;
+  min-height: 100%;
+}
+  
+.recruitment-wrap {
+  position: relative;
+}
+.dispute_container { max-width: 650px; margin:50px auto;} 
+.dispute_container h2 { font-size: 2.250em; margin-bottom: 20px; }
+.cardwrap { background: #fff; padding: 30px 40px;}
+  
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 12px;  
+  h1 {
+    color: #2929e4;
+    font-size: 2.250em;
+    font-weight: 500;
+    line-height: 1.194em;
+    margin: 2px;
+  }    
+}
+.datetimetextbox        { display: inline-block; vertical-align: middle; width: 100%;}
+.datetimetextbox .iconmoon { bottom: 18px;font-size: 15px;}
+.datetimetextbox .iconmoon.icon-close { bottom: 18px; font-size: 11px;}
+.datetimetextbox .form-control { margin-bottom: 0;}
+.form-group label {
+  display: block;
+  color: #4342E6;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+.form-group.disabled{
+  opacity: 0.5; cursor: not-allowed;
+}
+.form-control{
+  padding: .5rem 0;
+}
+.post-buttons{
+  margin: 40px 0 10px;
+}
+textarea.form-control { resize: none; height: 90px;}
+.messagebox { height: 130px; }
+
+.text-center { justify-content: center; }
+
+.interviewpopup {
+  position: relative;
+  padding:10px 35px 35px 35px;
+  .close_popup {
+      font-size: 13px; width: 50px; height: 50px; border-radius: 360px; background: #fe5f5b; color:#fff;
+       box-shadow: 0 0 5px rgba(0,0,0,0.5); position: absolute; top:-68px; right: 10px;text-align: center;  line-height: 54px;cursor: pointer; 
+       &:hover{
+          background: #fc514d;
+      }
+  }
+  &::after {
+      position: absolute; top:-20px; right: 25px; content: ""; border-style: solid; border-width: 10px; border-color:transparent transparent #fff transparent
+  }
+  &::before {
+      position: absolute; top:-22px; right: 24px; content: ""; border-style: solid; border-width: 11px; border-color:transparent transparent #3c3e3e transparent
+  }
+  .popheading { font-size:36px; color:#2929e4; font-weight: 500; margin-bottom: 30px; }
+  label {  font-size: 18px; }
+  .form-control { color: #2929e4;}
+  
+}
+
+.saffron_btn {min-width: 90px; }
+
+
+
+@media only screen and (max-width: 992px) {
+ 
+  .post-buttons .button { padding: 0 10px;}
+  .recruitment-wrap { width: 100%; }
+
+}
+@media (max-width: 767px) {
+  .cardwrap { padding: 20px 30px;}
+}
+
+@media only screen and (max-width: 480px) {
+  .cardwrap { padding:15px 10px;}
+
+}
+  
+  
+
+
+
+
+
+

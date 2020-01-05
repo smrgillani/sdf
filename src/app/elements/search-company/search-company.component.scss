@@ -1,0 +1,28 @@
+.searchresult { background: #fff;}
+.fa-check,.fa-times { display: none; 
+ position: absolute; right:5px; top:15px;
+ font-size: 16px;
+ color:#3c763d;
+}
+.form-group.has-error .fa-times{
+    color:#f00;
+}
+.form-group { position: relative; }
+.form-group.has-success .fa-check { 
+ //  background: url('/assets/img/check.png') right center no-repeat;
+ //  background-size: 16px;
+ display: block;
+        
+}
+.form-group.has-error  .fa-times {
+    display: block;
+}
+.errorwrap.has-success {
+    border-left: 5px solid #4342e6;
+    &:before{
+        background-color: #4342e6
+    }
+   &:after{
+    background-color: #4342e6;
+   }
+}

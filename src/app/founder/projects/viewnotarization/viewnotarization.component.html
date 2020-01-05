@@ -1,0 +1,33 @@
+<main>
+    <app-header class="position-static"></app-header>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Notarization</h1>
+        </div>
+        <div class="cardwrap viewnotarization">
+            <ngb-tabset *ngIf="notarizeResponse && notarizeResponse.status && notarizeResponse.status == 'completed'; else NoRecord">
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Sign in Info</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-sign-in-info [notarizeResponse]="notarizeResponse"></app-sign-in-info>
+
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Notary Info</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-notary-info [notarizeResponse]="notarizeResponse"></app-notary-info>
+                    </ng-template>
+                </ngb-tab>
+
+            </ngb-tabset>
+            <ng-template #NoRecord>
+                <div class="cardbody">
+                    <div class="row">
+                        No record found
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</main>

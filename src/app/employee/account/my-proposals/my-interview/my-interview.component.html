@@ -1,0 +1,91 @@
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+<app-header class="position-static" [backNavOptions]="{caption: 'My Proposals', route: ['employee', 'account', 'my-proposals']}"></app-header>
+
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Interview</h1>
+    </div>
+    <div class="cardwrap">
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="leftbox text-center" *ngIf="interviewData != undefined && (reschedule_interview_time == undefined || (interviewData.reschedule_interviews != undefined && interviewData.reschedule_interviews.length > 0 && interviewData.reschedule_interviews[0].status == 'draft'))">
+            <h4>Scheduled Interview for</h4>
+            <!-- <div class="datewrap" *ngIf="interviewData != undefined">{{interviewData.interview_date_time | date: 'MMMM dd, yyyy'}}</div>
+            <div class="timewrap" *ngIf="interviewData != undefined"> {{interviewData.interview_date_time | date: 'HH:mm'}}</div> -->
+            <div class="timestamp">
+              <div class="datewrap" *ngIf="interviewData != undefined">
+                <span class="icon-calendar"></span> {{internal_interview_date}}</div>
+              <div class="timewrap" *ngIf="interviewData != undefined">
+                <span class="icon-clock"></span> {{internal_interview_time}}</div>
+            </div>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="leftbox text-center" *ngIf="interviewData != undefined && interviewData.reschedule_interviews != undefined && interviewData.reschedule_interviews.length > 0 && interviewData.reschedule_interviews[0].status == 'draft' && reschedule_interview_time != undefined">
+            <h4>Rescheduled Interview by you </h4>
+            <!-- <div class="datewrap">{{interviewData.reschedule_interviews[0].reschedule_interview_date_time | date: 'MMMM dd, yyyy'}}</div>
+            <div class="timewrap"> {{interviewData.reschedule_interviews[0].reschedule_interview_date_time | date: 'shortTime'}}</div> -->
+            <div class="timestamp">
+              <div class="datewrap">
+                <span class="icon-calendar"></span> {{reschedule_interview_date}}</div>
+              <div class="timewrap">
+                <span class="icon-clock"></span> {{reschedule_interview_time}}</div>
+            </div>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="leftbox text-center" *ngIf="reschedule_interview_creator_time != undefined && interviewData != undefined && interviewData.reschedule_interviews != undefined && interviewData.reschedule_interviews.length > 0 && interviewData.reschedule_interviews[0].status == 'draft' && reschedule_interview_creator_date != undefined">
+            <h4>Rescheduled Interview by creator</h4>
+            <!-- <div class="datewrap">{{interviewData.reschedule_interviews[0].reschedule_interview_date_time | date: 'MMMM dd, yyyy'}}</div>
+            <div class="timewrap"> {{interviewData.reschedule_interviews[0].reschedule_interview_date_time | date: 'shortTime'}}</div> -->
+            <div class="timestamp">
+              <div class="datewrap">
+                <span class="icon-calendar"></span> {{reschedule_interview_creator_date}}</div>
+              <div class="timewrap">
+                <span class="icon-clock"></span> {{reschedule_interview_creator_time}}</div>
+            </div>
+          </div>
+
+          <div class="leftbox text-center" *ngIf="reschedule_interview_time != undefined && interviewData.reschedule_interviews != undefined && interviewData.reschedule_interviews.length > 0 && interviewData.reschedule_interviews[0].status == 'accept'">
+            <h4>Scheduled Interview for</h4>
+            <!-- <div class="datewrap" *ngIf="interviewData != undefined">{{interviewData.interview_date_time | date: 'MMMM dd, yyyy'}}</div>
+            <div class="timewrap" *ngIf="interviewData != undefined"> {{interviewData.interview_date_time | date: 'HH:mm'}}</div> -->
+            <div class="timestamp">
+              <div class="datewrap" *ngIf="interviewData.reschedule_interviews[0].is_employee">
+                <span class="icon-calendar"></span> {{reschedule_interview_date}}</div>
+              <div class="timewrap" *ngIf="interviewData.reschedule_interviews[0].is_employee">
+                <span class="icon-clock"></span> {{reschedule_interview_time}}</div>
+              <div class="datewrap" *ngIf="interviewData.reschedule_interviews[0].is_creator">
+                <span class="icon-calendar"></span> {{reschedule_interview_creator_date}}</div>
+              <div class="timewrap" *ngIf="interviewData.reschedule_interviews[0].is_creator">
+                <span class="icon-clock"></span> {{reschedule_interview_creator_time}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+          <div class="rightbox  text-center">
+            <h4>What would you like to do ?</h4>
+            <div class="post-buttons">
+              <button class="button blue" [disabled]="interviewData && interviewData.status==='accept'" (click)="confirmAvailability()">{{confirmAvailabilityText()}}</button>
+              <!-- <br>
+              <br> -->
+              <button class="button blue" (click)="rescheduleMyInterview()">Reschedule Interview</button>
+              <!-- <br>
+              <br> -->
+              <button class="button orange" (click)="attendNow()">Attend Interview now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>

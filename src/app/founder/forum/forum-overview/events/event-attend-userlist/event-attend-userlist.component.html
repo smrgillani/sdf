@@ -1,0 +1,15 @@
+<div class="projects-search">
+  <div class="search-icon"></div>
+  <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+</div>
+<div *ngIf="inviteFriendsInfoList">
+  <div class="project-action with-icon" *ngFor="let item of inviteFriendsInfoList">
+    <div class="action-user-icon">
+      <img *ngIf="item.photo" [src]="item.photo" alt="">
+    </div>
+    <div class="action-message">
+      <span class="action-user-name">{{item.name}}</span>
+    </div>
+  </div>
+</div>
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getAttenedUserList($event)"></app-pagination>

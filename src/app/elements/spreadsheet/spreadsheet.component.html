@@ -1,0 +1,136 @@
+<div class='spreadsheet' [hidden]="changeLogOpened">
+  <div class="change-panel" *ngIf="isCollab && docInfo && docInfo.changes && docInfo.changes.length">
+    <a class="change-view-trigger" (click)="openChangeLog()">
+      Last edit was {{ docInfo.changes[docInfo.changes.length - 1].timestamp_changed | formatRelativeTime }}
+    </a>
+  </div>
+
+  <div class="spreadsheet-statusbar-for-import" [hidden]="editedPage || isReadOnly">
+    <div style="display: flex;flex: 1;align-items:center;">
+      <span>Import from </span>
+      <div class="box">
+        <input type="file" on-change='load()' name="uploadSheet" class="form-control inputfile" id="importFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+        <label for="importFile">
+          <div class="sheeticon fromLocal"></div>
+        </label>
+      </div>
+      <div class="box">
+        <div id="dropbox-container" class="sheeticon fromDropbox"></div>
+      </div>
+      <div class="box">
+        <div class="sheeticon fromGoogleDrive" id="pick"></div>
+
+      </div>
+    </div>
+    <div class="spreadsheet-result-show"></div>
+    <!-- <div class="spreadsheet-ok-btn">Ok</div> -->
+  </div>
+
+  <div class="spreadsheet-statusbar-for-sum" [hidden]="!editedPage || isReadOnly">
+    <select size="5" [ngClass]="formulasSelectClass" on-change="onFormulasSelectionChanged()">
+      <option value="sum...multi_selection" selected="selected">AUTOSUM</option>
+      <option value="average...multi_selection">AVERAGE</option>
+      <option value="max...multi_selection">MAX</option>
+      <option value="min...multi_selection">MIN</option>
+      <option value="var...multi_selection">VAR</option>
+      <option value="varp...multi_selection">VARP</option>
+      <option value="stdev...multi_selection">STDEV</option>
+      <option value="stdevp...multi_selection">STDEVP</option>
+      <option value="counta...multi_selection">COUNTA</option>
+      <option value="countblank...multi_selection">COUNTBLANK</option>
+      <option value="countif...three_param">COUNTIF</option>
+      <option value="abs...single_param">ABS</option>
+      <option value="acos...single_param">ACOS</option>
+      <option value="asin...single_param">ASIN</option>
+      <option value="atan...single_param">ATAN</option>
+      <option value="cos...single_param">COS</option>
+      <option value="sin...single_param">SIN</option>
+      <option value="tan...single_param">TAN</option>
+      <option value="ceiling...single_param">CEILING</option>
+      <option value="floor...single_param">FLOOR</option>
+      <option value="round...double_param">ROUND</option>
+      <option value="exp...single_param">EXP</option>
+      <option value="ln...single_param">LN</option>
+      <option value="sqrt...single_param">SQRT</option>
+      <option value="rounddown...single_param">ROUNDDOWN</option>
+      <option value="mod...single_param">MOD</option>
+      <option value="power...single_param">POWER</option>
+      <option value="roundup...single_param">ROUNDUP</option>
+      <option value="trunc...single_param">TRUNC</option>
+      <option value="char...single_param">CHAR</option>
+      <option value="code...single_param">CODE</option>
+      <option value="concatenate...double_param">CONCATENATE</option>
+      <option value="left...single_param">LEFT</option>
+      <option value="right...single_param">RIGHT</option>
+      <option value="mid...single_param">MID</option>
+      <option value="len...single_param">LEN</option>
+      <option value="find...single_param">FIND</option>
+      <option value="text...single_param">TEXT</option>
+      <option value="value...single_param">VALUE</option>
+      <option value="Now...single_param">NOW</option>
+      <option value="Year...single_param">YEAR</option>
+      <option value="Month...single_param">Month</option>
+      <option value="Day...single_param">DAY</option>
+      <option value="today...single_param">TODAY</option>
+      <option value="time...three_param">TIME</option>
+      <option value="hour...single_param">Hour</option>
+    </select>
+
+    <div class="sum-mark-logo" (click)="showFormulas()">
+    </div>
+
+    <div class="formula-value">
+      <input type="text"/>
+    </div>
+    <div #sum class="spreadsheet-result-show"></div>
+  </div>
+  <div class="spreadsheetcomponent">
+    <wj-flex-sheet #flexSheet class="flexSheet"
+                   [isReadOnly]="isReadOnly"
+                   [style.overflow]="'visible'"
+                   (initialized)="flexSheetInit(flexSheet)">
+      <wj-sheet #dynamicContextMenuContainer [rowCount]="22" [columnCount]="24"></wj-sheet>
+    </wj-flex-sheet>
+  </div>
+
+  <section class="spreadsheet-panel">
+    <div class="undo-redo-wrapper">
+      <button type="button" class="btn btn-default" (click)="undo()"></button>
+      <button type="button" class="btn btn-default" (click)="redo()"></button>
+    </div>
+  </section>
+</div>
+
+<div class='spreadsheet' [hidden]="!changeLogOpened" *ngIf="isCollab && docInfo">
+  <div class="change-panel">
+    <a class="change-view-trigger" (click)="closeChangeLog()">
+      Return to editing
+    </a>
+    <div class="participant-info">
+
+      <div class="participant-count" *ngIf="changeViewerParticipants">
+        {{ changeViewerParticipants.length }} collaborators
+      </div>
+
+      <div class="participants">
+        <div *ngFor="let participant of changeViewerParticipants" [title]="participant.name"
+             class="participant" [style.background-color]="participant.color">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="change-view">
+    <div class="col change-viewer">
+      <wj-flex-sheet #flexSheetChangesViewer class="flexSheet"
+                     [isReadOnly]="true"
+                     [style.overflow]="'visible'"
+                     (initialized)="flexSheetInit(flexSheetChangesViewer)">
+        <wj-sheet #dynamicContextMenuContainerChangesViewer [rowCount]="22" [columnCount]="24"></wj-sheet>
+      </wj-flex-sheet>
+    </div>
+    <app-change-log [sessionEndings]="docInfo.session_endings" [documentChanges]="docInfo.changes"
+                    (changesSelected)="showChanges($event)"
+                    class="col change-log"></app-change-log>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.chat-filters {
+  display: inline-block;
+  padding: 5px 12px;
+  text-align: right;
+  font-size: 20px;
+  vertical-align: middle;
+
+  .filter {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,70 @@
+<app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header>
+<main>
+
+  <div class="container saf_blue_theme">
+    <div class="saffron_btn blue_btn pull-right" *ngIf="fundingsubmitted" [routerLink]="['../upgradefunding']">Upgrade Listing</div>
+
+    <div class="heading">
+      <h1>Manage Funding for XYZ Ltd.</h1>
+    </div>
+    <div class="cardwrap">
+      <ng-container>
+        <div class="card" *ngFor="let item of qaList; let index = index">
+          <div class="card-block">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" checked disabled>
+              <span class="custom-control-indicator"></span>
+            </label>
+            <h3 class="card-title" (click)="toggleAccordian($event,index)">
+
+              <span>{{item.panelname}}</span>
+
+            </h3>
+            <div class="card-text" [ngbCollapse]="isCollapsedArray[index]">
+              <div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Total Amount</label>
+                      <input type="text" class="form-control" [readonly]="fundingsubmitted" placeholder="Total Amount">
+                    </div>
+                    <div class="form-group">
+                      <label>Share percentage</label>
+                      <input type="text" class="form-control" [readonly]="fundingsubmitted" placeholder="Share percentage">
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-block">
+            <div class="row">
+              <div class="col-md-6">
+                <h3>Signature</h3>
+                <img src="./assets/img/sign.jpg" class="signatureimg" *ngIf="fundingsubmitted">
+                <div class="signaturebox" *ngIf="!fundingsubmitted">
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+      <div class="post-buttons">
+        <div class="saffron_btn skyblue_btn" *ngIf="!fundingsubmitted" (click)="submitfunding()">Next</div>
+        <div class="saffron_btn skyblue_btn" *ngIf="fundingsubmitted">Confirm & Submit</div>
+      </div>
+    </div>
+
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>

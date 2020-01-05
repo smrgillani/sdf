@@ -1,0 +1,10 @@
+<nav>
+  <!-- <div #navbarMenu class="button-icon waves-effect waves-light navbar-menu" (click)="toggleMenuItems()"> 
+    <i class="material-icons">expand_less</i>                  
+  </div> -->
+  <div class="logo" (click)="goHome()">
+    <img src="/assets/logos/saffron_mata_white.svg" alt="">
+  </div>
+  <app-profile-menu *ngIf="isLoggedIn" class="pull-right"></app-profile-menu>
+
+</nav>

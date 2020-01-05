@@ -1,0 +1,26 @@
+<div class=" table-responsive">
+  <table class="table table-hover projects-table">
+    <thead>
+      <tr>
+      	<th>Type</th>
+        <th>Project Name</th>
+        <th>Creator</th>
+        <th>Employee</th>
+        <th>Backer</th>
+        <th>Created Date</th>
+        <th>Signed Document</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of signedDocumentListInfo">
+      	<td>{{item._whichType}}</td>
+        <td>{{item.data.project_name}}</td>
+        <td>{{item.data.creator_name}}</td>
+        <td>{{item.data.employee_name}}</td>
+        <td>{{item.data.backer_name}}</td>
+        <td>{{item._created_date}}</td>
+        <td>{{item._signed_dicument}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

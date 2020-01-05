@@ -1,0 +1,58 @@
+:host ::ng-deep {
+  .nav-tabs {
+    margin-bottom: 20px;
+  }
+}
+
+main {
+  //  padding: 10px 60px 60px 60px;
+  padding: 0.625em 0 3.750em 0;
+  background-color: #f9f5f0;
+  min-height: calc(100% - 67px);
+}
+
+.recruitment-wrap {
+  position: relative;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  h1 {
+    color: #2929e4;
+    font-size: 2.250em;
+    font-weight: 500;
+    line-height: 1.194em;
+    margin: 2px;
+  }
+}
+
+.cardwrap {
+  background: #fff;
+  margin-bottom: 0.625em;
+  padding: 2.188em 2.500em;
+}
+
+@media only screen and (max-width: 992px) {
+  .recruitment-wrap {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  :host ::ng-deep {
+    .nav-tabs {
+      flex-direction: column;
+    }
+
+    ngb-tabset:not(.mobile-open) {
+      .nav-link:not(.active) {
+        display: none;
+      }
+    }
+  }
+}

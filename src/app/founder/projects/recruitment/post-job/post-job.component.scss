@@ -1,0 +1,42 @@
+.flex-container {
+    display: flex;
+    align-items: stretch;
+  }
+  
+
+  .flex-container>div.leftpanel  { flex: 0 0 185px; order:1; }
+  .flex-container>div.rightpanel { flex: 0 0 205px; order:3;}
+  .flex-container>div.middlepanel { flex-grow: 1; padding: 0 3.125em; order:2;}
+  .postingfilter { margin-bottom: 20px;}
+  .jobposting { height: 400px; width: 100%;}
+
+
+  p-dropdown.form-control {
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid blue;
+    border-radius: 0;
+}
+  
+@media (max-width: 767px) {
+  .flex-container { display: block; }
+  .flex-container>div.leftpanel {  }
+  .flex-container>div.rightpanel { margin-top: 30px; }
+  .flex-container>div.middlepanel { padding: 0; margin-top: 30px;}
+
+  .leftpanel h4,
+  .rightpanel h6 { cursor: pointer;}
+  .leftpanel h4 span { font-size: 0.7em;  font-weight: bold; }
+  .rightpanel h6 span { font-size: 1em;  font-weight: bold; }
+  .collapseopen span.icon-down-arrow:before{ content: "\e90c"  }
+
+}
+
+
+  
+
+
+
+
+
+

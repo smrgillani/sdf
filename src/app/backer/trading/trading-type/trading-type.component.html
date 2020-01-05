@@ -1,0 +1,37 @@
+<div class="container-fluid bg-gradient selectrole">
+    <div class="container-main bg-image">
+      <div class="container-border">
+        <div class="container-center selectrolecontent">
+         <!-- <app-navbar></app-navbar> -->
+         <app-header class="position-absolute no-bg"></app-header>
+      
+          <div class="container-buttons">
+            <div class="circle-container" [@pageState]="pageState" (click)="shownextpage('isx')" (@pageState.done)="animationDone($event)">
+              <div class="container-button border-green">
+                <div class="button-inner back-green"><span class="icon-isx"></span></div>            
+              </div>
+              <div class="button-name">ISX</div>
+            </div>
+            <div class="circle-container" [@pageState]="pageState" (click)="shownextpage('lsx')" (@pageState.done)="animationDone($event)">
+              <div class="container-button border-red">
+                <div class="button-inner back-red"><span class="icon-lsx"></span></div>
+              </div>
+              <div class="button-name">LSX</div>
+  
+            </div>
+            <div class="circle-container" [@pageState]="pageState" (click)="shownextpage('x')" (@pageState.done)="animationDone($event)">
+              <div class="container-button border-orange">
+                <div class="button-inner back-orange"><span class="icon-x"></span></div>
+              </div>
+              <div class="button-name">X<small>(funded project shares)</small></div>  
+          </div>         
+          </div>
+        </div>
+  
+        <!-- <div class="container-footer choose-role-footer" [@pageState]="pageState">Your here to create something special</div> -->
+      </div>
+    </div>
+  
+  </div>
+  
+  

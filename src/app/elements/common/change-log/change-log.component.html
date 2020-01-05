@@ -1,0 +1,28 @@
+<div class="session" [class.selected]="selectedSessionIndex === null">
+  <div class="session-name" (click)="selectChanges()">
+    <h5>Current version</h5>
+    <span>{{ currentEditingUsers.join(', ') }}</span>
+  </div>
+  <div class="session-changes">
+    <div *ngFor="let change of currentChanges; let j = index" [class.selected]="j === selectedChangeIndex"
+         (click)="selectChanges(null, j)">
+      <h6>{{ change.timestamp_changed | date:'MMMM d, h:mm a' }}</h6>
+      <span>{{ change.editing_user.name }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="session" *ngFor="let session of sessions; let i = index" [class.selected]="i === selectedSessionIndex">
+  <div class="session-name" (click)="selectChanges(i)">
+    <h5>{{ session.timestampEnded | date:'MMMM d, h:mm a' }}</h5>
+    <span>{{ session.editingUsers.join(', ') }}</span>
+  </div>
+
+  <div class="session-changes">
+    <div *ngFor="let change of session.changes; let j = index" [class.selected]="j === selectedChangeIndex"
+         (click)="selectChanges(i, j)">
+      <h6>{{ change.timestamp_changed | date:'MMMM d, h:mm a' }}</h6>
+      <span>{{ change.editing_user.name }}</span>
+    </div>
+  </div>
+</div>

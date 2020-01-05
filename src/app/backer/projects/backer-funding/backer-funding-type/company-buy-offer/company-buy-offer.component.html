@@ -1,0 +1,77 @@
+<div class="heading"  *ngIf="showActions">
+    <h1 (click)="isCollapse=togglecollapse(isCollapse)">Company buy offer</h1>
+</div>
+
+
+<h3 class="card-title" (click)="isCollapse=togglecollapse(isCollapse)" *ngIf="!showActions">
+        <i class="icomoon icon-next-1"></i>      
+        Company buy offer
+      <span class="icomoon pull-right"
+            [class.icon-up-arrow]="!isCollapse"
+            [class.icon-down-arrow]="isCollapse"                    
+            ></span>
+</h3>
+
+
+<div class="cardwrap" *ngIf="isCollapse">
+    <div class="showinterest text-right" *ngIf="showActions">
+        <button class="saffron_btn orange_btn" (click)="showInterest(popUpForShowInterestMessage)">Show Interest</button>
+        <!-- <button class="saffron_btn orange_btn" (click)="showInterest(popUpForShowInterestMessage)" #myShowInterestPopover="ngbPopover">Show Interest</button> -->
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Current valuation of company ($)</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.current_valuation.amount">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Details of the organization</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.organization_details">
+            </div>
+        </div>
+    </div>
+
+    <h5>T&Cs</h5>
+    <div class="terms_n_condition"  [innerHTML]="fundData.creatorFundData.terms_condition"></div>
+ <!-- <app-text-editor [readOnly]="true" class="wrappertexteditor" [ngModel]="fundData.creatorFundData.terms_condition" height="125px"></app-text-editor> -->
+    <!-- <hr> -->
+    <form [formGroup]="frmFundDetails">
+        <div class="row" *ngIf="!fundData.creatorFundData.sold">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <!-- <label>Select to proceed with this offer</label>
+                    <input type="checkbox" class="form-control" formControlName="buyCompany" [(ngModel)]="fundData.buyCompany">
+                -->
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" formControlName="buyCompany" [(ngModel)]="fundData.buyCompany">
+
+                        <!-- <input  class="custom-control-input ng-valid ng-dirty ng-touched" type="checkbox"> -->
+                        <span class="custom-control-indicator"></span>
+                        <span  class="custom-control-description">Select to proceed with this offer</span>
+                      </label>
+               
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="fundData.creatorFundData.sold">
+            <span>Already sold out</span>
+        </div>
+        <div class="post-buttons" *ngIf="showActions">
+            <button type="button" class="saffron_btn red_btn" (click)="skip()">Skip</button>
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">Next</button>
+
+        </div>
+    </form>
+</div>
+<ng-template #popUpForShowInterestMessage>
+    <div class="modal-body">Your request is send successfully.</div>
+    <div class="modal-footer">
+      <div class="buttons">
+        <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+      </div>
+    </div>
+  </ng-template>

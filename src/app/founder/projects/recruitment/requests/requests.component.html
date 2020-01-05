@@ -1,0 +1,97 @@
+<app-header class="position-static" [backNavOptions]="{ route: ['founder', 'projects', projectId > projectId ? projectId : 'null', 'recruitment'] }"></app-header>
+<main>
+    <!-- <button onclick="notifyMe()">Notify me!</button> -->
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Employee Requests</h1>
+    </div>
+
+    <div class="tabwrap">
+      <ngb-tabset activeId="{{activeId}}" (tabChange)="onTabChange($event)">
+        <ngb-tab id="tab1">
+          <ng-template ngbTabTitle>Bonus</ng-template>
+          <ng-template ngbTabContent>
+            <table class="saffron-table">
+              <tbody>
+                  <tr *ngFor="let bonus of bonusList">
+                      <td>
+                        <div class="employee-name">Employee {{bonus.employee}}</div>
+                        <div class="amount">Bonus Amount: {{(bonus.bonus.currency == 'USD' ? '$' : '') + bonus.bonus.amount}}</div>
+                        <div class="date">{{bonus.create_date | date: 'MMM dd, yyyy hh:mm'}}</div>
+                        <div class="status" *ngIf="bonus.status != 'new'" [ngClass]="{ 'accept': bonus.status == 'accept' }">{{bonus.status}}</div>
+                      </td>
+                      <td>
+                          <div class="project-actions" *ngIf="bonus.status == 'new'">
+                            <button class="saffron-btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus('Bonus', 'accept', bonus.id)">Accept</button>
+                            <button class="saffron-btn bittersweet waves-effect waves-light" (click)="updateRequestStatus('Bonus', 'decline', bonus.id)">Decline</button>
+                          </div>
+                      </td>
+                  </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab id="tab2">
+          <ng-template ngbTabTitle>Hike</ng-template>
+          <ng-template ngbTabContent>
+              <table class="saffron-table">
+                <tbody>
+                    <tr *ngFor="let hike of hikeList">
+                        <td>
+                          <div class="employee-name">Employee {{hike.employee}}</div>
+                          <div class="amount">Hike Amount: {{(hike.hike.currency == 'USD' ? '$' : '') + hike.hike.amount}}</div>
+                          <div class="date">{{hike.create_date | date: 'MMM dd, yyyy hh:mm'}}</div>
+                          <div class="status" *ngIf="hike.status != 'new'" [ngClass]="{ 'accept': hike.status == 'accept' }">{{hike.status}}</div>
+                        </td>
+                        <td>
+                            <div class="project-actions" *ngIf="hike.status == 'new'">
+                              <button class="saffron-btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus('Hike', 'accept', hike.id)">Accept</button>
+                              <button class="saffron-btn bittersweet waves-effect waves-light" (click)="updateRequestStatus('Hike', 'decline', hike.id)">Decline</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab id="tab3">
+          <ng-template ngbTabTitle>Quit Job</ng-template>
+          <ng-template ngbTabContent>
+              <table class="saffron-table">
+                <tbody>
+                  <tr *ngFor="let quitJob of quitJobList">
+                    <td>
+                      <div class="employee-name">Employee {{quitJob.employee}}</div>
+                      <div class="amount">Notice Period: {{quitJob.notice_period}}</div>
+                      <div class="date">{{quitJob.create_date | date: 'MMM dd, yyyy hh:mm'}}</div>
+                      <div class="status" *ngIf="quitJob.status != 'new'" [ngClass]="{ 'accept': quitJob.status == 'accept' }">{{quitJob.status}}</div>
+                    </td>
+                    <td>
+                        <div class="project-actions" *ngIf="quitJob.status == 'new'">
+                          <button class="saffron-btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus('QuitJob', 'accept', quitJob.id)">Accept</button>
+                          <button class="saffron-btn bittersweet waves-effect waves-light" (click)="updateRequestStatus('QuitJob', 'decline', quitJob.id)">Decline</button>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </ng-template>
+        </ngb-tab>
+
+        <!-- <ngb-tab>
+          <ng-template ngbTabTitle>Past Orders</ng-template>
+          <ng-template ngbTabContent>
+            <app-current-past-all-orders [orderType]="'past'" [projectId]="projectId"></app-current-past-all-orders>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>All Orders</ng-template>
+          <ng-template ngbTabContent>
+            <app-current-past-all-orders [projectId]="projectId"></app-current-past-all-orders>
+          </ng-template>
+        </ngb-tab> -->
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

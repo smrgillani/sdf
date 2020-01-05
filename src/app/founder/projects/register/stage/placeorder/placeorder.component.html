@@ -1,0 +1,103 @@
+<div class="container-fluid saf_blue_theme">
+    <div class="container-main">
+        <div class="container-border">
+            <!-- <app-navbar></app-navbar> -->
+            <app-header class="position-absolute" [backNavOptions]="{ route: ['/founder/projects',  projectId, 'register']} "></app-header> 
+            <div class="container-header">
+                    <div class="app-founder-register-bubble-toolbar">
+                <app-founder-register-bubble-toolbar *ngIf="stageState" [currentStage]="stageState.stage" [projectId]="projectId"></app-founder-register-bubble-toolbar>
+                
+            </div>
+            <div class="sectionheadings">
+                    <h1 class="d-inline hero-title">{{title}}</h1>
+                    <h3 class="d-inline hero-subtitle">{{subtitle}}</h3>
+                </div>
+            </div>
+
+            <div class="placeorderwrap">
+                <div class="scrollbar-container">
+                    <div class="container"  *ngIf="showSummary">
+
+                        <div class="container-summary">
+                            <ng-container>
+                                <div class="card" *ngFor="let item of qaList; let index = index">
+                                    <div class="card-block">
+                                        <h3 class="card-title">
+                                            {{questionGroups[item.group]}}
+                                            <span class="pull-right" [class.open]="!item.isCollapsed" [class.close]="item.isCollapsed" (click)="item.isCollapsed = !item.isCollapsed"></span>
+                                        </h3>
+                                        <div class="card-text" [ngbCollapse]="item.isCollapsed">
+                                            <div class="qa-item  clearfix" *ngFor="let question of item.list">
+                                                <h3>{{question.title}}</h3>
+                                                <p>{{question.subtitle}}</p>
+
+                                                <app-registration-answer-input *ngIf="!item.isCollapsed" [question]="question" [autoFocus]="false" [saveAnswer]="true" (onBlur)="saveProjectAnswers()"></app-registration-answer-input>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div  class="post-buttons">
+                                <button  class="button blue" (click)="showSummary=false;">Ok</button>    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container"  *ngIf="!showSummary">
+                        <div class="cardwrap">
+                            <div  class="tableheading mainheading">Choose the <span>{{entityTypeDetails.title}} package</span> that fits your needs</div>
+                            <div class="table-responsive" *ngIf="availablePackages && availablePackages.length>0; else nopackages">
+                                <table class="table table-hover  ">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div  class="mainheading">
+                                                Choose the
+                                                <span>{{entityTypeDetails.title}} package</span>
+                                                that fits your needs
+                                            </div>
+                                            </th>
+                                            <th *ngFor="let package of availablePackages; let index=index" class="center">
+                                                <div class="colortext color{{index}}">
+                                                    <sup>$</sup>
+                                                    <span>{{package.amount}}</span>
+                                                    <br/> {{package.title}}
+                                                </div>
+                                                <span class="packgedec">{{package.description}}</span>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let feature of availablePackages[0].features">
+                                            <td>
+                                                {{feature.feature}}
+                                            </td>
+                                            <td *ngFor="let package of availablePackages;" class="center">
+                                                <!-- {{available}}let available = getFeatureAvailablity(package.id, feature.feature); -->
+                                                <span class="iconmoon icon-check" *ngIf="getFeatureAvailablity(package.id, feature.feature_id)=='Yes'"></span>
+                                                <span class="iconmoon icon-multiply" *ngIf="getFeatureAvailablity(package.id, feature.feature_id)=='No'"></span>
+                                                <span *ngIf="getFeatureAvailablity(package.id, feature.feature_id)!='Yes' && getFeatureAvailablity(package.id, feature.feature_id)!='No'">{{getFeatureAvailablity(package.id, feature.feature_id)}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td *ngFor="let package of availablePackages; let index=index" class="center">
+                                                <button class="btn btn-{{index}}" (click)="onSelectPackage(package)">Select</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-template #nopackages>No packages available... contact administrator</ng-template>
+                            <div class="errorwrap" *ngFor="let error of errorMessages">
+                                    {{error}}
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,237 @@
+<app-header
+  class="position-static"
+  [backNavOptions]="{caption: 'Recruitment', route: ['founder', 'projects', projectId, 'recruitment']}"
+></app-header>
+
+<main>
+  <!-- <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="profile-imgwrap">
+      <div class="profilebox">
+        <div class="profile-img">
+          <img [src]="employeePaymentDetails?.photo" alt="">
+        </div>
+        <div class="profilename">{{employeePaymentDetails?.employee}}</div>
+        <div class="">{{employeePaymentDetails?.current_designation}}</div>
+        <div class="employee-starrate rateus">
+          (
+          <ngb-rating [rate]="employeePaymentDetails?.rating"></ngb-rating>)
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="container saf_blue_theme">
+    <div class="profile-imgwrap">
+      <div class="profilebox">
+        <div class="profile-img">
+          <img *ngIf="employeePaymentDetails?.photo" [src]="employeePaymentDetails.photo">
+        </div>
+        <div class="profilename">{{employeePaymentDetails?.employee}}</div>
+        <div class="profilepost">( {{employeePaymentDetails?.current_designation}} )</div>
+        <div class="starrate">
+          <ngb-rating [rate]="employeePaymentDetails?.rating"></ngb-rating>
+        </div>
+      </div>
+    </div>
+
+    <div class="makepayment">
+      <h3 class="pageheading">Make a Payment</h3>
+
+      <form [formGroup]="frmEmployeeHours">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Payment From</label>
+              <p-calendar class="form-control" formControlName="fromDate" [(ngModel)]="pay.from_date" (ngModelChange)="clearLoggedInHours()"></p-calendar>
+              <div class="form-control-feedback" *ngIf="fromDate.errors && (fromDate.touched || fromDate.dirty)">
+                <div class="errorwrap" *ngIf="fromDate.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Payment Till</label>
+              <p-calendar class="form-control" formControlName="tillDate" [(ngModel)]="pay.to_date" (ngModelChange)="clearLoggedInHours()"></p-calendar>
+              <div class="form-control-feedback" *ngIf="tillDate.errors && (tillDate.touched || tillDate.dirty)">
+                <div class="errorwrap" *ngIf="tillDate.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-8">
+            <div class="form-group pull-right">
+              <label class="btn-block hidden-sm-down">&nbsp;</label>
+              <button type="button" class="saffron_btn skyblue_btn" (click)="getLoggedInHours()">Get Logged In Hours
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="notewrap">
+          <span>
+            <strong>Note:</strong> Select date range and click on "Get Logged In Hours" to fetch details
+          </span>
+        </div>
+      </form>
+
+      <form [formGroup]="frmEmployeePay">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Hourly Rate ($)</label>
+              <input type="text" class="form-control" formControlName="hourlyRate" [(ngModel)]="pay.hourly_rate">
+              <div class="form-control-feedback" *ngIf="hourlyRate.errors && (hourlyRate.touched || hourlyRate.dirty)">
+                <div class="errorwrap" *ngIf="hourlyRate.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="hourlyRate.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Logged in hours</label>
+              <input type="text" class="form-control" readonly formControlName="loggedInHours" [(ngModel)]="pay.loggedin_hours">
+              <div class="form-control-feedback" *ngIf="loggedInHours.errors && (loggedInHours.touched || loggedInHours.dirty)">
+                <div class="errorwrap" *ngIf="loggedInHours.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Bonus ($)</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="bonus"
+                [(ngModel)]="pay.bonus.amount"
+                (ngModelChange)="calculateAmount()"
+              >
+              <div class="form-control-feedback" *ngIf="bonus.errors && (bonus.touched || bonus.dirty)">
+                <div class="errorwrap" *ngIf="bonus.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="bonus.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Deductions ($)</label>
+              <input type="text" class="form-control" formControlName="deductions" [(ngModel)]="pay.deductions.amount"
+                     (ngModelChange)="calculateAmount()">
+              <div class="form-control-feedback" *ngIf="deductions.errors && (deductions.touched || deductions.dirty)">
+                <div class="errorwrap" *ngIf="deductions.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="deductions.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Amount ($)</label>
+              <input type="text" class="form-control" readonly formControlName="amount" [(ngModel)]="pay.amount.amount">
+              <div class="form-control-feedback" *ngIf="amount.errors && (amount.touched || amount.dirty)">
+                <div class="errorwrap" *ngIf="amount.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="amount.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn skyblue_btn" (click)="clear()">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" (click)="submit()">Pay</button>
+          <button type="button" class="saffron_btn blue_btn" (click)="openBonusHikePopUp()">Check Requests</button>
+        </div>
+
+        <div class="errorwrap" *ngFor="let error of errorMessages">
+          {{error}}
+        </div>
+      </form>
+    </div>
+
+    <div class="paymenthistory boxtable">
+      <div class="boxheader">
+        <h3>Payment History</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>NAME</th>
+            <th>Payment From</th>
+            <th>Payment Till</th>
+            <th>Logged in hours</th>
+            <th>Bonus</th>
+            <th>Deductions</th>
+            <th>Amount Paid</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let history of employeePaymentDetails.payment_history?.results">
+            <td>{{employeePaymentDetails?.employee}}</td>
+            <td>{{history.from_date}}</td>
+            <td>{{history.to_date}}</td>
+            <td>{{history.loggedin_hours}}</td>
+            <td>{{history.bonus.amount}}</td>
+            <td>{{history.deductions.amount}}</td>
+            <td class="text-orange">${{history.amount.amount}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <app-pagination
+        class="my-pagination"
+        [pageSize]="pageSize"
+        [pagesQuantity]="employeePaymentDetails.payment_history?.count"
+        (pageChanged)="getCurrentEmployeePayDetails($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForBonusHike>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+      <div class="heading">
+        <h1>Request</h1>
+      </div>
+      <div class="cardwrap">
+        <ngb-tabset>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Bonus</ng-template>
+            <ng-template ngbTabContent>
+              <app-bonus-hike-popup
+                [type]="'Bonus'"
+                [user_id]="employeePaymentDetails.user_id"
+                [selectedBonusOrHike]="selectedBonus"
+                (emitService)="selectedItems($event)"
+              ></app-bonus-hike-popup>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab>
+            <ng-template ngbTabTitle>Hike</ng-template>
+            <ng-template ngbTabContent>
+              <app-bonus-hike-popup
+                [type]="'Hike'"
+                [user_id]="employeePaymentDetails.user_id"
+                [selectedBonusOrHike]="selectedHike"
+                (emitService)="selectedItems($event)"
+              ></app-bonus-hike-popup>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</ng-template>

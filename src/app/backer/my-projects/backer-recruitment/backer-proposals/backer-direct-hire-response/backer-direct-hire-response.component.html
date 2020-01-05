@@ -1,0 +1,83 @@
+<div class="hire_employees">
+       
+
+  <div class="projects-search">
+    <div class="search-icon"></div>
+    <input class="form-control" type="text"
+           placeholder="Search here"
+           [(ngModel)]="searchText"
+           (input)="valueChange()"/>
+  </div>
+
+  <table class="table table-hover employee-table">
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>
+          <div class="Employee-title">
+            <div  (click)="getProfile(employee.userprofile_id)">
+              <div class="employee-name">{{employee.first_name}} {{employee.last_name}} ({{employee.experience}})</div>
+            </div>
+            <div class="employee-details"><div class="employee_des">{{employee.job_title}}</div>
+            <div class="ava">Availability : {{employee.availability_details[0].hours_per_day.title}}-hours/day</div></div>
+            <div class="text-skyblue">{{employee.final_status}}</div>
+          </div>
+        </td>
+        <td>
+          <div class="Employee-oth">
+            <div class="employee-starrate"><ngb-rating [rate]="employee.rating"></ngb-rating></div>
+            <div class="employee-budget">{{employee.availability_details[0].hourly_charges.title}}</div>
+           
+          </div>
+        </td>          
+        <td>
+          <div class="project-actions">
+            <div class="btn-border skyblue" >
+                <div class="btn skyblue-btn" (click)="projectMessage(employee)">Message</div>
+              </div>
+              <div class="btn-border orange" *ngIf="employee.offer_details && employee.offer_details.envelop == null">
+                  <button [disabled]="true" type="button" class="btn orange-btn" (click)="interviewletter(employee)">Hire</button>
+                  <button [disabled]="true" type="button" *ngIf="employee.offer_details && employee.offer_details.envelop != null" class="btn orange-btn" (click)="checkDocuSign(employee, popUpForDocuSignMessage)">Appointment Letter</button>
+                </div> 
+                <div class="btn-border orange" *ngIf="employee.offer_details && employee.offer_details.envelop != null">
+                  <button [disabled]="true" type="button" class="btn orange-btn" (click)="checkDocuSign(employee, popUpForDocuSignMessage)">Appointment Letter</button>
+                </div> 
+              <div class="btn-border skyblue" *ngIf="employee.reschedule_details != undefined && employee.reschedule_details.is_employee != undefined && employee.reschedule_details.is_employee == true && employee.reschedule_details.status != 'accept'">
+                <button [disabled]="true" type="button" (click)="ConfirmRescheduledInterview(employee.reschedule_details)">Confirm</button>
+              </div>
+              <div class="btn-border skyblue" *ngIf="employee.reschedule_details != undefined && employee.reschedule_details.is_employee != undefined && employee.reschedule_details.is_employee == true && employee.reschedule_details.status != 'accept'">
+                <button [disabled]="true" type="button" class="btn skyblue-btn" (click)="rescheduleMyInterview(employee.reschedule_details)">Reschedule</button>
+              </div>
+              <div class="btn-border skyblue" *ngIf="employee.status != undefined && employee.status == 'accept'">
+                <button [disabled]="true" type="button" class="btn skyblue-btn">Start Interview Now</button>
+              </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewEmpoloyeeList($event)"></app-pagination>
+</div>
+<ng-template #popUpForDocuSignMessage>
+  <div class="modal-body">DocuSign is pending on either side.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForDocuSignModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+      <div class="buttons">
+          <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+      </div>
+  </div>
+</ng-template>
+<ng-template #popUpForCommonMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+      <div class="buttons">
+          <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+      </div>
+  </div>
+</ng-template>

@@ -1,0 +1,173 @@
+<div class="container-fluid bg-gradient profilehome">
+  <div class="container-main bg-image profilehomecontent">
+    <div class="container-border">
+      <div class="">
+        <!-- <app-navbar></app-navbar> -->
+        <app-header class="no-bg position-absolute" [showBackButton]="false"></app-header>
+        <p-confirmDialog header="No Projects" icon="fa fa-info-circle" width="300"></p-confirmDialog>
+
+        <div class="container-main bg-circle">
+
+          <div class="container-title text-center">
+            <div class="c-white font-large" [@titleState]="titleState" (@titleState.done)="animationDone($event)">
+              Employee Home
+            </div>
+            <div class="separator"></div>
+            <div class="font-small" [@titleState]="titleState">Manage your Profile
+              <br> and find work
+            </div>
+          </div>
+
+          <div class="container-buttons">
+            <div class="btn-menu btn-profile  circle-first"
+                 [@buttonState1]="buttonState1"
+                 (@buttonState1.done)="animationDone($event)"
+                 (click)="myProfile()">
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+
+              <h5 class="c-white btn-caption">My Profile</h5>
+            </div>
+
+            <!--<div class="btn-menu btn-findwork  circle-second"
+                 [@buttonState2]="buttonState2"
+                 (@buttonState2.done)="animationDone($event)"
+                 appPopoverAutoPosition [popOverName]="findWorkPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                 (click)="findWork(findWorkPopover)"
+                 (shown)="closePopoverpWithDelay(2000, findWorkPopover, 'findWorkTimer')"
+                 [triggers]="'none'"
+                 [container]="'body'"
+                 [ngbPopover]="findWorkNotification"
+                 #findWorkPopover="ngbPopover"
+            >
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+
+              <h5 class="c-white btn-caption">Find Work</h5>
+            </div>-->
+
+            <div class="btn-menu btn-project  circle-second"
+                 [@buttonState2]="buttonState2"
+                 (@buttonState2.done)="animationDone($event)"
+                 appPopoverAutoPosition [popOverName]="projectPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                 (click)="projectList(projectPopover)"
+                 (shown)="closePopoverpWithDelay(2000, projectPopover, 'projectsTimer')"
+                 [triggers]="'none'"
+                 [container]="'body'"
+                 [ngbPopover]="projectsNotification"
+                 #projectPopover="ngbPopover"
+            >
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+
+              <h5 class="c-white btn-caption">My Projects</h5>
+            </div>
+
+            <!-- <div class="btn-menu btn-proposal circle-fourth"
+                 [@buttonState4]="buttonState4"
+                 (@buttonState4.done)="animationDone($event)"
+                 appPopoverAutoPosition [popOverName]="proposalPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                 (click)="proposalList(proposalPopover)"
+                 (shown)="closePopoverpWithDelay(2000, proposalPopover, 'myProposalTimer')"
+                 [triggers]="'none'"
+                 [container]="'body'"
+                 [ngbPopover]="proposalNotification"
+                 #proposalPopover="ngbPopover"
+            >
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+
+              <h5 class="c-white btn-caption">My Proposals</h5>
+            </div>
+
+            <div class="btn-menu btn-project"
+                   [@buttonState2]="buttonState2"
+                   (@buttonState2.done)="animationDone($event)"
+                   appPopoverAutoPosition [popOverName]="forumPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                   (click)="openProjects(projectsPopover)"
+                   (shown)="closePopoverpWithDelay(2000, projectsPopover, 'projectsTimer')"
+                   [triggers]="'none'"
+                   [container]="'body'"
+                   [ngbPopover]="projectsNotification"
+                   #projectsPopover="ngbPopover"
+              >
+                <div class="btn-border">
+                  <div class="btn-icon center-both"></div>
+                </div>
+
+                <h5 class="c-white btn-caption">Projects</h5>
+              </div>
+     -->
+            <!-- <div class="btn-menu btn-forum"
+                   appPopoverAutoPosition [popOverName]="forumPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                   (click)="navigateTo('./startup')"
+                   [@buttonState3]="buttonState3"
+                   (@buttonState3.done)="animationDone($event)"
+                   (shown)="closePopoverpWithDelay(2000, forumPopover, 'forumTimer')"
+                   [triggers]="'none'"
+                   [container]="'body'"
+                   [ngbPopover]="forumNotification"
+                   #forumPopover="ngbPopover"
+              >
+                <div class="btn-border">
+                  <div class="btn-project-bg btn-icon center-both"></div>
+                </div>
+
+                <h5 class="c-white btn-caption">Forum</h5>
+              </div>
+     -->
+            <!-- <div class="btn-menu btn-account"
+                   [@buttonState4]="buttonState4"
+                   (@buttonState4.done)="animationDone($event)"
+                   (click)="navigateTo('account')"
+              >
+                <div class="btn-border">
+                  <div class="btn-account-bg btn-icon center-both"></div>
+                </div>
+
+                <h5 class="c-white btn-caption">Account</h5>
+              </div> -->
+          </div>
+
+        </div>
+        <!--  <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-left col-12 col-sm-5 col-md-5 col-lg-12">
+                  <label>Temporary Password: {{tempPassword}} </label>
+                     <div class="col-12 col-sm-5 col-md-5 col-lg-12">
+                        <input class="form-control" placeholder="Password" [(ngModel)]="password" type="password"  formControlName="password" >
+                        <!-- required minlength="6"-->
+        <!-- <button (click)="updatePassword()" class="enter-btn">Update Password</button>
+                      </div>
+                  </div>
+              </div>
+            </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #proposalNotification>
+  <div class="message">{{findWorkPopoverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="proposalPopover.close()">Ok</div>
+  </div>
+</ng-template>
+
+<ng-template #findWorkNotification>
+  <div class="message">{{findWorkPopoverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="findWorkPopover.close()">Ok</div>
+  </div>
+</ng-template>
+
+<ng-template #projectsNotification>
+  <div class="message">{{findWorkPopoverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="projectPopover.close()">Ok</div>
+  </div>
+</ng-template>

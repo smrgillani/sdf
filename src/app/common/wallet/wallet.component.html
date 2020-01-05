@@ -1,0 +1,43 @@
+<div class="container-fluid bg-gradient selectrole">
+  <div class="container-main bg-image">
+    <div class="container-border">
+      <div class="container-center selectrolecontent">
+      <app-header class="no-bg"></app-header>
+      <div class="container-title" [@pageState]="pageState">Wallet</div>
+        <div class="container-buttons">
+          <div class="circle-container" [@pageState]="pageState" (click)="bankaccount(popover)" (@pageState.done)="animationDone($event)"
+            (shown)="closePopoverpWithDelay(2000, popover, 'Profile')" [triggers]="'none'" [container]="'body'"
+            [ngbPopover]="popoverTemplate" #popover="ngbPopover"
+            appPopoverAutoPosition [popOverName]="popover" [placement]="{desktop:'bottom', tablet:'bottom', mobile:'none'}">
+
+            <div class="container-button border-green">
+              <div class="button-inner back-green"><span class="icon-banking"></span></div>
+            </div>
+            <div class="button-name">Bank Account</div>
+          </div>
+          <div class="circle-container" [@pageState]="pageState" (click)="transactions()" (@pageState.done)="animationDone($event)">
+            <div class="container-button border-red">
+              <div class="button-inner back-red"><span class="icon-transactions"></span></div>
+            </div>
+            <div class="button-name">Transactions</div>
+          </div>
+          <!-- <div class="circle-container" [@pageState]="pageState" (click)="tradeHistory()" (@pageState.done)="animationDone($event)">
+            <div class="container-button border-orange">
+              <div class="button-inner back-orange"><span class="icon-trade"></span></div>
+            </div>
+            <div class="button-name">Trade History</div>
+        </div> -->
+        </div>
+      </div>
+
+      <!-- <div class="container-footer choose-role-footer" [@pageState]="pageState">Your here to create something special</div> -->
+    </div>
+  </div>
+</div>
+
+<ng-template #popoverTemplate>
+  <div class="message">{{popOverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="popover.close()">Ok</div>
+  </div>
+</ng-template>

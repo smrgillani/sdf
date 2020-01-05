@@ -1,0 +1,167 @@
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading" #dummylabel>
+      <h1>Transaction</h1>
+    </div>
+
+    <!-- Bubble to choose Bank or Credit card -->
+    <div class="post-buttons" *ngIf="!_bankMode && !_creditMode">
+      <button class="saffron_btn orange_btn" (click)="selectMode('bank')">Pay by Bank</button>
+      <button class="saffron_btn skyblue_btn" (click)="selectMode('credit')">Pay by Credit Card</button>
+    </div>
+
+    <!-- For Bank -->
+    <div class="cardwrap" *ngIf="_bankMode">
+      <form name="form" (ngSubmit)="f.form.valid && saveTransactionInfo(f)" #f="ngForm" novalidate>
+        <input type="hidden" [(ngModel)]="transactionInfo.id" name="transactionInfoId" #bankId="ngModel">
+        <input type="hidden" [(ngModel)]="transactionInfo.is_external" name="non_field_errors" #non_field_errors="ngModel">
+        <div *ngIf="f.submitted && non_field_errors.errors && objKeyMessage && objKeyMessage['non_field_errors']" class="errorwrap">
+          {{objKeyMessage['non_field_errors'][0]}}
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Account</label>
+              <p-dropdown
+                class="form-control"
+                [options]="bankAccountList"
+                [(ngModel)]="transactionInfo.bank_account"
+                (onChange)="getSelectedBankCurrency()"
+                name="bank_account"
+                #bank_account="ngModel"
+                placeholder="-- Select --"
+                required
+              ></p-dropdown>
+
+              <div *ngIf="f.submitted && bank_account.errors?.required" class="errorwrap">Name Account is required</div>
+              <div *ngIf="f.submitted && bank_account.errors && objKeyMessage && objKeyMessage['bank_account']" class="errorwrap">{{objKeyMessage['bank_account'][0]}}</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Fund Type</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedType" name="mode" #mode="ngModel" required readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Amount</label>
+              <!-- <input type="number" class="form-control" min="1" [(ngModel)]="transactionInfo.amount.amount" name="amount" #amount="ngModel" required> -->
+              <p-spinner
+                size="30"
+                class="form-control"
+                [min]="1"
+                [(ngModel)]="transactionInfo.amount.amount"
+                [step]="1"
+                name="amount"
+                #amount="ngModel"
+                required
+              ></p-spinner>
+
+              <div *ngIf="f.submitted && amount.errors?.required" class="errorwrap">Amount is required</div>
+              <div *ngIf="f.submitted && amount.errors?.min && amount.touched" class="errorwrap"> Amount must be greater
+                than 0
+              </div>
+              <div *ngIf="f.submitted && amount.errors && objKeyMessage && objKeyMessage['amount']" class="errorwrap">{{objKeyMessage['amount'][0]}}</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Remark</label>
+              <input type="text" class="form-control" [(ngModel)]="transactionInfo.remark" name="remark" #remark="ngModel">
+              <!-- <div *ngIf="f.submitted && remark.errors?.required" class="errorwrap">Amount is required</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="currentRole == 'creator'">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Project</label>
+              <p-dropdown
+                class="form-control"
+                [options]="currentUserProjectList"
+                [(ngModel)]="transactionInfo.project"
+                name="project"
+                #project="ngModel"
+                placeholder="Personal"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="cancel()">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" type="submit">Add Transaction</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- For Credit Card -->
+    <div *ngIf="_creditMode">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Amount to deposit</label>
+            <p-spinner
+              size="10"
+              [disabled]="_creditMode && token"
+              class="form-control"
+              [min]="1"
+              [(ngModel)]="transactionInfo.amount.amount"
+              [step]="1"
+            ></p-spinner>
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="currentRole == 'creator'">
+          <div class="form-group">
+            <label>Project</label>
+            <p-dropdown
+              [disabled]="_creditMode && token"
+              class="form-control"
+              [options]="currentUserProjectList"
+              [(ngModel)]="transactionInfo.project"
+              name="project"
+              #project="ngModel"
+              placeholder="Personal"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-buttons" *ngIf="!token">
+        <div class="form-group">
+          <label class="btn-block">&nbsp;</label>
+          <button class="saffron_btn blue_btn" (click)="proceedToPayByCC()">Proceed to Pay</button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="_creditMode && token">
+        <iframe
+          id="load_payment"
+          class="embed-responsive-item"
+          name="load_payment"
+          width="100%"
+          [height]="iframeHeight"
+          frameborder="0"
+          scrolling="auto"
+        ></iframe>
+
+        <form id="send_hptoken" [action]="authorizeNetUrl" method="post" target="load_payment" #form>
+          <input type="hidden" name="token" [value]="token"/>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="alert alert-success" *ngIf="showSuccessMessage">
+      <strong>Amount deposited.</strong> You may add more or click on back to view list.
+    </div>
+  </div>
+</main>

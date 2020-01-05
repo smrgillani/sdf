@@ -1,0 +1,294 @@
+<div class="scrollbar-container">
+  <p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
+
+  <div class="form-container container">
+    <div class="row cardwrap" myMatchHeight="cards">
+      <div class="col-md-6" *ngFor="let c of arrayEmploymentInfo">
+        <div class="cards" [class.selected]="employmentInfo && employmentInfo === c">
+          <div class="headings">{{c.current_employer}}</div>
+          <div class="row" *ngIf="c.role_name!=undefined && c.role_name != ''">
+            <div class="col-sm-5"><strong>Role:</strong></div>
+            <div class="col-sm-7 value">{{c.role_name}}</div>
+          </div>
+          <div class="row" *ngIf="c.functional_areas_name!=undefined && c.functional_areas_name != ''">
+            <div class="col-sm-5"><strong>Functional Area:</strong></div>
+            <div class="col-sm-7 value">{{c.functional_areas_name}} </div>
+          </div>
+          <div class="row" *ngIf="c.departments_name!=undefined && c.departments_name != ''">
+            <div class="col-sm-5"><strong>Department:</strong></div>
+            <div class="col-sm-7 value">{{c.departments_name}}</div>
+          </div>
+          <div class="row" *ngIf="c.duration!=undefined && c.duration != ''">
+            <div class="col-sm-5"><strong>Duration:</strong></div>
+            <div class="col-sm-7 value">{{c.duration}}</div>
+          </div>
+          <div class="btnwrap">
+            <button type="text" (click)="editData(c)" class="btn btn-info"><span class="fa fa-pencil"></span></button>
+            <button type="text" (click)="confirm(c)" class="btn btn-danger"><span class="fa fa-trash-o"></span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="complexForm" (ngSubmit)="submitEmploymentInfo(complexForm.value)">
+      <input type="text" class="form-control" [(formControl)]="complexForm.controls['id']" hidden>
+      <input type="text" class="form-control" [(formControl)]="complexForm.controls['tempId']" hidden>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="">Employer</label>
+
+            <ng-template #rt let-r="result" let-t="term">
+              {{ r.employer}}
+            </ng-template>
+
+            <input
+              type="text"
+              class="form-control"
+              name="address"
+              [(formControl)]="complexForm.controls['current_employer']"
+              [ngbTypeahead]="searchEmployer"
+              [resultFormatter]="employer"
+              [resultTemplate]="rt"
+              (selectItem)="selectEmployer($event)"
+              [required]="validateEmploymentInfo()"
+            >
+
+            <span class="searching" *ngIf="searching; else commonText">searching...</span>
+            <div class="invalid-feedback" *ngIf="searchFailed && !searching">
+              Sorry, suggestions could not be loaded.
+            </div>
+
+            <ng-template #commonText>
+              <small class="form-text text-muted">Max 100. Alphanumeric + special characters</small>
+            </ng-template>
+
+            <!-- <div
+              *ngIf="complexForm.controls['current_employer'].hasError('required') && complexForm.controls['current_employer'].touched"
+              class="errorwrap">
+              Employer is required.
+            </div> -->
+            <div
+              *ngIf="complexForm.controls['current_employer'].hasError('required')"
+              class="errorwrap">
+              Employer is required.
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <label for="">Duration</label>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>From</label>
+            <p-calendar
+              class="form-control"
+              [(formControl)]="complexForm.controls['date_start']"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2030"
+              #fromDate
+              (onClose)="checkDateValidation(fromDate,toDate)"
+            ></p-calendar>
+
+            <div *ngIf="flagFromDate" class="errorwrap">From date must not be greater than today.</div>
+            <div [hidden]="complexForm.controls['date_start']?.status !== 'INVALID' " class="errorwrap">
+              From date is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-6">
+          <div class="form-group">
+            <label for="">To</label>
+            <p-calendar
+              class="form-control"
+              [(formControl)]="complexForm.controls['date_end']"
+              [monthNavigator]="true"
+              [yearNavigator]="true"
+              yearRange="1980:2030"
+              [disabled]="employmentInfo.present"
+              #toDate
+              (onClose)="checkDateValidation(fromDate,toDate)"
+            ></p-calendar>
+
+            <div *ngIf="flagToDate" class="errorwrap">To Date must be greater than From date.</div>
+            <!-- <div [hidden]="complexForm.controls['date_end']?.status !== 'INVALID' " class="errorwrap">To Date is required.</div> -->
+            <div [hidden]="complexForm.controls['date_end']?.status !== 'INVALID' || employmentInfo.present"
+                 class="errorwrap"
+            >To Date is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4  col-6">
+          <div class="form-group">
+            <br>
+            <label class="custom-control custom-checkbox">
+              <input
+                class="custom-control-input"
+                name="present"
+                type="checkbox"
+                [checked]="employmentInfo.present"
+                [(formControl)]="complexForm.controls['present']"
+                #checkboxID
+                (change)="onCheckedItemChanged(checkboxID.checked,fromDate)"
+              >
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Present</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Current Designation</label>
+            <input type="text" class="form-control" [(formControl)]="complexForm.controls['current_designation']">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Functional Area</label>
+            <p-multiSelect
+              [options]="functionalAreaList"
+              (onChange)="onFunctionalSelect($event.value)"
+              class="form-control"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['functional_areas']"
+            >
+              <ng-template let-r pTemplate="item">
+                <div style="font-size:14px;float:right;margin-top:4px">{{r.title}}</div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Role</label>
+            <!-- <p-dropdown [options]="roles" class="form-control"></p-dropdown> -->
+            <p-multiSelect
+              [options]="roleList"
+              (onChange)="onRoleSelect($event.value)"
+              class="form-control"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['role']"
+            >
+              <ng-template let-role pTemplate="item">
+                <div style="font-size:14px;float:right;margin-top:4px">{{role.title}}</div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label for="">Department</label>
+
+            <!-- <p-multiSelect class="form-control" [options]="roles" ></p-multiSelect> -->
+            <!--[(ngModel)]="selectedCities1"-->
+
+            <p-multiSelect
+              [options]="departmentList"
+              (onChange)="onDepartmentSelect($event.value)"
+              class="form-control"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['departments']"
+            >
+              <ng-template let-r pTemplate="item">
+                <div style="font-size:14px;float:right;margin-top:4px">{{r.title}}</div>
+              </ng-template>
+            </p-multiSelect>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="">Job Role</label>
+
+            <div class="radiogroup">
+              <label class="custom-control custom-radio">
+                <input
+                  class="custom-control-input"
+                  name="job_role"
+                  type="radio"
+                  [checked]="employmentInfo.job_role == null || employmentInfo.job_role == '' || employmentInfo.job_role == 'permanent'"
+                  [(formControl)]="complexForm.controls['job_role']"
+                  value="permanent"
+                >
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Permanent</span>
+              </label>
+
+              <label class="custom-control custom-radio">
+                <input
+                  class="custom-control-input"
+                  name="job_role"
+                  type="radio"
+                  [checked]="employmentInfo.job_role == 'contractual'"
+                  [(formControl)]="complexForm.controls['job_role']"
+                  value="contractual"
+                >
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Contractual</span>
+              </label>
+
+              <label class="custom-control custom-radio">
+                <input
+                  class="custom-control-input"
+                  name="job_role"
+                  type="radio"
+                  [checked]="employmentInfo.job_role == 'freelancer'"
+                  [(formControl)]="complexForm.controls['job_role']"
+                  value="freelancer"
+                >
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Freelancer</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <button class="btn btn-link addqualification"><span class="icomoon icon-add-song"></span>Add More </button>
+
+      <div id="done" class="done-container">
+          <button class="done-btn" (click)="onSubmit($event)"></button>
+          <button class="done-btn-caption" (click)="onSubmit($event)">Done</button>
+          <div class="done-note">
+            Click "Done" to go next step
+          </div>
+        </div> -->
+      <button class="btn btn-link addqualification" type="button" (click)="addMore(complexForm.value)">
+        <span class="icomoon icon-add-song"></span> Save &amp; Reset
+      </button>
+
+      <button class="btn btn-link reset-qualification" type="button" (click)="resetForm()">
+        <span class="fa fa-refresh"></span> Reset
+      </button>
+
+      <!-- [class.disabled]="!complexForm.valid"-->
+      <!-- <div id="done" class="done-container">
+        <button class="done-btn" type="submit" [ngClass]="{processing: processing}">
+          <img src="/assets/img/hourglass.svg">
+        </button>
+        <button class="done-btn-caption" type="submit">Done</button>
+        <div class="done-note">
+          Click "Done" to go next step
+        </div>
+      </div> -->
+      <div id="done" class="done-container">
+        <button class="done-btn" [ngClass]="{processing: processing}" type="submit">
+          Next
+        </button>
+        <div class="done-note">
+          Click "Next" to save
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

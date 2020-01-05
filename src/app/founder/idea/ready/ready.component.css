@@ -1,0 +1,51 @@
+.container-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bg-image {
+  background-image: url('/assets/img/circle1.png');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center center;
+}
+
+@media (min-width: 500px) {
+  .container-logo {
+    height: 40px;
+  }
+
+  .container-title {
+    font-size: 2em;
+    color: #fff;
+  }
+}
+
+@media (max-width: 499px) {
+  .container-logo {
+    height: 25px;
+  }
+
+  .container-title {
+    font-size: 1.5em;
+    color: #fff;
+  }
+}
+
+
+.container-footer {
+  color: #fff;
+  font-size: 1em;
+}
+
+.button-down-arrow {
+  width: 3em;
+  height: 2em;
+  cursor: pointer;
+  background-image: url(/assets/img/down_w.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90%;
+}

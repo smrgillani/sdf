@@ -1,0 +1,27 @@
+.document-container {
+  height: 100%;
+  background-color: white;
+}
+
+.document-element {
+  height: 100%;
+}
+
+.document-inside {
+  background-color: #fff;
+  height: 100%;
+  overflow: auto;
+  padding: 0 15px 15px;
+}
+
+.auto-save {
+  height: 32px;
+  color: #333;
+  margin: 0 16px;
+  border-bottom: 1px solid #ddd;
+  padding: 4px 0;
+}
+
+.auto-save + .document-element {
+  height: calc(100% - 32px);
+}

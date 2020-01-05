@@ -1,0 +1,46 @@
+<app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> 
+<main>
+  
+  <div class="container saf_blue_theme">
+      <div class="heading">
+
+          <h1>Manage Funding for XYZ Ltd. 
+
+             
+          </h1>  
+                  
+      </div>
+      <ng-container>
+        <div class="card" *ngFor="let item of qaList; let index = index">
+          <div class="card-block">
+                <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input"> 
+                        <span class="custom-control-indicator"></span>
+                    </label> 
+            <h3 class="card-title" (click)="toggleAccordian($event,index)">
+                      
+              <span >{{item.panelname}}</span>
+              <span class="icomoon pull-right"
+                    [class.icon-up-arrow]="!isCollapsedArray[index]"
+                    [class.icon-down-arrow]="isCollapsedArray[index]"                    
+                    ></span>
+            </h3>
+            <div class="card-text" [ngbCollapse]="isCollapsedArray[index]">
+              <div [innerHTML]="item.bodytext"></div>
+            </div>
+          </div>
+        </div>
+        
+      </ng-container>
+
+
+      <div class="post-buttons">
+          <div class="saffron_btn skyblue_btn" [routerLink]="['../fundingtype']">Next</div>
+        </div>
+   
+
+        <div class="projects-footer">
+          <div class="back-button" (click)="_location.back()">Back</div>
+        </div>
+   </div>
+</main>

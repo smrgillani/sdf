@@ -1,0 +1,264 @@
+.saffron_btn {
+    font-size: 1.125em;
+    padding: 0.167em 1em;
+}
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  
+    h1 {
+      color: #2929e4;
+      font-size: 2.250em;
+      font-weight: 500;
+      line-height: 1.194em;
+      margin: 2px;
+    }
+  
+    
+  }
+main {
+    padding: 0.625em 0 3.750em 0;
+    background-color: #f9f5f0;
+    min-height: calc(100% - 67px);
+}
+.cardwrap {
+   background: #fff;
+    margin-bottom: 0.625em;
+    padding: 2.188em 2.500em;
+    &.summarysec{
+        padding:0.8em 2.500em 2.188em 0;
+         .cardwrap {
+            padding: 0;
+          }
+    }
+}
+
+.post-buttons
+{
+    text-align: right;
+}
+.btn_wrap { margin: 1.250em 0; text-align: center; }
+
+h2 { color:#4342e6; font-size:1.500em;// 24px;
+ }
+
+.valuewrap { position: relative;
+    width: calc(100% - 6.250em);
+    top: -2.813em;
+    height: 2.313em;
+    margin-top: -2.313em;}
+.valuewrap span { color:#2c2be5; font-size:1.125em;// 18px; 
+    position: absolute; display: inline-block;    width: 5.556em; line-height: 2.056em;
+
+}
+.valuewrap .value{
+    left: 60%;    
+    bottom: 100%;
+    margin-left: -2.778em;
+    text-align: center;   color:#4342e6;
+}
+.valuewrap .totalvalue{
+    left: 100%;
+    text-align: right;
+}
+
+.progress{
+    height: 3.083em; width:calc(100% - 8.333em); margin: 3.750em 0; font-size: 0.750em;
+    &.bg-voilet { background: #8583ee; }
+    &.bg-lightvoilet { background: #c8c7f4; }
+    .progress-bar { height: 100%; }
+    .bg-danger { background: #fe5f5b; }
+    .bg-voilet { background: #8583ee; }
+
+}
+
+table tr th { text-transform: uppercase; font-weight: 500; }
+table tbody { border-bottom: 1px solid #eceeef; }
+.actionbtnwrap { white-space: nowrap; }
+table tbody td .btn-circle { width: 26px; height: 26px;  border-radius: 360px;-ms-border-radius: 360px;-webkit-border-radius: 360px;-moz-border-radius: 360px;
+    background: transparent;
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 2px;
+    cursor: pointer;
+    &.text-orange {
+        border-color:#fb605c;
+        color:#fb605c;
+    }
+    &.text-blue {
+        border-color:#7c7cf4;
+        color:#7c7cf4;
+    }
+    & + .btn-circle { margin-left: 5px; }
+}
+.materialcost-footer{ 
+    margin-bottom: 2.875em;
+    .form-control {
+    width: calc(100% - 330px);
+    display: inline-flex;
+    }
+    .footer-extrabtn { width: 325px; text-align: right; display: inline-flex;justify-content: flex-end;  }
+    .btn-blue {
+        background: #689af9; padding: 4px 20px;margin-left: 15px;
+        & + span {
+            margin-left: 15px;
+        }
+    }
+    
+}
+
+.card { border: 0; margin-bottom:0.625em;  } 
+.card-block { padding: 0 0 0 5.000em; position: relative; 
+
+    .custom-control {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        padding-left: 38px;
+        margin-right: 25px;
+        height: 38px;
+        font-size: 24px;
+        .custom-control-indicator{
+                width: 38px; height: 38px;    border-radius: 10px; -moz-border-radius: 10px;-ms-border-radius: 10px;-webkit-border-radius: 10px;
+                border: 1px solid #9999ab;
+                text-align: center;
+    line-height: 38px;
+        }
+        &.custom-checkbox .custom-control-input:checked~.custom-control-indicator { 
+            background: #00f2c4;
+            color:#3665df;
+            border-color:#00f2c4;
+            /* use !important to prevent issues with browser extensions that change fonts */
+            font-family: 'icomoon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+
+            /* Better Font Rendering =========== */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            &::before {
+                content: "\e90a";
+            }
+         }
+    }
+}
+
+.card-title{
+    font-size: 1.500em;
+    margin: 0;
+    position: relative;
+    padding: 0.833em 0.833em 0.833em 0;
+    cursor: pointer;
+    .icomoon {
+        width: 1.333em;
+        height: 1.333em;
+      //  margin-top: 0.208em;
+        opacity: 1;
+
+        cursor: pointer;
+    
+        &.icon-up-arrow {
+          background: url(/assets/img/idea/accordeon_close_button.png); background-size: 100%;
+        }
+    
+        &.icon-down-arrow {
+          font-size: 1em;
+          background: url(/assets/img/idea/accordeon_open_button.png);background-size: 100%;
+        }
+  
+        &:before{
+          display: none;
+        }
+      }
+  }
+  .card-text {
+       > div{
+           max-height: 300px;
+           overflow: auto;
+           padding-right:30px;
+           margin-bottom: 20px;
+       }  
+       font-size: 1.125em; color:#2c2be5; 
+       p{
+        font-size: inherit; color:inherit;
+       }
+  }
+
+.offercardwrap {     margin: 15px 0; }
+  .offercard {
+    border: 1px solid #4342e6;
+    padding: 15px 25px;
+    position: relative; 
+  h2 { margin-right: 85px; }
+    table{
+        tbody{
+                border: 0;
+        
+        td {
+            
+            vertical-align: top;
+            label{
+                margin: 0 10px 0 0;
+            }
+            span{
+                word-break: break-all;
+            }
+            
+        }
+    }
+    }
+    .btnwrap{
+        position: absolute;
+        top:10px;
+        right:10px;
+       button.btn { 
+            width: 36px;
+            height: 36px;
+            border-radius: 360px;
+            border: 0;
+            text-align: center;
+            padding: 2px;
+            line-height: 36px;
+            color:#fff;
+            &.skyblue{
+                background:#00d8c9;
+                &:hover{
+                    background: #03eddd;
+                }
+            }
+            &.red{
+                background:#fe5f5b;
+                &:hover{
+                    background: #fe7572;
+                }
+            }
+        }               
+    }
+  }
+
+
+@media (max-width: 767px){
+    .materialcost-footer{ 
+        .form-control  {
+            display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+        }
+        .footer-extrabtn  {
+            justify-content: flex-start;
+        }
+        .btn-blue:first-child { 
+                margin-left: 0;
+        }
+    }
+}
+
+@media (max-width: 360px){
+    .cardwrap { padding: 2.188em 1.5em; }
+}

@@ -1,0 +1,189 @@
+<div class="container-fluid bg-gradient">
+    <div *ngIf="!callback" class="container-main bg-image">
+        <div class="container-border">
+            <app-header class="no-bg position-absolute" [showBackButton]="false" [isLoggedIn]="false"></app-header>
+            <div class="login-box container">
+                <div class="close-btn hidden-sm-up" [routerLink]="['/']"></div>
+                <div class="col-12 column">
+                    <div class="container-title">Forgot Password</div>
+                    <div>
+                        <form novalidate [formGroup]="forgotForm" (ngSubmit)="resetPassword()" #lForm="ngForm">
+                            <div class="form-group form-inputs">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <p-dropdown class="form-control" formControlName="method" [options]="forgotMethod" (onChange)="removeErrors($event.value)"></p-dropdown>
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="form-group">
+                                            <input *ngIf="forgotForm.value.method === 'email'" class="form-control" placeholder="Email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" type="email" formControlName="email" />
+                                            <app-phone-input *ngIf="forgotForm.value.method === 'phone'" formControlName="phone"></app-phone-input>
+
+                                            <input *ngIf="forgotForm.value.method === 'username'" class="form-control" placeholder="User Name" required type="text" formControlName="user_name" />
+                                            <p-dropdown class="form-control" formControlName="IDproof" [options]="iDProofOption" *ngIf="forgotForm.value.method === 'idproof'"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- start of UserName-->
+
+                                <div class="col-12" *ngIf="forgotForm.value.method === 'username'">
+                                    <div class="btn-border pull-right" *ngIf="!flagQuestionEnable && !flagResetPassword">
+                                        <button type="button" class="enter-btn pull-right" (click)="getQuestion()">Next</button>
+                                    </div>
+                                    <!-- <div > -->
+
+                                    <div class="col-12" *ngIf="flagQuestionEnable">
+                                        <input type="text" class="form-control" id="question" placeholder="Question" formControlName="question" value={{question}} readonly>
+
+                                        <input *ngIf="question_type=='text'" type="text" class="form-control" id="answer" placeholder="Answer" formControlName="answer" required>
+
+                                        <div *ngIf="question_type=='radio'">
+                                            <label *ngFor="let r of listValue" class="custom-control custom-radio">
+                        <input id="{{r.key}}" formControlName="answer" type="radio" value="{{r.key}}" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">{{r.value}}</span>
+                      </label>
+                                        </div>
+
+                                        <div *ngIf="question_type=='checkboxes'">
+                                            <label *ngFor="let c of listValue" class="custom-control custom-checkbox">
+                        <input id="{{c.key}}" #checkboxID formControlName="answer" type="checkbox" 
+                        value="{{c.key}}" class="custom-control-input"
+                        [checked]="checkedItem" (change)="onCheckedItemChanged(checkboxID.checked,checkboxID.value)">
+                         <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">{{c.value}}</span>
+                      </label>
+                                        </div>
+                                        <div class="col-12" *ngIf="!flagResetPassword">
+                                            <div class="btn-border pull-right">
+                                                <button type="button" (click)="checkSecurityQuestion()" class="enter-btn pull-right">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- </div>  -->
+                                    <!-- <div class="col-6" >
+                    <div class="form-group" *ngIf="flagResetPassword">
+                      <input class="form-control" placeholder="New Password" type="password" formControlName="username_password" required>
+                    </div>
+                  </div>
+                  <div class="col-6" >
+                    <div class="form-group" *ngIf="flagResetPassword">
+                      <input class="form-control" placeholder="Confirm Password" type="password" formControlName="username_c_password" required>
+                    </div>
+                  </div> 
+                  <div class="col-12" >
+                    <div class="btn-border pull-right" *ngIf="flagResetPassword">
+                      <button type="submit"  class="enter-btn pull-right">Confirm</button>
+                    </div>
+                  </div>                                  -->
+
+                                </div>
+                                <!-- End of UserName-->
+                                <!-- start of Email-->
+                                <div class="row" *ngIf="forgotForm.value.method === 'email'">
+                                    <div *ngIf="flagMailSent" class="col-12 col-sm-5 col-md-5 col-lg-12">
+                                        <div class="note">Reset Link will be send to your email<br> If you did not received any mail then again click on SEND RESET LINK.
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="btn-border pull-right sentlink"><br>
+                                            <button type="submit" class="enter-btn pull-right ">Send Reset Link</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Email-->
+                                <!-- start of Phone-->
+                                <div class="row" *ngIf="showOtpInput && forgotForm.value.method === 'phone'">
+                                    <div class="col-12 col-sm-5 col-md-7">
+                                        <app-otp-input segmentLength="2" segments="3" required formControlName="otp"></app-otp-input>
+                                    </div>
+
+                                    <div class="col-12" *ngIf="!showResetPasswordInput">
+                                        <div class="btn-border pull-right">
+                                            <button type="button" (click)="confirmOTP()" class="enter-btn pull-right">Confirm OTP</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Phone-->
+
+                                <!-- Reset Password common for all-->
+                                <div *ngIf="showResetPasswordInput || flagResetPassword">
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="New Password" type="password" formControlName="new_password1" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Confirm Password" type="password" formControlName="new_password2" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="btn-border pull-right">
+                                            <button type="submit" class="enter-btn pull-right">Confirm</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- End of reset password-->
+
+                                <div class="row" *ngIf="forgotForm.value.method === 'idproof' && !showCapturePhoto">
+                                    <div class="col-12 col-sm-5 col-md-5 col-lg-12">
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="ID Proof Number" type="text" formControlName="idproofnumber" required>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!showResetPasswordInput" class="col-12">
+                                        <div class="btn-border pull-right">
+                                            <button type="button" (click)="showCapturePhoto = !showCapturePhoto" class="enter-btn pull-right">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="forgotForm.value.method === 'idproof' && showCapturePhoto"> 
+                                    <div class="col-12">                             
+                                    <app-id-login [id_number]="forgotForm.value.idproofnumber" [idmethod]="forgotForm.value.IDproof" (idstage)="getidstage($event)"></app-id-login>
+                                </div>     
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-6 col-md-7 otp-legend-container">
+                                        <div class="otp-legend" *ngIf="showOtpInput && forgotForm.value.method === 'phone' && !showResetPasswordInput">
+                                            Enter the code we texted you. Want Us to
+                                            <a (click)="sendCode()" href="javascript:void(0)">send it again</a>?
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-12">
+                                        <div class="btn-border pull-right" *ngIf="showLoginButton">
+                                            <button type="submit" class="enter-btn">Enter</button>
+                                        </div>
+                                        <div class="btn-border pull-right" *ngIf="!showOtpInput && forgotForm.value.method === 'phone'">
+                                            <button type="button" class="enter-btn pull-right" (click)="sendCode()">Send code</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <app-validation-message [messages]="messages" [msgArray]="msgArray" [fields]="fields"></app-validation-message>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container-other-buttons row">
+                <div class="link text-left col-4 mobile-hidden" [routerLink]="['/']">
+                    <i class="fa fa-arrow-left"></i> Back</div>
+                <!-- <div class="link col-12 col-md-4 text-right text-center">Forgot password?</div>
+        <div class="link col-md-4 text-right mobile-hidden" [routerLink]="['/signup']">Have no account?</div> -->
+            </div>
+        </div>
+        <div class="privacy-policy singin">By tapping "Join" you are agreeing to the
+            <span class="c-white" (click)="openTermsOfUseModal()">Terms of use</span> and
+            <span class="c-white text_underline" (click)="openPrivacyPolicyModal()">Privacy policy</span>
+        </div>
+    </div>
+    <div *ngIf="callback" class="container-main bg-image">
+        <div class="container-title text-center">Retrieving login information...</div>
+    </div>
+</div>

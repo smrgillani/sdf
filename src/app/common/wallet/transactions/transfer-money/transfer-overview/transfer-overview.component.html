@@ -1,0 +1,58 @@
+<div class="cardwrap tabwrap">
+  <div class="profile-address">
+    <div class="row" *ngIf="currentRole == 'creator'">
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="radiogroup">
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="is_self" [(ngModel)]="is_self" type="radio" [value]="true">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">To Self</span>
+            </label>
+
+            <label class="custom-control custom-radio">
+              <input class="custom-control-input" name="is_self" [(ngModel)]="is_self" type="radio" [value]="false">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">To Others</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="is_self && currentRole == 'creator'">
+      <app-transfer-to-self></app-transfer-to-self>
+    </div>
+
+    <div class="row" *ngIf="!is_self">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Find User</label>
+
+          <ng-template #rt let-r="result" let-t="term">
+            <div class="userbox">
+              <div class="usermsg">
+                {{ r.name}}
+              </div>
+            </div>
+          </ng-template>
+
+          <input
+            type="text"
+            name="searchText"
+            class="form-control"
+            [(ngModel)]="searchText"
+            [ngbTypeahead]="searchUser"
+            [resultFormatter]="userFormatter"
+            [resultTemplate]="rt"
+            (selectItem)="selectUser($event)"
+          >
+
+          <span class="searching" *ngIf="searching">searching...</span>
+
+          <div class="invalid-feedback" *ngIf="searchFailed && !searching">Sorry, suggestions could not be loaded.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

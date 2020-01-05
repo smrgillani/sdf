@@ -1,0 +1,365 @@
+<app-header
+  class="position-static"
+  [backNavOptions]="{caption: 'Projects', route: ['backer', 'trading', 'isx']}"
+></app-header>
+
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>{{project.title}}</h1>
+    </div>
+
+    <div class="cardwrap maingraph">
+      <div class="s-box">
+        <div class="s-box-heading">
+          <div class="row">
+            <div class="col-6">
+              <h2>Stock Information</h2>
+            </div>
+            <div class="col-6 text-right">
+
+              <div class="form-group graph-option text-right">
+                <p-dropdown
+                  class="form-control charttype"
+                  [options]="chartTypeList"
+                  [(ngModel)]="chartFormatting.chartType"
+                  (onChange)="reloadStockInformationChartData()"
+                ></p-dropdown>
+
+                <p-dropdown
+                  class="form-control charttime"
+                  [options]="dayItem"
+                  [(ngModel)]="day"
+                  (onChange)="reloadStockInformationChartData()"
+                ></p-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="s-box-body">
+          <div class="wj-flexchart-label-placeholder">
+            <table>
+              <tr>
+                <td>
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.date}}</span>
+                </td>
+                <td>
+                  Open:
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.open}}</span>
+                </td>
+                <td>
+                  Low:
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.low}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Volume:
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.volume}}</span>
+                </td>
+                <td>
+                  Close:
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.close}}</span>
+                </td>
+                <td>
+                  High:
+                  <span *ngIf="currentPoint === null">-</span>
+                  <span *ngIf="currentPoint !== null">{{currentPoint.high}}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <wj-financial-chart
+            #flexChart
+            [itemsSource]="filterEmptyValues(chartData?.stock_info)"
+            [itemFormatter]="customItemFormatter"
+            [symbolSize]="4"
+            [chartType]="chartFormatting.chartType"
+            bindingX="date"
+            [class.moving]="movingChart"
+            [interpolateNulls]="true"
+            [palette]="['#669bf9']"
+            >
+            <wj-flex-chart-axis
+              [wjProperty]="'axisY'"
+              [min]="chartFormatting.mainYAxisMin"
+              [max]="chartFormatting.mainYAxisMax"
+              [position]="chartFormatting.mainYAxisPosition"
+              [axisLine]="true"
+              [majorGrid]="false"
+            ></wj-flex-chart-axis>
+            <wj-flex-chart-axis
+              #axisVolumeY
+              [min]="0"
+              [max]="chartFormatting.volumeSeriesAxisYMax"
+              [axisLine]="false"
+              [labels]="false"
+              [majorGrid]="false"
+              [majorTickMarks]="chartFormatting.volumeSeriesAxisYTickMark"
+            ></wj-flex-chart-axis>
+
+            <wj-financial-chart-series
+              binding="volume"
+              [chartType]="chartFormatting.volumeSeriesChartType"
+              [axisY]="axisVolumeY"
+            ></wj-financial-chart-series>
+            <wj-financial-chart-series
+              binding="high,low,open,close"
+            ></wj-financial-chart-series>
+          </wj-financial-chart>
+
+          <div class="wj-flexchart-zoom">
+            <i class="fa fa-plus-circle" (click)="zoomChart(8/10)"></i>
+            <i class="fa fa-minus-circle" (click)="zoomChart(10/8)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cardwrap">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="s-box">
+            <div class="s-box-heading">
+              <h2>Order Book</h2>
+            </div>
+
+            <div class="form-group">
+              <p-dropdown
+                class="form-control"
+                [options]="orderTypeList"
+                [(ngModel)]="orderType"
+                (onChange)="onChangeOrderType($event)"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8 text-right">
+          <span><strong>Share Count: </strong>{{shares}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 dividerpipe">
+          <div class="s-box">
+            <div class="s-box-heading">
+              <h2>Buy</h2>
+            </div>
+
+            <form [formGroup]="bidForm" novalidate (ngSubmit)="saveBid(bidForm)">
+              <div class="s-box-body">
+                <input type="hidden" formControlName="exchange_type">
+                <input type="hidden" formControlName="project">
+                <input type="hidden" formControlName="order_type">
+
+                <div formGroupName="limit_price" *ngIf="orderType == 'limit'">
+                  <div class="form-group">
+                    <label>Price</label>
+
+                    <p-spinner size="30" class="form-control" [min]="1" formControlName="amount" [step]="0.01" required></p-spinner>
+
+                    <div
+                      *ngIf="bidForm.controls['limit_price'].controls['amount'].touched && bidForm.controls['limit_price'].controls['amount'].hasError('required')"
+                      class="errorwrap"
+                    >Amount is required.</div>
+
+                    <div *ngIf="!bidForm.controls['limit_price'].controls['amount'].valid && objKeyMessageBid" class="errorwrap">
+                      {{objKeyMessageBid['amount'][0]}}
+                    </div>
+
+                    <input type="hidden" formControlName="currency">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Quantity</label>
+
+                  <p-spinner size="30" class="form-control" [min]="1" formControlName="quantity" [step]="1" required></p-spinner>
+
+                  <div
+                    *ngIf="bidForm.controls['quantity'].touched && bidForm.controls['quantity'].hasError('required')"
+                    class="errorwrap">Quantity is required.
+                  </div>
+
+                  <div *ngIf="!bidForm.controls['quantity'].valid && objKeyMessageBid" class="errorwrap">
+                    {{objKeyMessageBid['quantity'][0]}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="s-box-footer">
+                <button type="submit" class="saffron_btn skyblue_btn">Buy</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="s-box">
+            <div class="s-box-heading">
+              <h2>Sell</h2>
+            </div>
+
+            <form [formGroup]="askForm" novalidate (ngSubmit)="saveAsk(askForm)">
+              <div class="s-box-body">
+                <input type="hidden" formControlName="exchange_type">
+                <input type="hidden" formControlName="project">
+                <input type="hidden" formControlName="order_type">
+
+                <div formGroupName="limit_price" *ngIf="orderType == 'limit'">
+                  <div class="form-group">
+                    <label>Price</label>
+
+                    <p-spinner size="30" class="form-control" [min]="1" formControlName="amount" [step]="0.01" required></p-spinner>
+
+                    <div
+                      *ngIf="askForm.controls['limit_price'].controls['amount'].touched && askForm.controls['limit_price'].controls['amount'].hasError('required')"
+                      class="errorwrap"
+                    >Amount is required.</div>
+
+                    <div *ngIf="!askForm.controls['limit_price'].controls['amount'].valid && objKeyMessageAsk" class="errorwrap">
+                      {{objKeyMessageAsk['amount'][0]}}
+                    </div>
+
+                    <input type="hidden" formControlName="currency">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Quantity</label>
+
+                  <p-spinner size="30" class="form-control" [min]="1" formControlName="quantity" [step]="1" required></p-spinner>
+
+                  <div *ngIf="askForm.controls['quantity'].touched && askForm.controls['quantity'].hasError('required')" class="errorwrap">
+                    Quantity is required.
+                  </div>
+
+                  <div *ngIf="askForm.controls['quantity'].touched && askForm.controls['quantity'].errors?.min" class="errorwrap">
+                    Quantity must be greater than 0.
+                  </div>
+
+                  <div *ngIf="!askForm.controls['quantity'].valid && objKeyMessageAsk" class="errorwrap">{{objKeyMessageAsk['quantity'][0]}}</div>
+                </div>
+              </div>
+
+              <div class="s-box-footer">
+                <button type="submit" class="saffron_btn skyblue_btn">Sell</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cardwrap">
+      <div class="row">
+        <div class="col-md-6 dividerpipe">
+          <div class="s-box">
+            <div class="s-box-heading">
+              <h2>Bid</h2>
+            </div>
+            <div class="s-box-body">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>PRICE</th>
+                  <th>QUANTITY</th>
+                  <th>TOTAL</th>
+                  <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let bidItem of bidListInfo">
+                  <td>{{bidItem.price}}</td>
+                  <td>{{bidItem.quantity}}</td>
+                  <td>{{bidItem.total}}</td>
+                  <td *ngIf=bidItem.is_cancel>
+                    <i (click)="cancelOrder(bidItem,'bid')" class="fa fa-times" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="s-box">
+            <div class="s-box-heading">
+              <h2>Ask</h2>
+            </div>
+            <div class="s-box-body">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>pRICE</th>
+                  <th>qUANTITY</th>
+                  <th>tOTAL</th>
+                  <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let askItem of askListInfo">
+                  <td>{{askItem.price}}</td>
+                  <td>{{askItem.quantity}}</td>
+                  <td>{{askItem.total}}</td>
+                  <td *ngIf=askItem.is_cancel>
+                    <i (click)="cancelOrder(askItem,'ask')" class="fa fa-times" aria-hidden="true"></i>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cardwrap">
+      <div class="s-box">
+        <div class="s-box-heading">
+          <h2>Stock History</h2>
+        </div>
+
+        <div class="s-box-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>qUANTITY</th>
+              <th>Buy/Sell</th>
+              <th>Bid/Ask</th>
+              <th>tOTAL</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let stockItem of stockHistoryInfoList">
+              <td>{{stockItem.date}}</td>
+              <td>{{stockItem.quantity}}</td>
+              <td>{{stockItem.order}}</td>
+              <td>{{stockItem.value}}</td>
+              <td>{{stockItem.total}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <app-pagination
+          class="my-pagination"
+          [pageSize]="pageSize"
+          [pagesQuantity]="count"
+          (pageChanged)="refreshStockHistoryList($event)"
+        ></app-pagination>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,58 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  h1 {
+    color: #2929e4;
+    font-size: 2.250em;
+    font-weight: 500;
+    line-height: 1.194em;
+    margin: 2px;
+  }
+}
+
+.saffron_btn {
+  font-size: 1.125em;
+  padding: 0.167em 1em;
+}
+
+.form-group {
+  margin-bottom: 24px;
+
+  label {
+    margin-bottom: 0;
+  }
+}
+
+.transfer-from {
+  .form-group.personal {
+    border-bottom: 1px solid #010dff;
+    height: 66px;
+
+    p {
+      padding: .5rem 0;
+      margin: 0;
+    }
+  }
+}
+
+.transfer-switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transfer-to {
+  .form-group.personal {
+    border-bottom: 1px solid #010dff;
+    height: 66px;
+
+    p {
+      padding: .5rem 0;
+      margin: 0;
+    }
+  }
+}

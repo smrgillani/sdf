@@ -1,0 +1,3 @@
+<app-header class="position-static" [backNavOptions]="{ route: ['/backer/my-projects', projectId] }"></app-header>
+<!-- <app-header class="position-static"></app-header> -->
+<app-collaboration *ngIf="projectId && milestones" [projectId]="projectId" [milestones]="milestones"></app-collaboration>

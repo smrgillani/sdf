@@ -1,0 +1,42 @@
+<!-- <app-header class="no-bg position-absolute"></app-header> -->
+<app-header class="no-bg position-absolute" [backNavOptions]="{ route: ['/founder'] }"></app-header>
+<div class="profile-subheader container">
+
+
+  <a [routerLink]="['edit']" class="profile-edit-button"></a>
+  <a class="walletbox" (click)="walletshow()"><span class="icon-wallet"></span></a>
+  <a class="balancesheetbox" (click)="showBalanceSheet()"><span class="icon-money"></span></a>
+  <div class="clearfix visible-xs"></div>
+  <div class="user-avatar" [class.white]="profile.photo_crop">
+    <img *ngIf="profile.photo_crop" [src]="profile.photo_crop" alt="">
+    <i *ngIf="profile.is_kyc_complete" class="icon-check2 verified"></i>
+  </div>
+
+  <h1 *ngIf="profile.first_name || profile.last_name">{{profile.first_name}} {{profile.last_name}}</h1>
+  <p class="user-roles">{{profile.role}}</p>
+  <p>
+    {{profile.email}}
+    <span class="dot" *ngIf="profile.email && profile.phone_number"></span>
+    {{profile.phone_number}}
+  </p>
+  <p *ngIf="profile.registration_country">{{profile.registration_country.title}}</p>
+  <p *ngIf="profile.address">{{profile.address}}</p>
+</div>
+
+<div class="profile-details container">
+  <div class="row">
+    <div class="col-6 profile-document">
+      <h4>Passport Id</h4>
+      <div class="document-image">
+        <img class="loading" *ngIf="profile.passport_photo" [src]="profile.passport_photo" alt="">
+      </div>
+    </div>
+
+    <div class="col-6 profile-document">
+      <h4>Driver License Id</h4>
+      <div class="document-image">
+        <img class="loading" *ngIf="profile.driver_license_photo" [src]="profile.driver_license_photo" alt="">
+      </div>
+    </div>
+  </div>
+</div>

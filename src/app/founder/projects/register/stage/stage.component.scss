@@ -1,0 +1,89 @@
+$bg-color: #4342E6;
+$bg-color-2: #f9f5f0;
+$header-height: 270px;
+
+.container-fluid {
+  //background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 300px, $bg-color-2 300px, $bg-color-2 100%);
+  background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat; background-size: 100% 300px;  
+}
+
+.container-main::after {
+  border-color: #404040;
+
+}
+
+.container-header {
+  position: absolute;
+  top: 60px;
+  height: 210px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.sectionheadings  {     width: 60%;
+  margin: 0 auto;} 
+.hero-title {
+  letter-spacing: 0;
+}
+.app-founder-register-bubble-toolbar {min-height: 105px; }
+app-registration-qa {
+  width: 100%;
+  position: absolute;
+  top: 270px;
+  bottom: 0;
+  left: 0;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .sectionheadings {width: calc(100% - 48px);}
+}
+@media only screen  and (min-width: 768px) and (max-width: 992px){
+  .bubble .caption{font-size: 13px; font-weight: 500; }
+  .button-icon  { font-size: 24px;     width: 44px;
+    height: 44px; padding: 9px;
+    font-size: 24px;}
+  .button-border   { height: 50px;
+    width: 50px;padding: 1px; }
+
+    .hero-title { font-size: 45px;}
+    .bubbles { margin-top: 15px;}
+}
+@media only screen and (max-width: 767px) {
+  .bubbles{ max-width: 500px;    margin: auto;}
+  app-registration-qa {
+    top: 235px;
+  }
+  .app-founder-register-bubble-toolbar {min-height: 145px;max-width: 520px;margin: auto; }
+  .container-fluid {
+   // background-image: linear-gradient(#4342E6, #4342E6 229px, #f9f5f0 229px, #f9f5f0 100%);
+   background-size: 100% 250px;  
+    
+  }
+
+
+  .container-header {
+    // width: auto;
+    height: 175px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+    line-height: 37px;
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    line-height: 16px;
+    max-width: 166px;
+    vertical-align: bottom;
+    margin-left: 10px;
+    font-weight: normal;
+    display: none !important;
+  }
+}
+

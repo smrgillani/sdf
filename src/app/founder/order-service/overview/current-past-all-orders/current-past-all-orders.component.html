@@ -1,0 +1,108 @@
+<!-- <p>
+  current-past-all-orders works!
+  Type: {{orderType}}
+</p> -->
+
+<div class="cardwrap">
+  <div class="s-box">
+    <!-- <div class="s-box-heading">
+          <h2>Stock History</h2>
+      </div> -->
+    <div class="s-box-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Order No</th>
+              <th>Creation On</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Price</th>
+              <th>Last Action On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orderServiceList">
+              <td>{{item.id}}</td>
+              <td>{{item.create_date | date:'d MMM yyyy'}}</td>
+              <td>{{item.title}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.creator_amount?.amount}}</td>
+              <td>{{item.action_date | date:'d MMM yyyy'}}</td>
+              <td style="width: 210px">
+                <div class="project-actions">
+                  <div class="btn-border blue" *ngIf="item.status != 'open' && item.is_work_uploaded"
+                  (click)="downloadFile(item.id)">
+                    <div class="btn  blue-btn">View Updates</div>
+                  </div>
+                  <div class="btn-border orange" *ngIf="item.status != 'open' && item.status != 'complete'" (click)="showFileDroppa(item.id)">
+                    <div class="btn  orange-btn">Suggest Changes</div>
+                  </div>
+                  <div class="btn-border skyblue" *ngIf="item.status != 'open' && item.status != 'complete' && item.status != 'reject'"
+                  (click)="updateStatus('complete', item.id)">
+                    <div class="btn  skyblue-btn">Complete</div>
+                  </div>
+                  <div class="btn-border blue" *ngIf="item.status != 'open' && item.status != 'complete' && item.status != 'reject'"
+                  (click)="showCR(item.id)">
+                    <div class="btn  blue-btn">Conflict</div>
+                  </div>
+                  <div class="btn-border  purple" *ngIf="item.status != 'open' && item.status != 'reject'"
+                  [routerLink]="[item.id,'work-area']">
+                      <div class="btn  purple-btn">Work</div>
+                    </div>
+                  <!-- <button *ngIf="item.document_name" class="saffron_btn skyblue_btn btn-block" (click)="downloadFile(item.document, item.document_name)">View Updates</button>-->
+                  <!-- <button class="saffron_btn skyblue_btn btn-block" *ngIf="item.status != 'open' && item.is_work_uploaded"
+                  (click)="downloadFile(item.id)">View Updates
+                  </button>
+                  <button class="saffron_btn blue_btn btn-block" *ngIf="item.status != 'open'" (click)="showFileDroppa(item.id)">
+                    Suggest Changes
+                  </button>
+                  <button class="saffron_btn orange_btn btn-block" *ngIf="item.status != 'open'"
+                  (click)="updateStatus('complete', item.id)">Complete</button>
+                  <button class="saffron_btn red_btn btn-block" *ngIf="item.status != 'open'"
+                   (click)="showCR(item.id)">Conflict</button>
+                  <button class="saffron_btn skyblue_btn btn-block" *ngIf="item.status != 'open'"
+                   [routerLink]="[item.id,'work-area']">Work</button> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="showFD">
+      <h5>For Order {{selectedId}}</h5>
+      <app-file-droppa class="pdfwithdoc" id="filedroppatemplate" [dropZoneTemplate]="dropZoneChartTemplate" [url]="" [multiple]="true"
+        [autoUpload]="false" [showFilesList]="true" [beforeAddFile]="beforeAddFile" (filesUpdated)="FilesUpdated($event)" [openTriggerId]="'passportTrigger'">
+        <div class="profile-buttons">
+          <div class="trigger" id="passportTrigger">
+          </div>
+        </div>
+      </app-file-droppa>
+      <div class="errorwrap" *ngIf="is_fileSizeExceed">The file size exceeds the limit.</div>
+      <button *ngIf="showFD && updateOrderServiceInfo?.sample_attachments && updateOrderServiceInfo?.sample_attachments.length > 0"
+        class="saffron_btn skyblue_btn" (click)="putOrderServiceInfo()">Save</button>
+    </div>
+    <div *ngIf="showConflictRemark">
+      <h5>For Order {{selectedId}}</h5>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Remark</label>
+            <textarea class="form-control" [(ngModel)]="updateOrderServiceInfo.conflict_remark"></textarea>
+          </div>
+        </div>
+      </div>
+      <button *ngIf="updateOrderServiceInfo?.conflict_remark && updateOrderServiceInfo?.conflict_remark.length > 0" class="saffron_btn skyblue_btn"
+        (click)="updateStatus('conflict', selectedId)">Save</button>
+    </div>
+    <div>
+      <p>Note:  Upon clicking View Updates, an offline copy will be <strong>DOWNLOADED</strong> of any relevant or completed files thus far of your service.  If there are no uploads yet, the system will display No Uploads yet.</p>
+      <p>On click of Suggest Changes, Creator can <strong>UPLOAD</strong> the documents from his end, in case any input is needed.  We will be able to view your Suggest Changes and consider the feedback.</p>
+    </div>
+
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getOrderServiceList($event)"></app-pagination>
+
+  </div>
+</div>

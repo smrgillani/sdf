@@ -1,0 +1,393 @@
+$login-box-width: 610px;
+$error-color: #FE5F5B;
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+
+  -webkit-box-shadow: 0 0 0 30px #391aa0 inset;
+  -webkit-text-fill-color: #fff !important;
+}
+.container-other-buttons {
+  color: #cccccc;
+  font-size: 18px;
+  justify-content: space-between;
+  max-width: $login-box-width;
+  width: 100%;
+  padding: 6px 24px;
+  margin-bottom: 35px;
+}
+
+
+.container-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.privacy-policy {
+  color: #ccc;
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  span{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.login-box {
+  max-width: $login-box-width;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background-color: rgba(42, 7, 106, 0.41);
+  overflow-y: visible;
+
+  .form-inputs {
+    min-height: 80px;
+  }
+
+  .close-btn{
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background: url(/assets/img/Combined_Shape.png) no-repeat;
+    background-size: cover;
+    display: none;
+  }
+
+  .column {
+    position: relative;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .container-title {
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 21px;
+  }
+
+  .vertical-separator {
+    margin-left: -1px;
+    margin-right: -1px;
+    width: 2px;
+    float: left;
+
+    .line {
+      box-sizing: border-box;
+      height: 118px;
+      width: 2px;
+      border: 1px solid #979797;
+    }
+
+    .text {
+      margin-left: -9px;
+      color: #cccccc;
+      font-size: 18px;
+      text-align: center;
+      height: 22px;
+      width: 18px;
+      margin-top: 8px;
+      margin-bottom: 13px;
+    }
+  }
+
+  .form-control {
+    color: #ffffff;
+    font-size: 18px;
+    background-color: transparent;
+    border: 0 solid #888888;
+    border-bottom-width: 2px;
+    border-radius: 0;
+    padding-left: 0px;
+
+    &::placeholder {
+      color: #808080;
+    }
+  }
+
+  select.form-control {
+    option {
+      color: #4342E6;
+      background-color: white;
+    }
+  }
+
+  .btn-border {
+    width: 132px;
+    height: 39px;
+    border: 2px solid #24d7c8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover{
+      border-width: 4px;
+    }
+    .enter-btn {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+      height: 31px;
+      width: 124px;
+      background-color: #24d7c8;
+      cursor: pointer;
+      border: none;
+      bottom: 9px;
+      right: 24px;
+
+      
+      
+    }
+    
+    &.sentlink{
+      width: auto;
+      padding: 2px;
+      white-space: nowrap;
+      .enter-btn
+      {
+        width: auto;
+      }
+    }
+    
+  }
+  .note{ color: #fff;}
+  app-phone-input {
+    color: #ffffff;
+    font-size: 18px;
+    background-color: transparent;
+    border: 0 solid #888888;
+    border-bottom-width: 2px;
+    border-radius: 0;
+  }
+
+  app-otp-input {
+    color: #ffffff;
+    font-size: 18px;
+    background-color: transparent;
+    border: 0 solid #888888;
+    border-bottom-width: 2px;
+    border-radius: 0;
+  }
+
+  .otp-legend-container {
+    min-height: 56px;
+  }
+
+  .otp-legend {
+    color: #CCCCCC;
+    font-size: 14px;
+    line-height: 18px;
+
+    a {
+      color: #CCCCCC;
+      font-weight: 600;
+    }
+  }
+}
+
+.error-message{
+  color: $error-color;
+}
+
+.error-input{
+  border-color: $error-color !important;
+  color: $error-color !important;
+  &::placeholder{
+    color: $error-color !important;
+  }
+}
+
+.custom-control-description {
+	color: #FFFFFF;
+}
+
+@media (max-width: 992px) {
+  .login-box{
+    max-width: 520px;
+
+    overflow-y: auto;
+    margin-top: 60px;
+
+    .vertical-separator {
+      width: 100%;
+      padding: 0 20px;
+      height: 2px;
+      margin: 10px 0;
+      .line {
+        width: 47%;
+        height: 2px;
+        &.left{
+          float: left;
+        }
+        &.right{
+          float: right;
+        }
+      }
+      .text{
+        float: left;
+        margin-top: -12px;
+        margin-left: 1.6%;
+      }
+    }
+  }
+
+  .container-other-buttons {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 520px;
+    
+  }
+}
+@media (max-width: 767px) {
+  .container-main
+  {
+    padding:0  0.938em !important;
+  }
+  .bg-image { background-size: contain;}
+  .container-border{
+    border: none;
+
+  }
+  .container-main::after
+  {
+    display: none;
+  }
+  .login-box{
+    padding-bottom: 10px;
+    top: 0;
+    width: 100%;
+    .vertical-separator {
+      .line {
+        width: 45%;
+      }
+      .text{
+        margin-left: 3%;
+      }
+    }
+  }
+  .privacy-policy {
+    bottom: 0;
+  }
+}
+
+@media (max-width: 499px) {
+
+  .container-main
+  {
+    padding: 0.938em 0.938em !important;
+    min-height: 100vh;
+  }
+  .container-fluid {
+    height: auto;
+  }
+  
+  .container-border {
+    position: static;
+  }
+
+  .login-box {
+    padding: 20px 10px 10px 10px;
+    position: relative;
+   
+
+    .close-btn {
+      width: 18px;
+      height: 18px;
+      top: -9px;
+      right: -9px;
+      display: block;
+    }
+
+    .vertical-separator {
+      padding: 0;
+      .line {
+        width: 42%;
+      }
+      .text{
+        margin-left: 5%;
+      }
+    }
+    .column{
+      padding: 0;
+    }
+    span, input{
+      width: 100%;
+      margin: 0;
+    }
+
+    .form-control, app-phone-input, app-otp-input {
+      font-size: 14px;
+    }
+  }
+  .container-other-buttons{
+    flex-direction: initial !important;
+  }
+
+  .container-title {
+    color: #ffffff;
+    font-size: 21px;
+  }
+
+  .social-wrapper .container-title {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  .privacy-policy {
+    bottom: 5px;
+    width: auto;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 374px) {
+
+  .container-border {
+    position: static;
+  }
+
+  .container-other-buttons .link {
+    padding: 2px;
+    line-height: 1;
+  }
+
+  .privacy-policy {
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
+  }
+}
+
+
+@media screen and (max-width:768px) and (orientation:landscape) {
+  .close-btn{
+    display: none;
+  }
+
+
+
+  .login-box{
+    overflow-y: scroll;
+  }
+
+  .privacy-policy{
+    bottom: 0;
+    left: 0;
+  }
+}

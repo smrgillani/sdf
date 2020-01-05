@@ -1,0 +1,179 @@
+
+
+    <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header>
+
+  <main>
+<div class="container saf_blue_theme">
+    <div class="profile-imgwrap">
+        <div class="profilebox">
+        <div class="profile-img">
+            <img src="/assets/img/profile.jpg">
+        </div>
+        <div class="profilename">Namrata Sehgal</div>
+        <div class="profilepost">( MVC Developer ) </div>
+        <div class="starrate"><ngb-rating [rate]="3"></ngb-rating></div>
+
+      </div>
+    </div>
+
+
+    <div class="makepayment">
+<h3 class="pageheading">Make a Payment</h3>
+
+<div class="row">
+  <div class="col-12 col-sm-6">
+    <div class="form-group">
+      <label>Payment From</label>
+      <input type="text" class="form-control">
+
+    </div>
+
+  </div>
+
+  <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label>Payment Till</label>
+        <input type="text" class="form-control">
+  
+      </div>
+  
+    </div>
+
+</div>
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label>Hourly Rate</label>
+        <input type="text" class="form-control">
+  
+      </div>
+  
+    </div>
+  
+    <div class="col-12 col-sm-6">
+        <div class="form-group">
+          <label>Logged in hours</label>
+          <input type="text" class="form-control">
+    
+        </div>
+    
+      </div>
+  
+  </div>
+
+
+  <div class="row">
+      <div class="col-12 col-sm-3">
+        <div class="form-group">
+          <label>Bonus</label>
+          <input type="text" class="form-control">
+    
+        </div>
+    
+      </div>
+    
+      <div class="col-12 col-sm-3">
+          <div class="form-group">
+            <label>Deductions</label>
+            <input type="text" class="form-control">
+      
+          </div>
+      
+        </div>
+
+
+      <div class="col-12 col-sm-6">
+          <div class="form-group">
+            <label>Amount </label>
+            <input type="text" class="form-control">
+      
+          </div>
+      
+        </div>
+    
+    </div>
+
+    <!-- <div class="project-actions">
+        <div class="btn-border orange">
+            <div class="btn orange-btn">Cancel</div>
+          </div>
+        <div class="btn-border skyblue">
+          <div class="btn  skyblue-btn">Pay</div>
+        </div>
+        
+        
+      </div> -->
+
+
+      <div class="post-buttons">
+          <div class="button orange">Cancel</div>
+         
+          <div class="button skyblue">Pay</div>
+        </div>
+
+
+
+      
+
+
+    </div>
+    <div class="paymenthistory boxtable">
+      <div class="boxheader"><h3>Payment History</h3></div>
+      <div class="table-responsive">
+
+      <table class="table"> 
+        <thead>
+
+          <tr>
+            <th>NAME</th>
+            <th>Payment From</th>
+            <th>Payment Till</th>
+            <th>Logged in hours</th>
+            <th>Deductions</th>
+            <th>Amount Paid</th>
+          </tr>
+        </thead>
+<tbody> 
+  <tr>
+    <td>Henry Kissinger</td>
+    <td>June 27 - 2017 </td>
+    <td>June 28 - 2017 </td>
+    <td>100</td>
+    <td>Nil</td>
+    <td class="text-orange">$2000</td>
+  </tr>
+  <tr>
+      <td>Hank Aaron</td>
+      <td>June 27 - 2017 </td>
+      <td>June 28 - 2017 </td>
+      <td>100</td>
+      <td>Nil</td>
+      <td class="text-orange">$2000</td>
+    </tr>
+    <tr>
+        <td>Henry Kissinger</td>
+        <td>June 27 - 2017 </td>
+        <td>June 28 - 2017 </td>
+        <td>100</td>
+        <td>Nil</td>
+        <td class="text-orange">$2000</td>
+      </tr>
+      <tr>
+          <td>Hank Aaron</td>
+          <td>June 27 - 2017 </td>
+          <td>June 28 - 2017 </td>
+          <td>100</td>
+          <td>Nil</td>
+          <td class="text-orange">$2000</td>
+        </tr>
+  
+</tbody>
+      </table>
+      </div>
+      <app-pagination class="my-pagination"  [pageSize]="pageSize" [pagesQuantity]="count"></app-pagination> 
+
+    </div>
+    
+    <div class="backbtn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</div>
+</div>
+</main>

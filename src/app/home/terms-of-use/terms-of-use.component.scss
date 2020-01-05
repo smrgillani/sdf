@@ -1,0 +1,51 @@
+.center-position.show .modal-dialog{
+  position: absolute;
+  height: fit-content;
+  left: 0; right: 0; top: 0; bottom: 0;
+  margin: auto;
+  max-width: 90%;
+}
+
+.center-position.show .modal-content .modal-header{
+  color: #fff;
+  font-size: 30px;
+  height: 65px;
+  background-color: #FE5F5B;
+}
+
+.center-position.show .modal-content .modal-header button {
+  position: absolute;
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+  right: 20px;
+}
+
+.center-position.show .modal-content .modal-header button span{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0; left: 0;
+  background-size: 24px;
+  background-image: url("/assets/img/abort-Icon.png");
+  background-repeat: no-repeat;
+}
+
+.center-position.show .modal-content .modal-body{
+  max-height: calc(100vh - 200px);
+  padding: 20px 40px;
+  color: #1F1EAA;
+  font-size: 18px;
+  overflow-y: scroll;
+}
+.modal-footer { display: block; color:#4342e6;}
+
+
+@media (max-width: 767px){
+
+  .center-position.show .modal-content .modal-body{
+    max-height: calc(100vh - 175px);
+  }
+
+
+}

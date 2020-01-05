@@ -1,0 +1,67 @@
+<app-header class="position-static"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Trades</h1>
+    </div>
+    <div class="cardwrap transitionWrap">
+      
+        <div class="pull-left fundWrap">
+              <h5>
+                <div class="fundBtn pull-left">
+                  <button type="text" class="btn skyblue"><span class="icomoon icon-money"></span></button>
+                </div>
+                Net Balance  {{walletAmmount}} mata Credits*
+                 <span class="dabcoin">1 Dab coin is equal to 1 USD </span>
+                </h5>
+        </div>
+        <div class="pull-right tradeList">
+              <ul class="fundList">
+                <li *ngIf="currentRole == 'backer'" class="fundWrap"><a href="javascript:void();" [routerLink]="['../../backer/trading']">
+                          <div class="fundBtn pull-left">
+                            <button type="text" class="btn purple"><span class="icomoon icon-buy"></span></button>
+                          </div>
+                          Buy Shares   </a>              
+                 </li>
+                <li *ngIf="currentRole == 'backer'" class="fundWrap"><a href="javascript:void();" [routerLink]="['../../backer/trading']">
+                          <div class="fundBtn pull-left">
+                            <button type="text" class="btn orange"><span class="icomoon icon-sale"></span></button>
+                          </div>
+                          Sell Shares</a>
+                 </li>
+                 <li *ngIf="currentRole == 'backer'" class="fundWrap"><a href="javascript:void();" [routerLink]="['../../backer/trading/myshares']">
+                          <div class="fundBtn pull-left">
+                            <button type="text" class="btn red"><span class="icomoon icon-avatar"></span></button>
+                          </div>
+                          My Portfolio      </a>  
+                  </li>
+                  <li class="fundWrap"><a href="javascript:void();" [routerLink]="['../funding-details']">
+                            <div class="fundBtn pull-left">
+                              <button type="text" class="btn skyblue"><span class="icomoon icon-funds"></span></button>
+                            </div>
+                            Funding Details</a>
+                  </li>
+              </ul>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    <div class="cardwrap tabwrap">
+      
+      <ngb-tabset>
+          <ngb-tab>
+             <ng-template ngbTabTitle>Pending Transactions</ng-template>
+             <ng-template ngbTabContent>
+              <app-trade-pending-transactions></app-trade-pending-transactions>         
+             </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Completed Transactions</ng-template>
+            <ng-template ngbTabContent>
+              <app-trade-completed-transactions></app-trade-completed-transactions>      
+            </ng-template>
+          </ngb-tab> 
+      </ngb-tabset>
+
+      </div>
+  </div>
+</main>

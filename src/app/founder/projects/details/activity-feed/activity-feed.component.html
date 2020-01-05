@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <app-header></app-header>
+      <div class="projects-container">
+        <div class="projects-header">
+          <div class="project-header-text">
+            <span class="projects-header-caption">Activity Feed</span>
+          
+          </div>
+        </div>        
+        <!-- <div class="projects-search">
+            <div class="search-icon"></div>
+            <input class="form-control" type="text"
+                   placeholder="Search here"
+                   />
+          </div> -->
+        <table class="table table-hover projects-table">
+          <tbody>
+            <tr *ngFor="let activityFeed of activityFeedList">
+              <td>
+                <div class="project-title">
+                  <div class="profile-icon">
+                    <img *ngIf="activityFeed.actor.photo_crop" [src]="activityFeed.actor.photo_crop" alt="">
+                  </div>
+                  <div class="project-name">{{activityFeed.message}}</div>
+                </div>
+              </td>
+              <td>
+                <div class="project-visibility">
+                  <span class="icon-clock"></span>
+                  <div class="project-name">{{activityFeed.timestamp | formatRelativeTime}}</div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <app-pagination class="my-pagination"  [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getActivityFeed($event)"></app-pagination> 
+      </div>
+    </div>
+  </div>
+</div>

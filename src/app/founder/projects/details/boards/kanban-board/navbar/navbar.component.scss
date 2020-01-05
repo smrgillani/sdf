@@ -1,0 +1,26 @@
+nav {
+  height: 75px;
+  width: 100%;
+  padding: 16px 18px 16px 18px;
+  background: url('/assets/logos/saffron_mata_white.svg') no-repeat top 24px left 28px;
+  background-position: top 22px left 26px;
+}
+
+.logo {
+  //display: inline-block;
+  height: 100%;
+  width: 135px;
+  cursor: pointer;
+  float: left;
+}
+  .back-btn {
+    margin-right: 15px;
+    color: white;
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    float: left;
+    margin-left: 200px;
+    height: 100%;
+    cursor: pointer;
+  }

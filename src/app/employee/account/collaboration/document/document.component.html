@@ -1,0 +1,53 @@
+<div *ngIf="documentItem" class="document-container">
+  <div class="auto-save" *ngIf="lastSaved">
+    Last auto-save was {{ lastSavedRelative }}
+  </div>
+
+  <div [ngSwitch]="document.doc_type" class="document-element">
+    <div class="document-inside">
+      <ng-container *ngSwitchCase="'document'">
+        <app-text-editor [documentid]="document.id" [docInfo]="document" [(ngModel)]="content"
+                         (forceSave)="onForceSave()" [isCollab]="true"></app-text-editor>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'diagram'">
+        <app-edit-drawing [documentId]="document.id" [docInfo]="document" [(ngModel)]="content"
+                          (forceSave)="onForceSave()" [isCollab]="true"></app-edit-drawing>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'spreadsheet'">
+        <app-spreadsheet [documentId]="document.id" [docInfo]="document" [(ngModel)]="content"
+                         (forceSave)="onForceSave()" [isCollab]="true" [initialSave]="initialSave"></app-spreadsheet>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'drawing'">
+        <app-vd-canvas #vdCanvas *ngIf="loadData" [documentid]="document.id" [options]="canvasOptions"
+                       [(ngModel)]="content" (forceSave)="onForceSave()" [isCollab]="true"></app-vd-canvas>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'ocr'">
+        <app-ocr-input [(ngModel)]="content" [documentid]="document.id" [docInfo]="document"
+                       (forceSave)="onForceSave()" [isCollab]="true"></app-ocr-input>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'presentation'">
+        <app-presentation-input [(ngModel)]="content" (forceSave)="onForceSave()"></app-presentation-input>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="row form-row drop_files" *ngIf="uploadDocument">
+  <div class="col-12">
+    <app-file-droppa #fileDroppa [dropZoneTemplate]="dropZoneDocumentTemplate" [url]="" [multiple]="false"
+                     [autoUpload]="false" [showFilesList]="false" (filesUpdated)="filesUpdated($event)"
+                     [openTriggerId]="'documentTrigger'" [beforeAddFile]="beforeAddFile">
+      <p class="dropzone-help-text">Drop docx or xlsx file to the file area</p>
+      <div class="profile-buttons">
+        <div class="trigger" id="documentTrigger">
+          <!-- <span class="icon upload"></span>Upload <br> new file -->
+        </div>
+      </div>
+    </app-file-droppa>
+  </div>
+</div>

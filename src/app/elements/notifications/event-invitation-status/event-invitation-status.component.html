@@ -1,0 +1,38 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="popheading">Event Invitation</div>
+
+  <div class="cardwrap tabwrap">
+    <div class="cardwrap">
+      <div class="s-box">
+        <div class="s-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody *ngIf="eventInfo?.event_details">
+                <tr>
+                  <td><strong>Event:</strong> {{eventInfo?.event_details?.event_name}}</td>
+                  <td><strong>Location:</strong> {{eventInfo?.event_details?.location}}</td>
+                  <td><strong>Type:</strong> {{eventInfo?.event_details?.event_type}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Owner:</strong> {{eventInfo?.event_details?.owner_name}}</td>
+                  <td colspan="2"><strong>Event Date:</strong> {{eventDate}} {{eventTime}}</td>
+                </tr>
+                <tr *ngIf="eventInfo?.status != 'new'">
+                  <td colspan="3"><strong>Status:</strong> {{eventInfo?.status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="project-actions" *ngIf="eventInfo?.status == 'new'">
+    <div class="btn-border skyblue" (click)="updateEventInfoStatus('accept')">
+      <div class="btn skyblue-btn">Accept</div>
+    </div>
+  </div>
+</div>

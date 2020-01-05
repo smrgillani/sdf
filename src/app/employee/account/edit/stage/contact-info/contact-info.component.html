@@ -1,0 +1,123 @@
+<div class="form-container container">
+    <form [formGroup]="complexForm" (ngSubmit)="submitContactInfo(complexForm.value)">
+        
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="form-group">
+              <label for="">Current Address line 1</label>
+              <input type="text" class="form-control" [(formControl)]="complexForm.controls['address_line1']" maxlength="200">
+              <small class="form-text text-muted">Max 200. Alphanumeric + special characters</small>
+
+            </div>
+      </div>
+      
+    
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="">Current Address line 2</label>
+                <input type="text" class="form-control" [(formControl)]="complexForm.controls['address_line2']"  maxlength="200">
+                <small class="form-text text-muted">Max 200. Alphanumeric + special characters</small>
+              </div>
+        </div>
+      
+      </div>
+      <div class="row">
+            <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">Country</label>
+                        <select (change)="onCountrySelect($event.target.value)"  [(formControl)]="complexForm.controls['country']" class="form-control">
+                            <option *ngFor="let q of countryList" value= {{q.id}}>
+                               {{q.title}}
+                            </option>
+                          </select>
+                      </div>
+                </div> 
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <label for="">State</label>
+                  <select (change)="onStateSelect($event.target.value)"  [(formControl)]="complexForm.controls['state']" class="form-control">
+                    <option *ngFor="let q of stateList" value= {{q.id}}>
+                       {{q.title}}
+                    </option>
+                  </select>
+                </div>
+          </div>
+        
+        </div>
+
+       
+
+
+        <!-- <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="">Project details</label>
+                    <input type="text" class="form-control" id=""  placeholder="Please Enter">
+                    <small class="form-text text-muted">Max 100. Alphanumeric + special characters</small>
+                </div>
+            </div>
+           
+          
+          </div> -->
+          
+
+        <div class="row">
+            <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">City</label>
+                        <input type="text" class="form-control" [(formControl)]="complexForm.controls['city']" maxlength="200">
+                        </div>
+                </div>
+        
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">Pin Code</label>
+                        <input type="text" class="form-control"  [(formControl)]="complexForm.controls['pin_code']" maxlength="10">
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">Contact Details</label>
+                        <!-- <input type="text" class="form-control"  [(formControl)]="complexForm.controls['contact_details']" maxlength="10"> -->
+                        <app-phone-input [(formControl)]="complexForm.controls['contact_details']" ></app-phone-input>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">Alternate contact details</label>
+                        <!-- <input type="text" class="form-control" [(formControl)]="complexForm.controls['alternate_contact_details']" maxlength="10"> -->
+                        <app-phone-input [(formControl)]="complexForm.controls['alternate_contact_details']" required></app-phone-input>
+                    </div>
+                </div>
+               
+              
+              </div>
+
+            <!-- <div id="done" class="done-container" [class.disabled]="isSubmitting">
+                <div class="done-btn" (click)="onSubmit($event)"></div>
+                <div class="done-btn-caption" (click)="onSubmit($event)">Done</div>
+                <div class="done-note">
+                  Click "Done" to go next step<br/>
+                  or <a (click)="changeAnswers($event)">Change answers</a>
+                </div>
+              </div> -->
+               <!-- <div class="row form-row">
+      <div class="col-12">
+        <button type="submit" [disabled]="!complexForm.valid" class="done-btn">Done</button>
+      </div>
+    </div> -->
+
+        <div id="done" class="done-container"  [class.disabled]="!complexForm.valid">
+            <button class="done-btn" type="submit"></button>
+            <button class="done-btn-caption" type="submit">Done</button>
+            <div class="done-note">
+              Click "Done" to go next step
+            </div>
+          </div>
+            </form>
+    </div>
+    

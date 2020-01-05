@@ -1,0 +1,70 @@
+<div class="heading">
+    <h1 (click)="isCollapse=togglecollapse(isCollapse)">offer-role</h1>
+</div>
+<div class="cardwrap" *ngIf="isCollapse">
+    <div class="showinterest text-right" *ngIf="showActions">
+        <button class="saffron_btn orange_btn" (click)="showInterest(popUpForShowInterestMessage)">Show Interest</button>
+    </div>
+    <div class="form-group">
+        <div class="row radiogroup" myMatchHeight="cards" *ngIf="fundData.creatorFundData.company_shares">
+            <div class="col-md-6 boxwrap" *ngFor="let c of fundData.creatorFundData.company_shares; let index = index">
+                <div class="radiooptionbox custom-control custom-radio">
+
+                    <input type="checkbox" *ngIf="!c.sold" class="custom-control-input" [(ngModel)]="c.buy" (change)="selectToBuy($event, c.role)">
+                    <span class="custom-control-indicator"></span>
+
+                    <div *ngIf="c.sold">Sold</div>
+
+
+                    <h2>${{c.amount.amount}}</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <label>Role:</label>
+                            </td>
+                            <td>
+                                <span>{{c.roleString}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Percentage:</label>
+                            </td>
+                            <td>
+                                <span>{{c.percentage}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="btnwrap">
+
+                        <!-- <button type="text" (click)="editData(index)" class="btn skyblue">
+                                <span class="icomoon icon-draw"></span>
+                            </button>
+                            <button type="text" (click)="confirm(index)" class="btn red">
+                                <span class="icomoon icon-delete_btn"></span>
+                            </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5>T&Cs</h5>
+    <div class="terms_n_condition" [innerHTML]="fundData.creatorFundData.terms_condition"></div>
+
+    <!-- <app-text-editor [readOnly]="true" class="wrappertexteditor" [ngModel]="fundData.creatorFundData.terms_condition" height="125px"></app-text-editor> -->
+
+    <div class="post-buttons" *ngIf="showActions">
+        <button type="button" class="saffron_btn red_btn" (click)="skip()">Skip</button>
+
+        <button type="button" class="saffron_btn skyblue_btn" (click)="next()">Next</button>
+    </div>
+</div>
+<ng-template #popUpForShowInterestMessage>
+    <div class="modal-body">Your request is send successfully.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,34 @@
+<app-header
+  class="position-static"
+  [backNavOptions]="{ caption: 'Trading', route: ['backer', 'trading'] }"
+></app-header>
+
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Trading</h1>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <div class="mysharebtn">
+        <button class="saffron_btn blue_btn" routerLink="../myshares">My Shares</button>
+      </div>
+
+      <ngb-tabset>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Projects Launched</ng-template>
+          <ng-template ngbTabContent>
+            <app-project-launch [tradingType]="tradingType"></app-project-launch>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Project Launching Soon</ng-template>
+          <ng-template ngbTabContent>
+            <app-project-launching-soon [tradingType]="tradingType"></app-project-launching-soon>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

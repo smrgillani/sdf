@@ -1,0 +1,77 @@
+<div class="container-sm">
+    <div class="cardwrap">
+        <div class="cardheading">
+            <div class="row">
+                <div class="col6">
+                    <h3>Video's</h3>
+                </div>
+                <div class="col6">
+                    <div class="saffron_btn purple_btn" *ngIf="!showAddPanel" (click)="toggleAdd()">Add Video</div>
+                </div>
+            </div>
+           
+        </div>
+        <div class="cardbody">
+
+            <div class="addvideo" *ngIf="showAddPanel">
+                <div class="row" >
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input class="form-control" type="text" [(ngModel)]="addVideo.title" placeholder="Title">
+                            </div>
+                            
+                        </div>
+                        <div class="col-4">
+                                <div class="form-group">
+                                        <label>URL</label>
+                                        <input class="form-control" type="text" [(ngModel)]="addVideo.url" placeholder="Youtube URL">
+                                    </div>
+                           
+                        </div>
+                        <div class="col-4">
+                                <div class="form-group videobtns">
+                                    <label class="btn-block">&nbsp;</label>
+                            <button class="btn btn-primary btn-sm" (click)="AddVideo()"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            <button class="btn btn-danger btn-sm" (click)="toggleAdd()"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </div>
+                        </div>
+                    </div>
+                
+                </div>
+                <div *ngFor="let errors of serverSideErrors">
+                        <div *ngIf="isArray(errors); else nonArray">
+                            <div *ngFor="let msg of errors.non_field_errors">
+                                <div class="errorwrap">{{msg}}</div>
+                            </div>
+                        </div>
+                        <ng-template #nonArray>
+                            <div class="errorwrap">{{errors}}</div>
+                        </ng-template>
+                    </div>
+            <div class="projects-search">
+                <div class="search-icon"></div>
+                <input class="form-control" type="text" placeholder="Start typing to search titles" [(ngModel)]="searchText" (ngModelChange)="valueChange()"
+                />
+            </div>
+
+            <div class="cardwrapper">
+                <div class="videowrap">
+                    <div class="row">
+                        <div class="col-sm-4" *ngFor="let video of videos">
+                            <div class="videos">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" [src]="video.url | safeUrl" allowfullscreen></iframe>
+                                </div>
+                                <div class="videoTitle">
+                                    <a target="_blank" [title]="video.title">{{video.title}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getVideosList($event)"></app-pagination>
+        </div>
+    </div>
+</div>

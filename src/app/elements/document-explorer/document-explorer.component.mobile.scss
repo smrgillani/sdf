@@ -1,0 +1,53 @@
+@media only screen and (max-width: 992px) {
+  .process {
+    .process-header {
+      padding: 7px 24px;
+      display: flex;
+      align-items: center;
+
+      .processes-trigger {
+        display: inline-block;
+        vertical-align: middle;
+        color: #FF6C24;
+      }
+
+      .folder-select {
+        display: inline-block;
+        vertical-align: middle;
+        flex: 1;
+      }
+    }
+  }
+
+  .documents-list-scroll {
+    padding: 15px;
+    height: calc(100% - 46px);
+  }
+
+  .documents-list {
+    .item {
+      margin: 7px;
+      width: 140px;
+    }
+  }
+
+  .bottom-toolbar {
+    right: 21px;
+  }
+
+  .create-document-toggle {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    line-height: normal;
+    padding: 5px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .process {
+    .process-header {
+      padding: 7px 24px;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<div class="new-message drawingbox">
+  <app-vd-canvas #canvas
+    [options]="canvasOptions"
+    [(ngModel)]="drawingAttachment.file"
+    (forceSave)="onForceSave()"
+  ></app-vd-canvas>
+</div>

@@ -1,0 +1,49 @@
+<main>
+    <app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['founder', 'projects']}"></app-header>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Notarization</h1>
+        </div>
+        <div class="cardwrap">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="leftbox text-center">
+                        <h4 *ngIf="notarizeResponse.transaction_id && notarizeResponse.transaction_id != null && notarizeResponse.transaction_id != ''; else selectedDoc">Document send for Notarization</h4>
+                        <ng-template #selectedDoc>
+                            <h4>Document selected for Notarization</h4>
+                        </ng-template>
+                        <div id="filedroppatemplate">
+                            <div class="file-list">
+                                <div class="file-container" *ngFor="let doc of notarizeResponse.uploaded_documents">
+                                    <div class="flex-block file-preview">
+                                        <div class="flex-block file-preview-ext ">file</div>
+                                        <div class="flex-block file-name">{{doc.document_name}}</div>
+                                        <progress class="file-progress" max="100" value="0"></progress>
+                                    </div>
+                                    <!-- <div class="file-remove">
+                                        <span class="remove">
+                                            <a href="#"></a>
+                                        </span>
+                                    </div>
+                                    <div class="flex-block">0 Byte</div> -->
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="rightbox  text-center">
+                        <div *ngIf="notarizeResponse.transaction_id && notarizeResponse.transaction_id != null && notarizeResponse.transaction_id != ''; else sendForNotarize" class="">
+                            <button class="saffron_btn orange_btn"   routerLink="../viewnotarization">View Notarization Documents</button>
+                        </div>
+                        <ng-template #sendForNotarize>
+                            <div class="">
+                                <button class="saffron_btn skyblue_btn" (click)="sendProjectNotarizeInfo()">Send to Verification</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

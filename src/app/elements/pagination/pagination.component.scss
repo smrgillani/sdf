@@ -1,0 +1,72 @@
+ngb-pagination {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+}
+
+.pagination {
+  margin: 15px 0 15px 0;
+  .page-item {
+    &.active{
+      .page-link{
+        background-color: #ededfc;
+        border: 1px solid #C6C6F7;
+      }
+    }
+    .page-link {
+      background-color: rgba(249,245,240,0.5);
+      color: #4342E6;
+      border: 1px solid #DDDDDD;
+      &[aria-label="First"] span, &[aria-label="Last"] span, &[aria-label="Previous"] span, &[aria-label="Next"] span{
+        display: none;
+      }
+      &[aria-label="First"]{
+        &:after{
+          content: 'First';
+        }
+      }
+      &[aria-label="Previous"]{
+        height: 38px;
+        &:after{
+          font-family: "FontAwesome";
+          content: '\f0d9';
+        }
+      }
+
+      &[aria-label="Next"]{
+        height: 38px;
+        &:after{
+          font-family: "FontAwesome";
+          content: '\f0da';
+        }
+      }
+
+      &[aria-label="Last"]{
+        &:after{
+          content: 'Last';
+        }
+      }
+    }
+  }
+}
+
+@media screen  and (min-width: 500px){
+  .pagination {
+    margin: 15px 0 15px 0;
+    .page-item {
+      .page-link[aria-label="First"] {
+        margin: 0 5px 0 0;
+      }
+      .page-link[aria-label="Last"] {
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+}
+
+@media screen  and (max-width: 419px){
+  .pagination{
+    transform: scale(0.77);
+  }
+}

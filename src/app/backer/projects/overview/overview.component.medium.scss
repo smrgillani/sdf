@@ -1,0 +1,37 @@
+$side-padding: 12px;
+
+@media(max-width: 1200px) {
+  .projects-container {
+    width: 90%;
+
+    .projects-header {
+      padding-left: 1.875em;
+      padding-right:1.875em;
+    }
+  }
+
+  .projects-search {
+    padding-left: $side-padding;
+    padding-right: $side-padding;
+  }
+
+  .projects-table {
+    td {
+      padding: $side-padding;
+    }
+
+    .project-actions {
+      .btn {
+        padding: 7px 12px 7px 12px;
+      }
+    }
+  }
+
+  .projects-footer {
+    width: 90%;
+
+    .back-button {
+      margin-left: $side-padding;
+    }
+  }
+}

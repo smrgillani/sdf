@@ -1,0 +1,119 @@
+<div class="hire_employees">
+  <div class="projects-search">
+    <div class="search-icon"></div>
+    <input
+      class="form-control"
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Start typing to search"
+      (input)="valueChange()"
+    />
+
+    <!-- <div class="width220">
+        Records per page
+        <div class="pull-right recordTop">
+            <p-dropdown class="form-control" name="roles" [options]="transactionCount"></p-dropdown>
+
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover projects-table transaction-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Volume</th>
+        <th>Value Graph</th>
+        <th>Last Price</th>
+        <th>% Change</th>
+        <th>Prev. High</th>
+        <th>Prev. Low</th>
+        <th>Added</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let item of tradingInfoList" [routerLink]="[item.id, 'projecttrading']">
+        <td>
+          <div class="companyiconwrap">
+            <span class="companyicon">{{item.title[0]}}</span>
+            <span class="companyname" title="Glass fiber">{{item.title}}</span>
+          </div>
+        </td>
+
+        <td *ngIf="item.volume; else Volume">{{item.volume}}</td>
+        <ng-template #Volume>
+          <td>-</td>
+        </ng-template>
+
+        <td class="chart-cell" *ngIf="item.prices.length; else prices">
+          <wj-flex-chart [itemsSource]="filterEmptyValues(item.prices)" chartType="Line" [interpolateNulls]="true">
+            <wj-flex-chart-axis [wjProperty]="'axisX'" [axisLine]="true" [labels]="false"></wj-flex-chart-axis>
+            <wj-flex-chart-axis
+              [wjProperty]="'axisY'"
+              [axisLine]="false"
+              [labels]="false"
+              [majorGrid]="false"
+              [min]="0"
+            ></wj-flex-chart-axis>
+
+            <wj-flex-chart-series binding="close"></wj-flex-chart-series>
+          </wj-flex-chart>
+        </td>
+        <ng-template #prices>
+          <td></td>
+        </ng-template>
+
+        <td *ngIf="item.last_price; else last_price">{{item.last_price}}</td>
+        <ng-template #last_price>
+          <td>-</td>
+        </ng-template>
+
+        <ng-container *ngIf="item.change; else change">
+          <td [class.shareup]="item.change > 0" [class.sharedown]="item.change < 0">
+            {{item.change}}%&nbsp;<span class="fa" [class.fa-caret-up]="item.change > 0" [class.fa-caret-down]="item.change < 0"></span>
+          </td>
+        </ng-container>
+        <ng-template #change>
+          <td>-</td>
+        </ng-template>
+
+        <td *ngIf="item.prev_high; else prev_high">{{item.prev_high}}</td>
+        <ng-template #prev_high>
+          <td>-</td>
+        </ng-template>
+
+        <td *ngIf="item.prev_low; else prev_low">{{item.prev_low}}</td>
+        <ng-template #prev_low>
+          <td>-</td>
+        </ng-template>
+
+        <td *ngIf="item.date; else date">{{item.date}}</td>
+        <ng-template #date>
+          <td>-</td>
+        </ng-template>
+
+        <td>
+          <div>
+            <button
+              type="button" class="saffron_btn skyblue_btn"
+              [routerLink]="['/', 'backer', 'projects', item.id, 'summary']"
+            >Inside
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- <app-pagination class="my-pagination" [pageReset]="paginationReset" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination> -->
+  <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getTradingList($event)"></app-pagination>
+  <!-- <div class="note">
+  Reference No's. are usually obtained in the response of Gateway API.
+  Details are also subject to the conditions for an example IFT/0232/3SDS could be an example. if amount is withdrawn, target account no will be mentioned. In case of deposit, the account from which the deposit has been done will be shown. In cases, when the details are not there NA will appear there.
+</div> -->
+</div>

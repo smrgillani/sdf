@@ -1,0 +1,153 @@
+﻿<app-header class="position-static" [backNavOptions]="{caption: 'Dashboard', route: ['employee']}"></app-header>
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Find Work</h1>
+    </div>
+
+    <div class="cardwrap">
+      <div class="flex-container">
+        <div class="leftpanel">
+          <h4 (click)="filterOpenPanel()" [ngClass]="{'collapseopen':filteropen}">Filters
+            <span class="hidden-lg-up pull-right icon-down-arrow"></span>
+          </h4>
+          <!-- <app-filters  *ngIf="filteropen" [findWorkFilters]="findWorkFilters" (selectedemployeeFilters)="selectedFilters($event)"></app-filters> -->
+          <!-- <app-filters *ngIf="filteropen" (selectedemployeeFilters)="selectedFilters($event)"></app-filters> -->
+          <app-filters [hidden]="!filteropen" (selectedemployeeFilters)="selectedFilters($event)"></app-filters>
+        </div>
+
+        <div class="rightpanel">
+          <h6 (click)="postingOpenPanel()" [ngClass]="{'collapseopen':jobposting}">My Applications
+            <span class="hidden-lg-up pull-right icon-down-arrow"></span>
+          </h6>
+
+          <div *ngIf="jobposting">
+            <!-- <select class="form-control postingfilter" name="method" (change)="onListSelect($event.target.value)">
+                <option value="publish" selected>Published</option>
+                <option value="unpublish">Unpublished</option>
+              </select> -->
+            <!-- <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{}}}</button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu">
+                <button class="dropdown-item">Unpublished</button>
+                <button class="dropdown-item">published</button>
+              </div>
+            </div> -->
+            <perfect-scrollbar class="jobposting">
+              <div class="content">
+                <ul class="list-group listlinebttom" *ngIf="myApplyJob">
+                  <li class="list-group-item" *ngFor="let myJob of myApplyJob">
+                    {{myJob.job_title}}
+                    <span class="icomoon icon-check"></span>
+                  </li>
+                </ul>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+
+        <div class="middlepanel">
+          <table class="table table-hover employee-table">
+            <tbody>
+            <!-- <tr *ngFor="let project of projects | filterVisible | filterProjectStage:stage | searchProject:searchText"> -->
+            <tr *ngFor="let job of jobData">
+              <td>
+                <div class="Employee-title">
+                  <div class="employee-name">{{job.title}}</div>
+                  <div class="employee-details">
+                    <div class="employee_des">{{job.description}} </div>
+                    <!-- <div class="ava">Availability : 20hrs/Day</div> -->
+                  </div>
+
+                  <div class="employee-budget pull-right">
+                    <!-- <div class="employee-budget">{{employee.hourlycharges}}</div> -->
+                    <!-- <div class="employee-budget">$ 25/hr</div> -->
+                    <div *ngIf="findWorkFilters != undefined && findWorkFilters.hourlybudget != undefined && findWorkFilters.hourlybudget != 0 && job.hourlybudget != undefined && job.hourlybudget.length > 0; else otherhourlybudget">
+                      <div *ngFor="let hb of job.hourlybudget">
+                        <div class="employee-budget" *ngIf="hb.id == findWorkFilters.hourlybudget">
+                          {{hb.title}}
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-template #hourlybudget>
+                      <div *ngIf="job.hourlybudget != undefined && job.hourlybudget.length > 0">
+                        <div class="employee-budget">
+                          {{job.hourlybudget[0].title}}
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+
+                  <div class="pad-right-adjust">
+                    <div *ngIf="findWorkFilters != undefined && findWorkFilters.availability != undefined && findWorkFilters.availability != 0 && job.availability != undefined && job.availability.length > 0; else otherAvalable">
+                      <div *ngFor="let avalable of job.availability">
+                        <div class="ava" *ngIf="avalable.id == findWorkFilters.availability">
+                          Availability: {{avalable.title}}/Day
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-template #otherAvalable>
+                      <div *ngIf="job.availability != undefined && job.availability.length > 0">
+                        <div class="ava">
+                          Availability: {{job.availability[0].title}}/Day
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <div class="project-actions">
+                  <div class="btn-border blue" (click)="projectMessage(job.project)">
+                    <div class="btn blue-btn">Message</div>
+                  </div>
+
+                  <div class="btn-border skyblue" *ngIf="!job.is_applied" (click)="scheduledInterview(job.id)">
+                    <div class="btn skyblue-btn">Apply</div>
+                  </div>
+
+                  <div class="btn-border skyblue applied" *ngIf="job.is_applied">
+                    <div class="btn skyblue-btn">Applied</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <app-pagination
+            *ngIf="findWorkFilters != undefined && findWorkFilters.experience != undefined && findWorkFilters.experience != 0 && jobData != undefined && jobData.length > 0"
+            class="my-pagination"
+            [pageSize]="pageSize"
+            [pagesQuantity]="count"
+            (pageChanged)="getJobList($event)"
+          ></app-pagination>
+          <!-- <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getJobList($event)"></app-pagination> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForCommonMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

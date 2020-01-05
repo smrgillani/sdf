@@ -1,0 +1,136 @@
+<app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}">
+</app-header>
+
+<main>
+
+  <div class="container saf_blue_theme">
+    <div class="profile-imgwrap">
+      <div class="profilebox">
+        <div class="profile-img">
+          <!-- <img src="/assets/img/profile.jpg"> -->
+          <img *ngIf="metricesModel.basicInfo?.photo" [src]="metricesModel.basicInfo?.photo" alt="">
+        </div>
+        <div class="profilename">{{metricesModel.basicInfo?.employee}}</div>
+        <div class="profilepost">( {{metricesModel.basicInfo?.current_designation}} ) </div>
+        <div class="starrate">
+          <ngb-rating [rate]="metricesModel.basicInfo?.rating"></ngb-rating>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="processesworked">
+      <h3>Processes worked on </h3>
+
+      <!-- <div class="projects-search">
+        <div class="search-icon"></div>
+        <input class="form-control" type="text" placeholder="Start typing to search processes worked on " [(ngModel)]="searchText"
+          (input)="valueChange()" />
+      </div> -->
+
+      <div class="hashtags" *ngIf="metricesModel.basicInfo.processes && metricesModel.basicInfo.processes.length > 0">
+        <button class="btn btn-link"  [ngClass]="{'active' : null == selectedProcessId}"
+          (click)="getProcessSelected(null, 'All')">#All</button>
+        <button class="btn btn-link" *ngFor="let process of metricesModel.basicInfo.processes" [ngClass]="{'active' : process.process_id == selectedProcessId}"
+          (click)="getProcessSelected(process.process_id, process.title)">#{{process.title}} </button>
+      </div>
+    </div>
+    <div class="worktable boxtable">
+      <h3>{{selectedProcessName}} work log</h3>
+      <div class="table-responsive">
+
+        <table class="table">
+          <thead>
+
+            <tr>
+              <!-- <th>Date</th> -->
+              <th>Start Date </th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Work hours</th>
+              <th>Work log</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--<tr *ngFor="let processItem of metricesModel?.ProcessListInfo?.results">
+              &lt;!&ndash; <td>Mon, June 21 - 2017 </td> &ndash;&gt;
+              <td>{{processItem.start_datetime}}</td>
+              <td>{{processItem.end_datetime}}</td>
+              <td class="text-organge">{{processItem.loggedin_hours | slice:0:5}} hr</td>
+              <td>
+                <div class="actionbtn">
+                  &lt;!&ndash; <a class="viewaction">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  </a> &ndash;&gt;
+                  <a class="playaction" (click)="getWebRTCArchive(processItem.id)">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>-->
+
+            <tr *ngFor="let processItem of mouseflowVideoList">
+              <td>{{processItem.created}}</td>
+              <td>{{processItem.startTime}}</td>
+              <td>{{processItem.endTime}}</td>
+              <td class="text-organge">{{processItem.duration}} hr</td>
+              <td>
+                <div class="actionbtn">
+                  <a class="playaction" (click)="geMouseFlowAuthId(processItem)">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <app-pagination  class="my-pagination" [pageSize]="pageSize"
+        [pagesQuantity]="count"
+                       (pageChanged)="getProcessSelectedList(null)"></app-pagination>
+
+     <!-- <app-pagination  class="my-pagination" [pageSize]="pageSize"
+                       [pagesQuantity]="count"
+      &lt;!&ndash;(pageChanged)="getProcessSelectedList($event)"&ndash;&gt;
+      (pageChanged)="getProcessSelectedList()"></app-pagination>-->
+
+      <!--<app-pagination *ngIf="selectedProcessId && selectedProcessId != 0" class="my-pagination" [pageSize]="pageSize"
+                      [pagesQuantity]="count" (pageChanged)="getProcessSelectedList($event)"></app-pagination>-->
+
+    </div>
+
+
+    <!-- <div class="backbtn">
+      <i class="fa fa-arrow-left" aria-hidden="true" (click)="_location.back()"> Back</i>
+    </div> -->
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForVideo>
+  <div class="modal-body">
+    <div class="cardwrapper">
+      <div class="videowrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="videos">
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" [src]="url | safeUrl" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Close</div>
+    </div>
+  </div>
+
+</ng-template>

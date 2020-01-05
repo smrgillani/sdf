@@ -1,0 +1,103 @@
+<div class="scrollbar-container">
+  <div class="form-container container">
+    <form [formGroup]="complexForm" (ngSubmit)="submitAvailabilityInfo(complexForm.value)">
+      <h4>Select your availability type</h4>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Number of days per year</label>
+            <!-- <select class="form-control">
+                <option>Select</option>
+            </select> -->
+            <!-- <select (change)="onDaysYearSelect($event.target.value)"
+              [(formControl)]="complexForm.controls['daysPerYear']" class="form-control">
+          <option *ngFor="let q of daysPerYearList" value= {{q.id}}>
+             {{q.title}}
+          </option>
+        </select> -->
+            <p-dropdown
+              class="form-control"
+              [options]="daysPerYearList"
+              placeholder="Choose"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['daysPerYear']"
+              required="true"
+            ></p-dropdown>
+            <!--required="true"-->
+            <!-- <div *ngIf="complexForm.controls['daysPerYear'].hasError('required') && complexForm.controls['daysPerYear'].touched" class="errorwrap">Number of days per year is required.</div> -->
+            <!-- <div [hidden]="complexForm.controls['daysPerYear']?.status !== 'INVALID' " class="errorwrap">Number of days per year is required.</div> -->
+            <div
+              *ngIf="complexForm.controls['daysPerYear'].hasError('required')  && complexForm.controls['daysPerYear'].touched"
+              class="errorwrap"
+            >
+              Number of days per year is required.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>Daily hours</label>
+            <!-- <select class="form-control">
+                <option>Select</option>
+            </select> -->
+            <!-- <select (change)="onHoursDaySelect($event.target.value)"  [(formControl)]="complexForm.controls['hoursPerDay']" class="form-control">
+                <option *ngFor="let q of hoursPerDay" value= {{q}}>
+                   {{q}}
+                </option>
+              </select> -->
+            <p-dropdown
+              class="form-control"
+              [options]="hoursPerDay"
+              placeholder="Choose"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['hoursPerDay']"
+            ></p-dropdown>
+            <!--required="true"-->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>Hourly Charges</label>
+
+            <!-- <input type="number" class="form-control" [(formControl)]="complexForm.controls['hourly_charges']" > -->
+            <p-dropdown
+              class="form-control"
+              [options]="hourly_chargesList"
+              placeholder="Choose"
+              optionLabel="title"
+              [(formControl)]="complexForm.controls['hourly_charges']"
+            ></p-dropdown>
+            <!--required="true"-->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- <button class="btn btn-link addqualification"><span class="icomoon icon-add-song"></span>Add More Qualification </button>  -->
+
+      <!-- <div id="done" class="done-container" [class.disabled]="isSubmitting"> -->
+      <!-- <div id="done" class="done-container">
+        <button class="done-btn" type="submit" [ngClass]="{processing: processing}">
+          <img src="/assets/img/hourglass.svg"></button>
+        <button class="done-btn-caption" type="submit">Done</button>
+        <div class="done-note">
+          Click "Done" to go next step
+        </div>
+      </div> -->
+      <div id="done" class="done-container">
+        <button class="done-btn" [ngClass]="{processing: processing}" type="submit">
+          Next
+        </button>
+        <div class="done-note">
+          Click "Next" to save
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

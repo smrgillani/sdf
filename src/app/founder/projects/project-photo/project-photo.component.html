@@ -1,0 +1,48 @@
+<div class="container-main">
+  <div class="container-border">
+    <!-- <app-navbar></app-navbar> -->
+    <app-header class="position-static no-bg"></app-header>
+    <p-growl [value]="msgs1"></p-growl>
+
+    <div class="container">
+      <div class="edit-photo">
+        <div class="edit-photo-header">Edit Project Photo <span (click)="backToEdit()">&times;</span></div>
+        <div class="edit-photo-body">
+          <div class="row">
+            <div class="col-6">
+              <img-cropper
+                [image]="data"
+                [settings]="cropperSettings"
+                (onCrop)="cropped($event)"
+                class="photo-canvas"
+              ></img-cropper>
+
+              <p>Drag frame to adjust photo</p>
+              <app-upload-capture-image (filechanged)="imageChangeListener($event)"></app-upload-capture-image>
+            </div>
+            <div class="col-6">
+              <h3>Your Project Photo</h3>
+
+              <div class="profile-photo">
+                <img *ngIf="data.image" [src]="data.image">
+              </div>
+
+              <div *ngIf="profileErrors['photo']" class="">
+                <div class="error-notification">
+                  <div class="alert-badge-border">
+                    <div class="alert-badge"></div>
+                  </div>
+                  <div class="errorwrap">{{profileErrors['photo']}}</div>
+                </div>
+              </div>
+
+              <button class="saffron_btn orange_btn" (click)="updateProjectPhoto()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <span class="back-button" (click)="backToEdit()">Back</span> -->
+    </div>
+  </div>
+</div>

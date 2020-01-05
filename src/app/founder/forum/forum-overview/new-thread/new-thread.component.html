@@ -1,0 +1,122 @@
+<div class="cardwrap">
+    <div class="cardheading">
+          <h3 *ngIf="!isReadonly; else updateThread">Create New Thread</h3>
+          <ng-template #updateThread><h3>Update Thread</h3></ng-template>          
+    </div>
+    <div class="cardbody">
+
+        <form name="form" (ngSubmit)="f.form.valid && saveNewThread(f)" #f="ngForm" novalidate>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Categories</label>
+                  <p-dropdown class="form-control" [readonly]="isReadonly" [options]="internalCategoryList" [(ngModel)]="threadInfoModel.forumcategories" name="forumcategories"
+                    #forumcategories="ngModel" placeholder="-- Select --" (onChange)="onCalegorySelect($event.value)" required></p-dropdown>
+                  <div *ngIf="f.submitted && forumcategories.errors?.required" class="errorwrap">Category is required</div>
+                  <div *ngIf="f.submitted && forumcategories.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['forumcategories'][0]}}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Topic</label>
+                  <p-dropdown class="form-control" [readonly]="isReadonly" placeholder="-- Select --" [options]="internalTopicList" [(ngModel)]="threadInfoModel.topics"
+                    name="topics" #topics="ngModel" required></p-dropdown>
+                  <div *ngIf="f.submitted && topics.errors?.required" class="errorwrap">Topic is required</div>
+                  <div *ngIf="f.submitted && topics.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['topics'][0]}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group idea_files nobg">
+                  <label>Upload Image</label>
+                  <app-file-droppa #fileDroppa [dropZoneTemplate]="dropZoneTemplate" [url]="" [multiple]="false" [autoUpload]="false" [beforeAddFile]="beforeAddFile"
+                    [showFilesList]="false" (filesUpdated)="filesUpdated($event)" [openTriggerId]="dropTriggerId" [class.has-image]="threadInfoModel.image">
+      
+                    <span *ngIf="threadInfoModel.image" (click)="removeImage()" [hidden]="isReadonly" class="remove-image-icon"></span>
+      
+                  </app-file-droppa>
+                  <input type="hidden" [(ngModel)]="threadInfoModel.image" name="image" #image="ngModel">
+                  <!-- <div *ngIf="f.submitted && image.errors?.required" class="errorwrap">Image is required</div> -->
+                  <div *ngIf="f.submitted && image.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['image'][0]}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Thread Title</label>
+                  <input type="text" [readonly]="isReadonly" class="form-control" [(ngModel)]="threadInfoModel.title" name="title" #title="ngModel" required>
+                  <div *ngIf="f.submitted && title.errors?.required" class="errorwrap">Title is required</div>
+                  <div *ngIf="f.submitted && title.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['title'][0]}}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Type</label>
+                  <!-- <input type="text" class="form-control" [(ngModel)]="threadInfoModel.public" name="public" #public="ngModel"> -->
+                  <p-dropdown class="form-control" placeholder="-- Select --" (onChange)="onTypeSelect($event.value)" [options]="internalTypeList" [(ngModel)]="threadInfoModel.public"
+                    name="public" #public="ngModel" required></p-dropdown>
+                  <div *ngIf="f.submitted && public.errors?.required" class="errorwrap">Type is required</div>
+                  <div *ngIf="f.submitted && public.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['public'][0]}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="!threadInfoModel.public">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Add Members</label>
+                  <!-- <p-dropdown class="form-control" placeholder="-- Select --" [options]="internalForumUserList" [(ngModel)]="threadInfoModel.participants" name="participants"
+                      #participants="ngModel" ></p-dropdown> -->
+                  <p-multiSelect [options]="AllCreatorForumUserList" class="form-control" placeholder="-- Select --" optionLabel="label" [(ngModel)]="threadInfoModel.participants"
+                    name="participants" #participants="ngModel" [required]="!threadInfoModel.public">
+                    <ng-template let-r pTemplate="item">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{r.label}}</div>
+                    </ng-template>
+                  </p-multiSelect>
+                  <div *ngIf="f.submitted && !threadInfoModel.public && participants.errors?.required" class="errorwrap">Add Members is required</div>
+                  <div *ngIf="f.submitted && !threadInfoModel.public && participants.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['participants'][0]}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Enter Description</label>
+                  <div class="document">
+                    <app-text-editor [readOnly]="isReadonly" [(ngModel)]="threadInfoModel.description" name="description" #description="ngModel" required></app-text-editor>
+                    <div *ngIf="f.submitted && description.errors?.required" class="errorwrap">Description is required</div>
+                    <div *ngIf="f.submitted && description.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['description'][0]}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <div class="post-buttons">
+              <button type="button" class="saffron_btn orange_btn" [disabled]="isReadonly" (click)="resetForm(f)">Cancel</button>
+              <button type="button" class="saffron_btn skyblue_btn" type="submit">Save</button>
+      
+            </div>
+          </form>
+
+
+    </div>
+
+  </div>
+  <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

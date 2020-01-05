@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="container-main">
+        <!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+        <app-header class="position-static"></app-header>
+        <div class="content-main">
+
+            <div class="content-main-header">
+                <div class="title">New Goal</div>
+                <div class="btn-group">
+
+                </div>
+            </div>
+            <div class="content-main-body">
+
+                <h3>{{currentMilestone?.title}}</h3>
+                <h3>Title</h3>
+                <p><input type="text" required class="width-50" placeholder="Goal title" maxlength="100" [(ngModel)]="goal.title" /></p>
+
+                <!-- <h3>Upload Files</h3>
+                <p>
+                    <app-file-droppa class="pdfwithdoc" id="filedroppatemplate" [dropZoneTemplate]="dropZoneChartTemplate"
+                        [url]="" [multiple]="true" [autoUpload]="false" [showFilesList]="true" [beforeAddFile]="beforeAddFile"
+                        (filesUpdated)="FilesUpdated($event)" [openTriggerId]="'passportTrigger'">
+                        <div class="profile-buttons">
+                            <div class="trigger" id="passportTrigger">
+                            </div>
+                        </div>
+                    </app-file-droppa>
+                </p> -->
+
+                <h3>Description</h3>
+                <p> <input type="text" required class="width-100" placeholder="Goal description" maxlength="100"
+                        [(ngModel)]="goal.description" />
+                </p>
+                <div class="process_list">
+                    <div class="header">
+                        <h3>Processes</h3>
+                        <div class="empty-add-btn" (click)="addProcessBtnClicked();">+</div>
+                        <!-- <div class="errorwrap">Milestone end date is less than current date or current date is less than Milestone start date</div> -->
+                        <div *ngIf="processError" class="errorwrap"> Current date is less than Milestone end date.</div>
+                    </div>
+                    <app-process *ngFor="let process of subtasks" [subtask]="process" [currentMilestone]="currentMilestone"></app-process>
+                </div>
+                <div class="process_list">
+                    <div class="header">
+                        <h3>Dependencies</h3>
+                        <div class="empty-add-btn" (click)="addDependencyBtnClicked();">+</div>
+                    </div>
+                    <app-dependency *ngFor="let dependency of dependencies;let dIndex = index;" [dependency]="dependency"
+                        [dIndex]="dIndex" [milestones]="milestones" [dependencies]="dependencies" [projectId]="project_id"></app-dependency>
+                </div>
+                <app-validation-message [msgArray]="msgArray"></app-validation-message>
+                <div class="content-footer">
+                    <div class="create-btn">
+                        <div class="inner-section" (click)="createTaskClicked();">
+                            Create
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="back-btn" (click)="backBtnClicked();"><span><img src="/assets/img/left-arrow-blue.png" width="20px" /></span><a>Back</a></div> -->
+        </div>
+
+    </div>
+
+</div>

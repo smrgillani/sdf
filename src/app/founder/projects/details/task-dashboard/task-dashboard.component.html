@@ -1,0 +1,31 @@
+<!-- <p>
+  task-dashboard works!
+</p> -->
+<div class="container-fluid bg-gradient selectrole">
+  <div class="container-main bg-image">
+    <div class="container-border">
+      <div class="container-center selectrolecontent">
+        <app-navbar></app-navbar>
+        <!-- <div class="container-title" [@pageState]="pageState">Are you a...</div> -->
+        <div class="container-buttons">
+          <div class="container-button border-blue" (click)="milestone()"  [@pageState]="pageState">
+            <div class="button-inner back-blue">MileStones</div>
+          </div>
+
+
+          <div class="container-button border-orange" (click)="todolist()"  [@pageState]="pageState">
+            <div class="button-inner back-orange">To do List</div>
+          </div>
+          <!-- <div class="container-button border-green" (click)="setRole(Roles.Backer)" 
+               (@pageState.done)="animationDone($event)">
+            <div class="button-inner back-green">Backer</div>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- <div class="container-footer choose-role-footer" [@pageState]="pageState">Your here to create something special</div> -->
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,184 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: white;
+
+  ::ng-deep .message-body p {
+    margin: 0;
+  }
+}
+
+.chat-room-name {
+  font-size: 22px;
+  font-weight: bold;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  padding: 15px 25px;
+  border-bottom: 1px solid #ccc;
+
+  .videocall-btn {
+    height: 40px;
+    width: 45px;
+    min-width: 45px;
+    background-image: url('/assets/img/collaboration/facetime-button.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 23px;
+    float: right;
+  }
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  perfect-scrollbar {
+    flex: 1;
+    min-height: 0;
+
+    .scrollingcontent {
+      padding: 15px 15px 0;
+
+      .message {
+        position: relative;
+        padding: 0 0 0 70px;
+        min-height: 70px;
+        margin-bottom: 10px;
+
+        .user {
+          color: #404040;
+          font-size: 14px;
+
+          .username {
+            font-weight: bold;
+          }
+
+          .star-message {
+            cursor: pointer;
+          }
+        }
+
+        .user-photo {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: #ccc url(/assets/img/navbar-noavatar-icon.png) no-repeat center;
+
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+
+          .user-status-indicator {
+            width: 7px;
+            height: 7px;
+            border-radius: 7px;
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+
+            &.user-status-online {
+              background-color: green;
+            }
+
+            &.user-status-away {
+              background-color: orange;
+            }
+
+            &.user-status-busy {
+              background-color: red;
+            }
+
+            &.user-status-offline {
+              background-color: grey;
+            }
+
+            &.user-status-unknown {
+              background-color: grey;
+            }
+          }
+        }
+
+        .replyfor {
+          display: flex;
+          flex-direction: column;
+
+          small {
+            font-size: 14px;
+          }
+        }
+
+        .message-action-buttons {
+          display: block;
+          width: 40px;
+          float: right;
+
+          i {
+            cursor: pointer;
+          }
+        }
+
+        .message-body {
+          background: #6a9df6;
+          padding: 10px 15px;
+          display: inline-block;
+          color: #fff;
+          border-radius: 0 10px 10px 10px;
+          position: relative;
+          min-width: 150px;
+          word-break: break-all;
+          word-break: break-word;
+
+          &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 100%;
+            border-style: solid;
+            z-index: 1;
+            border-width: 5px;
+            border-color: #6a9df6 #6a9df6 transparent transparent;
+          }
+        }
+
+        &.currentuser {
+          text-align: right;
+          padding: 0 70px 0 0;
+
+          .user-photo {
+            left: auto;
+            right: 0;
+          }
+
+          .message-body {
+            border-radius: 10px 0 10px 10px;
+            background: #fe5f5b;
+
+            &:before {
+              border-color: #fe5f5b transparent transparent #fe5f5b;
+              right: auto;
+              left: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .typing p {
+    margin: 0;
+  }
+}

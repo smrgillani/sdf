@@ -1,0 +1,175 @@
+<div class="container-fluid" *ngIf="!selectedPlatform">
+    <div class="container-main">
+        <div class="container-border">
+            <app-header class="no-bg position-absolute"></app-header>
+            <h1>{{project.title}}</h1>
+            <div class="project-buttons">
+                <div class="big-btn" *ngFor="let platform of platforms" [triggers]="'none'" [container]="'body'"
+                    [ngbPopover]="launchPopoverTemplate" #launchPopover="ngbPopover" appPopoverAutoPosition [popOverName]="launchPopover"
+                    [placement]="{desktop:'top', tablet:'top', mobile:'top'}" (click)="selectPlatform(platform,launchPopover)"
+                    >
+                    <app-wheel [color]="getColor(platform.title)" [icon]="getIcon(platform.title)"></app-wheel>
+                    <div>{{platform.title}}</div>
+
+                    <ng-template #launchPopoverTemplate>
+                        <div class="message">{{launchValidationMessage}}</div>
+                        <div class="buttons">
+                            <button class="saffron_btn red_btn" (click)="launchPopover.close()">{{launchValidationOkOnly ? 'Ok' : 'Back'}}</button>&nbsp;
+                            <button class="saffron_btn skyblue_btn" *ngIf="launchValidationOkOnly && project.launch && project.launch.length > 0" (click)="getLaunchPopUp(launchPopover)">View</button>&nbsp;
+                            <button *ngIf="!launchValidationOkOnly" class="saffron_btn skyblue_btn" (click)="goToRegister()">Register</button>&nbsp;
+                        </div>
+                    </ng-template>
+                </div>
+
+                <div class="big-btn" appPopoverAutoPosition [popOverName]="manageFunding" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                    (click)="selectManageFunding(false,manageFunding)" [triggers]="'none'" [container]="'body'" [ngbPopover]="manageFundingPopup"
+                    #manageFunding="ngbPopover">
+                    <app-wheel color="#FF6C24" icon="/assets/img/project/x.png"></app-wheel>
+                    <div>Manage Funding</div>
+
+                    <ng-template #manageFundingPopup>
+                        <div class="message">
+                            Seems, you have not launched the project on either LSX or ISX, as applicable. Would you wish to continue?
+                        </div>
+                        <div class="buttons">
+                            <button class="saffron_btn red_btn" (click)="selectManageFunding(true,manageFunding)">Yes</button>&nbsp;
+                            <button class="saffron_btn skyblue_btn" (click)="backToSelection(manageFunding)">No</button>
+                        </div>
+                    </ng-template>
+                </div>
+                <!-- (click)="selectUpgradeListing(false,upgradeListing)" -->
+                <div class="big-btn" appPopoverAutoPosition [popOverName]="upgradeListing" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+                    [routerLink]="['../budget/upgradefunding']" [triggers]="'none'" [container]="'body'" [ngbPopover]="upgradeListingPopup"
+                    #upgradeListing="ngbPopover">
+                    <app-wheel color="#6a9df6" icon="/assets/img/project/upgrade-listing.png"></app-wheel>
+                    <div>Upgrade Listing</div>
+
+                    <ng-template #upgradeListingPopup>
+                        <div class="message">
+                            Seems, you have not launched the project on either LSX or ISX, as applicable. Would you wish to continue?
+                        </div>
+                        <div class="buttons">
+                            <button class="saffron_btn red_btn" (click)="selectManageFunding(true,upgradeListing)">Yes</button>&nbsp;
+                            <button class="saffron_btn skyblue_btn" (click)="backToSelection(upgradeListing)">No</button>
+                        </div>
+                    </ng-template>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #launchInfo>
+    <main>
+        <div class="close_popup" (click)="popUpForShowInterestModalRef.close()">
+            <i class="icomoon icon-multiply" aria-hidden="true"></i>
+        </div>
+        <div class="container saf_blue_theme">
+            <div class="heading">
+                <h1>Launched {{launchTitle}}</h1>
+            </div>
+
+            <div class="cardwrap tabwrap">
+                <div class="cardwrap">
+                    <div class="s-box">
+                        <div class="s-box-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Due Date: {{project?.launch[0]?.due_date}}</td>
+                                            <td>Fund Amount: ${{project?.launch[0]?.fund_amount.amount}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Percentage: {{project?.launch[0]?.percentage}}%</td>
+                                            <td>Price Per Share: ${{project?.launch[0]?.price_per_share.amount}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><button class="saffron_btn skyblue_btn" (click)="downloadLaunch(project.launch[0].id)">Download</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</ng-template>
+
+<div *ngIf="selectedPlatform" class="lunchpage">
+        <app-header class="position-static" (onBackClicked)="backToSelection()"></app-header>
+        <main>
+        <div class="container saf_blue_theme">
+            <div class="heading">
+                <h1>{{project.title}}</h1>
+            </div>
+
+            <div class="cardwrap">
+                <div *ngIf="!isLaunched">
+                    <h2>Launch to {{selectedPlatform.title}}</h2>
+                    <form [formGroup]="frmLaunch" (ngSubmit)="launchProject(frmLaunch.value)">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Min. Total Amount</label>
+                                    <!-- <input class="form-control" [(formControl)]="frmLaunch.controls['requiredFundAmount']" placeholder="Required Fund Amount"> -->
+                                    <p-spinner size="30" class="form-control" [(formControl)]="frmLaunch.controls['requiredFundAmount']" placeholder="Required Fund Amount"></p-spinner>
+                                    <div *ngIf="frmLaunch.controls['requiredFundAmount'].hasError('required') && frmLaunch.controls['requiredFundAmount'].touched"
+                                        class="errorwrap">Fund Amount is required.</div>
+                                    <div *ngIf="frmLaunch.controls['requiredFundAmount'].hasError('invalidNumber') && frmLaunch.controls['requiredFundAmount'].touched"
+                                        class="errorwrap">Invalid input, enter number only.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Share Percentage</label>
+                                    <!-- <input class="form-control" [(formControl)]="frmLaunch.controls['percentage']" placeholder="Percentage %"> -->
+                                    <p-spinner size="30" class="form-control" [(formControl)]="frmLaunch.controls['percentage']" placeholder="Percentage %"></p-spinner>
+                                    <div *ngIf="frmLaunch.controls['percentage'].hasError('required') && frmLaunch.controls['percentage'].touched" class="errorwrap">Percentage is required.</div>
+                                    <div *ngIf="frmLaunch.controls['percentage'].hasError('invalidNumber') && frmLaunch.controls['percentage'].touched" class="errorwrap">Invalid input, enter number only.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price per Share</label>
+                                    <!-- <input class="form-control" [(formControl)]="frmLaunch.controls['sharePrice']" placeholder="Share Price"> -->
+                                    <p-spinner size="30" class="form-control" [(formControl)]="frmLaunch.controls['sharePrice']" placeholder="Share Price"></p-spinner>
+                                    <div *ngIf="frmLaunch.controls['sharePrice'].hasError('required') && frmLaunch.controls['sharePrice'].touched" class="errorwrap">Share price is required.</div>
+                                    <div *ngIf="frmLaunch.controls['sharePrice'].hasError('invalidNumber') && frmLaunch.controls['sharePrice'].touched" class="errorwrap">Invalid input, enter number only.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Review Period</label>
+                                    <div class="datetime-container">
+                                        <p-calendar class="form-control" [(formControl)]="frmLaunch.controls['dueDate']" [minDate]="minDateValue" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1970:2050">
+                                        </p-calendar>
+                                        <div *ngIf="frmLaunch.controls['dueDate'].hasError('required') && frmLaunch.controls['dueDate'].touched" class="errorwrap">Due date is required.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Terms and Conditions</label>
+                                    <app-text-editor class="wrappertexteditor" [(formControl)]="frmLaunch.controls['termsAndCondition']" height="125px"></app-text-editor>
+                                </div>
+                                <div class="form-group">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" [(formControl)]="frmLaunch.controls['acceptTerms']" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Check this box to agree to terms and conditions</span>
+                                    </label>
+                                    <div *ngIf="frmLaunch.controls['acceptTerms'].hasError('untickCheckbox') && frmLaunch.controls['acceptTerms'].touched" class="errorwrap">Please accept terms and condition.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-buttons">
+                            <!-- <button class="saffron_btn red_btn" (click)="backToSelection()">Back</button> -->
+                            <button class="saffron_btn skyblue_btn" type="submit">Submit and Launch</button>
+                        </div>
+                        <div *ngFor="let errors of serverSideErrors">
+                            <div class="errorwrap">{{errors}}</div>
+                        </div>
+                    </form>
+                </div>
+                <app-launch-success [platform]="selectedPlatform" *ngIf="isLaunched"></app-launch-success>
+            </div>
+        </div>
+    </main>
+</div>

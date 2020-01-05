@@ -1,0 +1,44 @@
+<app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['backer', 'my-projects', project.id]}"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Budget</h1>
+    </div>
+
+    <div class="cardwrap">
+      <div class="card">
+        <h2>My Expenses</h2>
+        <div class="progress bg-voilet">
+          <div class="progress-bar bg-danger" [style.width]="(project.my_expences_percent <= 100 ? project.my_expences_percent : 100) +'%'">
+          </div>
+        </div>
+        <div class="valuewrap">
+          <span class="value"  [title]="project.expences" [style.left]="(project.my_expences_percent <= 100 ? project.my_expences_percent : 100)+'%'">{{project.expences}}</span>
+          <span class="totalvalue" [title]="project.receive_funds">{{project.receive_funds}}</span>
+        </div>
+        <div class="btn_wrap">
+          <button class="saffron_btn skyblue_btn" [routerLink]="['./payment']">Payment</button>
+          <button class="saffron_btn blue_btn" [routerLink]="['./materialcost']">Material Cost</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>My Fund</h2>
+        <div class="progress bg-lightvoilet">
+          <div class="progress-bar bg-voilet" [style.width]="(project.my_fund_percent <= 100 ? project.my_fund_percent : 100)+'%'">
+          </div>
+        </div>
+        <div class="valuewrap">
+          <span class="value"  [title]="project.receive_funds" [style.left]="(project.my_fund_percent <= 100 ? project.my_fund_percent : 100)+'%'">{{project.receive_funds}}</span>
+          <span class="totalvalue"  [title]="project.expected_funds">{{project.expected_funds}}</span>
+        </div>
+        <div class="btn_wrap">
+          <button class="saffron_btn skyblue_btn" [routerLink]="['./viewlaunch']">View ISX/LSX</button>
+          <button class="saffron_btn orange_btn" [routerLink]="['./viewmanagefund']">View Funding</button>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>

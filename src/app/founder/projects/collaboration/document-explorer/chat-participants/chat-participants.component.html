@@ -1,0 +1,37 @@
+<div class="participants">
+  <div *ngFor="let participant of participants">
+    <div class="profile-icon" *ngIf="showParticipantActive(participant.id)">
+      <img class="photo" *ngIf="participant.photo_crop" [src]="participant.photo_crop || ''"/>
+      <span *ngIf="participant?.extended_date"><strong>Ext Date: </strong>{{participant?.extended_date}}</span>
+    </div>
+  </div>
+</div>
+<!--div class="details-date"><strong>Process</strong> {{process.process_percentage}} % </div-->
+<button class="btn" *ngIf="!process.is_complete" (click)="showConfirmationMessage()"> Reassign</button>
+
+<ng-template #popUpForConfirmationMessage>
+  <div class="interviewpopup">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()">
+      <i class="icon-close"></i>
+    </div>
+    <div class="popheading">Reassign Task</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Participants</label>
+          <p-multiSelect [options]="processCompletedParticipants" class="form-control" name="participants"
+                         [(ngModel)]="selectedParticipants" required>
+            <ng-template let-role pTemplate="item">
+              <div style="font-size:14px;float:right;margin-top:4px">{{role.lable}}</div>
+            </ng-template>
+          </p-multiSelect>
+          <div *ngIf="participants.errors?.required" class="errorwrap">Participants is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="post-buttons">
+      <button type="button" class="saffron_btn orange_btn" (click)="popUpForShowInterestModalRef.close()">Close</button>
+      <button type="button" class="saffron_btn skyblue_btn" (click)="reassignTask()">Save</button>
+    </div>
+  </div>
+</ng-template>

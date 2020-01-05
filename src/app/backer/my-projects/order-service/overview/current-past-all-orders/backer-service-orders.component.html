@@ -1,0 +1,48 @@
+<div class="cardwrap">
+    <div class="s-box">
+        <div class="s-box-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order No</th>
+                            <th>Creation On</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <th>Last Action On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of orderServiceList">
+                            <td>{{item.id}}</td>
+                            <td>{{item.create_date | date:'d MMM yyyy'}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.status}}</td>
+                            <td>{{item.creator_amount?.amount}}</td>
+                            <td>{{item.action_date | date:'d MMM yyyy'}}</td>
+                            <td style="width: 210px">
+                                <div class="project-actions">
+                                    <div class="btn-border blue" *ngIf="item.status != 'open' && item.is_work_uploaded"
+                                        (click)="downloadFile(item.id)">
+                                        <div class="btn  blue-btn">View Updates</div>
+                                    </div>
+                                    <div class="btn-border  purple  col6" *ngIf="item.status != 'open' && item.status != 'reject'"
+                                        [routerLink]="[item.id,'work-area']">
+                                        <div class="btn  purple-btn">Work</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <p>Note:  Upon clicking View Updates, an offline copy will be <strong>DOWNLOADED</strong> of any relevant or completed files thus far of your service.  If there are no uploads yet, the system will display No Uploads yet.</p>
+            <p>On click of Suggest Changes, Creator can <strong>UPLOAD</strong> the documents from his end, in case any input is needed.  We will be able to view your Suggest Changes and consider the feedback.</p>
+        </div>
+        <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getOrderServiceList($event)"></app-pagination>
+    </div>
+</div>

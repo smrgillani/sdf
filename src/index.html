@@ -1,0 +1,598 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Saffron</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="shortcut icon" href="./assets/favicon.ico?v=2" type="image/x-icon">
+  <link rel="icon" href="./assets/favicon.ico?v=2" type="image/x-icon">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png?v=2">
+  <link href="./assets/icomoon/style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://assets.tokbox.com/solutions/css/style.css">
+  <!-- <link href="node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css" rel="stylesheet"> -->
+
+  <script src="../node_modules/web-audio-recorder-js/lib-minified/WebAudioRecorder.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="./assets/js/AudioRecorder.js"></script>
+  <!--
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/slick-carousel@1.6.0/slick/slick.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <script src="./assets/js/session.js"></script>
+
+  <!-- <script src="https://cdn.convergence.io/latest/convergence-all.js"></script>
+  <script src="https://cdn.convergence.io/utils/input-element-bindings/latest/convergence-input-element-bindings.min.js"></script> -->
+  <style>
+    @font-face {
+      font-family: ProximaNova;
+      src: url(/assets/fonts/ProximaNova-Bold.otf);
+      font-weight: 600;
+    }
+
+    @font-face {
+      font-family: ProximaNova;
+      src: url(/assets/fonts/ProximaNova-Light.otf);
+      font-weight: 300;
+    }
+
+    @font-face {
+      font-family: ProximaNova;
+      src: url(/assets/fonts/ProximaNova-Regular.otf);
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: ProximaNova;
+      src: url(/assets/fonts/ProximaNova-Semibold.otf);
+      font-weight: 500;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 320px;
+      font-family: ProximaNova, sans-serif;
+      font-weight: 400;
+      overscroll-behavior-y: contain;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-size: 100%;
+      line-height: 1.5;
+    }
+
+    .idea_files {
+      text-align: center;
+      position: relative;
+    }
+
+    ngb-datepicker-navigation select {
+      float: left;
+    }
+
+    .ng2-imgcrop {
+      display: block;
+      height: 100%;
+    }
+
+    .drop_files .file-droppa-container,
+    .idea_files .file-droppa-container {
+      width: auto;
+    }
+
+    .drop_files .file-droppa-btns,
+    .idea_files .file-droppa-btns {
+      display: none;
+    }
+
+    .file-droppa-document-image,
+    .file-droppa-image {
+      height: 220px;
+      border: 3px solid #BBB5DC;
+      background: #F2EADF url(/assets/img/picture.png) no-repeat center;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .file-droppa-document-image.has-file {
+      background: #F2EADF;
+    }
+
+    .file-droppa-image.has-image {
+      display: inline-flex;
+      position: relative;
+      background-image: unset;
+    }
+
+    .file-droppa-document-image img,
+    .file-droppa-image img {
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      width: auto;
+    }
+
+    .file-droppa-image .delete-image:hover {
+      opacity: .5;
+    }
+
+    .profile-address .dropdown-menu {
+      border-radius: 0;
+      right: 15px;
+      padding: 0;
+    }
+
+    .profile-address .dropdown-menu .dropdown-item {
+      white-space: normal;
+      font-size: 14px;
+      line-height: 18px;
+      padding: 5px 10px;
+      color: rgba(31, 30, 170, 0.9);
+    }
+
+    .profile-address .dropdown-item.active {
+      background-color: #4342E6;
+      color: #fff;
+    }
+
+    .container-main::after {
+      content: "";
+      position: absolute;
+      top: 1.813em;
+      left: 1.813em;
+      right: 1.813em;
+      bottom: 1.813em;
+      z-index: 0;
+      border: 1px solid #cccccc;
+    }
+
+    .homepage {
+      width: 100%;
+      height: 100%;
+      padding: 0 0;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .homepage .bg-image {
+      background: url("/assets/img/circle1.png") no-repeat center;
+      background-size: cover;
+      height: 100%; /* display: flex;  min-height: auto;  width: 100%;  align-items: center;  flex-direction: row; */
+    }
+
+    .homepage .container-border {
+      display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+      display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+      display: -ms-flexbox; /* TWEENER - IE 10 */
+      display: -webkit-flex; /* NEW - Chrome */
+      display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      position: relative;
+      overflow: auto;
+      width: 100%;
+      height: 100%;
+    }
+
+    .splashscreen {
+      display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+      display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
+      display: -ms-flexbox; /* TWEENER - IE 10 */
+      display: -webkit-flex; /* NEW - Chrome */
+      display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      height: 100%;
+
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      /* background: linear-gradient(180deg, #450DA6 0%, #4342E6 100%); */
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+
+    .splashscreen img {
+      margin-bottom: 2.500em;
+      vertical-align: middle;
+    }
+
+    .splashscreen > img {
+      display: block;
+      max-width: 16em;
+    }
+
+    .splashscreen .loadingtext {
+      text-align: center;
+      margin-top: 0;
+      width: 10.417em;
+      line-height: 1em;
+      margin-bottom: 0;
+      font-size: 1.500em; /* 24px*/
+      color: #00d8c9;
+    }
+
+    .splashscreen .loadingtext img {
+      margin-bottom: 0;
+      vertical-align: baseline;
+    }
+
+    .loadingtext span {
+      margin-left: 0.167em;
+      font-size: 0.750em;
+      opacity: 0;
+      animation: blink 1.4s infinite;
+      -webkit-animation: blink 1.4s infinite;
+
+      animation-delay: 1s;
+      -webkit-animation-delay: 1s;
+
+      font-weight: normal;
+      /**
+      * Use the blink animation, which is defined above
+      */
+
+      /* animation-name: blink;
+      -webkit-animation-name: blink; */
+      /**
+      * The animation should take 1.4 seconds
+      */
+      /* animation-duration: 1.4s;
+      -webkit-animation-duration: 1.4s; */
+      /**
+      * It will repeat itself forever
+      */
+      /* animation-iteration-count: infinite;
+      -webkit-iteration-count: infinite; */
+      /**
+
+      * This makes sure that the starting style (opacity: .2)
+      * of the animation is applied before the animation starts.
+      * Otherwise we would see a short flash or would have
+      * to set the default styling of the dots to the same
+      * as the animation. Same applies for the ending styles.
+      */
+      animation-fill-mode: both;
+      -webkit-animation-fill-mode: both;
+    }
+
+    .loadingtext span:nth-child(3) {
+      /**
+      * Starts the animation of the third dot
+      * with a delay of .2s, otherwise all dots
+      * would animate at the same time
+      */
+      animation-delay: 1.2s;
+      -webkit-animation-delay: 1.2s;
+    }
+
+    .loadingtext span:nth-child(4) {
+      /**
+      * Starts the animation of the third dot
+      * with a delay of .4s, otherwise all dots
+      * would animate at the same time
+      */
+      animation-delay: 1.4s;
+      -webkit-animation-delay: 1.4s;
+    }
+
+    @keyframes blink {
+      /**
+      * At the start of the animation the dot
+      * has an opacity of .2
+      */
+      0% {
+        opacity: 0;
+        -khtml-opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+      }
+      5% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+      /**
+      * At 20% the dot is fully visible and
+      * then fades out slowly
+      */
+      20% {
+        opacity: 1;
+        -khtml-opacity: 1;
+        -moz-opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      /**
+      * Until it reaches an opacity of .2 and
+      * the animation can start again
+      */
+      100% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+    }
+
+    @-webkit-keyframes blink {
+      /**
+      * At the start of the animation the dot
+      * has an opacity of .2
+      */
+      0% {
+        opacity: 0;
+        -khtml-opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+      }
+      5% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+      /**
+      * At 20% the dot is fully visible and
+      * then fades out slowly
+      */
+      20% {
+        opacity: 1;
+        -khtml-opacity: 1;
+        -moz-opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      /**
+      * Until it reaches an opacity of .2 and
+      * the animation can start again
+      */
+      100% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+    }
+
+    @-moz-keyframes blink {
+      /**
+      * At the start of the animation the dot
+      * has an opacity of .2
+      */
+      0% {
+        opacity: 0;
+        -khtml-opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+      }
+      5% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+      /**
+      * At 20% the dot is fully visible and
+      * then fades out slowly
+      */
+      20% {
+        opacity: 1;
+        -khtml-opacity: 1;
+        -moz-opacity: 1;
+        filter: alpha(opacity=100);
+      }
+      /**
+      * Until it reaches an opacity of .2 and
+      * the animation can start again
+      */
+      100% {
+        opacity: .2;
+        -khtml-opacity: 0.2;
+        -moz-opacity: 0.2;
+        filter: alpha(opacity=20);
+      }
+    }
+
+    @media (max-width: 767px) {
+      .container-main {
+        padding: 0.938rem;
+      }
+
+      .container-main::after {
+        top: 0.875em;
+        left: 0.875em;
+        right: 0.875em;
+        bottom: 0.875em;
+      }
+    }
+
+    @media only screen and (max-width: 640px) {
+      .homepage .bg-image {
+        background: url(/assets/img/circle_flip.png) no-repeat center;
+        background-size: contain;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .file-droppa-document-image,
+      .file-droppa-image {
+        height: 135px;
+      }
+    }
+
+    .homepage {
+      background: #4342e6; /* Old browsers */
+      background: -webkit-linear-gradient(270deg, #450da6 0%, #4342e6 100%); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(180deg, #450da6 0%, #4342e6 100%); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(180deg, #450da6 0%, #4342e6 100%); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(180deg, #450da6 0%, #4342e6 100%); /* Standard syntax */
+    }
+
+    @media (max-width: 1199px) {
+      body {
+        font-size: 90%;
+      }
+    }
+
+    @media (max-width: 991px) {
+      body {
+        font-size: 85%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        font-size: 80%;
+      }
+    }
+
+    @media (max-width: 575px) {
+      body {
+        font-size: 75%;
+      }
+    }
+
+    @media (max-width: 360px) {
+      body {
+        font-size: 73%;
+      }
+    }
+  </style>
+  <script>
+      mxLoadResources = false;
+      mxLoadStylesheets = false;
+  </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131074681-1"></script>
+  <script src="https://apis.google.com/js/client.js?onload=initPicker"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+          dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'UA-131074681-1');
+  </script>
+
+  <script>
+      window._mfq = window._mfq || [];
+      (function() {
+          var mf = document.createElement("script");
+          mf.type = "text/javascript"; mf.async = true;
+          mf.src = "//cdn.mouseflow.com/projects/c61939d0-fe5a-4f05-b608-78e358a6b328.js";
+          document.getElementsByTagName("head")[0].appendChild(mf);
+      })();
+      _mfq.push(["config", "autoStart", false]);
+  </script>
+
+  <!-- Hotjar Tracking Code for https://saffron.vc -->
+  <script>
+      (function (h, o, t, j, a, r) {
+          h.hj = h.hj || function () {
+              (h.hj.q = h.hj.q || []).push(arguments)
+          };
+          h._hjSettings = {hjid: 1146491, hjsv: 6};
+          a = o.getElementsByTagName('head')[0];
+          r = o.createElement('script');
+          r.async = 1;
+          r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+
+  <!-- intercom messenger -->
+  <script>
+      window.intercomSettings = {
+          app_id: "p5ia3qsk"
+      };
+  </script>
+
+  <script>(function () {
+      var w = window;
+      var ic = w.Intercom;
+
+      if (typeof ic === "function") {
+          ic('reattach_activator');
+          ic('update', w.intercomSettings);
+      } else {
+          var d = document;
+          var i = function () {
+              i.c(arguments);
+          };
+          i.q = [];
+          i.c = function (args) {
+              i.q.push(args);
+          };
+          w.Intercom = i;
+
+          var l = function () {
+              var s = d.createElement('script');
+              s.type = 'text/javascript';
+              s.async = true;
+              s.src = 'https://widget.intercom.io/widget/p5ia3qsk';
+              var x = d.getElementsByTagName('script')[0];
+              x.parentNode.insertBefore(s, x);
+          };
+
+          if (w.attachEvent) {
+              w.attachEvent('onload', l);
+          } else {
+              w.addEventListener('load', l, false);
+          }
+      }
+  })();</script>
+  <!-- <link rel="stylesheet" href="./assets/css/styles.css"/> -->
+</head>
+
+<body class="saf_blue_theme">
+<style>
+  html, body {
+    min-height: auto;
+    overflow: hidden;
+  }
+</style>
+<div class="homepage  container-fluid">
+  <div class="bg-image  container-main">
+    <div class="container-border">
+      <div class="splashscreen">
+        <img src="/assets/logos/saffron_mata_white.svg">
+
+        <div class="loadingtext">
+          <img src="/assets/img/loading.png">
+          <span>&bull;</span><span>&bull;</span><span>&bull;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="./assets/js/quickfix.js"></script> -->
+</body>
+</html>

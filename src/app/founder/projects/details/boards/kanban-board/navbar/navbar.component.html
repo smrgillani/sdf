@@ -1,0 +1,5 @@
+<nav>
+  <div class="logo" (click)="goHome()"></div>
+  <div class="back-btn" (click)="backToProject()" ><span><img src="../../assets/img/left-arrow.png" width="20px" /></span><a>Back to <b>Project {{project_id}}</b></a></div> 
+  <app-profile-menu *ngIf="isLoggedIn" class="pull-right"></app-profile-menu>
+</nav>

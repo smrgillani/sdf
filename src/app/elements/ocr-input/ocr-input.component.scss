@@ -1,0 +1,73 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.editor-toggle {
+  height: 32px;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.drop_files {
+  position: relative;
+  height: 100%;
+
+  > div {
+    height: 100%;
+  }
+
+  .close a {
+    display: block;
+    color: #e2e2e2;
+    right: 0px;
+    position: absolute;
+    top: 24px;
+    background: red;
+    padding: 5px;
+    border-radius: 360px;
+    width: 35px;
+    text-align: center;
+  }
+}
+
+.file-upload-wrapper {
+  height: calc(100% - 32px);
+  overflow: auto;
+}
+
+.ocr-error {
+  color: red;
+  margin: 0 15px;
+}
+
+.file-upload {
+  display: block;
+  margin: 0 15px;
+}
+
+.file-container {
+  border: 1px solid #ccc;
+  background: #fff;
+  margin: 10px 0;
+}
+
+pre.file-container {
+  padding: 15px;
+}
+
+pre.file-container:empty {
+  visibility: hidden;
+}
+
+.radiogroup {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.output-editor {
+  height: calc(100% - 32px);
+  display: block;
+}

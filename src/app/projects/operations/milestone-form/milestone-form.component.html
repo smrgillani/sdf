@@ -1,0 +1,87 @@
+<form>
+  <div class="firstform" *ngIf="!showNextForm">
+    <div class="form-group">
+      <label class="form-control-label">Title</label>
+
+      <input
+        type="text"
+        class="form-control"
+        [readonly]="milestone.is_milestone_in_startup_stage"
+        placeholder="Title"
+        [maxlength]="50"
+        name="title"
+        [(ngModel)]="milestone.title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label">Description</label>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Description"
+        name="description"
+        [maxlength]="50"
+        [(ngModel)]="milestone.description"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label">Duration period</label>
+
+      <div class="period">
+        <div class="datetime-container">
+          <app-date-input [(date)]="milestone.date_start" (dateChange)="onStartDateChange($event)"></app-date-input>
+          <app-time-input [(ngModel)]="milestone.date_start" [ngModelOptions]="{standalone: true}"></app-time-input>
+        </div>
+
+        <div class="separator">-</div>
+
+        <div class="datetime-container">
+          <app-date-input [(date)]="milestone.date_end" (dateChange)="onEndDateChange($event)"></app-date-input>
+          <app-time-input [(ngModel)]="milestone.date_end" [ngModelOptions]="{standalone: true}"></app-time-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secondform" *ngIf="showNextForm">
+    <div class="form-group">
+      <label class="form-control-label">Select Icon</label>
+      <p-dropdown
+        class="form-control"
+        [options]="iconList"
+        (onChange)="onSelectedIconType($event.value)"
+        [(ngModel)]="milestone.icon_category"
+        [ngModelOptions]="{standalone: true}"
+      ></p-dropdown>
+
+      <div class="milestonemainwrap">
+        <perfect-scrollbar class="milestonescroller">
+          <div class="milestoneimagwrap">
+            <div
+              class="milestoneimages"
+              *ngFor="let milestonimage of selectedMilestone.folderimgs; let i = index"
+              [ngClass]="{active:milestonimage==milestone.icon_name}"
+              (click)="milestone.icon_name=milestonimage"
+            >
+              <img src="/assets/img/milestones/{{selectedMilestone.value}}/{{milestonimage}}">
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-control-label">Place it after</label>
+      <p-dropdown
+        class="form-control"
+        [options]="milestoneList"
+        (onChange)="onSelectedAfterMilestone($event.value)"
+        [(ngModel)]="placeItAfter"
+        [ngModelOptions]="{standalone: true}"
+      ></p-dropdown>
+    </div>
+  </div>
+</form>

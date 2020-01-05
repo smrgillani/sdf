@@ -1,0 +1,154 @@
+<div class="version-control" [hidden]="changeLogOpened">
+  <div class="change-panel" *ngIf="isCollab && docInfo && docInfo.changes && docInfo.changes.length">
+    <a class="change-view-trigger" (click)="openChangeLog()">
+      Last edit was {{ docInfo.changes[docInfo.changes.length - 1].timestamp_changed | formatRelativeTime }}
+    </a>
+  </div>
+
+  <app-import-toolbar [hidden]="!enabled" (fileChosen)="onFileChosen($event)"></app-import-toolbar>
+
+  <div class="edit-drawing">
+    <div class="mx-editor" [class.is-hand]="isHandToolActive">
+      <div #mxEditorOverlay class="mx-editor-overlay"></div>
+      <div [id]="editorId" class="mx-editor-svg-wrapper">
+        <ng-container *ngFor="let cursor of visibleCursors">
+          <div
+            class="mx-editor-cursor"
+            *ngFor="let cell of cursor.cells"
+            [ngStyle]="{
+              'left.px': cell.x,
+              'top.px': cell.y,
+              'width.px': cell.width,
+              'height.px': cell.height,
+              'border-color': cursor.color
+            }"
+          >
+            <div class="mx-editor-label" [ngStyle]="{
+              'border-color': cursor.color,
+              'color': cursor.color
+            }">
+              {{ cursor.firstName }} {{ cursor.lastName }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <app-edit-drawing-toolbar
+      [toolbarPosition]="toolbarPosition"
+      [enabledSections]="enabledSections"
+      [editingStyle]="editedStyle"
+      (styleChanged)="onStyleChanged($event)"
+      (actionOccurred)="onToolbarActionOccurred($event)"
+    ></app-edit-drawing-toolbar>
+
+    <div class="main-toolbar">
+      <div class="section">
+        <div class="clickable" [class.active]="!isHandToolActive" (click)="deactivateHandTool()">
+          <img src="/assets/img/compose.svg" alt="Compose Tool" title="Compose Tool">
+        </div>
+        <div class="clickable" [class.active]="isHandToolActive" (click)="activateHandTool()">
+          <img src="/assets/img/icon-3-high-five.svg" alt="Hand Tool" title="Hand Tool">
+        </div>
+      </div>
+      <div class="section" *ngIf="docInfo">
+        <div class="clickable" (click)="exportSVG()">
+          <img src="/assets/img/file-types/svg.svg" alt="Export SVG" title="Export SVG">
+        </div>
+      </div>
+      <div class="section">
+        <div class="clickable" (click)="undo()">
+          <img src="/assets/img/undo.svg" alt="Undo" title="Undo">
+        </div>
+        <div class="clickable" (click)="redo()">
+          <img src="/assets/img/redo.svg" alt="Redo" title="Redo">
+        </div>
+      </div>
+      <div class="section">
+        <div class="clickable" (click)="zoomOut()">
+          <img src="/assets/img/icon-113-search-minus.svg" alt="Zoom Out" title="Zoom Out">
+        </div>
+        <div class="zoom-percentage">{{ zoom[zoomIndex].display }}</div>
+        <div class="clickable" (click)="zoomIn()">
+          <img src="/assets/img/icon-112-search-plus.svg" alt="Zoom In" title="Zoom In">
+        </div>
+      </div>
+    </div>
+
+    <div class="drawing-panel-wrapper" *ngIf="enabled">
+      <div *ngIf="isFiguresVisible" class="drawing-figures">
+        <div class="close" (click)="isFiguresVisible = !isFiguresVisible">&times;</div>
+
+        <div class="figures">
+          <div *ngFor="let figure of figures" class="figure" (click)="drawFigure(figure.type)">
+            <img [src]="figure.img" alt="{{ figure.type }}" title="{{ figure.type }}">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isPanelVisible" class="drawing-categories">
+        <div class="drawing-category figures_tool" (click)="openFiguresSelector()" title="Figures"></div>
+        <div class="drawing-category text_tool" (click)="drawText()" title="Text"></div>
+        <div class="drawing-category image_tool" title="Image">
+          <input type="file" accept="image/*" (change)="drawImage($event)">
+        </div>
+        <div class="drawing-category line_tool" (click)="drawEdge()" title="Line"></div>
+      </div>
+
+      <div class="open-button" title="Create element" [class.pressed]="isPanelVisible" (click)="isPanelVisible = !isPanelVisible">
+        +
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="version-control" [hidden]="!changeLogOpened" *ngIf="isCollab && docInfo">
+  <div class="change-panel">
+    <a class="change-view-trigger" (click)="closeChangeLog()">
+      Return to editing
+    </a>
+    <div class="participant-info">
+      <div class="participant-count" *ngIf="changeViewerParticipants">
+        {{ changeViewerParticipants.length }} collaborators
+      </div>
+
+      <div class="participants">
+        <div *ngFor="let participant of changeViewerParticipants" [title]="participant.name"
+             class="participant" [style.background-color]="participant.color">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="change-view">
+    <div class="edit-drawing col change-viewer">
+      <div class="mx-editor">
+        <div class="mx-editor-svg-wrapper" [id]="editorId + '-changes'">
+          <ng-container *ngFor="let cursor of changeViewerCursors">
+            <div
+              class="mx-editor-cursor"
+              *ngFor="let cell of cursor.cells"
+              [ngStyle]="{
+              'left.px': cell.x,
+              'top.px': cell.y,
+              'width.px': cell.width,
+              'height.px': cell.height,
+              'border-color': cursor.color
+            }"
+            >
+              <div class="mx-editor-label" [ngStyle]="{
+              'border-color': cursor.color,
+              'color': cursor.color
+            }">
+                {{ cursor.firstName }} {{ cursor.lastName }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <app-change-log [sessionEndings]="docInfo.session_endings" [documentChanges]="docInfo.changes"
+                    (changesSelected)="showChanges($event)"
+                    class="col change-log"></app-change-log>
+  </div>
+</div>

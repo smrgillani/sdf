@@ -1,0 +1,58 @@
+<app-header class="position-static"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Transfer Money</h1>
+    </div>
+
+    <div class="cardwrap transitionWrap">
+      <div class="pull-left fundWrap">
+        <h5 *ngIf="!is_changeProject">
+          <div class="fundBtn pull-left">
+            <button type="text" class="btn skyblue">
+              <span class="icomoon icon-coins"></span>
+            </button>
+          </div>
+
+          <div class="pull-left">
+            {{walletAmount}} mata Credits
+            <span class="dabcoin">(Ex. 1 Dabcoin is equal to 1 USD) </span>
+            <span class="dabcoin" title="Change the project" *ngIf="currentRole == 'creator'">For Project {{selectedProjectTitle}}
+              <i class="fa fa-edit" (click)="is_changeProject = !is_changeProject"></i> </span>
+          </div>
+        </h5>
+
+        <div class="form-group" *ngIf="currentRole == 'creator' && is_changeProject" style="min-width: 250px;">
+          <label>Project</label>
+          <p-dropdown class="form-control" [(ngModel)]="selectedProject" [options]="currentUserProjectList" (onChange)="onSlectedProject()" placeholder="Personal"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <router-outlet></router-outlet>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <ngb-tabset>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Send</ng-template>
+
+          <ng-template ngbTabContent>
+            <app-send-money-list></app-send-money-list>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Received</ng-template>
+
+          <ng-template ngbTabContent>
+            <app-received-money-list></app-received-money-list>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

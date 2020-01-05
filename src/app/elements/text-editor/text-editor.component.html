@@ -1,0 +1,34 @@
+<div class="app-text-editor" [hidden]="changeLogOpened">
+  <div class="change-panel" *ngIf="isCollab && docInfo && docInfo.changes && docInfo.changes.length">
+    <a class="change-view-trigger" (click)="openChangeLog()">
+      Last edit was {{ docInfo.changes[docInfo.changes.length - 1].timestamp_changed | formatRelativeTime }}
+    </a>
+  </div>
+  <div [id]="editorId"></div>
+</div>
+
+<div class="app-text-editor" [hidden]="!changeLogOpened" *ngIf="isCollab && docInfo">
+  <div class="change-panel">
+    <a class="change-view-trigger" (click)="closeChangeLog()">
+      Return to editing
+    </a>
+    <div class="participant-info">
+      <div class="participant-count" *ngIf="changeViewerParticipants">
+        {{ changeViewerParticipants.length }} collaborators
+      </div>
+
+      <div class="participants">
+        <div *ngFor="let participant of changeViewerParticipants" [title]="participant.name"
+             class="participant" [style.background-color]="participant.color">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="change-view">
+    <div class="col change-viewer" [id]="editorId + '-changes'"></div>
+
+    <app-change-log [sessionEndings]="docInfo.session_endings" [documentChanges]="docInfo.changes"
+                    (changesSelected)="showChanges($event)"
+                    class="col change-log"></app-change-log>
+  </div>
+</div>

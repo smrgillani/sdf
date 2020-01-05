@@ -1,0 +1,123 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Project List', route: ['employee/account/project-list']}"></app-header>
+
+<main>
+
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Creator List</h1>
+    </div>
+    <div class="cardwrap">
+      <ng-container>
+        <div class="card" *ngFor="let item of founderList; let index = index">
+          <div class="card-block">
+            <h3 class="card-title" (click)="toggleAccordian($event,index)">
+              <i class="icomoon icon-next-1"></i>
+              {{item.owner_name}}
+              <span class="pull-right" [class.icon-up-arrow]="!isCollapsedArray[index]" [class.icon-down-arrow]="isCollapsedArray[index]"></span>
+            </h3>
+            <div class="card-text" [ngbCollapse]="isCollapsedArray[index]">
+              <table class="table table-hover  employee-table">
+                <tbody>
+                  <tr *ngFor="let subItem of item.projects" [hidden]="!subItem.is_user_assigned">
+                    <td>
+                      <div class="Employee-title">
+                        <div class="employee-name">{{subItem.title}}</div>
+                        <div class="employee-details">
+                          <!-- <div class="ava" *ngIf="subItem.boolean_text; else extensionRequest">No of Days: {{subItem.no_days}}</div>
+                              <ng-template #extensionRequest>
+                                  <div *ngIf="subItem.boolean_text != undefined && !subItem.boolean_text" class="ava" >No</div>
+                              </ng-template>
+                              <div class="employee_des">{{subItem.response_text}}</div> -->
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                        <div class="project-actions">
+                          <button class="saffron-btn maya-blue waves-effect waves-light" (click)="openBonusPopUp(item.owner_id, subItem.id)">Bonus</button>
+                          <button class="saffron-btn dark-turquoise waves-effect waves-light" (click)="openHikePopUp(item.owner_id, subItem.id)">Hike</button>
+                          <button class="saffron-btn pumpkin waves-effect waves-light" (click)="openQuitJob(item.owner_id, subItem.id)">Quit Job</button>
+                          <!-- <div class="btn-border blue" (click)="openBonusPopUp(item.owner_id)">
+                            <div class="btn blue-btn">Bonus</div>
+                          </div>
+                          <div class="btn-border skyblue" (click)="openHikePopUp(item.owner_id)">
+                            <div class="btn skyblue-btn">Hike</div>
+                          </div>
+                          <div class="btn-border orange" (click)="openQuitJob(item.owner_id)">
+                            <div class="btn orange-btn">Quit Job</div>
+                          </div> -->
+                        </div>
+                      </td>   
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getFounderList($event)"></app-pagination> -->
+      </ng-container>
+
+
+
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>
+
+<ng-template #popUpForBonus>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()"><i class="icon-close"></i></div>
+
+    <div class="popheading">Bonus</div>
+
+    <div class="form-group datetimetextbox">
+      <label>Bonus Amount </label>
+      <input type="hidden" [(ngModel)]="bonusRequestInfo.creator">
+      <input type="number" min="1" class="form-control" [(ngModel)]="bonusRequestInfo.bonus.amount" />
+    </div>
+    <div *ngIf="errorMsg && errorMsg != ''" class="errorwrap">{{errorMsg}}</div>
+    <div class="form-group project-actions">
+      <!-- <button class="saffron_btn skyblue_btn" [disabled]="!bonusRequestInfo.bonus.amount" (click)="requestBonus()">Confirm</button> -->
+      <button class="saffron-btn dark-turquoise waves-effect waves-light" [disabled]="!bonusRequestInfo.bonus.amount" (click)="requestBonus()">Confirm</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForHike>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()"><i class="icon-close"></i></div>
+
+    <div class="popheading">Hike</div>
+
+    <div class="form-group datetimetextbox">
+      <label>Hike per hour </label>
+      <input type="hidden" [(ngModel)]="hikeRequestInfo.creator">
+      <input type="number" min="1" class="form-control" [(ngModel)]="hikeRequestInfo.hike.amount" />
+    </div>
+    <div *ngIf="errorMsg && errorMsg != ''" class="errorwrap">{{errorMsg}}</div>
+    <div class="form-group project-actions">
+      <!-- <button class="saffron_btn skyblue_btn" [disabled]="!hikeRequestInfo.hike.amount" (click)="requestHike()">Confirm</button> -->
+      <button class="saffron-btn dark-turquoise waves-effect waves-light" [disabled]="!hikeRequestInfo.hike.amount" (click)="requestHike()">Confirm</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForQuitJob>
+    <div class="interviewpopup saf_blue_theme">
+      <div class="close_popup" (click)="popUpForShowInterestModalRef.close()"><i class="icon-close"></i></div>
+  
+      <div class="popheading">Quit Job</div>
+  
+      <div class="form-group datetimetextbox">
+        <label>Reason to quit job </label>
+        <input type="hidden" [(ngModel)]="quitJobInfo.creator">
+        <input type="text" class="form-control" [(ngModel)]="quitJobInfo.reason" />
+      </div>
+      <div *ngIf="errorMsg && errorMsg != ''" class="errorwrap">{{errorMsg}}</div>
+      <div class="form-group project-actions">
+        <!-- <button class="saffron_btn skyblue_btn" [disabled]="!quitJobInfo.reason" (click)="requestQuitJob()">Confirm</button> -->
+        <button class="saffron-btn dark-turquoise waves-effect waves-light" [disabled]="!quitJobInfo.reason" (click)="requestQuitJob()">Confirm</button>
+      </div>
+    </div>
+  </ng-template>

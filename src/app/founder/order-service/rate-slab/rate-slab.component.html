@@ -1,0 +1,47 @@
+<main>
+  <div class="container saf_blue_theme">
+    <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+      <i class="icomoon icon-multiply" aria-hidden="true"></i>
+    </div>
+    <div class="heading">
+      <h1>Rate Slab</h1>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <div class="cardwrap">
+        <div class="s-box">
+          <div class="s-box-body">
+              <div class="table-responsive">
+            <table class="table" *ngIf="rateSlabListInfo && rateSlabListInfo.length > 0">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Urgency</th>
+                  <th>Expertise</th>
+                  <th>Extensiveness</th>
+                  <th>Fee Amount</th>
+                  <th>Commission</th>
+                  <th>Total Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of rateSlabListInfo">
+                  <td>{{item?.subject?.title}}</td>
+                  <td>{{item?.urgency?.title}}</td>
+                  <td>{{item?.expertise}}</td>
+                  <td>{{item?.extensiveness?.title}}</td>
+                  <td>{{item?.fee?.amount}}</td>
+                  <td>{{item?.commission}}%</td>
+                  <td>{{item?.total_amount?.amount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>

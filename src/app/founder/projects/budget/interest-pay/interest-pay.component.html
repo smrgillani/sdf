@@ -1,0 +1,67 @@
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<app-header [backNavOptions]="{caption: 'Budget'}"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Interest Pay</h1>
+      <button class="saffron_btn blue_btn" [disabled]="ids.length == 0" (click)="putInterestPayInfo()">Pay</button>
+    </div>
+
+    <div class=" table-responsive">
+      <table class="table table-hover projects-table transaction-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Amount to pay</th>
+            <th>Interest Rate</th>
+            <!-- <th>Status</th> -->
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of interestPayInfoList; let isOdd = odd; let isEven = even;">
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [value]="item.id" (change)="setSelectedInterestPay($event)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+            <!-- <td>
+              <div class="companyiconwrap">
+                <span class="companyicon">{{item.backer_name[0]}}</span>
+                <span class="companyname" [title]="item.backer_name">{{item.backer_name}}</span>
+              </div>
+            </td> -->
+            <td>{{item.from_date}}</td>
+            <td>{{item.to_date}}</td>
+            <td>{{item.amount_to_pay.amount}}</td>
+            <td>{{item.interest_rate}} %</td>
+            <!-- <td>
+              <div *ngIf="!item.is_closed; else statusDone">
+                <button class="saffron_btn red_btn" (click)="putInterestPayInfo(item.id)">Close</button>
+              </div>
+              <ng-template #statusDone>Done</ng-template>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getInterestPayList($event)"></app-pagination>
+
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForErrorMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

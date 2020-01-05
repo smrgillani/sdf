@@ -1,0 +1,12 @@
+.buttonwrap { width: 200px !important;
+    }
+
+
+    @media (max-width: 767px){
+.project-actions .btn-border {
+    width: 100%;
+}.project-actions .btn-border.col6 {
+    width: calc(50% - 7px);
+}
+    }
+    

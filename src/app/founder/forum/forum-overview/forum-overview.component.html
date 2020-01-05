@@ -1,0 +1,29 @@
+<div id="forum-section" class="container-fluid saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header class="position-absolute" [backNavOptions]="{ route: ['./'] }"></app-header>
+      <div class="container-header">
+        <div id="employee-menuitems" class="app-employee-profile-bubble-toolbar">
+          <nav class="bubbles">
+            <div *ngFor="let button of buttons; let i = index" class="bubble" (click)="goTo(button.link)">
+              <div class="button-border" [class.active]="button.link == currentStage">
+                <div class="button-icon waves-effect waves-light">
+                  <i [ngClass]="button.icon"></i>
+                </div>
+              </div>
+              <div class="caption">{{button.caption}}</div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div>
+        <!-- <router-outlet name="document"></router-outlet> -->
+        <div id="forum-content" class="childpagewrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

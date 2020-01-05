@@ -1,0 +1,258 @@
+<!-- <app-header
+  class="position-static"
+  [backNavOptions]="{caption: project.title, route: backRoutePath}">
+</app-header> -->
+<app-header
+  class="position-static"
+  [backNavOptions]="{caption: project.title, route: backRoutePath}"
+></app-header>
+<main>
+  <div class="container-fluid">
+    <div class="heading">
+      <h1>Operations</h1>
+
+      <div class="actions">
+        <div *ngIf="allowEdit" class="btn add-btn" (click)="openModal(addMilestoneForm)"></div>
+      </div>
+    </div>
+
+    <div class="operations-chart" id="operations-chart">
+      <nav class="chart-mode-switcher">
+        <a
+          href="javascript:void(0)"
+          class="chart-mode"
+          *ngFor="let mode of ['day', 'week', 'month', 'year']"
+          (click)="setChartMode(mode)"
+          [class.selected]="mode === chartMode"
+        >{{mode}}</a>
+      </nav>
+
+      <app-gantt-chart
+        [dataSource]="operations"
+        [mode]="chartMode"
+        [allowEdit]="allowEdit"
+        (openWork)="openMilestone($event.milestone)"
+        (editWork)="openModal(editMilestoneForm, $event.milestone)"
+        (selectedWorkChange)="onSelectedWorkChange($event)"
+        (showWorkActivity)="openModal(showActivityLog, $event.milestone)"
+      ></app-gantt-chart>
+    </div>
+
+    <div class="cardwrap">
+      <div class="cardheading">
+        <h3>Project Milestone</h3>
+      </div>
+
+      <div
+        class="slicksliderwrap"
+        #slickmodal
+        [@cardAnimator]="animationState"
+        (@cardAnimator.done)="resetAnimationState()"
+        (pinchin)="pinchOut = false; deselectMilestone()"
+        (pinchout)="pinchOut = true"
+        [class.sliderinit]="pinchOut"
+        myMatchHeight="milestonname"
+      >
+        <div class="round-btn-wrap">
+          <button (click)="pinchOut=true" [disabled]="pinchOut">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+          <button (click)="pinchOut=false" [disabled]="!pinchOut">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <ngx-slick
+          class="carousel milestone-slider"
+          myMatchHeight="milestone-image"
+          #slickModal="slick-modal"
+          [config]="slideConfig"
+          (afterChange)="afterChange($event)"
+        >
+          <div
+            ngxSlickItem
+            *ngFor="let milestoneStage of projectMilestones; let i = index"
+            class="slide"
+            (tap)="selectMilestone($event,milestoneStage,i)"
+          >
+            <div class="milestone-item">
+              <div class="milestone-image">
+                <img
+                  src="/assets/img/milestones/{{milestoneStage.icon_category}}/{{milestoneStage.icon_name}}"
+                  onError="this.src='/assets/img/milestones/No Image/placeholder.png';"
+                >
+              </div>
+
+              <div class="milestone-name">
+                <span class="badge">{{milestoneStage.order + 1}}</span>
+                <span class="milestonname">{{milestoneStage.title}}</span>
+              </div>
+            </div>
+
+            <div class="milestoneinfo inside">
+              <div class="milestone-name">
+                <span class="badge">1</span>
+                <span class="milestonename">{{milestoneStage.title}}
+                </span>
+              </div>
+
+              <div class="maindatewrap" [ngClass]="{'centeralign': milestoneStage.tasks.length==0}">
+                <div class="datewrap from">
+                  {{milestoneStage.date_start | date: 'MMM d, y'}}
+                </div>
+                <div class="datewrap to">
+                  {{milestoneStage.date_end | date: 'MMM d, y'}}
+                </div>
+              </div>
+
+              <div class="milestonemainwrapper" *ngIf="milestoneStage.tasks">
+                <div class="milestonewrap" *ngFor="let milestoneTasks of milestoneStage.tasks; let i = index">
+                  <span class="milestone-number">{{i}}</span>
+
+                  <div class="milestone-count">
+                    <circle-progress [percent]="milestoneTasks.goal_percentage"></circle-progress>
+                    <div class="milestoneimage">
+                      <span class="milestone-percentage">{{milestoneTasks.goal_percentage}}%</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="milestonetitle">{{milestoneTasks.title}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ngx-slick>
+
+        <div *ngIf="showDetails" class="milestoneinfo outside">
+          <div class="milestone-name">
+            <span class="badge">{{milestoneInfo.order + 1}}</span>
+            <span class="milestonename">{{milestoneInfo.title}}
+            </span>
+            <span class="closemileston icon-multiply" (click)="showDetails=!showDetails"></span>
+          </div>
+
+          <div class="maindatewrap" [ngClass]="{'centeralign': milestoneInfo.tasks.length==0}">
+            <div class="datewrap from">
+              {{milestoneInfo.date_start | date: 'MMM d, y'}}
+            </div>
+
+            <div class="datewrap to">
+              {{milestoneInfo.date_end | date: 'MMM d, y'}}
+            </div>
+          </div>
+
+          <div class="milestonemainwrapper" *ngIf="milestoneInfo.tasks">
+            <div class="milestonewrap" *ngFor="let milestoneTasks of milestoneInfo.tasks; let i = index">
+              <span class="milestone-number">{{i}}</span>
+
+              <div class="milestone-count">
+                <circle-progress [percent]="milestoneTasks.goal_percentage"></circle-progress>
+                <div class="milestoneimage">
+                  <span class="milestone-percentage">{{milestoneTasks.goal_percentage}}%</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="milestonetitle">{{milestoneTasks.title}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<ng-template #addMilestoneForm>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="modal-header">
+      <h3 class="modal-title">New Milestone</h3>
+    </div>
+
+    <div class="modal-body">
+      <app-project-milestone-form
+        class="milestone-form"
+        [showNextForm]="showNextForm"
+        [milestone]="milestone"
+        [projectMilestones]="projectMilestones"
+        [categoryImageList]="categoryImageList"
+      ></app-project-milestone-form>
+    </div>
+
+    <div class="modal-footer">
+      <div class="buttons">
+        <div class="btn btn-ok" *ngIf="!showNextForm" (click)="showNextForm = !showNextForm">Next</div>
+        <div class="btn btn-danger" *ngIf="showNextForm" (click)="showNextForm = !showNextForm">Back</div>
+        <div class="btn btn-ok" *ngIf="showNextForm" (click)="createMilestone()">Create</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #editMilestoneForm>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="modal-header">
+      <h3 class="modal-title">Edit {{milestone.title}}</h3>
+      <div class="delete-btn" (click)="confirmDeleting(confirmDeletingMessage)">
+        <i class="fa fa-trash"></i>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <app-project-milestone-form
+        class="milestone-form"
+        [showNextForm]="showNextForm"
+        [milestone]="milestone"
+        [projectMilestones]="projectMilestones"
+        [categoryImageList]="categoryImageList"
+      ></app-project-milestone-form>
+    </div>
+
+    <div class="modal-footer">
+      <div class="buttons">
+        <div class="btn btn-ok" *ngIf="!showNextForm" (click)="showNextForm = !showNextForm">Next</div>
+        <div class="btn btn-danger" *ngIf="showNextForm" (click)="showNextForm = !showNextForm">Back</div>
+        <div class="btn btn-ok" *ngIf="showNextForm" (click)="updateMilestone()">Update</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmDeletingMessage>
+  <div class="modal-body">Are you sure you want to delete "{{milestone.title}}"?</div>
+
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-cancel" (click)="confirmDeletingModalRef.close()">Cancel</div>
+      <div class="btn btn-ok" (click)="deleteMilestone()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #showActivityLog>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="modal-header">
+      <h3 class="modal-title">Activity Log - {{milestone.title}}</h3>
+    </div>
+
+    <div class="modal-body">
+      <app-milestone-activity class="milestone-form" [milestone]="milestone"></app-milestone-activity>
+    </div>
+
+    <div class="modal-footer"></div>
+  </div>
+</ng-template>

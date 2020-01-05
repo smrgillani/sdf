@@ -1,0 +1,17 @@
+<app-founder-project-navbar></app-founder-project-navbar>
+<div class="container-fluid bg-gradient">
+  <div class="container-main">
+    <h4 class="c-white m-5">Draft version</h4>
+
+    <div *ngFor="let project of mockup_data" class="card text-center m-3 w-75">
+    <div class="card-block">
+      <h4 class="card-title" style="cursor: pointer;" (click)="navigateToInsidePrivate(project)">{{project.title}}</h4>
+    </div>
+    <div class="card-footer">
+      <div class="btn btn-primary" (click)="navigateToInsidePublic(project)" style="cursor: pointer">Inside</div>
+      <div *ngIf="project.registered === false" class="btn btn-primary" (click)="navigateToRegister(project)" style="cursor: pointer">Register</div>
+      <div class="btn btn-primary" (click)="navigateToWork(project)" style="cursor: pointer">Work</div>
+    </div>
+    </div>
+  </div>
+</div>

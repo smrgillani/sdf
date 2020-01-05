@@ -1,0 +1,80 @@
+<div class="container-fluid bg-gradient backer profilehome">
+  <div class="container-main bg-image profilehomecontent">
+    <div class="container-border">
+      <div class="">
+        <!-- <app-navbar></app-navbar> -->
+        <app-header class="no-bg position-absolute" [showBackButton]="false"></app-header>
+
+        <div class="container-main bg-circle">
+          <div class="container-title text-center">
+            <div class="c-white font-large">Investor Home</div>
+            <div class="separator"></div>
+            <div class="font-small">Manage your projects <br/>and collaborate with your team</div>
+          </div>
+
+          <!-- (click)="myProjectPopover.open()"
+               appPopoverAutoPosition [popOverName]="myProjectPopover" [placement]="{desktop:'left', tablet:'top', mobile:'none'}"
+               (shown)="closePopoverpWithDelay(2000, myProjectPopover, 'myProjectTimer')"
+               [triggers]="'none'" [container]="'body'" [ngbPopover]="myProjectNotificationTemplate" #myProjectPopover="ngbPopover" -->
+          <div class="container-buttons">
+            <a routerLink="my-projects" class="btn-menu btn-my-projects  circle-first"
+               [@buttonMyProjects]="buttonMyProjects" (@buttonMyProjects.done)="animationDone($event)">
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+              <h5 class="c-white btn-caption">My Projects</h5>
+
+              <!-- <span class="icon pink"></span>
+             <span class="button-text">My projects</span> -->
+            </a>
+
+            <a routerLink="projects" class="btn-menu  btn-projects  circle-second"
+               [@buttonProjects]="buttonProjects" (@buttonProjects.done)="animationDone($event)">
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+              <h5 class="c-white btn-caption">Projects</h5>
+
+
+              <!-- <span class="icon green"></span>
+              <span class="button-text">Projects</span> -->
+            </a>
+
+            <a routerLink="trading" class="btn-menu  btn-trading  circle-third"
+               [@buttonTrading]="buttonTrading" (@buttonTrading.done)="animationDone($event)">
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+              <h5 class="c-white btn-caption">Trading</h5>
+            </a>
+
+            <a routerLink="/founder/account" class="btn-menu  btn-account  circle-forth"
+               [@buttonAccount]="buttonAccount" (@buttonAccount.done)="animationDone($event)">
+              <div class="btn-border">
+                <div class="btn-icon center-both"></div>
+              </div>
+              <h5 class="c-white btn-caption">Account</h5>
+
+              <!-- <span class="icon blue"></span>
+              <span class="button-text">Account</span> -->
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #messageNotificationTemplate>
+  <div class="message">{{popoverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="messagePopover.close()">Ok</div>
+  </div>
+</ng-template>
+
+<ng-template #myProjectNotificationTemplate>
+  <div class="message">{{popoverMessage}}</div>
+  <div class="buttons">
+    <div class="btn btn-ok" (click)="myProjectPopover.close()">Ok</div>
+  </div>
+</ng-template>

@@ -1,0 +1,62 @@
+<div class="container-fluid ndapage">
+  <div class="container-main">
+    <div class="container-border">
+      <app-header class="no-bg"></app-header>
+
+      <div class="projects-container">
+        <div class="projects-header">
+          <div class="project-header-text">
+            <span class="projects-header-caption">NDA Content</span>
+          </div>
+        </div>
+
+        <form #ndaForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="ndaData.docusign_status == 'No Nda'; else showDoc">
+          <app-text-editor [(ngModel)]="ndaData.description" name="ndaContent" #ndaContent="ngModel"></app-text-editor>
+
+          <div class="form-group">
+            <div class="projects-filter">
+              <span class="projects-filter-caption">Email</span>
+              <input class="form-control" type="text" name="email" [(ngModel)]="ndaData.creator_email" #email="ngModel"
+                     required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$">
+              <div *ngIf="email.errors?.required" class="errorwrap">Email is required</div>
+              <div *ngIf="email.errors?.pattern && email.touched" class="errorwrap">
+                Invalid Email
+              </div>
+            </div>
+
+            <div>
+              <button
+                id="submitBtn" class="saffron_btn blue_btn" type="submit"
+                [disabled]="!ndaForm.valid || (ndaData.description == '<p><br></p>')"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <ng-template #showDoc>
+          <app-docu-signdocpreview *ngIf="ndaData.docusign_status" [URL]="ndaData.docusign_status.url"></app-docu-signdocpreview>
+        </ng-template>
+        <!-- <app-pagination class="my-pagination" [pageReset]="paginationReset" [pageSize]="pageSize"
+         [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination> -->
+      </div>
+
+      <!--
+      <div class="container nda-form">
+        <span (click)="location.back()" class="back-button">Back</span>
+        <div class="icon"></div>
+        <form #ndaForm="ngForm" (ngSubmit)="onSubmit()">
+          <label>NDA Content</label>
+          <app-text-editor [(ngModel)]="ndaData.description" name="ndaContent" #ndaContent="ngModel"></app-text-editor>
+            <div class="form-group">
+              <div class="col-sm-3">
+                <button id="submitBtn" type="submit"
+                [disabled]="!ndaForm.valid || (ndaData.description == '<p><br></p>')">Submit</button>
+              </div>
+            </div>
+        </form>
+      </div>         -->
+    </div>
+  </div>
+</div>

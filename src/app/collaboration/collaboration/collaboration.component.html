@@ -1,0 +1,377 @@
+<main>
+  <aside
+    class="processes"
+    [class.open]="isProcessesOpen"
+    [class.mobile_open]="activeMobileView === 'menu'"
+  >
+    <span class="open_trigger" (click)="isProcessesOpen = !isProcessesOpen"><i class="icomoon icon-menu2"></i></span>
+
+    <div class="processes-scroll" *ngIf="isProcessesOpen">
+      <h3 class="milestones-open-trigger" (click)="toggleMilestonesListOpened()">
+        <span>Milestones</span>
+        <i
+          class="fa"
+          [class.fa-caret-left]="!isMilestoneListOpened"
+          [class.fa-caret-down]="isMilestoneListOpened"
+        ></i>
+      </h3>
+      <ng-container *ngIf="isMilestoneListOpened">
+        <ul *ngFor="let milestone of milestones">
+          <li>
+          <span
+            class="milestone"
+            [attr.aria-expanded]="isMilestoneSelected(milestone)"
+            [class.selected]="isMilestoneSelected(milestone)"
+            (click)="openMilestone(milestone)"
+          >
+            <span class="clip">{{milestone.title}}</span>
+            <i
+              class="fa"
+              [class.fa-caret-left]="!isMilestoneSelected(milestone)"
+              [class.fa-caret-down]="isMilestoneSelected(milestone)"
+            ></i>
+          </span>
+
+            <ul
+              class="goals"
+              [ngbCollapse]="!isMilestoneSelected(milestone)"
+            >
+              <li *ngFor="let task of milestone.tasks;">
+              <span
+                [attr.aria-expanded]="isGoalSelected(task)"
+                [class.selected]="isGoalSelected(task)"
+                (click)="openGoal(task)"
+              >
+                {{task.title}}
+                <i
+                  class="fa"
+                  [class.fa-angle-left]="!isGoalSelected(task)"
+                  [class.fa-angle-down]="isGoalSelected(task)"
+                ></i>
+              </span>
+
+                <ul
+                  class="channels"
+                  [ngbCollapse]="!isGoalSelected(task)"
+                  *ngIf="task.subtasks.length"
+                >
+                  <li *ngFor="let channel of task.subtasks">
+                  <span
+                    [class.active]="isProcessSelected(channel)"
+                    (click)="openProcess(channel)"
+                  >#{{channel.title}}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </ng-container>
+
+      <div class="public_channels" *ngIf="isProcessesOpen">
+        <h3 (click)="openAddEditPublicRoomPopUp()">
+          Public Channels
+          <a href="#" (click)="$event.preventDefault()">+</a>
+        </h3>
+
+        <ul>
+          <li *ngFor="let lunchItem of publicRoomListInfo">
+            <span>
+              <div (click)="navigateToLunchRoom(lunchItem.id)">#{{lunchItem.title}}</div>
+            </span>
+          </li>
+        </ul>
+
+        <h3 (click)="openAddEditLunchRoomPopUp()">
+          Lunchroom
+          <a href="#" (click)="$event.preventDefault()">+</a>
+        </h3>
+
+        <ul>
+          <li *ngFor="let lunchItem of lunchRoomListInfo">
+            <span>
+              <div (click)="navigateToLunchRoom(lunchItem.id)">
+                #{{lunchItem.title}}
+              </div>
+              <i
+                class="fa fa-pencil-square-o"
+                (click)="getLunchRoomInfo(lunchItem.id)"
+              ></i>
+            </span>
+          </li>
+        </ul>
+
+        <h3 (click)="navigateToActivity()">
+          Activity Logs
+          <a href="#" (click)="$event.preventDefault()">+</a>
+        </h3>
+
+        <ul *ngIf="allowAddingActivity">
+          <li (click)="addTodaysActivity()"><span>#Add Bot</span></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <div class="file-browser-container">
+    <div class="process">
+      <div class="process-header">
+        <div class="processes-trigger" (click)="activeMobileView = activeMobileView ? null : 'menu'">
+          <i class="fa fa-list-ul"></i>
+        </div>
+
+        <app-folder-select class="folder-select"></app-folder-select>
+
+        <div class="right-toolbar">
+          <div #rightToolbar></div>
+        </div>
+
+        <div
+          class="processes-trigger"
+          *ngIf="selectedProcess && activeMobileView!='documents' && activeMobileView!=null"
+          (click)="activeMobileView = activeMobileView === 'documents' ? null : 'documents'; openChat()"
+        >
+          <img src="/assets/img/document-explorer/details.svg" width="24" height="24" alt="">
+        </div>
+
+        <div
+          class="processes-trigger"
+          *ngIf="selectedProcess && activeMobileView!='chat'"
+          (click)="activeMobileView = activeMobileView === 'chat' ? null : 'chat'; openChat()"
+        >
+          <img src="/assets/img/document-explorer/chat.svg" width="26" height="24" alt="">
+        </div>
+      </div>
+
+      <div class="documents-wrapper">
+        <router-outlet name="documents"></router-outlet>
+      </div>
+
+      <ng-container *ngIf="callData | async as callDataValue">
+        <div #webRTCWrapper
+             *ngIf="(isCallStarted | async) && (isDockedModeActive | async)"
+             class="webrtc-wrapper"
+             [class.expanded]="isExpanded"
+             [style.height.px]="webRTCHeight">
+          <div class="buttons">
+            <button class="button" (click)="isExpanded=!isExpanded">
+              <i class="fa fa-expand" aria-hidden="true" *ngIf="!isExpanded" title="Expand"></i>
+              <i class="fa fa-compress" aria-hidden="true" *ngIf="isExpanded" title="Collapse"></i>
+            </button>
+            <button class="button" (click)="openFloatingMode()">
+              <i class="fa fa-window-restore" aria-hidden="true" title="Floating mode"></i>
+            </button>
+          </div>
+
+          <app-webrtc-main
+            [callData]="callDataValue"
+          ></app-webrtc-main>
+
+          <app-element-resize
+            *ngIf="!isExpanded"
+            class="webrtc-resize-trigger"
+            [isVertical]="true"
+            [externalSize]="webRTCHeight"
+            (sizeChanged)="setWebRTCHeight($event)"
+            (resizeBegin)="fixWebRTCHeight()"
+            (resizeEnd)="fixWebRTCHeight()"
+          ></app-element-resize>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <router-outlet name="chat"></router-outlet>
+</main>
+
+<ng-template #popUpForPublicRoom>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="popheading">Public Room</div>
+    <form name="frmPublic" (ngSubmit)="f.form.valid && addEditPublicRoom(f)" #f="ngForm" novalidate>
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.id" name="id" #id="ngModel">
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.project" name="project" #project="ngModel">
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.room_id" name="room_id" #room_id="ngModel">
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.is_public_channel" name="is_public_channel" #is_public_channel="ngModel">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Public Room Title</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="lunchRoomInfo.title" #title="ngModel"
+                   required>
+            <div *ngIf="f.submitted && title.errors?.required" class="errorwrap">Title of public room is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="post-buttons">
+        <button type="button" class="saffron_btn orange_btn" (click)="popUpForShowInterestModalRef.close()">Close
+        </button>
+        <button type="button" class="saffron_btn skyblue_btn" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #popUpForLunchRoom>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.close()">
+      <i class="icon-close"></i>
+    </div>
+
+    <div class="popheading">Lunch Room</div>
+
+    <form name="form" (ngSubmit)="f.form.valid && addEditLunchRoom(f)" #f="ngForm" novalidate>
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.id" name="id" #id="ngModel">
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.project" name="project" #project="ngModel">
+      <input type="hidden" [(ngModel)]="lunchRoomInfo.room_id" name="room_id" #room_id="ngModel">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Lunch Room Title</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="lunchRoomInfo.title" #title="ngModel"
+                   required>
+            <div *ngIf="f.submitted && title.errors?.required" class="errorwrap">Title of lunch room is required</div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Participants</label>
+            <p-multiSelect [options]="userInfoList" class="form-control" name="participants" #participants="ngModel"
+                           [(ngModel)]="lunchRoomInfo.participants" required>
+              <ng-template let-role pTemplate="item">
+                <div style="font-size:14px;float:right;margin-top:4px">{{role.lable}}</div>
+              </ng-template>
+            </p-multiSelect>
+            <div *ngIf="f.submitted && participants.errors?.required" class="errorwrap">Participants is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-buttons">
+        <button type="button" class="saffron_btn orange_btn" (click)="popUpForShowInterestModalRef.close()">Close
+        </button>
+        <button type="button" class="saffron_btn skyblue_btn" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #popUpForAddActivity>
+  <div class="modal-body">
+    <div class="cardwrapper">
+      <div class="videowrap">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="videos">
+              <div class="embed-responsive">
+                <div>
+                  {{botQuestionAnswerInfo.answerInfo.title}}
+                  <!-- {{botQuestionAnswerInfo.answerInfo.question_type}} -->
+                </div>
+                <div [ngSwitch]="botQuestionAnswerInfo.answerInfo.question_type">
+                  <div class="form-group" *ngSwitchCase="'text'">
+                    <textarea rows="5" class="form-control" [(ngModel)]="botQuestionAnswerInfo.answerInfo.response_text"
+                              id="input-{{botQuestionAnswerInfo.answerInfo.index}}"></textarea>
+                  </div>
+                  <div *ngSwitchCase="'boolean'">
+                    <div class="form-group">
+                      <div class="radiogroup">
+                        <li class="">
+                          <label class="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              attr.name="radioGroup{{botQuestionAnswerInfo.answerInfo.index}}"
+                              name="radioGroup{{botQuestionAnswerInfo.answerInfo.index}}"
+                              class="custom-control-input"
+                              [(ngModel)]="botQuestionAnswerInfo.answerInfo.boolean_text"
+                              [value]="true"
+                            >
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">Yes</span>
+                          </label>
+                        </li>
+                        <li class="">
+                          <label class="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              attr.name="radioGroup{{botQuestionAnswerInfo.answerInfo.index}}"
+                              name="radioGroup{{botQuestionAnswerInfo.answerInfo.index}}"
+                              class="custom-control-input"
+                              [(ngModel)]="botQuestionAnswerInfo.answerInfo.boolean_text"
+                              [value]="false"
+                            >
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description">No</span>
+                          </label>
+                        </li>
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="botQuestionAnswerInfo.answerInfo.boolean_text">
+                      <label>No. of Days</label>
+                      <input type="number" min="1" max="5" class="form-control" [(ngModel)]="botQuestionAnswerInfo.answerInfo.no_days"/>
+
+                      <label>Remark</label>
+                      <textarea rows="5" class="form-control" [(ngModel)]="botQuestionAnswerInfo.answerInfo.response_text"></textarea>
+                    </div>
+                  </div>
+                  <div *ngIf="showErrorMessage" class="errorwrap">{{errorMessage}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <button
+                class="saffron_btn skyblue_btn"
+                [disabled]="botQuestionAnswerInfo.answerInfo.index == 0"
+                (click)="previousQuestion(botQuestionAnswerInfo.answerInfo.index-1)"
+              >
+                Previous
+              </button>
+              <button
+                class="saffron_btn orange_btn"
+                *ngIf="(botQuestionAnswerInfo.answerInfo.index) < (botQuestionAnswerInfo.answerInfoList.length - 1); else submitFinalData"
+                (click)="nextQuestion(botQuestionAnswerInfo.answerInfo.index+1)"
+              >Next
+              </button>
+              <ng-template #submitFinalData>
+                <button class="saffron_btn orange_btn" (click)="saveActivityLog()">Submit</button>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Close</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpActivityLogMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpToAddActivityLogMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="activateAddActivityPopUp()">Now</div>
+    </div>
+    <div class="buttons">
+      <div class="btn btn-cancel" (click)="popUpForShowInterestModalRef.close()">Later</div>
+    </div>
+  </div>
+</ng-template>

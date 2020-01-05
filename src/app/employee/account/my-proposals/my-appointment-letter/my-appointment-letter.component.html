@@ -1,0 +1,61 @@
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+<app-header class="position-static" [backNavOptions]="{caption: 'My Proposals', route: ['employee', 'account', 'my-proposals']}"></app-header>
+
+<main>
+    <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+        <div class="heading">
+            <h1>Appointment Letter</h1>
+        </div>
+        <div class="cardwrap">
+            <div class="appointmentletter">
+
+                <app-docu-signdocpreview [URL]="docuSignUrl"></app-docu-signdocpreview>
+
+                <div *ngIf="showNda && appointmentData?.status != 'accept'">
+                    <div class="">
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" required [(ngModel)]="ndaChecked" #ndaCheckbox="ngModel">
+                            <span class="custom-control-indicator"></span>
+                            <span class="custom-control-description"> I accept
+                                <a href="javascript:void(0);" (click)="openNdaModal(content)">Terms of Use</a>
+                            </span>
+                        </label>
+                    </div>
+                    <p class="errorwrap" *ngIf="ndaCheckbox.invalid && ndaCheckbox.touched">
+                        Please check Terms of Use
+                    </p>
+                </div>
+
+                <ng-template #content let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Terms of Use</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" [innerHTML]="ndaContent">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+                    </div>
+                </ng-template>
+
+                <div class="post-buttons" *ngIf="appointmentData?.status != 'accept'">
+                    <button class="button skyblue" *ngIf="!isApply && !isNone; else myAppointment" [disabled]="(showNda && !ndaChecked)" (click)="putRecuiterReqAppointment()">Accept</button>
+                    <ng-template #myAppointment>
+                        <button *ngIf="isApply && !isNone; else myDirectAppointment" class="button skyblue" [disabled]="(showNda && !ndaChecked)"
+                            (click)="putAppliedAppointment()">Accept</button>
+                        <ng-template #myDirectAppointment>
+                            <button class="button skyblue" (click)="putDirectAppointment()" [disabled]="(showNda && !ndaChecked)">Accept</button>
+                        </ng-template>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="projects-footer">
+            <div class="back-button" (click)="_location.back()">Back</div>
+        </div> -->
+    </div>
+    
+</main>

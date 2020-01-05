@@ -1,0 +1,87 @@
+<app-header class="position-static"></app-header>
+<main>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Manage Funding for {{project.title}}.</h1>
+        </div>
+        <!-- <p-growl [value]="msgs1"></p-growl> -->
+        <div class="cardwrap">
+            <h2>Upgrade Listing</h2>
+            <p></p>
+            <div class="packageselection">
+                <div class="tableheading mainheading">Select
+                    <span>Listing package</span>
+                </div>
+                <div class=" table-responsive">
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="mainheading">
+                                        Select
+                                        <span>Listing package</span>
+                                    </div>
+                                </th>
+                                <th class="center" *ngFor="let upgrade of upgradeListing; let i = index; let odd = odd; let even = even;">
+                                    <div class="colortext" [ngClass]="{'color0': i == 0, 'color1': even && i != 0, 'color2': odd }">
+                                        <sup>$</sup>
+                                        <span>{{upgrade.amount.amount}}</span>
+                                        <br/>{{upgrade.title}}
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Position</strong>
+                                </td>
+                                <td class="center" *ngFor="let upgrade of upgradeListing">
+                                    {{upgrade.position_name}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Days</strong>
+
+                                </td>
+                                <td class="center" *ngFor="let upgrade of upgradeListing">
+                                    {{upgrade.days}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="center" *ngFor="let upgrade of upgradeListing; let i = index; let odd = odd; let even = even;">
+                                    <button class="btn" *ngIf="!currentPackage.id; else showPopUp" (click)="postSubscribePackage(upgrade)" [disabled]="upgrade.acquire_positions == upgrade.position_number"
+                                        [ngClass]="{'btn-0': i == 0, 'btn-1': even && i != 0, 'btn-2': odd }">Select</button>
+                                    <ng-template #showPopUp>
+                                        <button class="btn" (click)="showPopUpToConfirm(upgrade)" [disabled]="(upgrade.id == currentPackage.package) || (upgrade.acquire_positions == upgrade.position_number)"
+                                            [ngClass]="{'btn-0': i == 0, 'btn-1': even && i != 0, 'btn-2': odd }">Select</button>
+                                    </ng-template>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="center" *ngFor="let upgrade of upgradeListing; let i = index; let odd = odd; let even = even;">
+                                    <div *ngIf="upgrade.acquire_positions == upgrade.position_number">{{upgrade.message}}</div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="selectedPakageMessage && selectedPakageMessage != ''">
+                                <td colspan="4">{{selectedPakageMessage}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<ng-template #popUpForShowInterestMessage>
+    <div class="modal-body">{{errorMessage}}</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

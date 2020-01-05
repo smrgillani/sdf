@@ -1,0 +1,50 @@
+<app-header class="position-static"></app-header>
+
+<div class="chat-room-wrap" [ngClass]="{'opened': isLeftMenuOpened}">
+  <div class="chat-rooms">
+    <h5>Chat Rooms</h5>
+
+    <ul>
+      <li (click)="isNewChatOpened = true">
+        <strong><span class="icon"><i class="fa fa-plus"></i></span> Create new chat</strong>
+      </li>
+
+      <li class="projects-search">
+        <label for="search" class="search-icon"></label>
+        <input
+          id="search"
+          class="form-control"
+          type="search"
+          placeholder="Search..."
+          [(ngModel)]="searchText"
+        />
+      </li>
+    </ul>
+
+    <ul>
+      <ng-container *ngFor="let item of roomList">
+        <li
+          *ngIf="item.room_name && (!searchText || (item.room_name && item.room_name.indexOf(searchText.toLowerCase()) >= 0))"
+          [class.active]="getActiveClass(item)"
+          [class.new-messages]="roomUnreads[item._id] > 0"
+          (click)="selectRoom(item._id)"
+        >
+          {{item.room_name}}&nbsp;<ng-container *ngIf="roomUnreads[item._id]">({{roomUnreads[item._id]}})</ng-container>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+
+  <span class="open_trigger" (click)="toggleLeftMenu()"><i class="icomoon icon-menu2"></i></span>
+
+  <div class="chat-section">
+    <app-create-room
+      *ngIf="isNewChatOpened"
+      (roomSelected)="selectUser($event)"
+    ></app-create-room>
+
+    <ng-container *ngIf="!isNewChatOpened">
+      <router-outlet></router-outlet>
+    </ng-container>
+  </div>
+</div>

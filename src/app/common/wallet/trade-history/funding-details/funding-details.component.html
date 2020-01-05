@@ -1,0 +1,68 @@
+<app-header class="position-static"></app-header>
+<main>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Funding Details</h1>
+        </div>
+        <div class="cardwrap tabwrap">
+            <div class="hire_employees">
+
+                <div class="projects-search">
+                    <div class="search-icon"></div>
+                    <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Start typing to search" (input)="valueChange()" />
+
+
+                    <!-- <div class="width220">
+                        Records per page
+                        <div class="pull-right recordTop">
+                            <p-dropdown class="form-control" name="roles" [options]="transactionCount"></p-dropdown>
+                             <select name="roles" class="form-control">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>30</option>
+                  </select> 
+                        </div>
+                        <div class="clearfix"></div>
+                    </div> -->
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover projects-table transaction-table">
+                        <thead>
+                            <tr>
+                                <th>Funding Type</th>
+                                <th>Funded to</th>
+                                <th>Amount</th>
+                                <th>Output</th>
+                                <th>Funded on</th>
+                                <th>Due On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of fundingInfoList">
+                                <td>{{item.fund_type}}</td>
+                                <td>{{item.funded_to}}</td>
+                                <td>{{item.amount}}</td>
+                                <td>{{item.output}}</td>
+                                <td>{{item.funded_on}}</td>
+                                <td>{{item.due_on}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+              <app-pagination class="my-pagination"  [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getFundingDetailsList($event)"></app-pagination> 
+                <!-- <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewEmpoloyeeList($event)"></app-pagination> -->
+                <!-- <div class="note">
+              Reference No's. are usually obtained in the response of Gateway API.
+              Details are also subject to the conditions for an example IFT/0232/3SDS could be an example. if amount is withdrawn, target account no will be mentioned. In case of deposit, the account from which the deposit has been done will be shown. In cases, when the details are not there NA will appear there.
+          </div> -->
+
+            </div>
+
+        </div>
+    </div>
+</main>

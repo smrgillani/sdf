@@ -1,0 +1,39 @@
+<div class="documents-list-scroll">
+  <div class="documents-list">
+    <div class="item" *ngFor="let item of items">
+      <app-document-item
+        *ngIf="!item.isFolder" class="file"
+        [document]="item"
+        [readonly]="readonly"
+        (open)="open.emit(item)"
+        (rename)="renameDocument.emit({item: item, name: $event})"
+        (percentageChanged)="percentageDocument.emit({item: item, percentage: $event})"
+        (export)="export.emit(item)"
+        (del)="deleteDocument.emit(item)"
+      ></app-document-item>
+
+      <app-folder-item
+        *ngIf="item.isFolder"
+        class="folder"
+        [folder]="item"
+        (click)="open.emit(item)"
+      ></app-folder-item>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-toolbar" [ngStyle]="{'display': !readonly ? 'block': 'none'}">
+  <div ngbDropdown #createDocumentMenu="ngbDropdown" class="create-document">
+    <div class="create-document-toggle" ngbDropdownToggle>+</div>
+
+    <div class="dropdown-menu" ngbDropdownMenu>
+<!--      <button *ngIf="!is_goal" class="dropdown-item presentation" (click)="createDocument.emit('presentation')" title="Presentation"></button>-->
+<!--      <button *ngIf="!is_service && !is_goal" class="dropdown-item ocr" (click)="createDocument.emit('ocr')" title="OCR"></button>-->
+      <button *ngIf="!is_goal" class="dropdown-item diagram" (click)="createDocument.emit('diagram')" title="Diagram"></button>
+<!--      <button *ngIf="!is_goal" class="dropdown-item drawing" (click)="createDocument.emit('drawing')" title="Drawing"></button>-->
+      <button *ngIf="!is_goal" class="dropdown-item spreadsheet" (click)="createDocument.emit('spreadsheet')" title="Spreadsheet"></button>
+      <button *ngIf="!is_goal" class="dropdown-item text" (click)="createDocument.emit('document')" title="Document"></button>
+      <button *ngIf="role=='creator' || (role=='employee' && !is_goal)" class="dropdown-item upload" (click)="createDocument.emit('upload')" title="Upload(docx or xlsx)"></button>
+    </div>
+  </div>
+</div>

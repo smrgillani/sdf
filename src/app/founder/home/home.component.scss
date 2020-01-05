@@ -1,0 +1,117 @@
+.btn-idea {
+  .btn-border {
+    border-color: #fd6c32;
+  }
+
+  .btn-icon {
+    background: #fd6c32 url('/assets/img/founder/ic_idea.svg') no-repeat center;
+    background-size: 45%;
+  }
+}
+
+.btn-project {
+  .btn-border {
+    border-color: #00d8c9;
+  }
+
+  .btn-icon {
+    background: #00d8c9 url('/assets/img/founder/ic_project.svg') no-repeat center;
+    background-size: 45%;
+  }
+}
+
+.btn-forum {
+  .btn-border {
+    border-color: #FE5F5B;
+  }
+
+  .btn-icon {
+    background: #FE5F5B url('/assets/img/founder/forum_icon.png') no-repeat center;
+    background-size: 45%;
+  }
+}
+
+.btn-account {
+  .btn-border {
+    border-color: #6a9df6;
+  }
+
+  .btn-icon {
+    background: #6a9df6 url('/assets/img/founder/ic_account.svg') no-repeat center;
+    background-size: 40%;
+  }
+}
+
+
+.btn-services {
+  .btn-border {
+    border-color: #fd6c32;
+  }
+
+  .btn-icon {
+    background: #fd6c32 url('/assets/img/founder/services.svg') no-repeat center;
+    background-size: 40%;
+  }
+}
+
+
+// @media only screen and (min-width: 992px) {
+//   .profilehome .container-buttons{
+//     left: calc(50% + 6em);
+//       font-size: 94%;
+//   }
+//   .profilehome .circle-second {
+//     margin-top: 0;
+//       margin-left: 7.813em;
+//   }
+//   .profilehome .circle-third {
+//     margin-top: 1.5em;
+//     margin-left: 11.375em;
+//   }
+//   .profilehome .circle-forth {
+//     margin-left: 7.813em;
+//     margin-top: 1.5em;
+//   }
+//   .profilehome .circle-fifth {
+//     margin-top: 0;
+//   }
+// }
+
+// @media only screen and (max-width: 992px) {
+//   .profilehome .container-buttons{
+//     justify-content: center;
+//     max-width: 440px;
+//   }
+//   .profilehome .container-buttons .btn-menu {
+//     flex-basis: calc(33.33% - 2em);
+//     margin: 1em !important;
+//   }
+//   .profilehome .btn-caption {
+//     white-space: normal;
+//   }
+// }
+
+// @media screen and (max-height: 576px) and (max-width: 992px){
+//   .profilehome .btn-border {
+//     font-size: 95%;
+//   }
+// }
+
+/** New Styles */
+
+/** Please remove this styles if circle buttons count is 4 */
+.container-buttons .btn-menu:first-child {
+  margin-left: 50px;
+}
+
+.container-buttons .btn-menu:nth-child(2) {
+    margin-left: 105px;
+    margin-top: 60px;
+}
+
+.container-buttons .btn-menu:nth-child(3) {
+  margin-left: 45px;
+  margin-top: 50px;
+}
+/** Until here */
+

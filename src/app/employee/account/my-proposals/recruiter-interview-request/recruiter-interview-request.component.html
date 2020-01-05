@@ -1,0 +1,71 @@
+<table class="table table-hover employee-table">
+    <tbody>
+        <tr *ngFor="let intReq of recruiterInterviewRequest">
+            <td>
+                <div class="Employee-title">
+                    <div class="employee-name">{{intReq?.project?.title}}</div>
+                    <div class="employee-details">
+                        <div class="employee_des">{{intReq.job_description}}</div>
+                        <div class="ava" *ngIf="intReq.job_availability != undefined && intReq.job_availability != null && intReq.job_availability.length > 0">Availability : {{intReq.job_availability[0].title}}/day</div>
+                    </div>
+                    <div class="employee-budget pull-right" *ngIf="intReq.job_hourlybudget != undefined && intReq.job_hourlybudget != null && intReq.job_hourlybudget.length > 0">{{intReq.job_hourlybudget[0].title}}</div>
+                    <div class="pad-right-adjust" [ngClass]="(intReq.status=='decline') ? 'text-orange':'text-blue'">{{intReq.job_application_status}}</div>
+                </div>
+            </td>
+
+            <td>
+                <div class="project-actions">
+                    <div class="btn-border blue" (click)="Message(intReq.project.id)">
+                        <div class="btn blue-btn">Message</div>
+                    </div>
+
+                    <div class="btn-border orange" *ngIf="interviewActions(intReq)  && intReq.status == 'schedule'" (click)="RescheduledInterview(intReq.id)">
+                        <div class="btn orange-btn">Interview</div>
+                    </div>
+
+                    <div class="btn-border red" *ngIf="interviewActions(intReq) && intReq.status == 'schedule'" (click)="RejectInterview(intReq.id)">
+                        <div class="btn red-btn">Reject</div>
+                    </div>
+
+                    <div class="btn-border skyblue" *ngIf="intReq.offer_details.status == 'draft'" (click)="joinForAppointment(intReq, popUpForDocuSignMessage)">
+                        <div class="btn skyblue-btn">Join</div>
+                    </div>
+                    <div class="btn-border skyblue" *ngIf="intReq.offer_details.status == 'accept'" (click)="joinForAppointment(intReq, popUpForDocuSignMessage)">
+                        <div class="btn skyblue-btn">Appointment</div>
+                    </div>
+                    <div class="btn-border red" *ngIf="intReq.offer_details.status == 'draft'" (click)="rejectForAppointment(intReq.id)">
+                        <div class="btn red-btn">Reject</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getRecuiterInterviewReq($event)"></app-pagination>
+
+<ng-template #popUpForDocuSignMessage>
+    <div class="modal-body">DocuSign is pending on either side.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForDocuSignModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #popUpForAddEmailMessage>
+    <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #popUpForCommonMessage>
+    <div class="modal-body">{{errorMessage}}</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

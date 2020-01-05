@@ -1,0 +1,27 @@
+<main>
+  <app-header class="position-static"></app-header>
+  <div class="container saf_blue_theme">
+      <div class="heading">
+          <h1>Notifications</h1>
+      </div>
+      <div class="cardwrap">
+        <div class="card waves-effect waves-light" *ngFor="let notification of notifications; let i = index"  [ngClass]="notification.read == true ? 'read':'unread'"  (click)="goTo(notification)">          
+            <span class="notification_icon"><span class="icon-notifications"></span></span>
+            <span class="notification" [title]="notification.title">{{notification.title}}</span>
+            <div class="project-actions" *ngIf="(notification.bonus_request || notification.hike_request || notification.quitjob_request) && notification.request_response_status !== 'responded'">
+                <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus(notification, 'accept', $event)">Accept</button>
+                <button class="saffron_btn bittersweet waves-effect waves-light" (click)="updateRequestStatus(notification, 'decline', $event)">Decline</button>
+              </div>
+            <div class="notification_status">
+                <div class="timestamp">{{notification.created_date | date: 'MM/dd h:mm a' }}</div>
+                <div *ngIf="notification.read; then showRead else showUnread"></div>
+                <ng-template #showRead><div class="timestamp">Read</div></ng-template>
+                <ng-template #showUnread><div class="timestamp">Unread</div></ng-template>
+            </div>
+            <div class="delete-btn-container" (click)="deleteNotification(notification, $event, i)">
+                <a class="btn-floating waves-effect waves-light btn-flat"><i class="material-icons">delete_forever</i></a>
+            </div>       
+        </div>
+      </div>
+  </div>
+</main>

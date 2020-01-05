@@ -1,0 +1,98 @@
+<aside
+  #process_details
+  class="process_details"
+  [class.closed]="isProcessesOpen"
+  [class.mobile_open]="activeMobileView === 'menu'"
+  [style.width.px]="chatWidth"
+>
+  <app-element-resize class="resize-trigger" [externalSize]="chatWidth" (sizeChanged)="setChatWidth($event)"
+                      (resizeBegin)="fixChatWidth()" (resizeEnd)="fixChatWidth($event)"></app-element-resize>
+
+  <div class="chatwrap">
+
+    <!-- <div class="switcher">
+      <div class="open-chat" [class.hidden]="isChatOpen" (click)="openChat()">Go to
+        <b>Discussion &rarr;</b>
+      </div>
+
+      <div class="open-details" [class.hidden]="!isChatOpen" (click)="isChatOpen = !isChatOpen">
+        <b>&larr;</b> Back to
+        <b>Discussion</b>
+      </div>
+    </div> -->
+
+    <div class="chat" [class.hidden]="!isChatOpen" [class.open]="activeMobileView === 'chat'">
+      <h4>Discussion {{chatRoom?.title}}</h4>
+      <app-chat-filters class="chat-filters" (filtersChanged)="onChatFiltersChanged($event)"></app-chat-filters>
+
+      <div class="chat-section">
+        <div class="chat-messages">
+          <perfect-scrollbar>
+            <div class="scrollingcontent">
+              <div class="message" *ngFor="let message of messages">
+                <ng-container *ngIf="!showOnlyStarred || isStarred(message)">
+                  <div class="user" *ngIf="message.user">
+                    <div class="user-photo">
+                      <img *ngIf="message.user.photo_crop" [src]="message.user.photo_crop" alt="">
+
+                      <div class="user-status-indicator" [ngClass]="'user-status-' + roomHandler?.usersList[message.userId]?.status"></div>
+                    </div>
+
+                    <span class="user-name" [attr.title]="getUsername(message.user)">
+                      <a class="star-message" (click)="starToggle(message)">
+                        <i
+                          class="fa"
+                          [class.fa-star]="isStarred(message)"
+                          [class.fa-star-o]="!isStarred(message)"
+                        ></i>
+                      </a>
+
+                      <span class="username">{{getUsername(message.user)}}</span>
+                      <span class="message-time">{{message.time | date:'shortTime'}}</span>
+
+                      <span class="message-action-buttons" *ngIf="message.editable">
+                        <i *ngIf="message.text" class="fa fa-pencil pull-right" aria-hidden="true" (click)="setEditMessage(message)"></i>
+                        <i class="fa fa-trash pull-right" aria-hidden="true" (click)="deleteMessage(message.id)"></i>
+                      </span>
+                    </span>
+                  </div>
+
+                  <div *ngFor="let attachment of message.attachments" class="replyfor">
+                    <small>{{attachment.title}}</small>
+                    <img *ngIf="attachment.image_url" [src]="attachment.image_url | safeUrl" alt="" height="200">
+                    <a *ngIf="attachment.image_url" [href]="attachment.image_url | safeUrl" target="_blank">Download</a>
+                    <!-- <p *ngIf="message.text" class="message-body" [innerHTML]="message.text"></p> -->
+                  </div>
+
+                  <!-- <p class="message-body" [innerHTML]="message.text"></p> -->
+
+                  <div [ngSwitch]="message.message_type" style="display: flex;justify-content: space-between;">
+                    <p *ngSwitchDefault class="message-body" [innerHTML]="message.text"></p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </perfect-scrollbar>
+
+          <div class="typing">
+            <p *ngFor="let user of roomHandler?.chatTypingUsers">{{user.name}} is typing...</p>
+          </div>
+        </div>
+
+        <app-chat-action-bar
+          class="chat-action-bar"
+          [enableMessageTypes]="false"
+          [editMessage]="editMessage"
+          [overDoubleWidth]="chatWidth >= 600"
+          [fileUploadErrors]="fileUploadErrors"
+          (typingOccurred)="onTypingOccurred()"
+          (typingStarted)="onTypingStarted()"
+          (typingEnded)="onTypingEnded()"
+          (messageSent)="sendMessage($event)"
+          (fileSent)="sendFile($event)"
+          (resetEditMessage)="editMessage = null"
+        ></app-chat-action-bar>
+      </div>
+    </div>
+  </div>
+</aside>

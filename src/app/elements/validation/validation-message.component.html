@@ -1,0 +1,22 @@
+<div *ngFor="let control of getFields(fields)">
+  <div *ngFor="let error of getErrors(fields[control].errors)">
+      <div class="error-notification" *ngIf="messages[error]">
+          <div class="alert-badge-border">
+            <div class="alert-badge"></div>
+          </div>
+          <div class="error-message-wrapper"><span class="text-capitalize">{{getControlName(control,messages[error])}}</span>{{messages[error]}}</div>
+        </div>
+  </div>
+</div>
+<div *ngIf="!clientErrorExists && msgArray && msgArray.length > 0">
+<div *ngFor="let message of msgArray">
+  <div>
+      <div class="error-notification">
+          <div class="alert-badge-border">
+            <div class="alert-badge"></div>
+          </div>
+          <div class="error-message-wrapper">{{message}}</div>
+        </div>
+  </div>
+</div>
+</div>

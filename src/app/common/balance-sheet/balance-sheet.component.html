@@ -1,0 +1,43 @@
+<div class="container-main">
+  <div class="container-border">
+    <app-header class="no-bg"></app-header>
+    <div class="projects-container">
+      <div class="projects-header">
+        <div class="project-header-text">
+          <span class="projects-header-caption">Balance Sheet</span>
+        </div>
+      </div>
+
+      <div class="formwrap">
+        <form #f="ngForm" (ngSubmit)="f.form.valid && generateBalanceSheet(f)" novalidate>
+          <div class="form-group">
+            <label class="form-control-label">Duration period</label>
+            <div class="period">
+              <div class="datetime-container">
+                <app-date-input [(date)]="fromDate" (dateChange)="onStartDateChange($event)"></app-date-input>
+              </div>
+              <div class="separator">-</div>
+              <div class="datetime-container">
+                <app-date-input [(date)]="toDate" (dateChange)="onEndDateChange($event)"></app-date-input>
+              </div>
+            </div>
+
+            <div>
+              <p>There are {{income}} income and {{expenses}} expenses transactions for given date range.</p>
+            </div>
+
+            <div *ngIf="error" class="errorwrap">
+              {{error}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="buttons">
+              <button type="submit" class="btn btn-ok" [disabled]="error">Generate Report</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

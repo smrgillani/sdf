@@ -1,0 +1,37 @@
+.container-sm{ width: 96%; margin: auto; }
+.saffron_btn {    
+  min-width: 7.222em;
+  font-size: 1.125em;
+  padding: 0.167em 1em;
+  margin: 0.111em 0;
+  text-align: center;
+  &+.saffron_btn {         
+   margin-left: 1.389em;
+ }
+}
+.projects-footer {
+  margin: 20px 0;
+}
+
+.container-sm {
+  padding: 0.938em;
+}
+
+.project-actions {
+  margin: 1em .5em;
+}
+
+.row.topheading {
+  margin: 0 -8px;
+}
+
+
+
+@media only screen and (max-width: 576px) {
+  .saffron_btn{
+    min-width: auto;
+  }
+  .saffron_btn + .saffron_btn {
+      margin-left: 0.389em;
+  }
+}

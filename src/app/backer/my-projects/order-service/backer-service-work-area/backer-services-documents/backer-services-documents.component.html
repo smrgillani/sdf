@@ -1,0 +1,8 @@
+<div class="work-timer-error" *ngIf="errorMessage"><span class="errorwrap">{{errorMessage}}</span></div>
+<app-document-explorer *ngIf="orderServiceInfo"
+                       class="app-document-explorer"
+                       [items]="documents"
+                       [readonly]="readonly"
+                       (open)="openDocument($event)"
+                       >
+</app-document-explorer>

@@ -1,0 +1,34 @@
+<!-- <app-header class="position-static" [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header> -->
+<app-header class="position-static" (onBackClicked)="backToLaunch()"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>{{project.title}}</h1>
+    </div>
+    <ng-container>
+      <div class="card" *ngFor="let item of fundTypes; let index = index">
+        <div class="card-block">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" [(ngModel)]="item.isSelected" (change)="manageFundTypeSelection($event, item)">
+            <span class="custom-control-indicator"></span>
+          </label>
+          <h3 class="card-title" (click)="item.isCollapsed=!item.isCollapsed">
+            <span>{{item.title}}</span>
+            <span class="icomoon pull-right" [class.icon-up-arrow]="!item.isCollapsed" [class.icon-down-arrow]="item.isCollapsed"></span>
+          </h3>
+          <div class="card-text" [ngbCollapse]="item.isCollapsed">
+            <div [innerHTML]="item.description"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="post-buttons">
+      <div class="saffron_btn skyblue_btn" [routerLink]="['./fundingtype']">Next</div>
+    </div>
+
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="backToLaunch()">Back</div>
+    </div> -->
+  </div>
+</main>

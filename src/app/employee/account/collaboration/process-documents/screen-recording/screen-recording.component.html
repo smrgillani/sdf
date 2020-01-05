@@ -1,0 +1,11 @@
+<button (click)="screenRecording()" [ngStyle]="{'display': (session_start) ? 'block': 'none'}" 
+    [disabled]="disableShare()" class="saffron_btn blue_btn btn-sm" 
+    *ngIf="!archiveData || !archiveData.id" id="shareBtn">Start Recording</button>
+<div id="videos">
+    <div hidden id="subscriber"></div>
+    <div hidden id="screen-publisher"></div>
+    <div hidden id="publisher"></div>
+    <div hidden id="screen-subscriber"></div>
+</div>
+<button class="message button clickable" *ngIf="archiveData && archiveData.id" 
+    class="saffron_btn orange_btn" (click)="stopArchive()">Stop Recording</button>

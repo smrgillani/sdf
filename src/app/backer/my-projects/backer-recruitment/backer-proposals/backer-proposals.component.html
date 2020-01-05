@@ -1,0 +1,15 @@
+<ngb-tabset>
+  <ngb-tab>
+      <ng-template ngbTabTitle>My Job Posting responses</ng-template>
+    <ng-template ngbTabContent>
+      <app-backer-job-posting-response [projectId]="projectId"></app-backer-job-posting-response>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle>Direct hire responses</ng-template>
+    <ng-template ngbTabContent>
+      <app-backer-direct-hire-response [projectId]="projectId"></app-backer-direct-hire-response>      
+    </ng-template>
+  </ngb-tab>
+ 
+</ngb-tabset>

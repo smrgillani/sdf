@@ -1,0 +1,220 @@
+$app-header-height: 67px;
+.bg-saffron { background-color: #4342E6; }
+
+.back-link {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5.556em;
+  color: #EEEEEE;
+  font-size: 1.125em;
+  span {
+    cursor: pointer;
+    &:hover {
+      opacity: .8;
+    }
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 0.833em;
+      height: 0.833em;
+      background: url(/assets/img/back-arrow-light.png) no-repeat center;
+      margin-right: 0.667em;
+      background-size: 100%;
+    }
+  }
+}
+
+.logo-block {
+  flex: 1;
+}
+
+.back-link {
+  max-width: calc(100% - 13.889em);
+  max-height: 2.778em;
+  overflow: hidden;
+  margin-top: 5px;
+
+  b {
+  display: inline-block;
+  vertical-align: top;
+  word-break: break-all;
+
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .logo-block {
+    flex-direction: column;
+    display: flex;
+    
+    .back-link{
+      max-width: initial;
+      b {
+        width: 7.778em;
+        text-overflow: ellipsis; overflow: hidden;    white-space: nowrap;
+      }
+    }
+  }
+}
+
+/** New Styles */
+:host(.position-static) {
+  position:static;
+}
+
+:host(.position-absolute) {
+  position:absolute;
+}
+
+:host(.no-bg) nav {
+  background-color: transparent;
+}
+
+:host(.burnt-orange) {
+  .back-link span:before {
+    border: solid 1px #f99872;
+  }
+
+  app-profile-menu /deep/ .menulinks > span:first-child,
+  app-profile-menu /deep/ .menulinks > i {
+    color: rgb(238, 238, 243);
+  }
+
+  app-profile-menu /deep/ .menulinks:hover > span:first-child,
+  app-profile-menu /deep/ .menulinks:hover > i {
+    color: #ffffff;
+  }
+
+  app-profile-menu /deep/ .menulinks > span.badge {
+    color: #ff6428;
+  }
+
+  app-profile-menu /deep/ .profile-role,
+  app-profile-menu /deep/ .profile-name {
+    color: #f5f5f5;
+  }
+
+  app-profile-menu /deep/ .profile-caption:hover .profile-role,
+  app-profile-menu /deep/ .profile-caption:hover .profile-name {
+    color: #ffffff;
+  }
+}
+
+.logo-block {
+  height: 100%;
+  margin-top:10px;
+}
+
+.logo {
+  width:11em;
+  height: 100%;
+  background-image: url('/assets/logos/saffron_mata_white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left 40%;
+  margin-top: -10px;
+}
+
+.back-link {
+  height: 100%;
+  margin: 0;
+  display: inline-flex;
+}
+
+.back-link.invisible {
+  visibility: hidden;
+}
+
+.back-link > span {
+  margin: auto 0;
+}
+
+.back-link span:before {
+  border: solid 1px #6d6de4;
+  border-radius: 24px;
+  padding: 13px;
+  background-size: 50%;
+  margin-top: -4px;
+}
+
+app-profile-menu /deep/ .profile-caption {
+  margin-left: 3px;
+}
+
+@media only screen and (max-width: 1199px) {
+  .logo-block {
+    display:block;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  nav {
+    height: 3.3rem;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .logo-block {
+    display:block;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .back-link span:before {
+    padding: 10px;
+  }
+
+  nav {
+    height: 3.1rem;
+  }
+}
+
+@media only screen and (max-width: 460px) {
+  .back-link span strong {
+    display: none;
+  }
+
+  nav {
+    height: 2.9rem;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .logo {
+    width: 8em;
+    margin-top: -7px;
+  }
+
+  app-profile-menu /deep/ div.profile-menu-btn {
+    font-size: 1em;
+    letter-spacing: .03em;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .back-link {
+    margin-top: 0px;
+  }
+
+  .back-link span:before {
+    padding: 8px;
+    background-size: 45%;
+  }
+
+  app-profile-menu {
+    font-size: 90%;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .logo {
+    width: 6.3em;
+    margin-top: -4px;
+  }
+
+  .back-link span:before {
+    padding: 7px;
+  }
+}

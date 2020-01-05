@@ -1,0 +1,96 @@
+<div class="flex-container">
+  <div class="leftpanel">
+    <h4 (click)="filteropenpanel()" [ngClass]="{'collapseopen':filteropen}">Job Specific
+      <span class="hidden-md-up pull-right icon-down-arrow"></span>
+    </h4>
+    <app-filters *ngIf="filteropen"></app-filters>
+
+  </div>
+  <div class="rightpanel">
+    <h6 (click)="postingopenpanel()" [ngClass]="{'collapseopen':jobposting}">PREVIOUS JOB POSTINGS
+      <span class="hidden-md-up pull-right icon-down-arrow"></span>
+    </h6>
+
+    <div *ngIf="jobposting">
+      <!-- <select class="form-control postingfilter" name="method" (change)="onListSelect($event.target.value)">
+                <option value="publish" selected>Published</option>
+                <option value="unpublish">Unpublished</option>              
+              </select> -->
+      <p-dropdown class="form-control" [options]="publishTypeList" placeholder="Choose" (onChange)="onListSelect($event.value)"
+        optionLabel="title"></p-dropdown>
+      <!--required="true"-->
+      <perfect-scrollbar class="jobposting">
+        <div class="content">
+          <ul class="list-group listlinebttom">
+            <li *ngFor="let c of jobList" class="list-group-item" (click)="getSelectedJob(c)">
+              {{c.title}} <span>({{c?.job_application_count}})</span>
+              <span class="icomoon icon-check"></span>
+            </li>
+
+          </ul>
+        </div>
+      </perfect-scrollbar>
+    </div>
+
+  </div>
+  <div class="middlepanel">
+    <!-- <form novalidate [formGroup]="postJobForm" (ngSubmit)="update()" #lForm="ngForm">
+             -->
+    <div *ngIf="flagDepartment" class="errorwrap">Please select Department</div>
+    <div *ngIf="flagRole" class="errorwrap">Please select Role</div>
+
+    <div class="form-group">
+      <label for="">Title</label>
+      <div class="row">
+        <div class="col-10">
+          <input type="text" class="form-control" id="title" [(ngModel)]="publishJobModelData.title" placeholder="Enter Title">
+          <div class="errorwrap" *ngIf="flagTitleReq">Title is required.</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Description</label>
+      <!-- <input type="text" class="form-control" id="description"  [(ngModel)]="publishJobModelData.description" placeholder="Enter Description"> -->
+      <textarea textareahgt [(ngModel)]="publishJobModelData.description" id="description" class="form-control" placeholder="Enter Description"></textarea>
+      <div class="errorwrap" *ngIf="flagDescReq">Description is required.</div>
+    </div>
+    <div class="form-group">
+      <label for="">Job Post Duration</label>
+      <div class="row">
+        <div class="col-lg-10">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                  <p-calendar class="form-control" [(ngModel)]="publishJobModelData.date_start" [monthNavigator]="true" [yearNavigator]="true"
+                  yearRange="1980:2030" #fromDate></p-calendar>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                  <p-calendar class="form-control" [(ngModel)]="publishJobModelData.date_end" [monthNavigator]="true" [yearNavigator]="true"
+                  yearRange="1980:2030" #toDate (onClose)="checkDateValidation(fromDate,toDate)"></p-calendar>
+                <div *ngIf="flagToDate" class="errorwrap">To Date must be greater than From date.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-buttons">
+
+
+      <div class="button blue" *ngIf="!(flagUnPublish || flagPublish)" (click)="publish()">Publish</div>
+
+      <div class="button skyblue" *ngIf="flagPublish" (click)="updateWithStatus('publish')">Update</div>
+      <div class="button blue" *ngIf="flagPublish" (click)="updateWithStatus('unpublish')">Unpublish</div>
+      <div class="button blue" *ngIf="flagUnPublish" (click)="updateWithStatus('publish')">Republish</div>
+
+      <div class="button orange" (click)="cancel()">Cancel</div>
+    </div>
+    <!-- <app-validation-message [messages]="messages" [fields]="fields"></app-validation-message>
+</form> -->
+  </div>
+
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>details</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="messenger-menu-mobile" transform="translate(-229.000000, -2.000000)" fill-rule="nonzero" fill="#FF6C24">
+            <g id="details">
+                <g transform="translate(229.000000, 2.000000)">
+                    <path d="M9.45,7.35 L11.55,7.35 L11.55,5.25 L9.45,5.25 L9.45,7.35 Z M10.5,18.9 C5.8695,18.9 2.1,15.1305 2.1,10.5 C2.1,5.8695 5.8695,2.1 10.5,2.1 C15.1305,2.1 18.9,5.8695 18.9,10.5 C18.9,15.1305 15.1305,18.9 10.5,18.9 L10.5,18.9 Z M10.5,4.6629367e-16 C4.70101013,-1.86517468e-15 2.22044605e-17,4.70101013 -4.4408921e-16,10.5 C-1.84297022e-15,13.2847731 1.10624682,15.9554892 3.0753788,17.9246212 C5.04451077,19.8937532 7.71522686,21 10.5,21 C13.2847731,21 15.9554892,19.8937532 17.9246212,17.9246212 C19.8937532,15.9554892 21,13.2847731 21,10.5 C21,7.71522686 19.8937532,5.04451077 17.9246212,3.0753788 C15.9554892,1.10624682 13.2847731,2.33146835e-16 10.5,0 L10.5,4.6629367e-16 Z M9.45,15.75 L11.55,15.75 L11.55,9.45 L9.45,9.45 L9.45,15.75 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

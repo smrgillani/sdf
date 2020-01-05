@@ -1,0 +1,94 @@
+.work-item {
+  padding: 2px;
+
+  .work-title {
+    color: #4342e6;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-bottom: 2px;
+
+    .title {
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      min-height: 18px;
+      min-width: 18px;
+      height: 18px;
+      width: 18px;
+      border: 1px dashed #7c7bf4;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-left: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .fa {
+        color: #7c7bf4;
+        font-size: 12px;
+      }
+    }
+
+    .activity-btn {
+      span {
+        display: inline-block;
+        margin-top: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .work-progress {
+    height: 24px;
+    border: 1px solid #7c7bf4;
+    background-color: #dedef5;
+    text-align: left;
+    position: relative;
+    cursor: pointer;
+
+    //&.draggable:hover {
+    //  cursor: move;
+    //}
+    //
+    //.drag-trigger {
+    //  position: absolute;
+    //  width: 2px;
+    //  top: 0;
+    //  bottom: 0;
+    //
+    //  &.left {
+    //    left: 0;
+    //  }
+    //
+    //  &.right {
+    //    right: 0;
+    //  }
+    //}
+
+    .work-progress-completed {
+      height: 100%;
+      width: 0;
+      background-color: #7c7bf4;
+
+      .percents {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 12px;
+        line-height: 22px;
+      }
+    }
+
+    &.draggable .drag-trigger:hover {
+      cursor: ew-resize;
+    }
+  }
+
+  &.selected .work-progress {
+    box-shadow: 0 0 0 1px #7c7bf4;
+  }
+}

@@ -1,0 +1,72 @@
+
+<div class="financesoutline" >
+  <div class="container-fluid">
+    <div class="container-main">
+      <div class="container-border">
+        <!-- <app-navbar></app-navbar> -->
+        <app-header class="position-static no-bg burnt-orange" [backNavOptions]="{ route: ['/founder/projects']}"></app-header>
+        <!-- Start Header -->
+        <div class="container-header">
+          <div class="container-buttons">
+            <div *ngFor="let menu of menus" class="container-button {{menu.enabled? 'selector' : ''}}  {{menu.enabled ? '' : 'disabled'}} "
+                [@pageState]="pageState"
+                (click)="navigateTo(menu)"
+                (@pageState.done)="animationDone($event)">
+              <div class="button-icon {{menu.icon}}"></div>
+              <div class="mt-2 c-primary text-center button-text">{{menu.title}}</div>
+            </div>         
+          </div> 
+          <div class="p-3">
+            <span class="c-white font-large mt-5 mb-0">Finances Outline</span>
+            <span class="c-white font-small">Subheader goes here</span>
+          </div>
+      </div>
+      <!-- End Header  -->
+      <!-- Start body -->
+      <div class="container-body">       
+        <div class="question-inner  clearfix">
+          <p class="question-title">Question</p>
+          <p class="question-subtitle">Question description</p>
+          <app-spreadsheet [projectId]='projectId' [questionId]='questionId' ></app-spreadsheet>
+          <div style="display:flex; justify-content: flex-end; padding:20px 0; align-items:center; margin-bottom: 100px;" >
+            <div class="pull-right private-question">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" >
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Make this answer private</span>
+                <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i>
+              </label>
+            </div>
+            
+            <div class="ok-btn"  >
+              <span>OK</span>
+            </div>         
+          </div>
+          <div class="clearfix"></div>
+        </div>       
+      </div>
+      <div class="stage-progress-container">
+        <div class="stage-progress-items">
+          <div class="stage-progress">
+            <div>1 of 3 answered</div>
+            <div class="stage-progress-bar">
+              <div class="stage-complete"
+                    [style.width.px]="80"></div>
+            </div>
+          </div>
+          <div style="display: flex;">
+              <div class="prev-btn"
+            (click)="onPrev(editingIndex)"
+            ><i class="fa fa-angle-left"></i></div>
+            <div class="next-btn"
+              (click)="onNext(editingIndex)"
+            ><i class="fa fa-angle-right"></i></div>
+          </div>
+        </div>
+      </div>
+      <!-- End body -->
+ 
+    </div>
+  </div>
+</div>
+</div>

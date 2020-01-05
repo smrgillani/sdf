@@ -1,0 +1,20 @@
+<div class="container-fluid bg-gradient">
+  <div class="container-main bg-image">
+    <img class="container-logo" src="assets/logos/saffron_mata_white.svg"/>
+
+    <div class="container-center">
+      <div class="container-title" [@pageState]="pageState">You have a ...</div>
+      <div class="container-buttons">
+        <div class="container-button border-blue" [@pageState]="pageState">
+          <div class="button-inner back-blue text-center" (click)="setProjectType('exist')">Existent<br>Business</div>
+        </div>
+        <div class="container-button border-green" [@pageState]="pageState" (click)="setProjectType('new')">
+          <div class="button-inner back-green">New Idea</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-footer">Something fresh and exciting</div>
+  </div>
+
+</div>

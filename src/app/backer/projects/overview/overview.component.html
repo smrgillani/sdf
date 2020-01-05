@@ -1,0 +1,100 @@
+<div class="container-fluid backer">
+    <div class="container-main">
+        <div class="container-border">
+            <!-- <app-navbar></app-navbar> -->
+            <app-header class="position-absolute" [backNavOptions]="{caption: 'Projects', route: ['backer']}"></app-header>
+            <div class="projects-container">
+                <div class="projects-header">
+                    <div class="project-header-text">
+                        <span class="projects-header-caption">Projects</span>
+
+                    </div>
+                    <div class="projects-filter">
+                        <span class="projects-filter-caption">Filter by stage</span>
+                        <p-dropdown class="form-control" [options]="projectType" [(ngModel)]="stage" (onChange)="getNewProjectList(1)"></p-dropdown>
+                        <!-- <select class="form-control" [(ngModel)]="stage">
+              <option value="">All</option>
+              <option value="idea">Idea</option>
+              <option value="startup">Startup</option>
+            </select> -->
+                    </div>
+                </div>
+                <div class="projects-search">
+                    <div class="search-icon"></div>
+                    <input class="form-control" type="text" placeholder="Start typing to search projects" [(ngModel)]="searchText"
+                        (input)="valueChange()" />
+                </div>
+                <table class="table table-hover projects-table">
+                    <tbody>
+                        <tr *ngFor="let project of projects">
+                            <!-- <tr *ngFor="let project of (projects | filterProjectStage:stage | searchProject:searchText)"> -->
+                            <td>
+                                <div class="project-title">
+                                    <div class="project-icon">{{project.title[0]}}</div>
+                                    <div class="project-name" (click)="navigateTo(project)">{{project.title}}</div>
+                                    <div [ngClass]="{'stock-down': project.stock_price_status && project.stock_price_status == 'down', 'stock-up': project.stock_price_status && project.stock_price_status == 'up' }"
+                                        class="project-stock">
+                                        <img *ngIf="project.market_price.amount > 0" src="/assets/img/{{project.stock_price_status}}.png">
+                                        ({{project?.market_price?.amount}})
+                                    </div>
+                                    <!-- <div class="project-stock stock-down">(235  <span class="icon-scroll-arrow-to-down"></span>)</div>  -->
+                                </div>
+                            </td>
+                            <td>
+                                <div class="project-stage">
+                                    <div class="project-stage-caption">{{projectStages[project.stage]}}</div>
+                                    <div class="project-stage-progress-bar">
+                                        <div class="project-stage-completed" [style.width.%]="project.progress">
+                                            {{project.progress}}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="project-description">
+                                    <span [ngbTooltip]="project.description">{{ (project.description &&
+                                        project.description.length>150)? (project.description |
+                                        slice:0:150)+'...':(project.description) }}</span>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="project-actions">
+                                    <div class="btn-border message-btn">
+                                        <div class="btn message-btn" (click)="projectMessage(project)">Message</div>
+                                    </div>
+                                    <div class="btn-border operations-btn" (click)="selectfunding(project)">
+                                        <div class="btn">Fund</div>
+                                    </div>
+                                    <div class="btn-border inside-btn" (click)="navigateTo(project)">
+                                        <div class="btn">Inside</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <app-pagination [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination>
+            </div>
+            <div class="projects-footer" style="visibility: hidden;">
+                <div class="back-button" (click)="_location.back()">Back</div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #popUpForAddEmailMessage>
+    <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #popUpForCommonMessage>
+    <div class="modal-body">{{errorMessage}}</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

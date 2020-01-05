@@ -1,0 +1,27 @@
+<!-- <div class="work-timer">
+    <span class="icon-clock"></span>
+    <button class="saffron_btn blue_btn" (click)="startTimer()" *ngIf="!timerstart">Start Work</button>
+    {{timer}}
+    <button class="saffron_btn orange_btn" (click)="stopTimer()"  *ngIf="timerstart">Stop Work</button>
+
+</div> -->
+<!-- <div class="work-timer-error" *ngIf="errorMessage"><span class="errorwrap">{{errorMessage}}</span></div> -->
+<app-document-explorer
+  *ngIf="process"
+  class="app-document-explorer"
+  [items]="documents | filterDocumentType: process.documentTypeFilter"
+  (export)="exportDocument($event)"
+  (open)="openDocument($event)"
+  [readonly]="true"
+>
+</app-document-explorer>
+
+<!-- <app-document-explorer *ngIf="process"
+                       class="app-document-explorer"
+                       [items]="documents | filterDocumentType: process.documentTypeFilter"
+                       (open)="openDocument($event)"
+                       (createDocument)="createDocument($event)"
+                       (renameDocument)="renameDocument($event.item, $event.name)"
+                       (percentageDocument)="percentageDocument($event.item, $event.percentage)"
+                       (deleteDocument)="deleteDocument($event)">
+</app-document-explorer> -->

@@ -1,0 +1,30 @@
+<div class="container-fluid saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header (onBackClicked)="onBack()"></app-header>
+      <div class="container-header">
+        <app-founder-idea-bubble-toolbar
+          *ngIf="stageState"
+          [currentStage]="stageState.stage"
+          [projectId]="idea"
+          (onClicked)="onToolbarClicked($event)"
+        ></app-founder-idea-bubble-toolbar>
+
+        <div class="sectionheadings">
+          <h1 class="d-inline hero-title">{{title}}</h1>
+          <h3 class="d-inline hero-subtitle">{{subtitle}}</h3>
+        </div>
+      </div>
+
+      <app-idea-qa
+        [stageState]="stageState"
+        *ngIf="loadStage"
+        projectStage="idea"
+        (done)="onDone($event)"
+        (next)="onNext($event)"
+        (skip)="onSkip()"
+      ></app-idea-qa>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+
+
+
+
+      <div class="acc_content"></div>
+
+<ngb-tabset>
+  <ngb-tab>
+      <ng-template ngbTabTitle>Current Employer</ng-template>
+    <ng-template ngbTabContent>
+      
+
+        <div *ngFor="let item of employmentInfo">
+          <div *ngIf="item.present">
+            <div class="p_wrap">
+              <div class="p_question">Current Employer</div>
+              <div class="p_answer">{{item.current_employer}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Duration </div>
+              <div class="p_answer">{{item.date_start | date: 'MMMM dd, yyyy'}} - {{item.date_end | date: 'MMMM dd, yyyy'}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Current Designation </div>
+              <div class="p_answer">{{item.current_designation}}</div>
+            </div>
+            <div class="p_wrap">
+              <div class="p_question">Functional Area</div>
+              <div class="p_answer" *ngFor="let farea of item?.functional_areas">{{farea.title}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Role</div>
+              <div class="p_answer" *ngFor="let role of item?.role">{{role.title}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Department </div>
+              <div class="p_answer" *ngFor="let dept of item?.departments">{{dept.title}}</div>
+            </div>
+
+
+            <div class="p_wrap">
+              <div class="p_question">Job Role</div>
+              <div class="p_answer">{{item.job_role}} </div>
+            </div>
+          </div>
+        </div>
+  
+    
+    
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle>Past Employer</ng-template>
+    <ng-template ngbTabContent>
+      
+
+        <div *ngFor="let item of employmentInfo">
+          <div *ngIf="!item.present">
+            <div class="p_wrap">
+              <div class="p_question">Previous Employer</div>
+              <div class="p_answer">{{item.current_employer}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Duration </div>
+              <div class="p_answer">{{item.date_start | date: 'MMMM dd, yyyy'}} - {{item.date_end | date: 'MMMM dd, yyyy'}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Previous Designation </div>
+              <div class="p_answer">{{item.current_designation}}</div>
+            </div>
+            <div class="p_wrap">
+              <div class="p_question">Functional Area</div>
+              <div class="p_answer" *ngFor="let farea of item?.functional_areas">{{farea.title}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Role</div>
+              <div class="p_answer" *ngFor="let role of item?.role">{{role.title}}</div>
+            </div>
+
+            <div class="p_wrap">
+              <div class="p_question">Department </div>
+              <div class="p_answer" *ngFor="let dept of item?.departments">{{dept.title}}</div>
+            </div>
+
+
+            <div class="p_wrap">
+              <div class="p_question">Job Role</div>
+              <div class="p_answer">{{item.job_role}} </div>
+            </div>
+          </div>
+        </div>
+
+
+    </ng-template>
+  </ngb-tab> 
+</ngb-tabset>
+
+
+
+<!-- 
+<ng-container>
+  <div class="card" *ngFor="let item1 of currentPastList; let index = index">
+    <div class="card-block">
+      <h3 class="card-title"  (click)="toggleAccordian($event,index,item1.panelname)">
+        <i class="icomoon icon-next-1"></i>
+        {{item1.panelname}}
+        <span class="pull-right" 
+          [class.icon-up-arrow]="!isCollapsedArray[index]" 
+          [class.icon-down-arrow]="isCollapsedArray[index]"
+         ></span>
+      </h3>
+       <div class="card-text" [ngbCollapse]="isCollapsedArray[index]"> 
+        <div class="acc_content" *ngIf="panelname =='Current Employer' && !isCollapsedArray[index]">
+          <div *ngFor="let item of employmentInfo">
+            <div *ngIf="item.present">
+              <div class="p_wrap">
+                <div class="p_question">Current Employer</div>
+                <div class="p_answer">{{item.current_employer}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Duration </div>
+                <div class="p_answer">{{item.date_start | date: 'MMMM dd, yyyy'}} - {{item.date_end | date: 'MMMM dd, yyyy'}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Current Designation </div>
+                <div class="p_answer">{{item.current_designation}}</div>
+              </div>
+              <div class="p_wrap">
+                <div class="p_question">Functional Area</div>
+                <div class="p_answer" *ngFor="let farea of item?.functional_areas">{{farea.title}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Role</div>
+                <div class="p_answer" *ngFor="let role of item?.role">{{role.title}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Department </div>
+                <div class="p_answer" *ngFor="let dept of item?.departments">{{dept.title}}</div>
+              </div>
+
+
+              <div class="p_wrap">
+                <div class="p_question">Job Role</div>
+                <div class="p_answer">{{item.job_role}} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc_content" *ngIf="panelname =='Past Employer' && !isCollapsedArray[index]">
+          <div *ngFor="let item of employmentInfo">
+            <div *ngIf="!item.present">
+              <div class="p_wrap">
+                <div class="p_question">Previous Employer</div>
+                <div class="p_answer">{{item.current_employer}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Duration </div>
+                <div class="p_answer">{{item.date_start | date: 'MMMM dd, yyyy'}} - {{item.date_end | date: 'MMMM dd, yyyy'}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Previous Designation </div>
+                <div class="p_answer">{{item.current_designation}}</div>
+              </div>
+              <div class="p_wrap">
+                <div class="p_question">Functional Area</div>
+                <div class="p_answer" *ngFor="let farea of item?.functional_areas">{{farea.title}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Role</div>
+                <div class="p_answer" *ngFor="let role of item?.role">{{role.title}}</div>
+              </div>
+
+              <div class="p_wrap">
+                <div class="p_question">Department </div>
+                <div class="p_answer" *ngFor="let dept of item?.departments">{{dept.title}}</div>
+              </div>
+
+
+              <div class="p_wrap">
+                <div class="p_question">Job Role</div>
+                <div class="p_answer">{{item.job_role}} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+</ng-container> -->

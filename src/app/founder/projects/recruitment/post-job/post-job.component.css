@@ -1,0 +1,10 @@
+.flex-container {
+    display: flex;
+    align-items: stretch;
+    background-color: #f1f1f1;
+  }
+  
+
+  .flex-container>div.leftpanel,
+  .flex-container>div.rightpanel { flex: 0 0 200px;}
+  .flex-container>div.middlepanel { flex-grow: 1;}

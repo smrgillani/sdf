@@ -1,0 +1,484 @@
+$bg-color: #4342e6;
+$bg-color-2: #f9f5f0;
+
+.container-fluid {
+  // background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 65%, $bg-color-2 65%, $bg-color-2 100%);
+  background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat;
+  background-size: 100% 65%;
+}
+
+.container-main {
+  flex-direction: column;
+}
+
+.container-main::after {
+  border-color: #404040;
+}
+
+.container-border {
+  display: block;
+  height: 100%;
+}
+
+.toolbar {
+  background-color: #3223df;
+}
+
+.container-header {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 65%; //calc(65% + 9px);
+}
+
+.container-buttons {
+  flex-grow: 1;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -4.438em;
+}
+
+
+.container-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 8.750em; // 140px;
+  margin: 0.625em; // 10px;
+
+  .caption {
+    color: #4342e6;
+    font-size: 1.500em; //24px;
+    font-weight: bold;
+    margin-top: 0.417em; // 10px;
+
+    &.next {
+      color: #679bf9;
+
+      &.done {
+        color: #ff6c24;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.button-icon {
+  width: 8.750em; // 140px;
+  height: 8.750em; // 140px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: initial;
+  border-radius: 360px;
+  -moz-border-radius: 360px;
+  -webkit-border-radius: 360px;
+  -ms-border-radius: 360px;
+}
+
+.font-large {
+  font-size: 2em;
+}
+
+.font-small {
+  font-size: 1em;
+}
+
+.font-medium {
+  font-size: 1.1em;
+}
+
+.bg-incomplete {
+  background-color: #fc585c;
+}
+
+.c-primary {
+  color: #3223df;
+}
+
+.hero-subtitle {
+  // font-size: 27px;
+  max-width: 36.667em; //  990px;
+  text-align: center;
+  font-weight: normal;
+  line-height: 1.185em; // 32px;
+  padding: 0 5px;
+}
+
+.bg-express {
+  @extend .bg-incomplete;
+  background-image: url('/assets/img/idea/express.png');
+  background-size: 31%;
+}
+
+.bg-develop {
+  @extend .bg-incomplete;
+  background-image: url('/assets/img/idea/develop.png');
+  background-size: 44.5%;
+}
+
+.bg-visual {
+  @extend .bg-incomplete;
+  background-image: url('/assets/img/idea/visual.png');
+  background-size: 32%;
+}
+
+.bg-target {
+  @extend .bg-incomplete;
+  background-image: url('/assets/img/idea/target.png');
+  background-size: 44%;
+}
+
+.bg-plan {
+  @extend .bg-incomplete;
+  background-image: url('/assets/img/idea/plan.png');
+  background-size: 37%;
+}
+
+.bg-next {
+  background: #5585f7;
+  background-image: url('/assets/img/idea/next.png');
+  background-size: 20%;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &.done {
+    background-color: #ff6c24;
+    cursor: pointer;
+  }
+}
+
+.bg-checked {
+  background-color: rgb(27, 209, 188);
+  background-image: url('/assets/img/idea/done.png');
+  background-size: 50%;
+}
+
+.disabled {
+  opacity: 0.3;
+}
+
+div.selector {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1100px) {
+  .overviewidea {
+    font-size: 85%;
+  }
+  .container-fluid {
+    // background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 50%, $bg-color-2 50%, $bg-color-2 100%);
+    background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat;
+    background-size: 100% 50%;
+  }
+  .container-header {
+    height: 50%;
+  }
+
+  .container-buttons {
+    margin-top: -5.438em;
+    // margin-top: -55px;
+  }
+
+  .container-button {
+    // width: auto;
+  }
+
+  .button-icon {
+    //  width: 90px;
+    //  height: 90px;
+    // background-size: 35%;
+  }
+
+  .hero-title {
+    //  margin-top: 70px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .overviewidea {
+    font-size: 75%;
+  }
+
+  .hero-title {
+    //  margin-top: 40px;
+    //  font-size: 45px;
+  }
+
+  .hero-subtitle {
+    //  font-size: 22px;
+  }
+
+  .container-button .caption {
+    // font-size: 22px;
+    // font-weight: normal;
+  }
+
+  .container-buttons {
+    margin-top: -5.438em;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  .overview-component {
+    &.container-fluid {
+      // height: auto;
+      background-size: 100% 250px;
+    }
+
+    .container-border {
+      // min-height: calc(100% - 32px);
+    }
+
+    .container-header {
+      padding-top: 60px;
+      height: 188px;
+    }
+
+    .overviewidea {
+      //min-height: calc(100vh - 1.875rem);
+    }
+
+    .hero-title {
+      // font-size: 30px;
+      //  line-height: 36px;
+      //font-weight: normal;
+      // margin-top: 0;
+    }
+
+    .hero-subtitle {
+      // padding: 0 20px;
+      //  font-size: 16px;
+      // line-height: 19px;
+    }
+
+    .container-buttons {
+      margin-top: 0;
+      // position: static;
+      // margin-top: 0;
+
+      .button-icon {
+        // width: 80px;
+        // height: 80px;
+        //  background-size: 35%;
+
+        &.bg-next {
+          // background-size: 20%;
+        }
+      }
+
+      .container-button {
+        .caption {
+          // font-size: 16px;
+          // font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .overview-component {
+    &.container-fluid {
+      // background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 256px, $bg-color-2 256px, $bg-color-2 100%);
+      background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat;
+      background-size: 100% 200px;
+    }
+
+    .container-header {
+      // padding-top: 30px;
+      // height: 240px;
+      height: 185px;
+    }
+
+    .hero-title {
+      // font-size: 30px;
+      // line-height: 36px;
+      // font-weight: normal;
+      // margin-top: 0;
+    }
+
+    .hero-subtitle {
+      // font-size: 16px;
+      // line-height: 19px;
+    }
+
+    .container-buttons {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .container-button {
+      // width: 80px;
+      text-align: center;
+
+      .caption {
+        // font-size: 16px;
+        // line-height: 19px;
+        // font-weight: normal;
+      }
+    }
+
+    .button-icon {
+      // width: 60px;
+      // height: 60px;
+      // background-size: 50%;
+    }
+
+    .bg-next {
+      // background-size: 25%;
+    }
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .overviewidea {
+    font-size: 50%;
+  }
+
+  .overview-component {
+    .hero-title {
+      // font-size: 24px;
+      // line-height: 34px;
+      // font-weight: normal;
+    }
+
+    .hero-subtitle {
+      // font-size: 14px;
+      // line-height: 17px;
+    }
+
+    .container-buttons {
+      width: auto;
+    }
+
+    .container-button {
+      // margin: 10px 0;
+    }
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-height: 500px) {
+  .overviewidea {
+    font-size: 60%;
+  }
+
+  .container-header {
+    height: 60%;
+  }
+
+  .container-fluid {
+    background-size: 100% 60%;
+  }
+}
+
+@media only screen and (min-width: 1101px) and (max-height: 500px) {
+  .overviewidea {
+    font-size: 48%;
+  }
+
+  .container-header {
+    height: 60%;
+  }
+
+  .container-fluid {
+    background-size: 100% 60%;
+  }
+}
+
+@media only screen and (max-width: 767px) and (max-height: 450px) {
+  .container-fluid {
+    height: auto;
+  }
+}
+
+app-header {
+  position: absolute;
+}
+
+/** New Styles */
+.container-header {
+  height: 365px;
+}
+
+.container-fluid {
+  background-size: 100% 406px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .container-header {
+    height: 265px;
+  }
+
+  .container-fluid {
+    background-size: 100% 290px !important;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .container-header {
+    height: 265px;
+  }
+
+  .container-fluid {
+    background-size: 100% 290px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .container-header {
+    height: 200px !important;
+  }
+
+  .container-fluid {
+    background-size: 100% 265px !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .overview-component .container-buttons {
+    width: 100%;
+  }
+
+  .container-button {
+    width: 8em;
+  }
+
+  .button-icon {
+    width: 8em;
+    height: 8em;
+  }
+
+  .container-fluid {
+    background-size: 100% 245px !important;
+  }
+
+  .container-header {
+    height: 183px !important;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .overview-component .container-header {
+    height: 135px !important;
+  }
+
+  .container-fluid {
+    background-size: 100% 175px !important;
+  }
+
+  .container-button {
+    width: 7em;
+  }
+
+  .button-icon {
+    width: 7em;
+    height: 7em;
+  }
+}

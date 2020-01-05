@@ -1,0 +1,112 @@
+<div class="editor-tools-panel" *ngIf="enabledSections.length"
+     [style.left]="toolbarPosition['x'] + 'px'"
+     [style.top]="toolbarPosition['y'] + 'px'"
+>
+  <ng-container *ngIf="!isColorPickerEnabled">
+    <div class="section-group" *ngIf="isSectionEnabled(sections.BORDER) || isSectionEnabled(sections.FILL)">
+      <div class="section border" *ngIf="isSectionEnabled(sections.BORDER)">
+        Border
+        <div class="color"
+             [class.transparent]="!editingStyle['strokeColor'] || editingStyle['strokeColor'] === 'transparent'"
+             (click)="openColorPicker('strokeColor')"
+             [style.backgroundColor]="editingStyle['strokeColor']"
+        ></div>
+        <div class="border-width">
+          <span *ngIf="!editingSize" (click)="editSize('edit-border-size')">{{editingStyle['strokeWidth']}}px</span>
+          <input type="text"
+                 id="edit-border-size"
+                 maxlength="2"
+                 name="strokeWidth"
+                 *ngIf="editingSize"
+                 [(ngModel)]="editingStyle['strokeWidth']"
+                 (blur)="editingSize = !editingSize; styleChanged.emit(editingStyle)"
+                 (keypress)="validateSize($event)"
+                 (keyup.enter)="changeSize($event)"
+          >
+        </div>
+        <div class="border-style" (click)="changeBorderStyle()">
+          <span *ngIf="editingStyle['dashed'] === '0'">Solid</span>
+          <span *ngIf="editingStyle['dashed'] === '1'">Dashed</span>
+        </div>
+      </div>
+
+      <div class="section fill" *ngIf="isSectionEnabled(sections.FILL)">
+        Fill
+        <div class="color"
+             [class.transparent]="!editingStyle['fillColor'] || editingStyle['fillColor'] === 'transparent'"
+             (click)="openColorPicker('fillColor')"
+             [style.backgroundColor]="editingStyle['fillColor']"
+        ></div>
+      </div>
+
+      <div class="section delete" *ngIf="!isSectionEnabled(sections.FONT)">
+        <img class="img-button" src="/assets/img/icon-27-trash-can.svg" alt="Delete" (click)="deleteElement()">
+      </div>
+    </div>
+
+    <div class="section-group" *ngIf="isSectionEnabled(sections.FONT)">
+      <div class="section font-size">
+        Font
+        <span *ngIf="!editingSize" (click)="editSize('edit-font-size')">{{editingStyle['fontSize']}}px</span>
+        <input type="text"
+               id="edit-font-size"
+               maxlength="2"
+               name="fontSize"
+               *ngIf="editingSize"
+               [(ngModel)]="editingStyle['fontSize']"
+               (blur)="editingSize = !editingSize; styleChanged.emit(editingStyle)"
+               (keypress)="validateSize($event)"
+               (keyup.enter)="changeSize($event)"
+        >
+      </div>
+
+      <div class="section text-alignment">
+        <i class="fa fa-align-left"
+           [class.active]="editingStyle['right'] === 'left'"
+           (click)="editingStyle['right'] = 'left'; styleChanged.emit(editingStyle)"
+        ></i>
+        <i class="fa fa-align-center"
+           [class.active]="editingStyle['right'] === 'center'"
+           (click)="editingStyle['right'] = 'center'; styleChanged.emit(editingStyle)"
+        ></i>
+        <i class="fa fa-align-right"
+           [class.active]="editingStyle['right'] === 'right'"
+           (click)="editingStyle['right'] = 'right'; styleChanged.emit(editingStyle)"
+        ></i>
+      </div>
+
+      <div class="section font-color">
+        <div class="color"
+             [class.transparent]="!editingStyle['fontColor'] || editingStyle['fontColor'] === 'transparent'"
+             (click)="openColorPicker('fontColor')"
+             [style.backgroundColor]="editingStyle['fontColor']"
+        ></div>
+      </div>
+
+      <div class="section delete" *ngIf="isSectionEnabled(sections.FONT)">
+        <img class="img-button" src="/assets/img/icon-27-trash-can.svg" alt="Delete" (click)="deleteElement()">
+      </div>
+    </div>
+
+    <div class="section-group"
+         *ngIf="isSectionEnabled(sections.DELETE) && !(isSectionEnabled(sections.BORDER) || isSectionEnabled(sections.FILL)) && !isSectionEnabled(sections.FONT)">
+      <div class="section delete">
+        <img class="img-button" src="/assets/img/icon-27-trash-can.svg" alt="Delete" (click)="deleteElement()">
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isColorPickerEnabled">
+    <div class="section-group">
+      <div class="section colors">
+        <div *ngFor="let color of colors"
+             class="color"
+             [class.transparent]="color.name === 'transparent'"
+             [style.backgroundColor]="color.hex"
+             (click)="getSelectedColor(color)"
+        ></div>
+      </div>
+      <div class="section close" (click)="isColorPickerEnabled = false;"></div>
+    </div>
+  </ng-container>
+</div>

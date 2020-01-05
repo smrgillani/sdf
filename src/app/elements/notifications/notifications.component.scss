@@ -1,0 +1,211 @@
+.saffron_btn {
+    font-size: 1.125em;
+    padding: 0.167em 1em;
+}
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  
+    h1 {
+      color: #2929e4;
+      font-size: 2.250em;
+      font-weight: 500;
+      line-height: 1.194em;
+      margin: 2px;
+    }
+  
+    
+  }
+main {
+    padding:0 0 1.75em 0;
+    background-color: #f9f5f0;
+    min-height:100%;
+}
+.cardwrap {
+  
+    padding: 0;
+    margin-bottom: 1.875em;
+}
+.card                   { flex-direction: row; padding: 2.000em 2.000em 2.000em 0; cursor: pointer; border: 0; margin-bottom: 1.667em;   background: #fff; font-size: 0.750em; }
+.notification_icon      {  width: 2.917em; text-align: center; font-size: 2.000em; color:#7b79e8; line-height: normal; }
+.notification           {  font-size: 1.500em; color:#2b29ad; width:calc(100% - 12.222em); 
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
+    padding-right: 1.556em;
+    word-break: break-all;
+}
+
+.timestamp { 
+    font-size: 1.1em;
+    color: #676767;
+    width: 9.375em; 
+}
+
+.card.unread:hover {
+    background-color: #e0e0e0;
+}
+
+.card.unread {
+    background: #edf2fa;
+}
+
+.card.unread .icon-notifications {
+    color:rgb(238, 61, 43);
+}
+
+.card.unread:hover .timestamp {
+    color: #383636;
+}
+
+.card .notification {
+    word-break: break-word;
+}
+
+.card a.btn-floating:hover {
+    background-color: #e4e4e4;
+}
+
+.card i.material-icons {
+    color: #666666;
+    font-size: 21px;
+}
+
+.card i.material-icons:hover {
+    color: #000000;
+}
+
+// .card i.material-icons {
+//     color: #f43f53;
+//     font-size: 21px;
+// }
+
+// .card i.material-icons:hover {
+//     color: #ff011d;
+// }
+
+.card > span {
+    display: flex;
+    align-items: center;
+}
+
+.card > span:first-child {
+    justify-content: center;
+}
+
+.card .timestamp {
+    justify-content: flex-end;
+    padding-right: 15px;
+}
+
+.delete-btn-container {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+}
+
+/** New Styles */
+.saf_blue_theme .project-actions {
+    flex-wrap: nowrap;
+}
+
+.saffron_btn {
+    font-weight: 400;
+    transition: .3s ease-in-out;
+    padding: 3px;
+    min-width: 6em;
+    white-space: nowrap;
+    outline: none;
+    font-size: 1em;
+    font-family: ProximaNova, sans-serif;
+}
+
+.saffron_btn:active {
+    outline: none;
+}
+
+.saffron_btn.dark-turquoise {
+    background-color: #00d8c9;
+    border: 2px solid #00d8c9;
+    margin-right: 2px;
+}
+
+.saffron_btn.bittersweet {
+    background-color: #FE5F5B;
+    border: 2px solid #FE5F5B;
+}
+
+.cardwrap .card {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.timestamp { 
+    width: 100%;
+    text-align: right; 
+}
+
+.notification_status { 
+    width: 95%;
+    text-align: right;
+    position: relative;
+    margin-top: -5px;
+}
+
+.project-actions {
+    display: block;
+}
+
+.notification {
+    width: calc(95% - 3.889em);
+    padding-right: 0;
+}
+
+.project-actions {
+    margin: 5px 0px -34px 70px;
+    z-index: 10;
+}
+
+.btn-floating.btn-flat {
+    display:block;
+}
+
+@media only screen and (max-width: 1199px) {
+    .project-actions {
+        margin-left: 65px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .notification_status {
+        margin-top:0;
+    }
+
+    .project-actions {
+        margin-left: 60px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .project-actions {
+        margin-left: 57px;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .project-actions {
+        margin-left: 54px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .project-actions {
+        margin: 5px 0px 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+}
+  

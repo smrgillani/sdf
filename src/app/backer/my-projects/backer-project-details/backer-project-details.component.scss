@@ -1,0 +1,234 @@
+.container-fluid {
+    // height: auto;
+    overflow: auto;
+     background: linear-gradient(180deg, #450DA6 0%, #4342E6 100%);
+   }
+   .container-fluid{
+     height: auto;
+   }
+   .container-main {
+     background-image: url('/assets/img/founder/bg_home.svg');
+     background-repeat: no-repeat;
+     background-size: 840px;
+     background-position: center center;
+     position: relative;
+     /* top: 100px; */
+   }
+   .container-border {
+     min-height: calc(100vh - 3.750rem );
+   }
+   
+   h1 {
+     color: #ffffff;
+     font-size: 48px;
+     font-weight: 600;
+     line-height: 58px;
+     margin-top: 75px;
+     margin-bottom: 36px;
+   }
+   
+   .activity-group {
+     min-height: 165px;
+     max-width: 650px;
+     width: 100%;
+     margin-bottom: 25px;
+     padding: 0 10px;
+   
+     h3 {
+       color: #fff;
+       font-size: 14px;
+       font-weight: 600;
+       text-align: left;
+       text-transform: uppercase;
+       margin-bottom: 15px;
+     }
+   }
+   
+   .process-icon {
+     height: 24px;
+     width: 24px;
+     border: 2px solid #cccccc;
+     margin-right: 12px;
+   }
+   
+   .project-action {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     align-items: center;
+     margin-bottom: 5px;
+     background-color: #450DA6;
+     border-right: 3px solid;
+     height: 40px;
+   
+     &:nth-of-type(1) {
+       border-color: #FF6C24;
+     }
+     &:nth-of-type(2) {
+       border-color: #82C786;
+     }
+     &:nth-of-type(3) {
+       border-color: #4A90E2;
+     }
+   
+     &.with-icon {
+       border-top-left-radius: 20px;
+       border-bottom-left-radius: 20px;
+     }
+   
+     .action-message {
+       color: #dddddd;
+       font-size: 18px;
+       margin-left: 12px;
+       width: 100%;
+       overflow:hidden;
+       display:inline-block;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+     }
+   
+     .action-user-icon {
+       height: 40px;
+       width: 40px;
+       min-width: 40px;
+       border-radius: 50%;
+       background: #f5f5f5 url('/assets/img/navbar-noavatar-icon.png') no-repeat center center;
+       border-radius: 360px;-moz-border-radius: 360px;-webkit-border-radius: 360px;-ms-border-radius: 360px;-o-border-radius: 360px; overflow: hidden; 
+   
+       img {
+         max-width: 100%;
+         height: auto;
+         border-radius: 50%;
+         min-height: 100%;
+       }
+     }
+   
+     .action-user-name {
+       font-weight: 600;
+     }
+   
+     .action-time {
+       color: #ffffff;
+       font-size: 14px;
+       text-align: right;
+       margin-right: 20px;
+       white-space: nowrap;
+     }
+   }
+   
+   .more-link {
+     color: #dddddd;
+     font-size: 16px;
+     text-align: right;
+     text-decoration: underline;
+     cursor: pointer;
+   }
+   
+   .project-buttons {
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     width: 700px;
+     margin-top: 15px;
+     margin-bottom: 40px;
+   
+     .big-btn {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       cursor: pointer;
+   
+       color: #f5f5f5;
+       font-size: 18px;
+       font-weight: 600;
+       letter-spacing: 1px;
+   
+       app-wheel {
+         height: 90px;
+         width: 90px;
+         margin-bottom: 9px;
+       }
+   
+       &:hover {
+         -webkit-transform: scale(1.1);
+         -ms-transform: scale(1.1);
+         transform: scale(1.1);
+   
+         transition: .2s ease-in-out;
+       }
+     }
+   
+     &.noticeable {
+       -webkit-transform: scale(0.5);
+       -ms-transform: scale(0.5);
+       transform: scale(0.5);
+   
+       transition: .2s ease-in-out;
+     }
+   }
+   
+   @media (max-width: 767px) {
+    
+   
+     .container-border {
+       border: none;
+       h1 {
+         color: #FFFFFF;
+         font-size: 36px;
+         font-weight: 600;
+       }
+   
+       h3 {
+         font-size: 14px;
+       }
+   
+       .project-action {
+         flex-direction: column;
+         align-items: flex-start;
+         &.with-icon {
+           display: block;
+           div {
+             float: left;
+           }
+   
+           .action-message {
+             width: calc(100% - 60px);
+             margin: 0 10px;
+           }
+         }
+   
+         .action-message {
+           width: auto;
+           margin: 0 12px;
+           height: 18px;
+           font-size: 14px;
+         }
+   
+         .action-time {
+           height: 23px;
+           margin: 0 0 0 12px;
+         }
+       }
+     }
+     .project-buttons {
+       justify-content: center;
+       width: 95%;
+       max-width: 310px;
+       flex-wrap: wrap;
+   
+   
+       .big-btn {
+         position: relative;
+         margin: 0 5px 15px 5px;
+         font-size: 14px;
+         
+   
+         app-wheel{
+           height: 80px;
+           width: 80px;
+         }
+       }
+     }
+   }
+   
+   

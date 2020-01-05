@@ -1,0 +1,78 @@
+<div class="heading">
+    <h1 (click)="isCollapse=togglecollapse(isCollapse)">Normal Crowd Funding</h1>
+</div>
+<div class="cardwrap" *ngIf="isCollapse">
+    <div class="showinterest text-right" *ngIf="showActions">
+        <button class="saffron_btn orange_btn" (click)="showInterest(popUpForShowInterestMessage)">Show Interest</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Minimum Target Offering Amount ($)</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.min_target_offering_amt.amount">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Due by</label>
+                <input type="date" class="form-control" disabled [ngModel]="fundData.creatorFundData.due_by">
+            </div>
+        </div>
+    </div>
+   <!--  <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Return in form</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.return_form">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Price/ Security ($)</label>
+                <input type="text" class="form-control" disabled [ngModel]="fundData.creatorFundData.price_security.amount">
+            </div>
+        </div>
+    </div> -->
+
+    <h5>T&Cs</h5>
+    <div class="terms_n_condition" [innerHTML]="fundData.creatorFundData.terms_condition"></div>
+
+    <!-- <app-text-editor [readOnly]="true" class="wrappertexteditor" [ngModel]="fundData.creatorFundData.terms_condition" height="125px"></app-text-editor> -->
+    <!-- <hr> -->
+    <form [formGroup]="frmFundDetails">
+        <div class="row">
+            <!-- <div class="col-md-6">
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" class="form-control" formControlName="quantity" [(ngModel)]="fundData.quantity">
+                    <div class="form-control-feedback" *ngIf="quantity.errors && (quantity.touched || quantity.dirty)">
+                        <div class="errorwrap" *ngIf="quantity.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Fund Amount ($)</label>
+                    <p-spinner size="30" class="form-control" formControlName="fund_amount" [(ngModel)]="fundData.fund_amount.amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="fund_amount.errors && (fund_amount.touched || fund_amount.dirty)">
+                        <div class="errorwrap" *ngIf="fund_amount.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="fund_amount.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="post-buttons" *ngIf="showActions">
+            <button type="button" class="saffron_btn red_btn" (click)="skip()">Skip</button>
+
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">Next</button>
+        </div>
+    </form>
+</div>
+<ng-template #popUpForShowInterestMessage>
+    <div class="modal-body">Your request is send successfully.</div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,15 @@
+<div class="new-message">
+  <app-file-droppa
+    [dropZoneTemplate]="dropZoneChartTemplate"
+    [url]=""
+    [multiple]="false"
+    [autoUpload]="false"
+    [showFilesList]="false"
+    (filesUpdated)="sourceFilesUpdated($event)"
+    [openTriggerId]="'passportTrigger'"
+  >
+    <div class="profile-buttons">
+      <div class="trigger" id="passportTrigger"></div>
+    </div>
+  </app-file-droppa>
+</div>

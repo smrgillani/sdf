@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <app-header></app-header>
+      <div class="projects-container">
+        <div class="projects-header">
+          <div class="project-header-text">
+            <span class="projects-header-caption">PROCESSES DUE SOON</span>
+          
+          </div>
+        </div>        
+        <table class="table table-hover projects-table">
+          <tbody>
+            <tr *ngFor="let processDueSoon of processDueSoonList; let first = first;" [ngClass]="{'active': first}">
+              <td>
+                <div class="project-title link">
+                  <div (click)="goToProcess(processDueSoon.id)" class="project-name">{{processDueSoon.message}}</div>
+                </div>
+              </td>
+              <td>
+                <div class="project-visibility">
+                  <span class="icon-clock"></span>
+                  <div class="project-name">{{processDueSoon.timestamp | formatRelativeTime}}</div>
+                </div>
+              </td>             
+            </tr>
+          </tbody>
+        </table>
+        <app-pagination class="my-pagination"  [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getProcessesDueSoon($event)"></app-pagination> 
+      </div>
+    </div>
+  </div>
+</div>

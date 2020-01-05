@@ -1,0 +1,68 @@
+<app-header [backNavOptions]="{caption: 'Payment', route: ['founder', 'projects', projectId, 'payment']}"></app-header>
+<main>
+
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Payment Rating</h1>
+    </div>
+
+    <div class="cardwrap">
+
+      <div class="card">
+
+        <ngb-tabset>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Thumbs Up</ng-template>
+            <ng-template ngbTabContent>
+
+              <div>
+
+                <div class="project-action with-icon" *ngFor="let item of rateUp">
+                  <div class="action-user-icon">
+                    <img *ngIf="item.photo" [src]="item.photo" alt="">
+                    <i *ngIf="item.is_kyc_complete" class="icon-check2 verified"></i>
+                  </div>
+                  <div class="action-message">
+                    <span class="action-user-name">{{item.name}}</span>
+                  </div>
+                  <div class="action-time">
+                  </div>
+                </div>
+              </div>
+              <app-pagination class="my-pagination" [pageSize]="pageSizeUp" [pagesQuantity]="countUp" (pageChanged)="getPaymentThumbsUp($event)"></app-pagination>
+
+
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle>Thumbs Down</ng-template>
+            <ng-template ngbTabContent>
+
+              <div>
+                <div class="project-action with-icon" *ngFor="let item of rateDown">
+                  <div class="action-user-icon">
+                    <img *ngIf="item.photo" [src]="item.photo" alt="">
+                    <i *ngIf="item.is_kyc_complete" class="icon-check2 verified"></i>
+                  </div>
+                  <div class="action-message">
+                    <span class="action-user-name">{{item.name}}</span>
+                  </div>
+                  <div class="action-time">
+                  </div>
+                </div>
+              </div>
+              <app-pagination class="my-pagination" [pageSize]="pageSizeDown" [pagesQuantity]="countDown" (pageChanged)="getPaymentThumbsDown($event)"></app-pagination>
+
+
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+
+    </div>
+
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>

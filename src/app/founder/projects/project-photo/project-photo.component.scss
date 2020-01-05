@@ -1,0 +1,272 @@
+$primary-color: #4342e6;
+
+.container-main {
+  height: auto;
+  background: url(/assets/img/summary_header_dots.png) top center no-repeat,
+  -webkit-linear-gradient(top, $primary-color, $primary-color 210px, rgb(249, 245, 240) 210px, rgb(249, 245, 240) 100%);
+
+  &::after {
+    border-color: #333;
+  }
+
+  .container-border {
+    display: block;
+
+    .container {
+      width: 798px;
+    }
+
+    .close_popup {
+      font-size: 13px;
+      width: 50px;
+      height: 50px;
+      border-radius: 360px;
+      background: #fe5f5b;
+      color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: -68px;
+      right: 10px;
+      text-align: center;
+      line-height: 54px;
+      cursor: pointer;
+    }
+
+    .edit-photo {
+      width: 768px;
+      margin: 120px auto 6px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+
+      .edit-photo-header {
+        background-color: #fe5f5b;
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 60px;
+        padding: 0 30px;
+
+        span {
+          display: none;
+        }
+      }
+
+      .edit-photo-body {
+        padding: 15px;
+        background-color: #fff;
+      }
+
+      .col-6 + .col-6 {
+        border-left: 1px solid #ddd;
+      }
+
+      .photo-canvas {
+        display: block;
+        height: 170px;
+        background-color: #f2eadf;
+        margin: 0 auto 15px;
+      }
+
+      p {
+        color: #7c7c7c;
+        font-size: 18px;
+        line-height: 24px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .profile-buttons {
+        text-align: center;
+
+        .trigger {
+          display: inline-block;
+          position: relative;
+          margin: 0 33px;
+          color: #4342e6;
+          font-size: 16px;
+          line-height: 16px;
+          text-align: center;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        .icon {
+          display: block;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          margin: 0 auto 6px;
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.35);
+          cursor: pointer;
+
+          &.upload {
+            background: #6a9df6 url(/assets/img/upload_new_photo.png) no-repeat center;
+          }
+
+          &.take {
+            background: #24d7c8 url(/assets/img/take_photo.png) no-repeat center;
+          }
+        }
+      }
+
+      h3 {
+        color: #4342e6;
+        font-size: 24px;
+        line-height: 32px;
+        text-align: center;
+        margin-bottom: 11px;
+      }
+
+      .profile-photo {
+        height: 124px;
+        width: 124px;
+        border-radius: 50%;
+        border: 4px solid #f9f5f0;
+        background: #f9f5f0 url(/assets/img/founder/user.png) no-repeat center;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+        margin: 20px auto;
+
+        img {
+          border-radius: 50%;
+          max-width: 100%;
+          height: auto;
+        }
+      }
+
+      .saffron_btn {
+        margin: 20px auto;
+        display: block;
+      }
+    }
+
+    .hidden-input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      max-width: 100%;
+    }
+
+    .back-button {
+      margin-left: 30px;
+    }
+
+    ack-webcam {
+      width: 100%;
+    }
+
+    .trigger span,
+    .trigger input,
+    .trigger label {
+      cursor: inherit;
+    }
+
+    @media only screen and (max-width: 992px) {
+      .container {
+        max-width: 798px;
+        width: auto;
+      }
+
+      .edit-photo {
+        max-width: 672px;
+        width: auto;
+        margin: 120px auto 30px;
+
+        .photo-canvas {
+          display: block;
+          height: 290px;
+        }
+
+        .edit-photo-body {
+          .row {
+            display: block;
+            margin-right: -15px;
+            margin-left: -15px;
+          }
+
+          .col-6 {
+            display: block;
+            max-width: 100%;
+          }
+
+          .col-6 + .col-6 {
+            border-left: 0;
+            border-top: 1px solid #ddd;
+          }
+        }
+
+        .profile-buttons {
+          margin-bottom: 30px;
+        }
+
+        h3 {
+          margin-top: 30px;
+          font-weight: normal;
+        }
+      }
+
+      .back-button {
+        margin-bottom: 30px;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      .edit-photo {
+        margin: 135px auto 30px;
+      }
+    }
+
+    @media only screen and (max-width: 575px) {
+      .edit-photo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        height: 100vh;
+        overflow-y: scroll;
+        width: 100%;
+        margin: 0;
+        z-index: 100;
+        background-color: #fff;
+
+        h3 {
+          margin-top: 29px;
+        }
+
+        .edit-photo-header {
+          font-weight: normal;
+          display: flex;
+          justify-content: space-between;
+
+          span {
+            display: inline-block;
+            font-weight: 100;
+          }
+        }
+
+        .profile-buttons {
+          .trigger {
+            margin: 0 15px;
+          }
+        }
+
+        .photo-canvas {
+          display: block;
+          height: 170px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .container-main {
+    background: url(/assets/img/summary_header_dots.png) top center no-repeat,
+    -webkit-linear-gradient(top, $primary-color, $primary-color 156px, rgb(249, 245, 240) 156px, rgb(249, 245, 240) 100%);
+  }
+}

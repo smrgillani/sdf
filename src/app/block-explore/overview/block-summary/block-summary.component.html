@@ -1,0 +1,95 @@
+<main>
+    <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+        <div class="heading">
+            <h1>Summary <small>- information of block {{blockSummaryInfo.block_number}}</small></h1>
+        </div>
+        <div class="cardwrap">
+            <div class=" table-responsive">
+                <table class="table table-hover projects-table">
+                    <tbody>
+                        <tr>
+                            <td>Block Number</td>
+                            <td>{{blockSummaryInfo.block_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Block Hash</td>
+                            <td>{{ blockSummaryInfo.block_hash }}</td>
+                        </tr>
+                        <tr>
+                            <td>Received Time</td>
+                            <td>
+                                {{blockSummaryInfo.received_time}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Confirmations</td>
+                            <td>{{blockSummaryInfo.confirmations}}</td>
+                        </tr>
+                        <tr>
+                            <td>Difficulty</td>
+                            <td>
+                                {{blockSummaryInfo.difficulty}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nonce</td>
+                            <td>{{blockSummaryInfo.nonce}}</td>
+                        </tr>
+                        <tr>
+                            <td>Size</td>
+                            <td>{{blockSummaryInfo.size}} bytes</td>
+                        </tr>
+                        <tr>
+                            <td>Miner</td>
+                            <td>{{blockSummaryInfo.miner}}</td>
+                        </tr>
+                        <tr>
+                            <td>Gas Limit</td>
+                            <td>{{blockSummaryInfo.gas_limit}}</td>
+                        </tr>
+                        <tr>
+                            <td>Gas Used</td>
+                            <td>{{blockSummaryInfo.gas_used}}</td>
+                        </tr>
+                        <tr>
+                            <td>Uncle Hash</td>
+                            <td>{{ blockSummaryInfo.uncle_hash }}</td>
+                        </tr>
+                        <tr>
+                            <td>State Root Hash</td>
+                            <td>{{ blockSummaryInfo.state_root_hash }}</td>
+                        </tr>
+                        <tr>
+                            <td>Parent Hash</td>
+                            <td>{{ blockSummaryInfo.parent_hash }}</td>
+                        </tr>
+                        <!-- <tr>
+                            <td>Data</td>
+                            <td>{{blockSummaryInfo.extraData}}</td>
+                        </tr> -->
+
+                        <tr>
+                            <td>Data (Translated)</td>
+                            <td>{{blockSummaryInfo.data_translated}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Number of Uncle Blocks</td>
+                            <td>{{blockSummaryInfo.no_of_uncle_blocks}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Number of Transactions</td>
+                            <td>{{blockSummaryInfo.transaction_count}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="projects-footer">
+    <div class="back-button" (click)="_location.back()">Back</div>
+</div>

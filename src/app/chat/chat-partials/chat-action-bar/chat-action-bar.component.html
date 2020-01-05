@@ -1,0 +1,165 @@
+<ng-container [ngSwitch]="inputType">
+  <div class="input modes" *ngSwitchCase="'modes'">
+    <ul class="chat-option clearfix" [class.single-line]="overDoubleWidth">
+      <li *ngFor="let messageTypeItem of messageTypes">
+        <a [ngClass]="{'active': messageType === messageTypeItem}" (click)="setMessageType(messageTypeItem)">
+          <i [class]="messageTypeItem.icon" aria-hidden="true"></i>
+          <span>{{ messageTypeItem.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="input text" *ngSwitchCase="'text'" [ngSwitch]="messageType.name">
+    <app-multi-question-source
+      *ngSwitchCase="'assumption'"
+      [questions]="['If this where to happen ...', 'What do you think would happen if ...']"
+      [message]="messageText"
+      (forceSave)="messageText = $event"
+      (typingStarted)="typingStarted.emit()"
+      (typingEnded)="typingEnded.emit()"
+    ></app-multi-question-source>
+
+    <app-multi-question-source
+      *ngSwitchCase="'thought_experiment'"
+      [questions]="['If this where to happen ...', 'What do you think would happen if ...']"
+      [message]="messageText"
+      (forceSave)="messageText = $event"
+      (typingStarted)="typingStarted.emit()"
+      (typingEnded)="typingEnded.emit()"
+    ></app-multi-question-source>
+
+    <app-multi-question-source
+      *ngSwitchCase="'hypothesis'"
+      [questions]="['If this ...', 'When I think this will happen ...', 'Because of this ...']"
+      [message]="messageText"
+      (forceSave)="messageText = $event"
+      (typingStarted)="typingStarted.emit()"
+      (typingEnded)="typingEnded.emit()"
+    ></app-multi-question-source>
+
+    <ng-container *ngSwitchDefault>
+      <p class="tip">
+        <i class="fa fa-exclamation-circle"></i> Ctrl / Cmd + Enter to send a message
+      </p>
+
+      <app-text-editor-chat
+        class="text-editor-chat"
+        [(ngModel)]="messageText"
+        (forceSave)="typingOccurred.emit()"
+        (sendMessage)="sendMessage()"
+      ></app-text-editor-chat>
+    </ng-container>
+  </div>
+
+  <div class="input drawing" *ngSwitchCase="'drawing'">
+    <app-drawing-source
+      class="drawing-source"
+      (forceSave)="updateDrawing($event)"
+    ></app-drawing-source>
+  </div>
+
+  <div class="input file-upload" *ngSwitchCase="'file-upload'">
+    <app-file-upload-source
+      [errors]="fileUploadErrors"
+      (fileUploaded)="sendFile($event.file)"
+    ></app-file-upload-source>
+  </div>
+
+  <div class="input poll" *ngSwitchCase="'poll'">
+    <app-text-editor-chat
+      class="text-editor-chat"
+      [(ngModel)]="messageText"
+      (forceSave)="typingOccurred.emit()"
+      (sendMessage)="sendMessage()"
+    ></app-text-editor-chat>
+
+    <app-decision-poll-option-source
+      *ngFor="let option of decisionPollOptions"
+      [decisionPollOption]="option"
+      (removeOption)="removePollOption(option)"
+      (addOption)="addPollOption()"
+      (typingStarted)="typingStarted.emit()"
+      (typingEnded)="typingEnded.emit()"
+      (typingOccurred)="typingOccurred.emit()"
+    ></app-decision-poll-option-source>
+  </div>
+
+  <div class="input audio" *ngSwitchCase="'audio'">
+      <div class="button-inner">
+        <i class="fa fa-microphone"></i>
+        <p class="text-center" id="recordingList"><p>
+      </div>
+  </div>
+</ng-container>
+
+
+<div class="action-bar">
+  <div class="button" title="Mode select"
+       [class.active]="inputType === 'modes'"
+       *ngIf="enableMessageTypes" (click)="setInputType('modes')">
+    <div class="button-inner">
+      <i class="{{ messageType.icon }}"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Text message"
+       [class.active]="inputType === 'text'"
+       *ngIf="allowedInputTypes['text'].indexOf(messageType.name) >= 0" (click)="setInputType('text')" (click)="isRecorded = false">
+    <div class="button-inner">
+      <i class="fa fa-comment"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Drawing"
+       [class.active]="inputType === 'drawing'"
+       *ngIf="allowedInputTypes['drawing'].indexOf(messageType.name) >= 0" (click)="setInputType('drawing')" (click)="isRecorded = false">
+    <div class="button-inner">
+      <i class="fa fa-paint-brush"></i>
+    </div>
+  </div>
+
+  <div class="button" title="File upload"
+       [class.active]="inputType === 'file-upload'"
+       *ngIf="allowedInputTypes['file-upload'].indexOf(messageType.name) >= 0" (click)="setInputType('file-upload')" (click)="isRecorded = false">
+    <div class="button-inner">
+      <i class="fa fa-upload"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Record Audio"
+  (click)="inputType === 'audio'">
+    <div class="button-inner" (mousedown)="recordAudio()" (mouseup)="recordStop()">
+      <i class="fa fa-microphone recordButton"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Poll"
+       [class.active]="inputType === 'poll'"
+       *ngIf="allowedInputTypes['poll'].indexOf(messageType.name) >= 0" (click)="setInputType('poll')">
+    <div class="button-inner">
+      <i class="fa fa-th-list"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Audio message"
+       [class.active]="inputType === 'audio'"
+       *ngIf="false && allowedInputTypes['audio'].indexOf(messageType) >= 0" (click)="setInputType('audio')">
+    <div class="button-inner">
+      <i class="fa fa-microphone"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Send message" (click)="sendMessage()" *ngIf="isMessageText || messageAttachment">
+    <div class="button-inner">
+      <i class="fa fa-paper-plane"></i>
+    </div>
+  </div>
+
+  <div class="button" title="Send recording" (click)="sendAudio()" *ngIf="isRecorded">
+    <div class="button-inner">
+      <i class="fa fa-paper-plane"></i>
+    </div>
+  </div>
+
+</div>

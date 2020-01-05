@@ -1,0 +1,32 @@
+<div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="profile-imgwrap">
+    <div class="profilebox">
+      <div class="profile-img">
+        <img *ngIf="employeeProfileInfo?.basicInfo?.photo_crop" [src]="employeeProfileInfo?.basicInfo?.photo_crop" alt="">
+        <i *ngIf="is_kyc_complete" class="icon-check2 verified"></i>
+      </div>
+      <div class="profilename">{{employeeProfileInfo?.basicInfo?.first_name}}
+        {{employeeProfileInfo?.basicInfo?.last_name}}</div>
+      <div class="birthdate">Date of Birth {{employeeProfileInfo?.basicInfo?.date_of_birth | date: 'MMMM dd, yyyy'}}</div>
+    </div>
+  </div>
+  <ng-container *ngIf="employeeProfileInfo.id">
+    <div class="card" *ngFor="let item of qaList; let index = index">
+      <div class="card-block">
+        <h3 class="card-title">
+          {{item.panelname}}
+          <span class="pull-right" [class.open]="!item.isCollapsed" [class.close]="item.isCollapsed" (click)="item.isCollapsed = !item.isCollapsed"></span>
+        </h3>
+        <div class="card-text" [ngbCollapse]="item.isCollapsed">
+          <app-view-basic-info [basicInfo]="employeeProfileInfo.basicInfo" *ngIf="item.panelname=='Basic Info'"></app-view-basic-info>
+          <app-view-professional-info [professionalInfo]="employeeProfileInfo.professionalInfo" [resume]="resume" *ngIf="item.panelname=='Professional Info'"></app-view-professional-info>
+          <app-past-experience [employmentInfo]="employeeProfileInfo.employmentInfo" *ngIf="item.panelname=='Past Experience'"></app-past-experience>
+          <app-work-sample [worksampleInfo]="employeeProfileInfo.worksampleInfo" *ngIf="item.panelname=='Work Sample'"></app-work-sample>
+          <app-availability [availabilityInfo]="employeeProfileInfo.availabilityInfo" *ngIf="item.panelname=='Availabilty'"></app-availability>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

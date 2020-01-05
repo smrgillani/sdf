@@ -1,0 +1,171 @@
+<form name="form" (ngSubmit)="f.form.valid && sendFireLetter()" #f="ngForm" novalidate>
+
+  <div class="appoitmentpage saf_blue_theme" #content>
+    <div class="close_popup" (click)="activeModal.dismiss('Cross click')" *ngIf="!isEmailHide">
+      <i class="icomoon icon-multiply" aria-hidden="true"></i>
+    </div>
+    <div class="conpanyinfo">
+      <div class="companylogo">
+        <img src="/assets/img/company-logo.jpg">
+      </div>
+      <div class="companyname">
+        <h1>{{companyName}}</h1>
+        <span>your slogan or tag line</span>
+      </div>
+    </div>
+
+    <div class="contactbox">
+      <input type="text" class="form-control" placeholder="(Insert Date)" name="createdate" #createdate="ngModel" [(ngModel)]="fireEmployee.create_date" readonly>
+      <div *ngIf="!isEmailHide"> Email
+        <span>
+          <input type="text" class="form-control" name="email" [(ngModel)]="fireEmployee.creator_email" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+          />
+          <div *ngIf="f.submitted && email.errors?.required" class="errorwrap">Email is required</div>
+          <div *ngIf="email.errors?.pattern && email.touched" class="errorwrap">
+            Invalid Email
+          </div>
+        </span>
+      </div>
+      <div class="mt-20 mb-10">To,</div>
+      <input type="text" class="form-control" placeholder="(Name)" name="name" #name="ngModel" [(ngModel)]="fireEmployee.name" readonly>
+      <input type="text" class="form-control" placeholder="(Address)" name="address" #address="ngModel" [(ngModel)]="fireEmployee.address" readonly>
+      <div>
+        <span [ngClass]="{'sm':fireEmployee.department != undefined && fireEmployee.department.length<20}">{{fireEmployee.address1}}</span>
+      </div>
+
+      <input type="text" class="form-control" placeholder="(City, State & Zip)" name="CityStateZip" #CityStateZip="ngModel" [(ngModel)]="fireEmployee.city || ' '|| fireEmployee.state || ' '|| fireEmployee.zip"
+        readonly>
+
+    </div>
+
+    <div class="text-center heading-text" myEditorabletext="texteditable">Termination Letter</div>
+    <!-- <div class="appointmentcontent"  myEditorabletext="texteditable"> -->
+    <div class="appointmentcontent">
+      <div class="personname">Dear
+        <input type="text" class="form-control" placeholder="(Insert Name)" readonly name="name" #name="ngModel" [(ngModel)]="fireEmployee.name">
+      </div>
+
+      <p>We regret to inform you that your employment with
+
+        <!-- <span class="texteditable" [ngClass]="{'editablemode': true}">
+        <input type="text" autofocus  #inputtext class="form-control" *ngIf="editablemode"  (blur)="editablemode=false" placeholder="(Insert Working Title, e.g., director of graduate programs, curriculum coordinator, director of undergraduate advising)" [(ngModel)]="fireEmployee.working_title"> 
+        <u class="placeholdertext" [hidden]="fireEmployee.working_title || editablemode" (click)="togglefocus($event);">(Insert Working Title, e.g., director of graduate programs, curriculum coordinator, director of undergraduate advising)</u>
+        <u [hidden]="editablemode"  (click)="togglefocus($event);">{{fireEmployee.working_title}}</u>
+      </span> -->
+
+        <!-- this is for company Name-->
+
+        <!-- <span>
+      <span class="editabletext" [hidden]="!editablemode[1] && fireEmployee.company_name.length==0" [ngClass]="{'sm':fireEmployee.company_name != undefined && fireEmployee.company_name.length<20}">
+        <span spellcheck="false" contenteditable="true" #company_name (blur)="editablemode[1]=false" [textContent]="fireEmployee.company_name" (input)="fireEmployee.company_name=$event.target.textContent"></span>  
+      </span>
+      <span class="editabletext" [hidden]="fireEmployee.company_name.length>0 || editablemode[1]==true"  (click)="togglefocus($event,company_name,1)">(Insert Department)</span>
+      <input type="hidden" [(ngModel)]="fireEmployee.company_name"> 
+    </span> -->
+
+        <input type="text" class="form-control" placeholder="(Company Name)" name="companyname" #companyname="ngModel" [(ngModel)]="fireEmployee.company_name" readonly> from the role of
+        <!-- this is for Role Name-->
+        <!-- <input type="text" class="form-control" placeholder="(Insert Department)" [(ngModel)]="fireEmployee.department"> -->
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[0] && fireEmployee.working_title.length==0" [ngClass]="{'sm':fireEmployee.working_title != undefined && fireEmployee.working_title.length<20}">
+            <span spellcheck="false" contenteditable="true" #working_title (blur)="editablemode[0]=false" [textContent]="fireEmployee.working_title"
+              (input)="fireEmployee.working_title=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.working_title.length>0 || editablemode[0]==true" (click)="togglefocus($event,working_title,0)">(Insert Working Title, e.g., director of graduate programs, curriculum coordinator, director of undergraduate advising)</span>
+          <input type="hidden" name="workingtitle" #workingtitle="ngModel" [(ngModel)]="fireEmployee.working_title">
+        </span>
+
+        is terminated effective from
+
+        <!-- this is for termination date-->
+        <span class="datetimetextbox">
+
+          <!-- <input ng2-datetime-picker class="form-control textfeild" [(ngModel)]="fireEmployee.termination_date"
+      date-only="true"    date-format="MM-DD-YYYY" [close-on-select]="true" />  -->
+          <p-calendar class="form-control" name="terminationdate" #terminationdate="ngModel" [(ngModel)]="fireEmployee.termination_date" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1980:2030"></p-calendar>
+
+          <i class="iconmoon icon-menu"></i>
+          <i class="iconmoon icon-close" (click)="fireEmployee.termination_date=''"></i>
+        </span> . The reasons for the termination are:
+
+        <!-- this is for Reasons -->
+        <!-- <input type="text" class="form-control" placeholder="(insert tenure status and rank)"  [(ngModel)]="fireEmployee.tenureStatus"> -->
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[2] && fireEmployee.termination_reason1.length==0" [ngClass]="{'sm':fireEmployee.termination_reason1 != undefined && fireEmployee.termination_reason1.length<20}">
+            <span spellcheck="false" contenteditable="true" #termination_reason1 (blur)="editablemode[2]=false" [textContent]="fireEmployee.termination_reason1"
+              (input)="fireEmployee.termination_reason1=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.termination_reason1.length>0 || editablemode[2]==true" (click)="togglefocus($event,termination_reason1,2)">(Termination Reason)</span>
+          <input type="hidden" name="terminationreason1" #terminationreason1="ngModel" [(ngModel)]="fireEmployee.termination_reason1">
+        </span>
+
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[3] && fireEmployee.termination_reason2.length==0" [ngClass]="{'sm':fireEmployee.termination_reason2 != undefined && fireEmployee.termination_reason2.length<20}">
+            <span spellcheck="false" contenteditable="true" #termination_reason2 (blur)="editablemode[3]=false" [textContent]="fireEmployee.termination_reason2"
+              (input)="fireEmployee.termination_reason2=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.termination_reason2.length>0 || editablemode[3]==true" (click)="togglefocus($event,termination_reason2,3)">(Termination Reason)</span>
+          <input type="hidden" name="terminationreason2" #terminationreason3="ngModel" [(ngModel)]="fireEmployee.termination_reason2">
+        </span>
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[4] && fireEmployee.termination_reason3.length==0" [ngClass]="{'sm':fireEmployee.termination_reason3 != undefined && fireEmployee.termination_reason3.length<20}">
+            <span spellcheck="false" contenteditable="true" #termination_reason3 (blur)="editablemode[4]=false" [textContent]="fireEmployee.termination_reason3"
+              (input)="fireEmployee.termination_reason3=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.termination_reason3.length>0 || editablemode[4]==true" (click)="togglefocus($event,termination_reason3,4)">(Termination Reason)</span>
+          <input type="hidden" name="terminationreason3" #terminationreason3="ngModel" [(ngModel)]="fireEmployee.termination_reason3">
+        </span>
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[5] && fireEmployee.termination_reason4.length==0" [ngClass]="{'sm':fireEmployee.termination_reason4 != undefined && fireEmployee.termination_reason4.length<20}">
+            <span spellcheck="false" contenteditable="true" #termination_reason4 (blur)="editablemode[5]=false" [textContent]="fireEmployee.termination_reason4"
+              (input)="fireEmployee.termination_reason4=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.termination_reason4.length>0 || editablemode[5]==true" (click)="togglefocus($event,termination_reason4,5)">(Termination Reason)</span>
+          <input type="hidden" name="terminationreason4" #terminationreason4="ngModel" [(ngModel)]="fireEmployee.termination_reason4">
+        </span>
+
+        <span>
+          <span class="editabletext" [hidden]="!editablemode[6] && fireEmployee.termination_reason5.length==0" [ngClass]="{'sm':fireEmployee.termination_reason5 != undefined && fireEmployee.termination_reason5.length<20}">
+            <span spellcheck="false" contenteditable="true" #termination_reason5 (blur)="editablemode[6]=false" [textContent]="fireEmployee.termination_reason5"
+              (input)="fireEmployee.termination_reason5=$event.target.textContent"></span>
+          </span>
+          <span class="editabletext" [hidden]="fireEmployee.termination_reason5.length>0 || editablemode[6]==true" (click)="togglefocus($event,termination_reason5,6)">(Termination Reason)</span>
+          <input type="hidden" name="terminationreason5" #terminationreason5="ngModel" [(ngModel)]="fireEmployee.termination_reason5">
+        </span>
+
+
+
+        We, as an organization are obliged for all your sincere efforts and wish you best of luck for future endeavors.
+
+
+        <div>
+          <strong>Respectfully,</strong>
+          <div class="signaturebox">
+            <br>
+            <br>
+            <br>
+
+          </div>
+          <strong>Signature and stamp</strong>
+
+        </div>
+
+        <div>
+
+          <div class="project-actions" *ngIf="!isEmailHide">
+            <div class="btn-border skyblue" >
+              <button class="btn skyblue-btn" type="submit">Send</button>
+            </div>
+          </div>
+
+
+        </div>
+    </div>
+  </div>
+
+</form>

@@ -1,0 +1,152 @@
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<!-- <app-header [backNavOptions]="{caption: project.title, route: ['employee']}"></app-header> -->
+
+<main>
+    <app-header [backNavOptions]="{caption: 'Job List', route: ['employee']}"></app-header>
+
+
+    <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+        <div class="heading">
+            <h1>Dispute</h1>
+
+        </div>
+        <div class="cardwrap">
+            <div class="dispute_container">
+                <h2 [hidden]="disbledforreject || disbledformodify">Dispute Summary</h2>
+                <h2 *ngIf="disbledformodify">Modify Dispute</h2>
+                <h2 *ngIf="disbledforreject">Reject Dispute</h2>
+
+                <div class="form-group" [class.disabled]="disbledformodify || disbledforreject">
+                    <label>Reason for dispute</label>
+                    <input type="text" class="form-control" [disabled]="disbledformodify || disbledforreject" placeholder="Please Enter Reason for dispute"
+                        value="">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group" [class.disabled]="disbledformodify || disbledforreject">
+
+                            <span class="datetimetextbox">
+                                <label>Start Date</label>
+                                <!-- <input ng2-datetime-picker class="form-control textfeild" [(ngModel)]="hireEmployee.beginningDate"
+                date-only="true"    date-format="MM-DD-YYYY" [close-on-select]="true" />  -->
+                                <p-calendar class="form-control" [disabled]="disbledformodify || disbledforreject" [(ngModel)]="startdate" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" icon="icon-menu" showIcon="true"></p-calendar>
+
+                                <i class="iconmoon icon-close" *ngIf="startdate" (click)="startdate=''"></i>
+
+                            </span>
+
+
+                            <!-- <input type="text"  class="form-control" placeholder="Start Date" value="January 28, 2017"> -->
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" [class.disabled]="disbledformodify || disbledforreject">
+                            <!-- <input type="text"  class="form-control" placeholder="End Date" value="January 28, 2017"> -->
+
+                            <span class="datetimetextbox">
+                                <label>End Date</label>
+                                <!-- <input ng2-datetime-picker class="form-control textfeild" [(ngModel)]="hireEmployee.beginningDate"
+                date-only="true"    date-format="MM-DD-YYYY" [close-on-select]="true" />  -->
+                                <p-calendar class="form-control" [disabled]="disbledformodify || disbledforreject" [(ngModel)]="enddate" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" icon="icon-menu" showIcon="true"></p-calendar>
+                                <i class="iconmoon icon-close" *ngIf="enddate" (click)="enddate=''"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group" [class.disabled]="disbledforreject">
+                    <label>Reimbursement Amount</label>
+                    <input type="text" class="form-control" [disabled]="disbledforreject" placeholder="Please Enter Amount" value="$2000">
+                </div>
+                <div class="messagebox">
+                    <div class="form-group" *ngIf="disbledformodify || disbledforreject">
+                        <label>Message</label>
+                        <textarea type="text" class="form-control" placeholder="Type your message here..."></textarea>
+                    </div>
+                </div>
+
+
+
+
+                <div class="post-buttons">
+                    <button class="button blue" (click)="modifydispute(confirmpopup)">Modify</button>
+                    <button class="button red" (click)="rejectdispute(confirmpopup)">Reject</button>
+                    <button class="button skyblue" (click)="acceptdispute(confirmpopup)">Accept</button>
+                </div>
+                <!-- <pre>{{closeResult}}</pre> -->
+
+            </div>
+        </div>
+    </div>
+</main>
+<!-- 
+
+<p-dialog header="Godfather I" [(visible)]="acceptdisplay" modal="modal" width="300" [responsive]="true">
+    <p>The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding. 
+       His beloved son Michael has just come home from the war, but does not intend to become part of his father's business. 
+       Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, 
+       kind and benevolent to those who give respect, 
+       but given to ruthless violence whenever anything stands against the good of the family.</p>
+        <p-footer>
+            <button type="button" pButton icon="fa-check" (click)="display=false" label="Yes"></button>
+            <button type="button" pButton icon="fa-close" (click)="display=false" label="No"></button>
+        </p-footer>
+</p-dialog>
+
+
+
+ -->
+
+
+<ng-template #confirmpopup let-c="close" let-d="dismiss">
+    <div class="interviewpopup saf_blue_theme">
+        <div class="close_popup" (click)="d('Cross click')">
+            <i class="icon-close"></i>
+        </div>
+        <div class="modal-body">
+            <div class="contentmsg acceptbody">
+                <div class="rounded-circle">
+                    <i class="icomoon icon-check"></i>
+                </div>
+                <div class="actualmsg">
+                    Are you sure
+                    <br> you want to accept the dispute?
+                </div>
+                <div class="text-center">
+                        <button type="button" class="saffron_btn skyblue_btn" (click)="c('accept')">Ok</button>
+                </div>
+            </div>
+
+            <div class="contentmsg modifybody">
+                <div class="rounded-circle">
+                    <i class="icomoon icon-reload2"></i>
+                </div>
+                <div class="actualmsg">
+                    Are you sure
+                    <br> you want to modify the dispute?
+                </div>
+                <div class="text-center">
+                        <button type="button" class="saffron_btn blue_btn" (click)="c('modify')">Ok</button>
+                </div>
+            </div>
+
+            <div class="contentmsg rejectbody">
+                <div class="rounded-circle">
+                    <i class="icomoon icon-round"></i>
+                </div>
+                <div class="actualmsg">
+                    Are you sure
+                    <br> you want to reject the dispute?
+                </div>
+                <div class="text-center">
+                        <button type="button" class="saffron_btn red_btn" (click)="c('reject')">Ok</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</ng-template>

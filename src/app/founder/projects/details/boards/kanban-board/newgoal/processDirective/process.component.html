@@ -1,0 +1,28 @@
+<div class="process" ngClass={{processId}}>
+    <div class="process-header">
+        <input type="text" class="name" maxlength="100" [(ngModel)]="subtask.title" [title]="subtask.title"/>      
+        <app-process-participants (hideCalendar)="toggleCalendar($event)" style="display: flex; flex: 7" [subtask]="subtask"></app-process-participants>
+
+        <div class="due-date" *ngIf="!hideCalendar">
+            Due on
+            <app-date-input class="date-picker" [minDate]="currentMilestone.date_start" [maxDate]="currentMilestone.date_end" [(date)]="subtask.due_date"></app-date-input>
+            <div hidden class="date-picker-value">{{strdate}}</div>
+        </div>
+        <div *ngIf="subtask.id">
+            <a class="delete-btn" (click)="deleteProcess(subtask.id, pIndex, subtasks)"></a>
+        </div>
+        <div class="arrow" [class.down]="!isCollapsed" [class.up]="isCollapsed" (click)="arrowBtnClicked(processId);">
+        </div>
+    </div>
+    <div class="process-content" [class.hide]="!isCollapsed" [class.show]="isCollapsed">
+        <div class="process-content-header">
+            <h3>Rules</h3>
+            <div class="dot-border-empty-add-btn" (click)="addRuleBtnClicked()">+</div>
+        </div>
+        <div>
+            <ul class="rules">
+                <textarea class="rule" *ngFor="let rule of subtask.rules" maxlength="100" [(ngModel)]="rule.title"></textarea>
+            </ul>
+        </div>
+    </div>
+</div>

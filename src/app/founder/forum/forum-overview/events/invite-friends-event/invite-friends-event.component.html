@@ -1,0 +1,27 @@
+<!-- <p>
+  invite-friends-event works!
+</p> -->
+<div class="projects-search">
+  <div class="search-icon"></div>
+  <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+</div>
+<div *ngIf="inviteFriendsInfoList">
+  <div class="project-action with-icon" *ngFor="let item of inviteFriendsInfoList">
+    <div class="action-user-icon">
+      <img *ngIf="item.photo" [src]="item.photo" alt="">
+    </div>
+    <div class="action-message">
+      <span class="action-user-name">{{item.name}}</span>
+    </div>
+    <div class="action-time">
+      <!-- <input type="checkbox" [value]="item.user_id" [checked]="item.is_checked"> -->
+      <label class="custom-control custom-checkbox">
+        <input type="checkbox" class="form-control custom-control-input" [value]="item.user_id" [checked]="item.is_checked" (change)="isInviteFriends($event)">
+        <span class="custom-control-indicator"></span>
+        <!-- <span class="custom-control-description"> is Complete</span> -->
+        <!-- <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i> -->
+      </label>
+    </div>
+  </div>
+</div>
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getInviteFriendsList($event)"></app-pagination>

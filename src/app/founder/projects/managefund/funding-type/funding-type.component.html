@@ -1,0 +1,80 @@
+<app-header class="position-static"></app-header>
+<main>
+    <div class="container saf_blue_theme">
+        <div [ngSwitch]="currentFund.fund" *ngIf="!showSummary">
+            <div *ngSwitchCase="fundTypes.CrowdFunding">
+                <app-founder-crowd-equity [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-crowd-equity>
+            </div>
+            <div *ngSwitchCase="fundTypes.LoanServices">
+                <app-founder-loan-service [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-loan-service>
+            </div>
+            <div *ngSwitchCase="fundTypes.NormalCrowdFunding">
+                <app-founder-crowd-normal [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-crowd-normal>
+            </div>
+            <div *ngSwitchCase="fundTypes.P2PLoan">
+                <app-founder-p2p-loan-lend [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-p2p-loan-lend>
+            </div>
+            <div *ngSwitchCase="fundTypes.CompanyBuyOffer">
+                <app-founder-company-buy-offer [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-company-buy-offer>
+            </div>
+            <div *ngSwitchCase="fundTypes.OfferBuyRole">
+                <app-founder-offer-role [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-offer-role>
+            </div>
+            <div *ngSwitchCase="fundTypes.SplitEquity">
+                <app-founder-split-equity [showNextButton]="true" [fundData]="currentFund" (onNext)="onNext()"></app-founder-split-equity>
+            </div>
+            <div *ngSwitchDefault>
+                <div>
+                    Sorry, but fund type {{currentFund.fund_title}} is not implemented yet.
+                </div>
+            </div>
+        </div>
+        <div class="heading" *ngIf="showSummary">
+            <h1>Manage Funding</h1>
+        </div>
+        <div class="cardwrap summarysec" *ngIf="showSummary">
+            <ng-container>
+                <div class="card" *ngFor="let item of selectedFundTypes; let index = index">
+                    <div class="card-block">
+                        <app-founder-crowd-equity *ngIf="item.fundType.fund == fundTypes.CrowdFunding" [fundData]="item.fundType"></app-founder-crowd-equity>
+                        <app-founder-loan-service *ngIf="item.fundType.fund == fundTypes.LoanServices" [fundData]="item.fundType"></app-founder-loan-service>
+                        <app-founder-crowd-normal *ngIf="item.fundType.fund == fundTypes.NormalCrowdFunding" [fundData]="item.fundType"></app-founder-crowd-normal>
+                        <app-founder-p2p-loan-lend *ngIf="item.fundType.fund == fundTypes.P2PLoan" [fundData]="item.fundType"></app-founder-p2p-loan-lend>
+                        <app-founder-company-buy-offer *ngIf="item.fundType.fund == fundTypes.CompanyBuyOffer" [fundData]="item.fundType"></app-founder-company-buy-offer>
+                        <app-founder-offer-role *ngIf="item.fundType.fund == fundTypes.OfferBuyRole" [fundData]="item.fundType"></app-founder-offer-role>
+                        <app-founder-split-equity *ngIf="item.fundType.fund == fundTypes.SplitEquity" [fundData]="item.fundType"></app-founder-split-equity>
+                    </div>
+                </div>
+
+                <!-- <div class="card">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Signature</h3>
+                                <div class="signaturebox">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </ng-container>
+            <div class="post-buttons">
+                <div class="saffron_btn skyblue_btn" (click)="submitFundingTypes()">Confirm & Submit</div>
+            </div>
+        </div>
+        <div *ngFor="let errors of serverSideErrors">
+            <div *ngIf="isArray(errors); else nonArray">
+                <div *ngFor="let msg of errors.non_field_errors">
+                    <div class="errorwrap">{{msg}}</div>
+                </div>
+            </div>
+            <ng-template #nonArray>
+                <div class="errorwrap">{{errors}}</div>
+            </ng-template>
+        </div>
+        <!-- <div class="projects-footer">
+            <div class="back-button" (click)="goBack()">Back</div>
+        </div> -->
+    </div>
+</main>

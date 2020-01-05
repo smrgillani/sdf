@@ -1,0 +1,26 @@
+<div class="cardbody">
+<div class="row">
+  <div class="col-md-10">
+      <div class="form-group">
+        <label>Start</label>
+        <input type="text" class="form-control" value="{{notarizeResponse.start | date: 'MMM dd, yyyy HH:mm'}}" readonly>
+      </div>
+      <div class="form-group">
+          <label>End</label>
+          <input type="text" class="form-control" value="{{notarizeResponse.end | date: 'MMM dd, yyyy HH:mm'}}" readonly>
+        </div>
+        <div class="form-group">
+            <label>Notary Name</label>
+            <input type="text" class="form-control" value="{{notarizeResponse.notary_name}}" readonly>
+          </div>
+          <div class="form-group">
+              <label>Notary City</label>
+              <input type="text" class="form-control" value="{{notarizeResponse.notary_city}}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Notary Registration</label>
+                <input type="text" class="form-control" value="{{notarizeResponse.notary_registration}}" readonly>
+              </div>
+  </div>  
+
+</div></div>

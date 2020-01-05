@@ -1,0 +1,61 @@
+<div *ngIf="!withFileDroppa">
+  <div class="profile-buttons">
+    <div class="trigger">
+      <span class="icon upload"></span>
+      Upload<br>
+      new photo
+      <input id="photo-input" class="hidden-input" type="file" (change)="fileChangeListener($event)">
+    </div>
+
+    <div class="trigger" (click)="openCameraPopover()" [triggers]="'none'" [container]="'body'"
+         (shown)="closePopoverWithDelay(10000, takePhotoPopover, 'projectTimer')" [ngbPopover]="takePhotoNotification"
+         #takePhotoPopover="ngbPopover" placement="top">
+      <span class="icon take"></span>
+      Take<br>
+      a photo
+    </div>
+  </div>
+</div>
+
+<div *ngIf="withFileDroppa">
+  <app-file-droppa [dropZoneTemplate]="dropZoneTemplate" [url]="" [multiple]="false" [autoUpload]="false"
+                   [beforeAddFile]="beforeAddFile" [showFilesList]="false" (filesUpdated)="fileChangeListener($event)"
+                   [openTriggerId]="dropTriggerId" [class.has-image]="imageSrc">
+    <span *ngIf="imageSrc" [ngStyle]="{'display': !viewOnly ? 'block': 'none'}" (click)="removeImage()"
+          class="remove-image-icon"></span>
+  </app-file-droppa>
+  <p class="dropzone-help-text" [ngStyle]="{'display': !viewOnly ? 'block': 'none'}">
+    Drag & Drop new file to the file area or
+  </p>
+
+  <div class="profile-buttons" [ngStyle]="{'display': !viewOnly ? 'block': 'none'}">
+    <div class="trigger" [id]="dropTriggerId">
+      <span class="icon upload"></span>
+      Upload<br>
+      new photo
+    </div>
+
+    <div class="trigger" (click)="openCameraPopover()" [triggers]="'none'" [container]="'body'"
+         (shown)="closePopoverWithDelay(10000, takePhotoPopover, 'projectTimer')" [ngbPopover]="takePhotoNotification"
+          #takePhotoPopover="ngbPopover" placement="top">
+      <span class="icon take"></span>
+      Take<br>
+      a photo
+    </div>
+  </div>
+</div>
+
+<div class="row form-row" *ngIf="webCamMissing">
+  <div class="errorwrap">Please Check your Web Camera</div>
+</div>
+
+<ng-template #takePhotoNotification>
+  <div class="popoverwrap">
+    <article class="profilephoto  text-center">
+      <ack-webcam [(ref)]="webcam" [options]="options" (onSuccess)="onCamSuccess($event)"
+                  (onError)="onCamError($event)"></ack-webcam>
+      <button class="saffron_btn blue_btn" (click)="makeWebCameraPhoto()">Make Photo</button>&nbsp;
+      <button class="saffron_btn skyblue_btn" (click)="takePhotoPopover.close()">Ok</button>
+    </article>
+  </div>
+</ng-template>

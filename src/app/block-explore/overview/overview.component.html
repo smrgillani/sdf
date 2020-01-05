@@ -1,0 +1,59 @@
+<!-- <app-header [backNavOptions]="{ route: ['./']}"></app-header> -->
+
+<main>
+
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Overview</h1>
+    </div>
+    <div class="cardwrap">
+      <ngb-tabset>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Home</ng-template>
+          <ng-template ngbTabContent>
+            <app-home></app-home>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Blockchain Info</ng-template>
+          <ng-template ngbTabContent>
+            <app-block-info></app-block-info>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Project Registration</ng-template>
+          <ng-template ngbTabContent>
+            <app-project-registration></app-project-registration>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Project Notarization</ng-template>
+          <ng-template ngbTabContent>
+            <app-project-notarization></app-project-notarization>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Financial Transactions</ng-template>
+          <ng-template ngbTabContent>
+            <app-financial-transactions></app-financial-transactions>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Action Buttons</ng-template>
+          <ng-template ngbTabContent>
+            <app-action-buttons></app-action-buttons>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Signed Documents</ng-template>
+          <ng-template ngbTabContent>
+            <app-signed-documents></app-signed-documents>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>
+<div class="projects-footer">
+  <div class="back-button" (click)="_location.back()">Back</div>
+</div>

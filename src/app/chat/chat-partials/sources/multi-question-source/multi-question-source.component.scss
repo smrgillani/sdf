@@ -1,0 +1,27 @@
+label {
+  color: #333333;
+  font-size: 14px;
+  line-height: 31px;
+  margin: 6px 24px;
+}
+
+.new-message {
+  display: flex;
+  height: 56px;
+  border-bottom: 1px solid #ccc;
+
+  textarea {
+    color: #3D3C40;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 10px 20px;
+    resize: none;
+    font-size: 18px;
+    line-height: 31px;
+
+    &::placeholder {
+      color: #999999;
+    }
+  }
+}

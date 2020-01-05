@@ -1,0 +1,102 @@
+label {
+  color: #4342e6;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.form-control {
+  color: #1f1eaa;
+  font-size: 18px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid #010dff;
+
+  &[name='title'] {
+    width: 50%;
+  }
+
+  &::placeholder {
+    font-weight: 200;
+    color: rgba(67, 66, 230, 0.5);
+  }
+}
+
+.form-group {
+  margin-bottom: 29px;
+}
+
+.period {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  color: #1f1eaa;
+  font-size: 18px;
+  font-weight: normal;
+
+  .separator {
+    line-height: 40px;
+    font-weight: bold;
+  }
+}
+
+.datetime-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.milestoneimagwrap {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 15px 0 0;
+}
+
+.milestoneimages {
+  width: 16.66%;
+  border: 1px solid transparent;
+  padding: 10px;
+
+  &.active {
+    border-color: #010dff;
+  }
+}
+
+.milestoneimages img {
+  width: 100%;
+}
+
+.milestonescroller {
+  height: 255px;
+  margin: 25px 0;
+}
+
+.nextbtn {
+  text-align: right;
+  padding-top: 24px;
+}
+
+@media screen and (max-width: 991px) {
+  .milestonescroller {
+    margin: 15px 0;
+    height: 235px;
+
+    .milestoneimagwrap {
+      padding: 0 10px 0 0;
+
+      .milestoneimages {
+        padding: 5px;
+        width: 25%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .milestonescroller {
+    .milestoneimagwrap {
+      .milestoneimages {
+        width: 33.33%;
+      }
+    }
+  }
+}

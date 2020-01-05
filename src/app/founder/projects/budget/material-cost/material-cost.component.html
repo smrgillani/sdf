@@ -1,0 +1,177 @@
+<!-- <app-header class="position-static" [backNavOptions]="{caption: projectBudget.title, route: ['founder', 'projects', projectBudget.id, 'budget']}"></app-header> -->
+<app-header class="position-static"></app-header>
+
+<main>
+  <p-confirmDialog
+    header="Confirmation"
+    icon="fa fa-question-circle"
+    acceptButtonStyleClass="saffron_btn blue_btn"
+    rejectButtonStyleClass="saffron_btn skyblue_btn"
+    width="425"
+  ></p-confirmDialog>
+
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Budget</h1>
+    </div>
+
+    <div *ngIf="!addingManually" class="cardwrap">
+      <div class="card">
+        <h2>My Expenses</h2>
+
+        <div class="progress bg-voilet">
+          <div
+            class="progress-bar bg-danger"
+            [style.width]="(project.my_expences_percent <= 100 ? project.my_expences_percent : 100) +'%'"
+          ></div>
+        </div>
+
+        <div class="valuewrap">
+          <span
+            class="value"
+            [title]="project.expences"
+            [style.left]="project.my_expences_percent + 3 + '%'"
+          >{{project.expences}}</span>
+          <span class="totalvalue" [title]="project.receive_funds">{{project.receive_funds}}</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Material Cost</h2>
+
+        <app-product-wallmart-search (onSelectedProduct)="addProduct($event)"></app-product-wallmart-search>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th width="80px">QTY</th>
+              <th width="125px">Price / Unit</th>
+              <th width="125px">Total</th>
+              <th width="100px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products">
+              <td>{{product.name}}</td>
+              <td>{{product.qty}}</td>
+              <td>${{product.price.amount}}</td>
+              <td>
+                <span class="text-orange">{{product.total}}</span>
+              </td>
+              <td>
+                <div class="actionbtnwrap">
+                  <button class="btn-circle text-orange" (click)="confirm(product)">
+                    <i class="icon-delete_btn"></i>
+                  </button>
+                  <!-- <button class="btn-circle text-blue">
+                      <i class="icon-scroll-arrow-to-down"></i>
+                  </button> -->
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <td>
+                <strong>Total</strong>
+              </td>
+              <td></td>
+              <td></td>
+              <td class="text-orange">${{projectBudget.subtotal}}</td>
+              <td></td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <app-pagination
+          class="my-pagination"
+          [pageSize]="pageSize"
+          [pagesQuantity]="count"
+          (pageChanged)="getMatrialCost($event)"
+        ></app-pagination>
+      </div>
+
+      <div class="materialcost-footer">
+        <div class="form-group">
+          <label>As additional option you can add url of the product or add product manually</label>
+
+          <input type="text" [(ngModel)]="productUrl" class="form-control" placeholder="Add your url here">
+          <div class="footer-extrabtn">
+            <button class="btn btn-blue btn-sm" (click)="addByProductUrl()">Add</button>
+            <span> or </span>
+            <button class="btn btn-blue  btn-sm" (click)="addingManually = true">Add Manually</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="addingManually" class="cardwrap">
+      <form [formGroup]="frmAddProductManually" (ngSubmit)="addProductManually()">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Product Name</label>
+
+              <input type="text" class="form-control" formControlName="productName" [(ngModel)]="product.name">
+              <div class="form-control-feedback" *ngIf="productName.errors && (productName.touched || productName.dirty)">
+                <div class="errorwrap" *ngIf="productName.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Product Description</label>
+
+              <input type="text" class="form-control" formControlName="productDescription" [(ngModel)]="product.shortDescription">
+              <div
+                class="form-control-feedback"
+                *ngIf="productDescription.errors && (productDescription.touched || productDescription.dirty)"
+              >
+                <div class="errorwrap" *ngIf="productDescription.errors.required">Required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Price</label>
+
+              <input type="text" class="form-control" formControlName="price" [(ngModel)]="product.price.amount">
+              <div class="form-control-feedback" *ngIf="price.errors && (price.touched || price.dirty)">
+                <div class="errorwrap" *ngIf="price.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="price.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Quantity</label>
+
+              <input type="text" class="form-control" formControlName="quantity" [(ngModel)]="product.qty">
+              <div class="form-control-feedback" *ngIf="quantity.errors && (quantity.touched || quantity.dirty)">
+                <div class="errorwrap" *ngIf="quantity.errors.required">Required</div>
+                <div class="errorwrap" *ngIf="quantity.errors.invalidNumber">Invalid input, enter number only.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-buttons">
+          <button type="submit" class="saffron_btn skyblue_btn">Save</button>
+          <button type="button" class="saffron_btn skyblue_btn" (click)="cancelManually()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="errorwrap" *ngFor="let error of errorMessages">
+      {{error}}
+    </div>
+  </div>
+</main>

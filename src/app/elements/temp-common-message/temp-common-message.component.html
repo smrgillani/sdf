@@ -1,0 +1,28 @@
+<div class="interviewpopup saf_blue_theme">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="popheading">Error Message</div>
+
+  <div class="cardwrap tabwrap">
+    <div class="cardwrap">
+      <div class="s-box">
+        <div class="s-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td colspan="3">{{message}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="buttons">
+    <div class="btn btn-cancel" (click)="closePopUp()">Do it later</div>
+    <div class="btn btn-ok" (click)="editProfile()">Ok</div>
+  </div>
+</div>

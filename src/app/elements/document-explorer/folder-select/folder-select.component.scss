@@ -1,0 +1,89 @@
+.folder-select {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 38px;
+
+  .dropdown {
+    position: static;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
+.icon {
+  height: 16px;
+  width: 21px;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.title {
+  color: #4342e6;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shift0 {
+  margin-left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shift1 {
+  margin-left: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shift2 {
+  margin-left: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.shift1:before, .shift2:before {
+  content: '-';
+}
+
+.dropdown-menu {
+  background-color: #ffffff;
+  border-radius: 0;
+  left: 0;
+  right: auto;
+  padding: 0;
+
+  .dropdown-item {
+    color: #5554e8;
+    font-size: 18px;
+    font-weight: 600;
+
+    height: 39px;
+    padding: 5px 20px 5px 20px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .dropdown-menu {
+    max-width: 270px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .folder-select {
+    height: 24px;
+  }
+}

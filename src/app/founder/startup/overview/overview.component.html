@@ -1,0 +1,25 @@
+<app-header-container>
+  <app-header class="position-static no-bg burnt-orange" [backNavOptions]="{ route: ['/founder/projects']}"></app-header>
+  <div class="container-header text-center">
+    <p class="c-white font-large mt-5 mb-0">STARTUP</p>
+    <p class="c-white font-small">Follow our guided steps to get your idea ready<br> for business</p>
+  </div>
+</app-header-container>
+
+<app-main-container>
+  <div class="container-buttons">
+    <div *ngFor="let menu of menus"
+         class="container-button {{menu.enabled? 'selector' : ''}} {{menu.enabled ? '' : 'disabled'}}"
+         [@pageState]="pageState"
+         (click)="navigateTo(menu)"
+         (@pageState.done)="animationDone($event)">
+      <div class="button-icon {{menu.icon}}"></div>
+      <div class="mt-2 c-primary text-center button-text">{{menu.title}}</div>
+    </div>
+  </div>
+
+  <div class="down-arrow-wrapper">
+    <div *ngFor="let number of [0,1,2,3,4,5,6,7]" class="middot"></div>
+    <div class="down-arrow"></div>
+  </div>
+</app-main-container>

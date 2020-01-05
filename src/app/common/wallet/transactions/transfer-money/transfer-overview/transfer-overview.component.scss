@@ -1,0 +1,28 @@
+.userbox {
+  position: relative;
+  min-height: 40px;
+  padding: 5px;
+
+  .imgbox {
+    width: 30px;
+    height: 30px;
+    border-radius: 360px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ccc url(/assets/img/navbar-noavatar-icon.png) no-repeat center;
+
+    img {
+      max-width: 100%
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 24px;
+
+  label {
+    margin-bottom: 0;
+  }
+}

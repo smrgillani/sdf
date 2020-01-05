@@ -1,0 +1,25 @@
+<nav class="navbar navbar-dark navbar-inverse bg-trans navbar-toggleable-sm fixed-top justify-content-end">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navBar"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+    <span class="navbar-toggler-icon" (click)="toggleState()"></span>
+  </button>
+
+  <a class="navbar-brand" style="color: #FFF">Saffron</a>
+
+  <div class="collapse navbar-collapse justify-content-end" [ngClass]="{'show' : isMenuExpanded}">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="btn-round justify-content-center align-items-center" href="#/founder"><span>Home</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="btn-round justify-content-center align-items-center" href="#/founder/idea"><span>Ideas</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="btn-round justify-content-center align-items-center" href="#/founder/projects"><span>Projects</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="btn-round justify-content-center align-items-center" href="#/founder/account"><span>Account</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,224 @@
+$bg-color: #4342E6;
+$bg-color-2: #F9F5F0;
+$header-height: 270px;
+
+.container-fluid {
+  // background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 300px, $bg-color-2 300px, $bg-color-2 100%);
+  background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat; background-size: 100% 300px;   
+}
+
+.container-main::after {
+  border-color: #404040; 
+}
+
+
+.container-header {
+  position: absolute;
+  top: 60px;
+  height: 210px;
+  width: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin:auto;
+}
+
+.app-employee-profile-bubble-toolbar{
+  min-height: 6.875em;
+}
+
+app-basic-info,
+app-professional-info,
+app-employment-info,
+app-work-sample-info,
+app-availability-info {
+  width: 100%;
+    position: absolute;
+    top: 270px;
+    bottom: 0;
+    left: 0;
+}
+
+.hero-title {
+  letter-spacing: 0;
+}
+
+app-idea-qa {
+  width: 100%;
+  position: absolute;
+  top: 270px;
+  bottom: 0;
+}
+app-navbar{
+  // position: static;
+}
+
+@media only screen and (max-width: 767px) {
+  app-navbar {
+    //padding: 15px 10px 15px 10px;
+  }
+
+  app-idea-qa {
+    top: 213px;
+  }
+
+  .container-fluid {
+    // background-image: linear-gradient($bg-color, $bg-color 213px, $bg-color-2 213px, $bg-color-2 100%);
+    
+  background: #f9f5f0 url('/assets/img/founder/stage_bg.png') 0 0 no-repeat; background-size: 100% 250px;   
+  }
+
+  .container-border {
+   // border: none;  
+  }
+
+  .container-header {
+    // width: auto;
+    height: 175px;
+  }
+  app-basic-info,
+app-professional-info,
+app-employment-info,
+app-work-sample-info,
+app-availability-info {
+
+    top: 235px;
+}
+
+  .hero-title {
+    font-size: 30px;
+    line-height: 37px;
+    display: inline-block !important;
+    vertical-align: middle;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    line-height: 16px;
+    max-width: 166px;
+    vertical-align: bottom;
+    margin-left: 10px;
+    font-weight: normal;
+    display: none !important;
+  }
+}
+
+
+
+.form-container{
+  width: 770px;
+  margin:0 auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .form-container{
+    max-width: 600px;
+      width: auto;  
+  }   
+}
+
+/** New Styles */
+html, body {
+  min-width: 300px;;
+}
+
+.container-header {
+  height: 170px;
+  top:50px;
+}
+
+.saf_blue_theme {
+  background-size: 100% 260px;
+}
+
+app-basic-info, app-professional-info, app-employment-info, app-work-sample-info, app-availability-info {
+  top: 230px;
+}
+
+app-basic-info /deep/ .scrollbar-container, 
+app-professional-info /deep/ .scrollbar-container, 
+app-employment-info /deep/ .scrollbar-container, 
+app-work-sample-info /deep/ .scrollbar-container, 
+app-availability-info /deep/ .scrollbar-container {
+  padding-top: 25px;
+}
+
+@media only screen and (max-width: 767px) {
+  .container-header {
+    height: 125px;
+  }
+
+  .saf_blue_theme {
+    background-size: 100% 183px;
+    color: #4342e6;
+  }
+
+  .app-employee-profile-bubble-toolbar {
+    min-height: 6em;
+  }
+
+  app-basic-info, app-professional-info, app-employment-info, app-work-sample-info, app-availability-info {
+    top: 168px;
+  }
+
+  app-basic-info /deep/ .scrollbar-container, 
+  app-professional-info /deep/ .scrollbar-container, 
+  app-employment-info /deep/ .scrollbar-container, 
+  app-work-sample-info /deep/ .scrollbar-container, 
+  app-availability-info /deep/ .scrollbar-container {
+    padding-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 418px) {
+  app-employee-profile-bubble-toolbar /deep/ .bubbles .bubble {
+    width: 50px;
+    text-align: center;
+  }
+
+  app-employee-profile-bubble-toolbar /deep/ .bubbles .bubble .caption {
+    font-size: 10px;
+    line-height: 1.1em;
+  }
+}
+
+@media only screen and (max-width: 365px) {
+  .container-header {
+    top: 38px;
+  }
+
+  app-employee-profile-bubble-toolbar /deep/ .bubbles .bubble:last-child {
+    display:none;
+  }
+
+  app-employee-profile-bubble-toolbar /deep/ .bubbles .bubble {
+    width: 48px;
+  }
+
+  app-employee-profile-bubble-toolbar /deep/ .bubbles .bubble .caption {
+    font-size: 9px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+    line-height: 1em;
+    display: block !important;
+  }
+
+  .container-header {
+    height: 100px;
+  }
+
+  .saf_blue_theme {
+    background-size: 100% 150px;
+  }
+
+  app-basic-info, app-professional-info, app-employment-info, app-work-sample-info, app-availability-info {
+    top: 135px;
+  }
+
+  app-availability-info /deep/ form h4 {
+    font-size: 1.5em;
+  }
+}

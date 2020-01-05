@@ -1,0 +1,273 @@
+<div class="row ">
+  <div class="col-md-6 col-sm-6 mb-30 swot_wrap" [ngClass]="{'col-lg-3': !isSummary,'col-lg-6': isSummary}">
+    <div class="swot_box">
+      <div class="swot_header">
+        <h2>Strength</h2>
+        <div class="btn-group" *ngIf="!isViewOnly">
+          <a (click)="editStrength = !editStrength" class="savebtn" *ngIf="editStrength">
+            <i class="icommon icon-check2"></i>
+          </a>
+
+          <a
+            (click)="editStrength = !editStrength"
+            [ngClass]="{'edit-svg-btn': !editStrength}"
+            *ngIf="!addStrength && !editStrength && swot.strength.length"
+          ></a>
+
+          <a
+            (click)="addStrength = !addStrength"
+            class="add_btn"
+            [ngClass]="{'closebtn': addStrength}"
+            *ngIf="!editStrength"
+          ></a>
+        </div>
+      </div>
+
+      <div class="swot_body" [ngClass]="{'editmode': editStrength}">
+        <div class="addfeild" *ngIf="addStrength">
+          <div class="form-group">
+            <label>Add your strength...</label>
+
+            <textarea
+              class="form-control"
+              id="newStrength"
+              #newStrength
+              (keydown)="changeHeight($event,'newStrength')"
+            ></textarea>
+
+            {{updateHeight('newStrength')}}
+          </div>
+          <div class="btnwrap">
+            <button class="saffron_btn skyblue_btn" (click)="save('strength', newStrength)">Ok</button>
+          </div>
+        </div>
+        <ul *ngIf="!addStrength">
+          <li *ngFor="let strength of swot.strength; let index = index; trackBy: index; let last = last;">
+            <div class="editmodewrap" *ngIf="editStrength">
+              <div class="editbtns">
+                <button class="deletebtn" (click)="delete('strength', strength)">
+                  <i class="icomoon icon-close"></i>
+                </button>
+              </div>
+
+              <textarea
+                class="form-control"
+                [id]="'strength'+index"
+                (keydown)="changeHeight($event,'strength' + index)"
+                (blur)="onDataChange('strength', index, $event.target.value)"
+                [value]="strength"
+              ></textarea>
+
+              {{updateHeight('strength' + index)}}
+            </div>
+            <div class="viewmode" *ngIf="!editStrength">{{strength}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6 mb-30 swot_wrap" [ngClass]="{'col-lg-3': !isSummary, 'col-lg-6': isSummary}">
+    <div class="swot_box">
+      <div class="swot_header">
+        <h2>Weakness</h2>
+
+        <div class="btn-group" *ngIf="!isViewOnly">
+          <a (click)="editWeakness = !editWeakness" class="savebtn" *ngIf="editWeakness">
+            <i class="icommon icon-check2"></i>
+          </a>
+
+          <a
+            (click)="editWeakness = !editWeakness"
+            [ngClass]="{'edit-svg-btn': !editWeakness}"
+            *ngIf="!addWeakness && !editWeakness && swot.weakness.length"
+          ></a>
+          <!--
+          <a (click)="editweakness=!editweakness" [ngClass]="{'edit-svg-btn':!editweakness,'savebtn':editweakness}"
+           *ngIf="!addweakness"><i class="icommon icon-check2" *ngIf="editweakness"></i></a>
+          -->
+          <a
+            (click)="addWeakness = !addWeakness"
+            class="add_btn"
+            [ngClass]="{'closebtn': addWeakness}"
+            *ngIf="!editWeakness"
+          ></a>
+        </div>
+      </div>
+
+      <div class="swot_body" [ngClass]="{'editmode': editWeakness}">
+        <div class="addfeild" *ngIf="addWeakness">
+          <div class="form-group">
+            <label>Add your weakness...</label>
+
+            <textarea
+              class="form-control"
+              id="weaknessadd"
+              #newWeakness
+              (keydown)="changeHeight($event, 'newWeakness')"
+            ></textarea>
+
+            {{updateHeight('weaknessadd')}}
+          </div>
+          <div class="btnwrap">
+            <button class="saffron_btn skyblue_btn" (click)="save('weakness', newWeakness)">Ok</button>
+          </div>
+        </div>
+
+        <ul *ngIf="!addWeakness">
+          <li *ngFor="let weakness of swot.weakness; let index = index; trackBy: index;">
+            <div class="editmodewrap" *ngIf="editWeakness">
+              <div class="editbtns">
+                <button class="deletebtn" (click)="delete('weakness', weakness)">
+                  <i class="icomoon icon-close"></i>
+                </button>
+              </div>
+
+              <textarea
+                class="form-control"
+                [id]="'weakness' + index"
+                (keydown)="changeHeight($event, 'weakness' + index)"
+                (blur)="onDataChange('weakness', index, $event.target.value)"
+                [value]="weakness"
+              ></textarea>
+
+              {{updateHeight('weakness' + index)}}
+            </div>
+            <div class="viewmode" *ngIf="!editWeakness">{{weakness}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6 mb-30 swot_wrap" [ngClass]="{'col-lg-3': !isSummary, 'col-lg-6': isSummary}">
+    <div class="swot_box">
+      <div class="swot_header">
+        <h2>Opportunity</h2>
+        <div class="btn-group" *ngIf="!isViewOnly">
+          <a (click)="editOpportunity = !editOpportunity" class="savebtn" *ngIf="editOpportunity">
+            <i class="icommon icon-check2"></i>
+          </a>
+
+          <a
+            (click)="editOpportunity = !editOpportunity"
+            [ngClass]="{'edit-svg-btn': !editOpportunity}"
+            *ngIf="!addOpportunity && !editOpportunity && swot.opportunity.length"
+          ></a>
+
+          <!-- <a (click)="editopportunity=!editopportunity"
+           [ngClass]="{'edit-svg-btn':!editopportunity,'savebtn':editopportunity}"
+           *ngIf="!addopportunity"><i class="icommon icon-check2" *ngIf="editopportunity"></i></a> -->
+
+          <a
+            (click)="addOpportunity = !addOpportunity"
+            class="add_btn"
+            [ngClass]="{'closebtn': addOpportunity}"
+            *ngIf="!editOpportunity"
+          ></a>
+        </div>
+      </div>
+
+      <div class="swot_body" [ngClass]="{'editmode': editOpportunity}">
+        <div class="addfeild" *ngIf="addOpportunity">
+          <div class="form-group">
+            <label>Add your opportunity...</label>
+            <textarea class="form-control" id="opportunityadd" #newOpportunity (keydown)="changeHeight($event, 'newOpportunity')"></textarea>
+            {{updateHeight('opportunityadd')}}
+          </div>
+          <div class="btnwrap">
+            <button class="saffron_btn skyblue_btn" (click)="save('opportunity', newOpportunity)">Ok</button>
+          </div>
+        </div>
+
+        <ul *ngIf="!addOpportunity">
+          <li *ngFor="let opportunity of swot.opportunity; let index = index; trackBy: index;">
+            <div class="editmodewrap" *ngIf="editOpportunity">
+              <div class="editbtns">
+                <button class="deletebtn" (click)="delete('opportunity', opportunity)">
+                  <i class="icomoon icon-close"></i>
+                </button>
+              </div>
+
+              <textarea
+                class="form-control"
+                [id]="'opportunity' + index"
+                (keydown)="changeHeight($event,'opportunity' + index)"
+                (blur)="onDataChange('opportunity', index, $event.target.value)"
+                [value]="opportunity"
+              ></textarea>
+
+              {{updateHeight('opportunity' + index)}}
+            </div>
+            <div class="viewmode" *ngIf="!editOpportunity">{{opportunity}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6 mb-30 swot_wrap" [ngClass]="{'col-lg-3': !isSummary, 'col-lg-6': isSummary}">
+    <div class="swot_box">
+      <div class="swot_header">
+        <h2>Threats</h2>
+        <div class="btn-group" *ngIf="!isViewOnly">
+          <a (click)="editThreats = !editThreats" class="savebtn" *ngIf="editThreats">
+            <i class="icommon icon-check2"></i>
+          </a>
+
+          <a
+            (click)="editThreats = !editThreats"
+            [ngClass]="{'edit-svg-btn': !editThreats}"
+            *ngIf="!addThreats && !editThreats && swot.threat.length"
+          ></a>
+
+          <!-- <a (click)="editthreats=!editthreats" [ngClass]="{'edit-svg-btn':!editthreats,'savebtn':editthreats}"
+           *ngIf="!addthreats"><i class="icommon icon-check2" *ngIf="editthreats"></i></a> -->
+
+          <a
+            (click)="addThreats = !addThreats"
+            class="add_btn"
+            [ngClass]="{'closebtn': addThreats}"
+            *ngIf="!editThreats"
+          ></a>
+        </div>
+      </div>
+
+      <div class="swot_body" [ngClass]="{'editmode': editThreats}">
+        <div class="addfeild" *ngIf="addThreats">
+          <div class="form-group">
+            <label>Add your threat...</label>
+            <textarea class="form-control" id="threatadd" #newThreat (keydown)="changeHeight($event, 'newThreat')"></textarea>
+            {{updateHeight('threatadd')}}
+          </div>
+          <div class="btnwrap">
+            <button class="saffron_btn skyblue_btn" (click)="save('threat', newThreat)">Ok</button>
+          </div>
+        </div>
+        <ul *ngIf="!addThreats">
+          <li *ngFor="let threat of swot.threat; let index = index; trackBy: index;">
+            <div class="editmodewrap" *ngIf="editThreats">
+              <div class="editbtns">
+                <button class="deletebtn" (click)="delete('threat', threat)">
+                  <i class="icomoon icon-close"></i>
+                </button>
+              </div>
+
+              <textarea
+                class="form-control"
+                [id]="'threat' + index"
+                (keydown)="changeHeight($event,'threat' + index)"
+                (blur)="onDataChange('threat', index, $event.target.value)"
+                [value]="threat"
+              ></textarea>
+
+              {{updateHeight('threat' + index)}}
+            </div>
+
+            <div class="viewmode" *ngIf="!editThreats">{{threat}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

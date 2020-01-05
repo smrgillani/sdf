@@ -1,0 +1,43 @@
+main {
+  padding: 0.625em 0 3.750em 0;
+  background-color: #f9f5f0;
+  min-height: calc(100% - 67px);
+}
+
+.profile-img {
+  background: #ccc url(/assets/img/navbar-noavatar-icon.png) no-repeat center;
+}
+
+.profilename {
+  font-weight: 500;
+}
+
+h3.pageheading {
+  font-size: 1.75em;
+  margin-bottom: 0.893em;
+}
+
+.saf_blue_theme {
+  color: #2928e5;
+}
+
+.saf_blue_theme .boxtable td.text-orange {
+  color: #ff605c;
+}
+
+.saf_blue_theme .boxtable td {
+  min-width: 105px;
+  padding: 0.600em;
+}
+
+.notewrap {
+  background: #eaeaea;
+  padding: 10px;
+  margin: 0 0 25px 0;
+  border: 1px solid #dcd9d9;
+  color: #fe5f5b;
+}
+
+.paymenthistory {
+  background-color: white;
+}

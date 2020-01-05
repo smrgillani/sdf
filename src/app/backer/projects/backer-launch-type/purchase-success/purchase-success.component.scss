@@ -1,0 +1,31 @@
+.projectsuccess{
+    padding: 6em 0;
+    .done-container
+    {
+        margin: 0;
+        .done-btn1{
+            margin-bottom: 0;
+            color: #4342e6;
+            background-color: #00d8c9;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 114px;
+            width: 114px;
+            border-radius: 70px;
+            cursor: pointer;
+            border: 0;
+            line-height: 114px;
+            font-size: 60px;
+            text-align: center;
+        }
+    }
+    .projectsucctext{
+        width: 347px;
+        font-size: 24px;
+        text-align: center;
+        color: #2f29af;
+        font-weight: 500;
+        margin: 35px auto 50px;
+    }
+
+}

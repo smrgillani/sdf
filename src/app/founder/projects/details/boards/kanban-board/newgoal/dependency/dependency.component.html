@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label>Select Milestone</label>
+            <p-dropdown  class="form-control"  [options]="milestones" placeholder="Choose Milestone" optionLabel="Milestone" [(ngModel)]="dependency['milestone']" (onChange)="onMilestoneSelect($event.value)" required="true" ></p-dropdown>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label>Select Goal</label>
+            <p-dropdown  class="form-control"  [options]="goals" placeholder="Choose Goal" optionLabel="Goal" [(ngModel)]="dependency['task']"></p-dropdown>
+        </div>
+    </div>
+    <div class="col-sm-2">
+            <div class="form-group">
+                <label class="btn-block">&nbsp;</label>
+                <a class="delete-btn saffron_btn red_btn" (click)="removeDependency(dIndex)">Cancel</a>
+            </div>
+    </div>
+</div>

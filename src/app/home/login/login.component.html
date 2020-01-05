@@ -1,0 +1,175 @@
+<div class="container-fluid login-container bg-gradient">
+    <div *ngIf="!callback" class="container-main bg-image">
+        <div class="container-border">
+            <!-- <app-navbar [isLoggedIn]="false" class="mobile-hidden"></app-navbar> -->
+            <app-header class="no-bg position-absolute" [showBackButton]="false" [isLoggedIn]="false"></app-header>
+
+            <div *ngIf="!idlognpprocess">
+                <div class="login-box container clearfix">
+                    <div class="close-btn hidden-sm-up" [routerLink]="['/']"></div>
+                    <div class="col-12 col-lg-6 column pull-left">
+                        <div class="container-title">Login</div>
+                        <div>
+                            <form *ngIf="!showOtpInput" novalidate [formGroup]="loginForm" (ngSubmit)="loginUser()" #lForm="ngForm">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <p-dropdown class="form-control" formControlName="method" [options]="loginMethod" (onChange)="removeErrors($event.value)"></p-dropdown>
+                                        </div>
+                                        <div class="col-7">
+                                            <input *ngIf="loginForm.value.method === 'email'" class="form-control" placeholder="Email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+                                                type="email" formControlName="email" />
+                                            <!-- pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" -->
+                                            <app-phone-input *ngIf="loginForm.value.method === 'phone'" formControlName="phone"></app-phone-input>
+                                            <input *ngIf="loginForm.value.method === 'username'" class="form-control" type="text" required formControlName="username"
+                                                placeholder="User Name" />
+                                            <p-dropdown class="form-control" formControlName="idmethod" *ngIf="loginForm.value.method === 'idproof'" [options]="idMethods"></p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="loginForm.value.method != 'idproof'" style="margin-bottom:5px;">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-5 col-md-5 col-lg-12">
+                                            <mat-form-field floatPlaceholder="never" class="password-form-control">  
+                                                <mat-placeholder>Password</mat-placeholder>
+                                                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required minlength="6" (keydown)="keydown($event)" (focus)="focus($event)">
+                                                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" (click)="passwordVisibilityClick($event)">
+                                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                                </button>
+                                            </mat-form-field>                         
+                                            <div class="error-notification warning" *ngIf="displayCapsWarning">
+                                                <div class="alert-badge-border">
+                                                  <div class="alert-badge"></div>
+                                                </div>
+                                                <div class="error-message-wrapper">Caps Lock Is On</div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group submit-btn-fg" *ngIf="loginForm.value.method != 'idproof' || isStage=='completeState'" style="margin-top:5px;">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 textleft-xs">
+                                            <label class="custom-control custom-checkbox">
+                                                <input
+                                                  class="custom-control-input"
+                                                  name="keep_me_loggedin"
+                                                  [checked]="keepMeLoggedIn"
+                                                  (change)="keepMeLoggedIn =! keepMeLoggedIn"
+                                                  type="checkbox">
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">Keep me logged in</span>
+                                              </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <input
+                                    class="custom-control-input"
+                                    name="keep_me_loggedin"
+                                    type="checkbox"
+                                    [checked]="professionalInfo.present"
+                                    [(formControl)]="complexForm.controls['present']"
+                                    #checkboxID
+                                    (change)="onCheckedItemChanged(checkboxID.checked,fromDate)"> -->
+
+                                <div class="form-group" *ngIf="loginForm.value.method === 'idproof'">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-5 col-md-5 col-lg-12">
+                                            <input class="form-control" placeholder="ID" type="text" formControlName="idproof" required minlength="6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="loginForm.value.method === 'idproof'  && loginForm.value.idmethod && isStage && isStage!='completeState' && loginForm.value.idproof">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 textcenter-xs">
+                                            <div class="btn-border pull-right">
+                                                <!-- *ngIf="showLoginButton" -->
+                                                <button type="submit" class="enter-btn" (click)="idlognpprocess=true">Next</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group submit-btn-fg" *ngIf="loginForm.value.method != 'idproof' || isStage=='completeState'">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 textcenter-xs">
+                                            <div class="btn-border pull-right">
+                                                <!-- *ngIf="showLoginButton" -->
+                                                <button type="submit" class="enter-btn">Login</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <app-validation-message [messages]="messages" [fields]="fields"></app-validation-message>
+                            </form>
+
+                            <form *ngIf="showOtpInput" novalidate [formGroup]="otpForm" (ngSubmit)="submitOtp()" #oForm="ngForm">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-5 col-md-5 col-lg-12">
+                                            <input class="form-control" placeholder="OTP" formControlName="otp" required minlength="6" maxlength="6">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 textcenter-xs">
+                                            <div class="btn-border pull-right">
+                                                <!-- *ngIf="showLoginButton" -->
+                                                <button type="submit" class="enter-btn">Enter</button>
+                                            </div>
+                                        </div>
+                                    </div>keepMeLoggedIn
+                                    <div class="row">
+                                            <div class="col-12 col-md-12 textcenter-xs">
+                                                    <div class="pull-right" *ngIf="showOtpInput">
+                                                        Enter the code we texted/email you. Want Us to
+                                                        <a (click)="sendCode()" href="javascript:void(0)">send it again</a>?
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <div>
+                                    <div class="error-notification" *ngIf="otpError">
+                                        <div class="alert-badge-border">
+                                            <div class="alert-badge"></div>
+                                        </div>
+                                        <div class="error-message-wrapper">OTP invalid.</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="vertical-separator">
+                        <div class="line left"></div>
+                        <div class="text">or</div>
+                        <div class="line right"></div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 pull-left column social-wrapper">
+                        <div class="container-title">Sign In with</div>
+                        <app-login-social></app-login-social>
+                    </div>
+                </div>
+            </div>
+            <app-id-login *ngIf="idlognpprocess" [id_number]="loginForm.value.idproof" [idmethod]="loginForm.value.idmethod" (idstage)="getidstage($event)"></app-id-login>
+
+            <div class="container-other-buttons row">
+                <div class="link text-left col-4 mobile-hidden" [routerLink]="['/']">
+                    <i class="fa fa-arrow-left"></i> Back</div>
+                <div class="link col-4 text-right text-center" [routerLink]="['/forgot']">Forgot password?</div>
+                <div class="link col-4 text-right mobile-hidden" [routerLink]="['/signup']">Have no account?</div>
+            </div>
+        </div>
+        <div class="privacy-policy singin">By tapping "Join" you are agreeing to the
+            <span class="c-white" (click)="openTermsOfUseModal()">Terms of use</span> and
+            <span class="c-white text_underline" (click)="openPrivacyPolicyModal()">Privacy policy</span>
+        </div>
+
+    </div>
+    <div *ngIf="callback" class="container-main bg-image">
+        <div class="container-title text-center">Retrieving login information...</div>
+    </div>
+</div>

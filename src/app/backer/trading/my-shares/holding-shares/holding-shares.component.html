@@ -1,0 +1,38 @@
+<div class="hire_employees">
+
+
+        <div class="projects-search">
+            <div class="search-icon"></div>
+            <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Start typing to search" (input)="valueChange()" />
+        </div>
+    
+        <div class=" table-responsive">
+            <table class="table table-hover projects-table transaction-table">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>ISX Shares</th>
+                        <th>LSX Shares</th>
+                        <th>X Shares</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of myHoldingsShareList">
+                        <td>
+                            <div class="companyiconwrap">
+                                <span class="companyicon">{{item.project_title[0]}}</span>
+                                <span class="companyname" [title]="item.project_title">{{item.project_title}}</span>
+                            </div>
+                        </td>
+                        <td>{{item.isx_count}}</td>
+                        <td>{{item.lsx_count}}</td>
+                        <td>{{item.x_count}}</td>
+                    </tr>
+    
+                </tbody>
+            </table>
+        </div>
+    
+        <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getMyShareList($event)"></app-pagination>
+    
+    </div>

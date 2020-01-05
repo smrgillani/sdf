@@ -1,0 +1,47 @@
+.flex-container {
+  display: flex;
+  align-items: stretch;
+}
+
+
+.flex-container>div.leftpanel  { flex: 0 0 185px;}
+.flex-container>div.hire_employees { flex-grow: 1; padding: 0 0 0 50px;}
+
+
+.modal-body, .modal-footer {
+  padding: 24px;
+}
+
+
+@media (max-width: 767px) {
+
+  .flex-container { display: block; }
+  .flex-container>div.leftpanel {  }
+  .flex-container>div.hire_employees { padding: 0; margin-top: 30px;}
+
+  .employee-table tr td:first-child {width: 100%; }
+  .employee-table tr td:nth-of-type(2) { width: 100%; }
+  .employee-table tr td:last-child{width: 100%;  }
+  
+  .leftpanel h4 { cursor: pointer;}
+  .leftpanel h4 span { font-size: 0.7em;  font-weight: bold; }
+  .collapseopen span.icon-down-arrow:before{ content: "\e90c"  }
+
+
+}//@media (max-width: 767px)
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+
+}//@media (min-width: 768px) and (max-width: 991px)
+
+@media (min-width: 992px){
+
+
+}//@media (min-width: 992px)
+
+
+@media (min-width: 576px)
+{
+  .container { width: 100%;}
+}

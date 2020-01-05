@@ -1,0 +1,120 @@
+.document-item-container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+.document-item {
+  height: 130px;
+  width: 130px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 9px;
+}
+.document-item-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border-top: 1px solid #CCCCCC;
+  position: relative;
+
+  .document-title {
+    color: #666666;
+    font-size: 16px;
+    line-height: 28px;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+
+  input.form-control {
+    color: #4342E6;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #010DFF;
+  }
+
+  .action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+
+  .document-menu-btn {
+    color: #7C7BF4;
+    border-radius: 50%;
+    border: 1px solid #7C7BF4;
+  }
+
+  .apply-renaming-btn {
+    color: #ffffff;
+    background-color: #00D8C9;
+  }
+
+  .apply-deleting-btn {
+    color: #FE5F5B;
+    border: 1px solid #FE5F5B;
+  }
+
+  .cancel-deleting-btn {
+    color: #7C7BF4;
+    border: 1px solid #7C7BF4;
+  }
+
+  .delete-actions {
+    display: flex;
+  }
+
+  .dropdown {
+    position: static;
+  }
+}
+.document {
+  background-image: url('/assets/img/document-explorer/types/docs.svg');
+}
+.diagram {
+  background-image: url('/assets/img/document-explorer/types/diagram.svg');
+}
+.drawing {
+  background-image: url('/assets/img/document-explorer/types/drawing.svg');
+}
+.spreadsheet {
+  background-image: url('/assets/img/document-explorer/types/spreadsheet.svg');
+}
+.ocr {
+  background-image: url('/assets/img/document-explorer/types/ocr.svg');
+}
+.presentation {
+  background-image: url('/assets/img/document-explorer/types/presentation.svg');
+}
+
+.dropdown-toggle:after {
+  content: none;
+}
+
+.dropdown-menu {
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  right: 0;
+  left: 0;
+  min-width: unset;
+  margin-top: 0;
+  padding: 6px;
+
+
+  .dropdown-item {
+    color: #4342E6;
+    cursor: pointer;
+    padding: 3px 6px;
+  }
+
+  .dropdown-item + .dropdown-item {
+    border-top: 1px solid #4342E6;
+  }
+}

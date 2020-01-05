@@ -1,0 +1,64 @@
+<div class="container-sm">
+  <div class="cardwrap">
+    <div class="cardheading">
+      <div class="row">
+        <div class="col6">
+          <h3>News</h3>
+        </div>
+        <div class="col6">
+          <button id="news-refresh-btn" class="saffron_btn royal-blue waves-effect waves-light" (click)="refreshFeed()">
+            Refresh
+        </button>
+        </div>
+      </div>
+    </div>
+    <div class="cardbody">
+      <div class="cardwrapper">
+        <div class="newsfeeds">
+          <p-accordion>
+            <div class="newsfeed card">
+              <p-accordionTab *ngFor="let feed of feeds">
+                <p-header>
+                  <div class="newsTitle" [title]="feed.description">
+                    {{feed.title}}
+                  </div>
+                  <div class="newsDetails">
+                    <span>{{feed.author}} &bull;</span>
+                    <span>{{feed.pubDate}} &bull;</span>
+                    <ul class="newsCategory clearfix">
+                      <li *ngFor="let feedcate of feed.categories">{{feedcate}}</li>
+                    </ul>
+                  </div>
+                </p-header>                
+                <div class="description" [innerHTML]="feed.content"></div>
+                <a [href]="feed.link" target="_blank">Source Link</a>
+              </p-accordionTab>
+            </div>
+          </p-accordion>
+        </div>
+
+        <!-- <div class="newsfeeds">
+          <div class="newsfeed card" *ngFor="let feed of feeds; let i = index">
+            <div class="newsTitle">
+                {{feed.title}}
+            </div>
+            <div class="newsDetails">
+              <span>{{feed.author}} &bull;</span>
+              <span>{{feed.pubDate}} &bull;</span>
+              <ul class="newsCategory clearfix">
+                <li *ngFor="let feedcate of feed.categories">{{feedcate}}</li>
+              </ul>
+            </div>
+            <div *ngIf="expandIndex!=i" class="description" [innerHTML]="feed.description"></div>
+            <br>
+            <span *ngIf="expandIndex!=i" (click)="expandIndex = i">Read More...</span>
+            
+            <div *ngIf="expandIndex==i" class="description" [innerHTML]="feed.content"></div>
+            <a *ngIf="expandIndex==i" [href]="feed.link" target="_blank">Source Link</a>
+            <span *ngIf="expandIndex==i" (click)="expandIndex = -1">Read Less...</span>
+          </div>
+        </div>         -->
+      </div>
+    </div>
+  </div>
+</div>

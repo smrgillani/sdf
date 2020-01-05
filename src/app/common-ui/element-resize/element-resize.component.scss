@@ -1,0 +1,34 @@
+.trigger {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 60px;
+  text-align: center;
+  color: #343434;
+  font-weight: normal;
+  transition: 0.3s all;
+
+  i.icomoon {
+    display: block;
+
+    &.vertical {
+      transform: rotateZ(90deg);
+    }
+  }
+}
+
+.trigger-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  cursor: pointer;
+
+  &:not(.open) {
+    display: none;
+  }
+}

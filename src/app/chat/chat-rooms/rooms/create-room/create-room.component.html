@@ -1,0 +1,22 @@
+<div class="chat-room-name">
+  <div class="projects-search">
+    <input
+      id="search"
+      class="form-control"
+      type="search"
+      placeholder="Search users..."
+      [(ngModel)]="searchText"
+    />
+  </div>
+</div>
+
+<ul>
+  <ng-container *ngFor="let item of userList">
+    <li
+      *ngIf="searchText && item.username.indexOf(searchText.toLowerCase()) >= 0"
+      (click)="roomSelected.emit(item.id)"
+    >
+      {{item.username}}
+    </li>
+  </ng-container>
+</ul>

@@ -1,0 +1,26 @@
+$primary-color: #4342e6;
+
+.container-main {
+  height: auto;
+  background:
+    url(/assets/img/summary_header_dots.png) top center no-repeat,
+    -webkit-linear-gradient(top, $primary-color, $primary-color 210px, rgb(249,245,240) 210px, rgb(249,245,240) 100%);
+
+    &::after{
+      border-color: #333;
+    }
+  
+  .container-border {
+    display: block;
+    //border-color: #333;
+
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .container-main {
+    background: url(/assets/img/summary_header_dots.png) top center no-repeat,
+      -webkit-linear-gradient(top, $primary-color, $primary-color 156px, rgb(249,245,240) 156px, rgb(249,245,240) 100%);
+   
+  }
+}

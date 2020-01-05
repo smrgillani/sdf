@@ -1,0 +1,155 @@
+<div class="chat-messages">
+  <perfect-scrollbar>
+    <div class="scrollingcontent">
+      <div class="message" *ngFor="let message of messages">
+        <ng-container *ngIf="!showOnlyStarred || isStarred(message)">
+          <div class="user" *ngIf="message.user">
+            <div class="user-photo">
+              <img *ngIf="message.user.photo_crop" [src]="message.user.photo_crop" alt="">
+
+              <div class="user-status-indicator" [ngClass]="'user-status-' + roomHandler?.usersList[message.userId]?.status"></div>
+            </div>
+
+            <span class="user-name" [attr.title]="getUsername(message.user)">
+              <a class="star-message" (click)="starToggle(message)">
+                <i
+                  class="fa"
+                  [class.fa-star]="isStarred(message)"
+                  [class.fa-star-o]="!isStarred(message)"
+                ></i>
+              </a>
+
+              <span class="username">{{getUsername(message.user)}}</span>
+
+              <span class="message-time">{{message.time | date:'shortTime'}}</span>
+
+              <span class="message-action-buttons" *ngIf="message.editable">
+                <i *ngIf="message.text" class="fa fa-pencil pull-right" aria-hidden="true" (click)="setEditMessage(message)"></i>
+                <i class="fa fa-trash pull-right" aria-hidden="true" (click)="deleteMessage(message.id)"></i>
+              </span>
+
+              <span class="message-type" *ngIf="message.message_type">
+                {{message.message_type}}
+              </span>
+
+              <span class="message-type" style="cursor: pointer;" *ngIf="message.message_type && message.message_type != 'decision_poll' && !message.is_reply && message.userId != chatUserId"
+                    (shown)="closePopoverpWithDelay(3000, stagePopover, 'stageTimer-response')" [triggers]="'none'" [container]="'body'"
+                    [ngbPopover]="stagePopoverTemplate" #stagePopover="ngbPopover" appPopoverAutoPosition [popOverName]="stagePopover"
+                    [placement]="{desktop:'bottom', tablet:'bottom', mobile:'none'}" (click)="setDataForResponse(message, stagePopover)">
+                &nbsp;&nbsp;&nbsp;<i
+                class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                <span *ngIf="message?.agree_count" class="mes_count positive">{{message?.agree_count}}</span>
+                <span *ngIf="message?.diagree_count" class="mes_count negative">{{message?.diagree_count}}</span>
+                <ng-template #stagePopoverTemplate>
+                  <div class="buttons opinionsbtns">
+                    <div class="opinion-btn" (click)="postADR('agree', message, stagePopover)">Agree</div>
+                    <div class="opinion-btn" (click)="postADR('disagree', message, stagePopover)">Disagree</div>
+                    <div class="opinion-btn" (shown)="closePopoverpWithDelay(100000, stageSubPopover, 'stageTimer-response', stagePopover)"
+                         [triggers]="'none'" [container]="'body'" [ngbPopover]="requestPopoverTemplate"
+                         #stageSubPopover="ngbPopover" appPopoverAutoPosition [popOverName]="stageSubPopover"
+                         [placement]="{desktop:'bottom', tablet:'bottom', mobile:'none'}" (click)="setDataForResponse(message, stageSubPopover)">Request</div>
+                    <div class="opinion-btn dots" (click)="stagePopover.close()">
+                      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template #requestPopoverTemplate>
+                  <div class="opinionsbtns" style="width:120px">
+                    <div class="form-group">
+                      <textarea class="form-control" [(ngModel)]="messageText" placeholder="Type here..."></textarea>
+                    </div>
+                    <button class="saffron_btn skyblue_btn" type="button" (click)="postADR(messageText, message, stagePopover, stageSubPopover)">Go!</button>
+                  </div>
+                </ng-template>
+              </span>
+
+              <span *ngIf="message?.agree_count" class="mes_count positive">{{message?.agree_count}}</span>
+              <span *ngIf="message?.diagree_count" class="mes_count negative">{{message?.diagree_count}}</span>
+            </span>
+          </div>
+
+          <div *ngFor="let attachment of message.attachments" class="replyfor">
+            <small>{{attachment.title}}</small>
+            <img *ngIf="attachment.image_url" [src]="attachment.image_url | safeUrl" alt="" height="200">
+            <a *ngIf="attachment.image_url" [href]="attachment.image_url | safeUrl" target="_blank">Download</a>
+            <!-- <p *ngIf="message.text" class="message-body" [innerHTML]="message.text"></p> -->
+          </div>
+
+          <!-- <p class="message-body" [innerHTML]="message.text"></p> -->
+
+          <div [ngSwitch]="message.message_type">
+            <div *ngSwitchCase="'decision_poll'">
+              <div class="pollwrap">
+                <p class="question_heading" [innerHTML]="message.text"></p>
+
+                <ul *ngIf="message.message_type == 'decision_poll' && !message.is_reply && message.userId != chatUserId">
+                  <li *ngFor="let option of message.options">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" name="options" value="option.id" (change)="selectedPollOption(option.id, message)">
+
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">{{option.option}}</span>
+                    </label>
+                  </li>
+                </ul>
+
+                <div *ngIf="message.message_type == 'decision_poll' && (message.is_reply || message.userId == chatUserId)">
+                  <div class="project-stage" *ngFor="let option of message.options">
+                    <div class="project-stage-caption">{{option.option}}</div>
+                    <div class="project-stage-progress-bar">
+                      <div class="project-stage-completed" [style.width.%]="option.percentage">
+                        {{option.percentage}}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="message_box" *ngSwitchCase="'assumption'">
+              <div [innerHTML]="message.text"></div>
+            </div>
+
+            <div class="message_box" *ngSwitchCase="'hypothesis'">
+              <div [innerHTML]="message.text"></div>
+            </div>
+
+            <div class="message_box" *ngSwitchCase="'thought_experiment'">
+              <div [innerHTML]="message.text"></div>
+            </div>
+
+            <div *ngSwitchDefault>
+              <p class="message-body" [innerHTML]="message.text"></p>
+            </div>
+
+            <div *ngIf="message.attachments && message.attachments.length == 1" class="replyfor">
+              <div class="replyforinfo">
+                <span class="username" [attr.title]="message?.attachments[0]?.author_name">{{message?.attachments[0]?.author_name}}</span>
+                <span class="message-time">{{message.attachments[0].ts | date:'shortTime'}}</span>
+              </div>
+              <p *ngIf="message.attachments[0].text" class="message-body" [innerHTML]="message.attachments[0].text"></p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="typing">
+        <p *ngFor="let user of roomHandler?.chatTypingUsers">{{user.name}} is typing...</p>
+      </div>
+    </div>
+  </perfect-scrollbar>
+</div>
+
+<app-chat-action-bar
+  class="chat-action-bar"
+  [enableMessageTypes]="true"
+  [editMessage]="editMessage"
+  [overDoubleWidth]="overDoubleWidth"
+  [fileUploadErrors]="fileUploadErrors"
+  (typingOccurred)="onTypingOccurred()"
+  (typingStarted)="onTypingStarted()"
+  (typingEnded)="onTypingEnded()"
+  (messageSent)="sendMessage($event)"
+  (fileSent)="sendFile($event)"
+  (resetEditMessage)="editMessage = null"
+></app-chat-action-bar>

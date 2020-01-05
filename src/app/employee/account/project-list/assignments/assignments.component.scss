@@ -1,0 +1,62 @@
+.pad-right-adjust {
+  padding-right: 125px;
+}
+
+.text-orange {
+  color: #ff6d24;
+}
+
+.text-blue {
+  color: #669bf9;
+}
+
+.employee-table tr .Employee-title .employee-name {
+  margin-bottom: 0.7em;
+}
+
+.employee_des {
+  margin-bottom: 3px;
+  word-wrap: break-word;
+}
+
+.projectmember > div {
+  display: flex;
+  height: 100%;
+  align-content: flex-end;
+  justify-content: flex-end;
+
+  ul {
+    display: flex;
+    align-items: flex-end;
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+
+      span {
+        display: block;
+        width: 32px;
+        height: 32px;
+        color: #70a2f9;
+        font-size: 31px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: auto;
+          min-height: 100%;
+          display: block;
+        }
+
+        &.rounded-circle {
+          background: #ccc url(/assets/img/navbar-noavatar-icon.png) no-repeat center;
+        }
+      }
+
+      & + li {
+        margin-left: 5px;
+      }
+    }
+  }
+}

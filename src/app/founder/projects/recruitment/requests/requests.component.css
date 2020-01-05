@@ -1,0 +1,141 @@
+.heading {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+main {
+    padding: 0.625em 0 3.750em 0;
+    background-color: #f9f5f0;
+    min-height: calc(100% - 67px);
+}
+
+.tabwrap {
+    padding: 2.188em 2.0em;
+    margin-bottom: 0.875em;
+    background: #fff;
+}
+
+.heading h1 {
+    color: #2929e4;
+    font-size: 2.250em;
+    font-weight: 500;
+    line-height: 1.194em;
+    margin: 2px;
+}
+
+.saffron-table {
+    border-bottom: 1px solid #dddddd;
+    table-layout: fixed;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+}
+
+.saffron-table tr .employee-name {
+    font-size: 1.333em;
+    font-weight: bold;
+    line-height: 1em;
+    cursor: pointer;
+    margin-bottom: 0.7em;
+}
+
+.saffron-table tr .amount {
+    font-size: 1.125em;
+    color: #669bf9;
+}
+
+.saffron-table tr .status {
+    text-transform: capitalize;
+    color:red;
+}
+
+.saffron-table tr .status.accept {
+    color:green;
+}
+
+.saffron-table tr .project-actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0 -2.5px;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.saffron-table tr td {
+    padding: 20px 15px 20px 15px;
+    height: 75px;
+    border-top: 1px solid #dddddd;
+}
+
+.saffron-table tr td:first-child {
+    padding-left: 5px;
+}
+
+.saffron-table tr td:last-child {
+    padding-right: 5px;
+    width: 190px;
+    text-align: right;
+}
+
+
+.saffron-btn {
+    font-weight: 400;
+    transition: .3s ease-in-out;
+    min-width: 7.222em;
+    white-space: nowrap;
+    outline: none;
+    font-size: 1.125em;
+    font-family: ProximaNova, sans-serif;
+    color: #ffffff;
+    border: 2px solid #dddddd;
+    background-color: #dddddd;
+    transition: .3s ease-in-out;
+    padding: 3px 18px;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px #fff inset;
+    margin: 2px 0;
+}
+
+.saffron-btn:active {
+    outline: none;
+}
+
+.saffron-btn:hover {
+    box-shadow: 0 0 0 1px transparent inset;
+    outline: none;
+}
+
+.saffron-btn.dark-turquoise {
+    background-color: #00d8c9;
+    border: 2px solid #00d8c9;
+}
+
+.saffron-btn.bittersweet {
+    background-color: #FE5F5B;
+    border: 2px solid #FE5F5B;
+}
+
+@media only screen and (max-width: 575px) {
+    .saffron-table tr td:first-child {
+        width:55%;
+    }
+    
+    .saffron-table tr td:last-child {
+        width:45%;
+    }
+  }

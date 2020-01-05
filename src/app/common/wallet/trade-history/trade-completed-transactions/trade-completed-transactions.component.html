@@ -1,0 +1,52 @@
+<div class="hire_employees">
+
+
+    <div class="projects-search">
+        <div class="search-icon"></div>
+        <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Start typing to search" (input)="valueChange()" />
+
+        <!-- <div class="width220">
+            Records per page
+            <div class="pull-right recordTop">
+                <p-dropdown class="form-control" name="roles" [options]="transactionCount"></p-dropdown>
+       
+            </div>
+            <div class="clearfix"></div>
+        </div> -->
+
+    </div>
+
+    <div class=" table-responsive">
+        <table class="table table-hover projects-table transaction-table">
+            <thead>
+                <tr>
+                    <th>Added on</th>
+                    <th>Mode</th>
+                    <th>Entity Name</th>
+                    <th>Quantity</th>
+                    <th>Share/Price</th>
+                    <th>Amount Involved</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of completeTransInfoList">
+                    <td>{{item.added_on}}</td>
+                    <td>{{item.mode}}</td>
+                    <td>{{item.entity_name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price_per_share}}</td>
+                    <td>{{item.total_amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- <app-pagination class="my-pagination" [pageReset]="paginationReset" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination> -->
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getCompleteTransList($event)"></app-pagination>
+    <!-- <div class="note">
+    Reference No's. are usually obtained in the response of Gateway API.
+    Details are also subject to the conditions for an example IFT/0232/3SDS could be an example. if amount is withdrawn, target account no will be mentioned. In case of deposit, the account from which the deposit has been done will be shown. In cases, when the details are not there NA will appear there.
+</div> -->
+
+</div>

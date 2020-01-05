@@ -1,0 +1,88 @@
+<label class="custom-control lg-checkbox custom-checkbox" *ngIf="!showNextButton">
+    <input type="checkbox" class="custom-control-input" checked disabled>
+    <span class="custom-control-indicator"></span>
+</label>
+<div class="heading">
+    <h1 (click)="isCollapseCrowd=togglecollapse(isCollapseCrowd)">Equity crowdfunding / exchangeable equity</h1>
+</div>
+<form [formGroup]="frmFundDetails">
+    <div class="cardwrap" *ngIf="isCollapseCrowd">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Minimum Target Offering Amount ($)</label>
+                    <!-- <input type="text" class="form-control" formControlName="min_target_offering_amt" [(ngModel)]="fundData.min_target_offering_amt.amount"> -->
+                    <p-spinner size="30" class="form-control" formControlName="min_target_offering_amt" [(ngModel)]="fundData.min_target_offering_amt.amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="min_target_offering_amt.errors && (min_target_offering_amt.touched || min_target_offering_amt.dirty)">
+                        <div class="errorwrap" *ngIf="min_target_offering_amt.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="min_target_offering_amt.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Due by</label>
+                    <p-calendar class="form-control" formControlName="due_by" [(ngModel)]="fundData.due_by"></p-calendar>
+                    <div class="form-control-feedback" *ngIf="due_by.errors && (due_by.touched || due_by.dirty)">
+                        <div class="errorwrap" *ngIf="due_by.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Amount of equity (%)</label>
+                    <!-- <input type="text" class="form-control" formControlName="amount_equity" [(ngModel)]="fundData.amount_equity"> -->
+                    <p-spinner size="30" class="form-control" formControlName="amount_equity" [(ngModel)]="fundData.amount_equity"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="amount_equity.errors && (amount_equity.touched || amount_equity.dirty)">
+                        <div class="errorwrap" *ngIf="amount_equity.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="amount_equity.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Return in form</label>
+                    <p-dropdown class="form-control" [options]="returnInForms" formControlName="return_form" placeholder="-- Select --" [(ngModel)]="fundData.return_form"></p-dropdown>
+                    <div class="form-control-feedback" *ngIf="return_form.errors && (return_form.touched || return_form.dirty)">
+                        <div class="errorwrap" *ngIf="return_form.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Minimum Stake of equity (%)</label>
+                    <p-spinner size="30" class="form-control" formControlName="min_amount_equity" [(ngModel)]="fundData.min_amount_equity"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="min_amount_equity.errors && (min_amount_equity.touched || min_amount_equity.dirty)">
+                        <div class="errorwrap" *ngIf="min_amount_equity.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="min_amount_equity.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Price/ Security ($)</label>
+                    <!-- <input type="text" class="form-control" formControlName="price_security" [(ngModel)]="fundData.price_security.amount"> -->
+                    <p-spinner size="30" class="form-control" formControlName="price_security" [(ngModel)]="fundData.price_security.amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="price_security.errors && (price_security.touched || price_security.dirty)">
+                        <div class="errorwrap" *ngIf="price_security.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="price_security.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5>T&Cs</h5>
+        <app-text-editor class="wrappertexteditor" formControlName="terms_condition" 
+            [(ngModel)]="fundData.terms_condition" height="125px"
+            [readOnly]="showReadOnly">
+        </app-text-editor>
+
+        <div class="post-buttons" *ngIf="showNextButton && !showReadOnly">
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">{{nextButtonText}}</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+.assigned-users {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 70px;
+  overflow: auto;
+  .user {
+    width: 40px;
+    height: 40px;
+    float: left;
+    border-radius: 100%;
+    margin: 0 5px 5px 0;
+    background-color: aquamarine;
+  }
+}
+
+.user-unassign {
+  cursor: pointer;
+}
+
+.users {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  .dot-border-empty-add-btn {
+    color: #4342e6;
+    border-radius: 50%;
+    border: dotted 2px #4342e6;
+    font-size: 25px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  input {
+    width: 100%;
+    color: #4342e6;
+    font-size: 18px;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    border-bottom: solid 2px #4342e6;
+    line-height: 1rem;
+    margin-bottom: 15px;
+  }
+}
+
+.users-list-dropdown {
+  position: absolute;
+  width: 210px;
+  height: auto;
+  max-height: 200px;
+  padding: 0;
+  margin: 0;
+  float: left;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  overflow-y: scroll;
+  li {
+    position: relative;
+    width: calc(100% - 15px);
+    min-height: 38px;
+    border-bottom: 1px solid;
+    border-color: #4342e6;
+    padding: 5px 0 5px 33px;
+    margin: 0 7px;
+    line-height: 27px;
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    &:hover {
+      background-color: #eaeaea;
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
+    img {
+      position: absolute;
+      width: 27px;
+      height: 27px;
+      left: 0;
+      background-color: #00d8c9;
+      border-radius: 100%;
+    }
+  }
+  .userbox {
+    display: flex;
+    justify-content: space-between;
+  }
+  .profileicon {
+    width: 25px;
+    height:25px;
+    border:1px dashed #4342e6;
+    border-radius: 360px;
+  }
+}

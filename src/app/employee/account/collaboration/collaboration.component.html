@@ -1,0 +1,4 @@
+<app-header class="position-static" [backNavOptions]="{ route: ['employee', 'account', 'project-list'] }"></app-header>
+<!-- <app-header class="position-static"></app-header> -->
+
+<app-collaboration *ngIf="projectId && milestones" [projectId]="projectId" [milestones]="milestones" [allowAddingActivity]="true"></app-collaboration>

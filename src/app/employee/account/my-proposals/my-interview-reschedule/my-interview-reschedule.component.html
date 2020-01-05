@@ -1,0 +1,27 @@
+<div class="interviewpopup saf_blue_theme">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+    <i class="icon-close"></i>
+  </div>
+
+  <div class="popheading">Reschedule</div>
+
+  <div class="form-group datetimetextbox">
+    <label>Reschedule Interview </label>
+
+    <!-- <input ng2-datetime-picker class="form-control textfeild " [(ngModel)]="scheduleOn" date-format="MM-DD-YYYY HH:MM" [close-on-select]="false"
+    /> -->
+    <p-calendar  class="form-control" [(ngModel)]="scheduleOn" [minDate]="todaysDate" showTime="true" hourFormat="24"
+    [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2050" required="true" dateFormat="mm-dd-yy"></p-calendar>
+    <i class="iconmoon icon-menu"></i>
+    <i class="iconmoon icon-close" (click)="scheduleOn=''"></i>
+
+  </div>
+  <div class="project-actions">
+    <!-- <div class="btn-border skyblue" [disabled]="scheduleOn == ''" (click)="scheduleIt()">
+      <div class="btn skyblue-btn">Confirm</div>
+    </div> -->
+    <button class="btn-border skyblue" [disabled]="scheduleOn == ''" (click)="scheduleIt()">
+      <div class="btn skyblue-btn">Confirm</div>
+    </button>
+  </div>
+</div>

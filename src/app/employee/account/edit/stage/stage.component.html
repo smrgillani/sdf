@@ -1,0 +1,32 @@
+<div class="container-fluid saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header class="position-absolute no-bg" [backNavOptions]="{ route: ['/employee'] }"></app-header>
+      <div class="container-header">
+        <div class="app-employee-profile-bubble-toolbar">
+        <app-employee-profile-bubble-toolbar *ngIf="stageState"
+                                         [currentStage]="stageState.stage"
+                                         (onClicked)="onToolbarClicked($event)"></app-employee-profile-bubble-toolbar>
+         </div>
+        <div class="form-container">
+          <h3 class="d-inline hero-title">{{title}}</h3>
+          <!-- <h3 class="d-inline hero-subtitle">{{subtitle}}</h3> -->
+        </div>
+      </div>
+<app-basic-info *ngIf="employeeInfo.basicInfo != undefined && stageState != undefined && stageState.stage != undefined && stageState.stage == 'basicinfo'" [basicinfo]="employeeInfo.basicInfo"></app-basic-info>
+<!-- <app-basic-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'basicinfo'"></app-basic-info> -->
+<app-professional-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'professionalinfo'"></app-professional-info>
+<app-employment-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'employmentinfo'"></app-employment-info>
+<app-work-sample-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'worksampleinfo'"></app-work-sample-info>
+<app-availability-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'availabilityinfo'"></app-availability-info>
+<!-- <app-contact-info *ngIf="stageState != undefined && stageState.stage != undefined && stageState.stage == 'contactinfo'"></app-contact-info> -->
+
+      <!-- <app-idea-qa [stageState]="stageState"
+                   *ngIf="stageState"
+                   projectStage="idea"
+                   (done)="onDone($event)"
+                   (next)="onNext($event)"></app-idea-qa> -->
+  </div>
+  </div>
+</div>

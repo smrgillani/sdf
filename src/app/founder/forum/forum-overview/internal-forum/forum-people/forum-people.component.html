@@ -1,0 +1,62 @@
+<div class="cardwrap" *ngIf="selectedUserId == 0; else userInfonThread">
+  <div class="cardheading">
+    <div class="row">
+      <div class="col-12">
+        <div class="projects-search">
+          <label for="search" class="search-icon"></label>
+          <input
+            id="search"
+            class="form-control"
+            type="search"
+            placeholder="Search..."
+            [(ngModel)]="searchText"
+          />
+        </div>
+
+        <h3>People</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="cardbody">
+    <div class="peoplewrap">
+      <ng-container *ngFor="let item of forumUserInfoList">
+      <div class="peoplebox" *ngIf="!searchText || item.name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0">
+        <div class="peopleclickbox" (click)="selectedUser(item.id)">
+          <div class="peopleimgbox">
+            <div>
+              <img *ngIf="item.image && item.image != null" [src]="item.image" alt="">
+            </div>
+          </div>
+
+          <h4>{{item.name}}
+            <i *ngIf="item.is_kyc_complete" class="icon-check2 verified"></i>
+          </h4>
+        </div>
+      </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #userInfonThread class="cardwrap">
+  <app-preview-people *ngIf="ownerInfo" [ownerInfo]="ownerInfo" (getUserId)="peopleMessage($event)"></app-preview-people>
+</ng-template>
+
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForCommonMessage>
+  <div class="modal-body">{{errorMessage}}</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,55 @@
+<div class=" table-responsive">
+    <table class="table table-hover projects-table">
+      <tbody>
+          <tr>
+              <td>Current Block</td>
+              <td>{{ chainInfo?.current_block }}</td>
+          </tr>
+          <tr>
+              <td>Block Time</td>
+              <td>
+                  {{ chainInfo?.block_time }}
+                  <br>
+              </td>
+          </tr>
+          <tr>
+              <td>Block Time Averages</td>
+              <td>
+                <table><tbody><tr><td>
+                  {{ chainInfo?.block_time_averages.blocktime_average1 }}<br>
+                  {{ chainInfo?.block_time_averages.blocktime_average2 }}
+                  </td><td>
+                  {{ chainInfo?.block_time_averages.blocktime_average3 }}<br>
+                  {{ chainInfo?.block_time_averages.blocktime_average4 }} 
+                  </td></tr><tr><td>
+                  {{ chainInfo?.block_time_averages.blocktime_average5 }} 
+                  </td></tr></tbody></table>
+              </td>
+          </tr>
+          <tr>
+              <td>Current Difficulty</td>
+              <td>{{ chainInfo?.current_difficulty }}</td>
+          </tr>
+          <tr>
+              <td>Total Difficulty</td>
+              <td>{{ chainInfo?.total_difficulty }}</td>
+          </tr>
+          <tr>
+              <td>Gas Limit</td>
+              <td>{{ chainInfo?.gas_limit }}</td>
+          </tr>
+          <tr>
+              <td>Time</td>
+              <td>{{ chainInfo?.time }}</td>
+          </tr>
+          <tr>
+              <td>Connected to ETH Network</td>
+              <td>{{ chainInfo?.is_connected }}</td>
+          </tr>
+          <tr>
+              <td>API/Client Version</td>
+              <td>{{ chainInfo?.version }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>

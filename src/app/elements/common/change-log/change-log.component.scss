@@ -1,0 +1,30 @@
+:host {
+  overflow-y: auto;
+}
+
+.session {
+  border-bottom: 1px solid #999;
+  cursor: pointer;
+
+  &.selected {
+    background-color: #cecece;
+  }
+
+  .session-name {
+    padding: 24px;
+  }
+
+  &:not(.selected) .session-changes {
+    display: none;
+  }
+
+  .session-changes > div {
+    padding: 12px 24px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ccc;
+
+    &.selected {
+      background-color: #ddd;
+    }
+  }
+}

@@ -1,0 +1,375 @@
+<app-header class="no-bg" [backNavOptions]="{ route: ['/founder/account'] }"></app-header>
+<div class="profile-subheader container">
+    <div class="profile-buttons">
+        <!-- <a class="fa fa-google-wallet" [routerLink]="['wallet']"></a> -->
+        <a [routerLink]="['../']" class="decline"></a>
+        <a class="accept" (click)="submitForm($event)"></a>
+    </div>
+    <a [routerLink]="['photo']" class="user-avatar" [class.white]="profile.photo_crop">
+        <img *ngIf="profile.photo_crop" [src]="profile.photo_crop" alt="">
+        <span>
+            Edit
+        </span>
+        <i *ngIf="profile.is_kyc_complete" class="icon-check2 verified"></i>
+    </a>
+    <div *ngIf="profileErrors['photo']" class="">
+        <div class="error-notification">
+            <div class="alert-badge-border">
+                <div class="alert-badge"></div>
+            </div>
+            <div class="errorwrap">{{profileErrors['photo']}}</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="form-container container">
+    <form action="." #f="ngForm">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" ngModel [(ngModel)]="profile.first_name" #firstName="ngModel"
+                        required> <!-- pattern="^[a-zA-Z0-9. ',-_]+$" -->
+                    <app-validation-message [messages]="messages" [fields]="fields"></app-validation-message>
+                </div>
+            </div>
+            <!-- *ngIf='!profile.first_name' -->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <!-- <input type="text" name="last_name" ngModel [(ngModel)]="profile.last_name" #lastName="ngModel" pattern="^[a-zA-Z0-9.',]+$" required> -->
+                    <input type="text" name="last_name" ngModel [(ngModel)]="profile.last_name" #lastName="ngModel">
+                </div>
+            </div>
+            <!-- *ngIf='!profile.last_name' -->
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="email" [(ngModel)]="profile.email" [readonly]="changeEmail">
+                    <div *ngIf="profileErrors['email']" class="">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['email']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <app-phone-input name="phone_number" [(ngModel)]="profile.phone_number"></app-phone-input>
+
+                    <div *ngIf="profileErrors['phone_number']" class="">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['phone_number']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6" *ngIf="this.profile.email">
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input id="is_2faEmail" type="checkbox" class="custom-control-input" #2FAEmail="ngModel" name="2FAEmail"
+                            ngModal [(ngModel)]="profile.is_2FA_Email">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Enable 2FA Email</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-6" *ngIf="this.profile.phone_number">
+                <div class="form-group">
+                    <label class="custom-control custom-checkbox">
+                        <input id="is_2faPhone" type="checkbox" class="custom-control-input" #2FAPhone="ngModel" name="2FAPhone"
+                            ngModal [(ngModel)]="profile.is_2FA_Phone">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Enable 2FA Phone</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>User name</label>
+                    <input *ngIf="!isTemporaryUser" type="text" name="user_name" [(ngModel)]="profile.user_name"
+                        [readonly]="changeUsername">
+                    <input *ngIf="isTemporaryUser" type="text" name="user_name" [(ngModel)]="profile.user_name">
+                    <div *ngIf="profileErrors['user_name']" class="">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['user_name']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Role</label>
+                    <p-dropdown class="form-control" name="roles" [(ngModel)]="profile.role" [options]="userRoles"></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="profile.registration_country">
+            <div class="col-12">
+                <p><strong>Country - </strong> {{profile.registration_country.title}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <div class="profile-address" [class.hasError]="profileErrors['address']">
+                        <label>Address</label>
+                        <ng-template #rt let-r="result" let-t="term">
+                            {{ r.address}}
+                        </ng-template>
+                        <input type="text" name="address" [(ngModel)]="profile.address" [ngbTypeahead]="searchAddress"
+                            [resultFormatter]="addressFormatter" [resultTemplate]="rt" (selectItem)="selectAddress($event)">
+                        <span class="searching" *ngIf="searching">searching...</span>
+                        <div class="invalid-feedback" *ngIf="searchFailed && !searching">Sorry, suggestions could not
+                            be
+                            loaded.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label *ngIf="isCountryUS">Zip</label>
+                    <label *ngIf="!isCountryUS">Postal Code</label>
+                    <input type="text" name="zip" ngModel [(ngModel)]="profile.zip" #zip="ngModel" maxlength="8">
+                    <!-- <div class="error" *ngIf="firstName.touched && firstName.invalid">Enter alpha characters name!</div> -->
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <p-calendar class="form-control" name="date_of_birth" ngModel #date_of_birth="ngModel" [(ngModel)]="profile.date_of_birth"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1900:2050" #birthDate (onClose)="checkFromDate(birthDate)"></p-calendar>
+                    <div *ngIf="flagFromDate" class="errorwrap">Date of Birth must not be greater than today.</div>
+                    <div *ngIf="f.submitted && profileErrors['date_of_birth']" class="">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['date_of_birth']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label *ngIf="isCountryUS" class="ssn">SSN</label>
+                    <small *ngIf="isCountryUS" class="form-text text-muted ssn" style="cursor: pointer;" (click)="ssnPopUp()">
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      </small>
+                    <label *ngIf="!isCountryUS">NIN</label>
+                    <input type="text" name="ssn" ngModel [(ngModel)]="profile.ssn" #ssn="ngModel" maxlength="9">
+                    <!-- <div class="error" *ngIf="lastName.touched && lastName.invalid">Enter alpha characters name!</div> -->
+                    <div *ngIf="profileErrors['ssn']" class="">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['ssn']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group" *ngIf="!profile.is_social_login; else is_social">
+                    <button type="button" class="saffron_btn blue_btn" (click)="showChangePassword()">Change Password</button>
+                </div>
+                <ng-template #is_social>
+                    <div class="form-group">
+                        <button type="button" class="saffron_btn blue_btn" (click)="showSetPassword()">Set Password</button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div *ngIf="flagShowPassword">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Old Password </label>
+                        <input type="password" name="old_password" [(ngModel)]="objChangePassword.old_password">
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>New Password </label>
+                        <input type="password" name="new_password1" [(ngModel)]="objChangePassword.new_password1">
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Confirm Password </label>
+                        <input type="password" name="new_password2" [(ngModel)]="objChangePassword.new_password2">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-circle accept" (click)="changePassword()">
+                            <span class="icomoon icon-check2"></span>
+                        </button>
+                        <!-- <a class="accept" (click)="changePassword()"></a> -->
+                        <button type="button" class="btn btn-circle decline" (click)="declinePassword()">
+                            <span class="icomoon icon-close"></span>
+                        </button>
+                        <!-- <a class="decline" (click)="declinePassword()"></a> -->
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="profileErrors['old_password'] || profileErrors['new_password1'] || profileErrors['new_password2']">
+                <div *ngIf="profileErrors['old_password']" class="errorwrap btn-block">
+                    <div class="error-notification">
+                        <div class="alert-badge-border">
+                            <div class="alert-badge"></div>
+                        </div>
+                        <div class="error-message-wrapper">{{profileErrors['old_password']}}</div>
+                    </div>
+                </div>
+
+                <div *ngIf="profileErrors['new_password1']" class="errorwrap btn-block">
+                    <div class="error-notification">
+                        <div class="alert-badge-border">
+                            <div class="alert-badge"></div>
+                        </div>
+                        <div class="error-message-wrapper">{{profileErrors['new_password1']}}</div>
+                    </div>
+                </div>
+                <div *ngIf="profileErrors['new_password2']" class="errorwrap btn-block">
+                    <div class="error-notification">
+                        <div class="alert-badge-border">
+                            <div class="alert-badge"></div>
+                        </div>
+                        <div class="error-message-wrapper">{{profileErrors['new_password2']}}</div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+        <div *ngIf="flagShowSetPassword">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name="password1" [(ngModel)]="objSetPassword.password1">
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Confirm Password </label>
+                        <input type="password" name="password2" [(ngModel)]="objSetPassword.password2">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-circle accept" (click)="setPassword()">
+                            <span class="icomoon icon-check2"></span>
+                        </button>
+                        <button type="button" class="btn btn-circle decline" (click)="declineSetPassword()">
+                            <span class="icomoon icon-close"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="profileErrors['password1'] || profileErrors['password2']">
+
+                <div *ngIf="profileErrors['password1']" class="errorwrap btn-block">
+                    <div class="error-notification">
+                        <div class="alert-badge-border">
+                            <div class="alert-badge"></div>
+                        </div>
+                        <div class="error-message-wrapper">{{profileErrors['password1']}}</div>
+                    </div>
+                </div>
+                <div *ngIf="profileErrors['password2']" class="errorwrap btn-block">
+                    <div class="error-notification">
+                        <div class="alert-badge-border">
+                            <div class="alert-badge"></div>
+                        </div>
+                        <div class="error-message-wrapper">{{profileErrors['password2']}}</div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+        <div class="row  drop_files profileImages">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Passport Id</label>
+                    <app-upload-capture-image [withFileDroppa]="true" name="passport_photo" [dropTriggerId]="'passportUploadTrigger'"
+                        [imageSrc]="profile.passport_photo" (filechanged)="imageChangeListener($event,'passport_photo')"></app-upload-capture-image>
+                    <!-- <div *ngIf="f.submitted && profileErrors['passport_photo']" class="errorwrap">{{profileErrors['passport_photo'][0]}}</div> -->
+                    <div *ngIf="profileErrors['passport_photo']" class="errorwrap btn-block">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['passport_photo']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Driver License Id</label>
+                    <app-upload-capture-image [withFileDroppa]="true" name="driver_license_photo" [dropTriggerId]="'drivingLicUploadTrigger'"
+                        [imageSrc]="profile.driver_license_photo" (filechanged)="imageChangeListener($event,'driver_license_photo')"></app-upload-capture-image>
+                    <div *ngIf="!profile.is_dlverify && profile.driver_license_back_photo && !profile.driver_license_photo && profile.driver_license_photo == ''"
+                        class="errorwrap">Front Driving ID Proof is required.</div>
+                    <!-- <div *ngIf="f.submitted && profileErrors['driver_license_photo']" class="errorwrap">{{profileErrors['driver_license_photo'][0]}}</div> -->
+                    <div *ngIf="profileErrors['driver_license_photo']" class="errorwrap btn-block">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['driver_license_photo']}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Driver License back Id</label>
+                    <app-upload-capture-image [withFileDroppa]="true" name="driver_license_back_photo" [dropTriggerId]="'drivingLicUploadTrigger'"
+                        [imageSrc]="profile.driver_license_back_photo" (filechanged)="imageChangeListener($event,'driver_license_back_photo')"></app-upload-capture-image>
+                    <div *ngIf="!profile.is_dlverify && profile.driver_license_photo && !profile.driver_license_back_photo && profile.driver_license_back_photo == ''"
+                        class="errorwrap">Back Driving ID Proof is required.</div>
+                    <div *ngIf="profileErrors['driver_license_back_photo']" class="errorwrap btn-block">
+                        <div class="error-notification">
+                            <div class="alert-badge-border">
+                                <div class="alert-badge"></div>
+                            </div>
+                            <div class="error-message-wrapper">{{profileErrors['driver_license_back_photo']}}</div>
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="f.submitted && profileErrors['driver_license_back_photo']" class="errorwrap">{{profileErrors['driver_license_back_photo'][0]}}</div> -->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

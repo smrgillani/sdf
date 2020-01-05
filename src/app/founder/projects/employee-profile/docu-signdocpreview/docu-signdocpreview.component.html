@@ -1,0 +1,13 @@
+<div class="appoitmentpage saf_blue_theme" #content>
+
+  
+  <!-- <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+    <i class="icomoon icon-multiply" aria-hidden="true"></i>
+  </div> -->
+
+    <button *ngIf="isPopup" type="button" class="close-popup" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+   	<iframe *ngIf="URL" [src]="URL | safeUrl" frameborder="0" width="100%"></iframe>
+  
+</div>

@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="form-group" [ngClass]="{'has-success':status && companyName && companyName.length>0,'has-error':!status && companyName && companyName.length>0}">
+      <input type="text" class="form-control" [(ngModel)]="companyName" (input)="valueChange()" />
+      <i class="fa fa-check" aria-hidden="true"></i>
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group">
+      <p-dropdown class="form-control" [options]="registrationTypeList" (onChange)="getSelectedRegistrationtype($event.value)"
+        [(ngModel)]="registrationType"></p-dropdown>
+    </div>
+  </div>
+
+</div>
+<div class="errorwrap" [ngClass]="{'has-success':status,'has-error':!status && companyName && companyName.length>0}"
+  *ngIf="errorMessage && errorMessage != ''">{{errorMessage}}</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-hover searchresult">
+      <tbody>
+        <tr *ngFor="let item of company_data">
+          <td>
+            {{item.name}}
+          </td>
+          <td>
+            {{item.opencorporates}}
+          </td>
+
+          <!-- <td>
+            <div class="Employee-oth">
+              <div class="employee-budget">{{employee.availability_details[0].hourly_charges.title}}</div>
+            </div>
+          </td>          
+          <td>
+            <div class="project-actions">
+              <div class="btn-border blue">
+                <div class="btn  blue-btn">Message</div>
+              </div>
+              <div class="btn-border orange">
+                <div class="btn orange-btn">Metrices</div>
+              </div>
+              <div class="btn-border skyblue col6">
+                <div class="btn skyblue-btn">Pay</div>
+              </div>
+              <div class="btn-border purple col6">
+                <button type="button" class="btn purple-btn">Fire</button>
+              </div>
+            </div>
+          </td> -->
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="container-sm">
+  <div class="project-actions">
+    <div class="saffron_btn orange_btn" (click)="goTo('dialogs')">Dialogs</div>
+    <div class="saffron_btn blue_btn" (click)="goTo('topics')">Topics</div>
+    <div class="saffron_btn skyblue_btn" (click)="goTo('people')">People</div>
+  </div>
+  <router-outlet></router-outlet>
+  <div class="projects-footer">
+    <div class="back-button" (click)="_location.back()">Back</div>
+  </div>
+</div>

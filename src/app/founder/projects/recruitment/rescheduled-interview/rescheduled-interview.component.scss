@@ -1,0 +1,58 @@
+.interviewpopup {
+    position: relative;
+    padding:10px 35px 35px 35px;
+    .close_popup {
+        font-size: 13px; width: 50px; height: 50px; border-radius: 360px; background: #fe5f5b; color:#fff;
+         box-shadow: 0 0 5px rgba(0,0,0,0.5); position: absolute; top:-68px; right: 10px;text-align: center;  line-height: 54px; cursor: pointer;
+         &:hover{
+                background: #fc514d;
+         }
+    }
+    &::after {
+        position: absolute; top:-20px; right: 25px; content: ""; border-style: solid; border-width: 10px; border-color:transparent transparent #fff transparent
+    }
+    &::before {
+        position: absolute; top:-22px; right: 24px; content: ""; border-style: solid; border-width: 11px; border-color:transparent transparent #3c3e3e transparent
+    }
+    .popheading { font-size:36px; color:#2929e4; font-weight: 500; margin-bottom: 30px; }
+    label {  font-size: 18px; }
+    .form-control { color: #2929e4;}
+    
+}
+.saf_blue_theme .project-actions{ display: inline-block; display: block; text-align: right; }
+.saf_blue_theme .project-actions .btn-border {  height: 38px; display: inline-block;  width: auto;}
+.saf_blue_theme .project-actions .btn-border .btn {height: 32px; }
+.reschedule_interviewbox {
+    width: 49%;
+    margin-right: 1%;
+    border: 2px solid #669bf9;
+    float: left;
+    color: #669bf9;
+    padding: 10px 20px 5px;
+    text-align: center;
+    position: relative;
+    font-size: 18px;
+    &::after{
+        position: absolute; content:""; top: 100%; left: 50%; margin-left: -10px; border-style: solid; border-width: 10px; border-color:#fff transparent transparent transparent;
+    }
+    &::before{
+        position: absolute; content:"";  top: 100%; left: 50%; margin-left: -13px; border-style: solid; border-width: 13px; border-color:#669bf9 transparent transparent transparent;
+    }
+}
+.attend_interviewbox {
+    margin-left: 1%;
+    width: 49%;
+    border: 2px solid #ff6d24;
+    float: left;
+    color: #ff6d24;
+    padding: 10px 20px 5px;
+    text-align: center;
+    position: relative;
+    font-size: 18px;
+    .fa{
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 14px;
+    }
+}

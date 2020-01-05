@@ -1,0 +1,46 @@
+.btn-profile {
+  margin-left: 6.183em;
+  margin-bottom: 1.50em;
+
+  .btn-border {
+    border-color: #fd6c32;
+  }
+
+  .btn-icon {
+    background: #fd6c32 url('/assets/img/founder/ic_account.svg') no-repeat center;
+    background-size: 45%;
+  }
+}
+
+.btn-findwork {
+  .btn-border {
+    border-color: #00d8c9;
+  }
+
+  .btn-icon {
+    background: #00d8c9 url('/assets/img/employee/find_work.png') no-repeat center;
+    background-size: 70%;
+  }
+}
+
+.btn-project {
+  .btn-border {
+    border-color: #FE5F5B;
+  }
+
+  .btn-icon {
+    background: #FE5F5B url('/assets/img/founder/ic_project.svg') no-repeat center;
+    background-size: 45%;
+  }
+}
+
+.btn-proposal {
+  .btn-border {
+    border-color: #6a9df6;
+  }
+
+  .btn-icon {
+    background: #6a9df6 url('/assets/img/employee/proposal.png') no-repeat center;
+    background-size: 40%;
+  }
+}

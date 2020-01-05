@@ -1,0 +1,28 @@
+<div class="scrol-activity-log">
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+
+    <div class="heading">
+      <h1>User List</h1>
+    </div>
+
+    <div>
+      <div class="project-action with-icon" *ngFor="let item of userList" (click)="selectedUser(item.id)">
+        <div class="action-user-icon">
+          <img *ngIf="item.photo" [src]="item.photo" alt="">
+          <i *ngIf="item.is_kyc_complete" class="icon-check2 verified"></i>
+        </div>
+        <div class="action-message">
+          <span class="action-user-name">{{item.name}}</span>
+        </div>
+        <div class="action-time">
+        </div>
+      </div>
+    </div>
+
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getAllProjectUsers($event)"></app-pagination>
+
+  </div>
+  <div class="projects-footer">
+    <div class="back-button" (click)="_location.back()">Back</div>
+  </div>
+</div>

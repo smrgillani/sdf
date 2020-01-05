@@ -1,0 +1,49 @@
+.product-dropdown { 
+position: absolute; background: #fff; border: 1px solid #dddddd; width: 100%; box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2); z-index: 6;
+.productlist        { height: 250px; }
+ul                  { margin:0; padding:0; }
+li                  { list-style-type: none; padding: 10px; margin: 0;  border-bottom:1px solid #dddddd;
+                    & > div { display: flex; align-items: center; }
+                    .productimg         { width: 52px; height: 52px; border-radius: 360px; border:2px solid #ccc; margin-right: 10px; min-width: 52px;
+                                        img     { width: 100%; height: auto; min-height: 100%; border-radius: 360px; }
+                                        }
+                    .productinfo        { width: calc(100% - 140px);  }
+                    .productname        { word-break: break-all; }
+                    .productprice       { color:#fe6f6b; }  
+}
+}
+.productoptions {
+width: 90px;
+.radiogroup { display: inline-block; vertical-align: middle; width: 27px;height: 27px; margin-right: 10px;
+label { margin: 0;}
+}
+}
+
+.btn-circle  { width: 26px; height: 26px; border-radius: 360px; color:#7c7bf4; border:1px solid #7c7bf4;
+vertical-align: middle;
+background: transparent; box-shadow: none; padding: 0;padding-top: 1px;
+text-align: center;
+line-height: 27px;
+
+i {
+font-weight: bold;
+}
+&.active{
+    transform: rotate(18deg);
+    -moz-transform: rotate(18deg);-o-transform: rotate(18deg);
+    -webkit-transform: rotate(180deg);
+}
+}
+.pad-25 { padding: 25px;border-top: 1px solid rgba(0,0,0,0.1); }
+.product-dropdown li > div.collasablediv { padding-left: 52px;      align-items: flex-start; padding-top: 15px; }
+.qtywrap { width: 120px;  padding-left: 20px;
+.form-control{
+border-radius: 0; border: 0; border-bottom: 1px solid #010dff; color: inherit;
+}}
+.prod_desc {width: calc(100% - 120px); }
+
+@media only screen and(max-width:600){
+    .product-dropdown li > div.collasablediv {flex-direction: column-reverse; }
+    .qtywrap { padding-left: 0; margin-bottom: 15px;  }
+}
+

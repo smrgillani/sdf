@@ -1,0 +1,64 @@
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Transaction <small>View information about an Ethereum transaction</small></h1>
+    </div>
+    <div class="cardwrap">
+      <div class=" table-responsive">
+        <table class="table table-hover projects-table">
+          <tbody><tr>
+            <th colspan="2" style="text-align:left">Summary</th>
+        </tr>
+        <tr>
+            <td>Block Hash</td>
+            <td>{{txData?.blockHash}}</td>
+        </tr>
+        <!-- <tr>
+            <td>Received Time</td>
+            <td>
+                {{txData?.time * 1000 | date:'medium'}}
+            </td>
+        </tr> -->
+        <tr>
+            <td>Included In Block</td>
+            <td>
+                {{txData?.blockNumber}}
+            </td>
+        </tr>
+        <tr>
+            <td>Gas Used</td>
+            <td>{{txData?.gas}}</td>
+        </tr>
+        <tr>
+            <td>Gas Price</td>
+            <td>{{txData?.gasPrice}}</td>
+        </tr>
+        <!-- <tr>
+            <td>Transaction Confirmations</td>
+            <td>{{conf}}</td>
+        </tr> -->
+        <tr>
+            <td>Number of transactions made by the sender prior to this one</td>
+            <td>{{txData?.nonce}}</td>
+        </tr>
+        <!-- <tr>
+            <td>Transaction price</td>
+            <td>{{txprice}}</td>
+        </tr> -->
+        <tr>
+            <td>Data</td>
+            <td><textarea readonly style="min-width: 100%;">{{txData?.input}}</textarea></td>
+            <!-- <td>{{txData?.input}}</td> -->
+        </tr>
+
+
+        </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="projects-footer">
+  <div class="back-button" (click)="_location.back()">Back</div>
+</div>

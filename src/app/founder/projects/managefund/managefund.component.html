@@ -1,0 +1,55 @@
+<!-- <app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+<app-header class="position-static"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>{{project.title}}</h1>
+    </div>
+    <ng-container>
+      <div class="card" *ngFor="let item of fundTypes; let index = index">
+        <div class="card-block">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" *ngIf="item.isNotAllowed" class="custom-control-input" (click)="notAllowed($event)">
+            <input type="checkbox" *ngIf="item.flag && !item.isNotAllowed" class="custom-control-input" checked="true" disabled>
+            <input type="checkbox" *ngIf="!item.flag && !item.isNotAllowed" class="custom-control-input" [(ngModel)]="item.isSelected"
+              (change)="manageFundTypeSelection($event, item)">
+            <span class="custom-control-indicator"></span>
+          </label>
+          <h3 class="card-title" (click)="item.isCollapsed=!item.isCollapsed">
+            <span>{{item.title}}</span>
+            <span class="icomoon pull-right" [class.icon-up-arrow]="!item.isCollapsed" [class.icon-down-arrow]="item.isCollapsed">
+            </span>
+
+          </h3>
+          <span class="icon-choices" *ngIf="item.flag" (click)="downloadFundInfo(item)"></span>
+          <span class="icon-draw" *ngIf="item.flag && !item.isNotAllowed" (click)="editManageFund(item)"></span>
+          <div class="card-text" [ngbCollapse]="item.isCollapsed">
+            <div [innerHTML]="item.description"></div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Warning</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This funding requires your idea to complete the company registration phase.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+    <div class="post-buttons">
+      <div class="saffron_btn skyblue_btn" [routerLink]="['./fundingtype']">Next</div>
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="backToLaunch()">Back</div>
+    </div> -->
+  </div>
+</main>

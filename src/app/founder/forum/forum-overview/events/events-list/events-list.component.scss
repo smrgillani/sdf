@@ -1,0 +1,156 @@
+/** Button Colors New Styles */
+
+.saffron_btn {
+    font-weight: 400;
+    transition: .3s ease-in-out;
+    padding: 4px 18px;
+    min-width: 7.222em;
+    white-space: nowrap;
+    outline: none;
+    font-size: 1.125em;
+    font-family: ProximaNova, sans-serif;
+}
+
+.saffron_btn:active {
+    outline: none;
+}
+
+.saffron_btn:disabled {
+    border: 2px solid #dddddd !important;
+    background-color: #dddddd !important;
+}
+
+.saffron_btn:disabled:hover {
+    cursor: not-allowed;
+    box-shadow: 0 0 0 1px #ffffff inset
+}
+
+
+.saffron_btn.dark-turquoise {
+    background-color: #00d8c9;
+    border: 2px solid #00d8c9;
+}
+
+.saffron_btn.maya-blue {
+    background-color: #679BF9;
+    border: 2px solid #679BF9;
+}
+
+.saffron_btn.royal-blue {
+    background-color: #4342e6;
+    border: 2px solid #4342e6;
+}
+
+.saffron_btn.pumpkin {
+    background-color: #FF6C24;
+    border: 2px solid #FF6C24;
+}
+
+
+/** New Styles */
+
+.childpagewrapper .cardwrap .cardheading .col6:first-child {
+    vertical-align: middle;
+    display: flex;
+}
+
+.projects-search .form-control {
+    padding-left: 10px;
+}
+
+.event-list-table tr .Employee-oth > .row {
+    margin-bottom:0;
+}
+
+.event-list-table tr .Employee-oth > .row:hover {
+    text-decoration: underline;
+    text-shadow: 0px 0px 1px #679bf9;
+}
+
+.event-list-table tr .employee-name {
+    margin-bottom:5px;
+}
+
+.event-list-table tr .Employee-oth > .row > .col6:first-child {
+    font-weight: bold;
+    margin-right: 7px;
+}
+
+.event-list-table tr .employee-budget {
+    font-size: 1em !important;
+    font-weight: normal !important;
+}
+
+.event-list-table tr .Employee-oth {
+    display: table-cell !important;
+    vertical-align: middle;
+    color: #679bf9;
+}
+
+.event-list-table tr td:nth-child(1) {
+    width:50% !important;
+}
+
+.event-list-table tr td:nth-child(2),
+.event-list-table tr td:nth-child(3) {
+    width:25% !important;
+    padding:0;
+}
+
+.event-list-table tr:hover {
+    background: #edf2fa;
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .event-list-table .project-actions {
+        margin: -5px 0 1.875em 0;
+        text-align: right;
+        display: block;
+    }
+
+    .event-list-table tr td:nth-child(2),
+    .event-list-table tr td:nth-child(3) {
+        width:50% !important;
+        display: inline-block;
+    }
+
+    .event-list-table tr td:nth-child(2) {
+        padding-left: 73px;
+    }
+
+    .event-list-table tr td:nth-child(1) {
+        width:100% !important;
+    }
+
+    .event-list-table .employee-details {
+        display: block;
+    }
+
+    .cardwrap .cardbody {
+        padding: .5em 1em 1em 1em;
+    }
+
+    .projects-search {
+        padding: 0 1em 0 1em;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .saffron_btn {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .event-list-table tr td:nth-child(2),
+    .event-list-table tr td:nth-child(3) {
+        width:100% !important;
+    }
+
+    .event-list-table .project-actions {
+        margin: 10px 0 12px 0;
+        text-align: center;
+        display: block;
+    }
+}

@@ -1,0 +1,57 @@
+<div class="projects-search">
+    <div class="search-icon"></div>
+    <input class="form-control" type="text"
+           placeholder="search here"
+           [(ngModel)]="searchText"
+           (input)="valueChange()"/>
+  </div>
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Fund Type</th>
+        <th>Fund By</th>
+        <th width="150px">Funding date</th>
+        <th width="125px">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Equity</td>
+            <td>Dipak Sapkal</td>
+            <td>Dec 27, 2017</td>
+            <td>$2000</td>
+          
+          </tr>
+          <tr>
+                <td>Equity</td>
+                <td>Dipak Sapkal</td>
+                <td>Dec 27, 2017</td>
+                <td>$2000</td>
+              
+              </tr>
+              <tr>
+                    <td>Equity</td>
+                    <td>Dipak Sapkal</td>
+                    <td>Dec 27, 2017</td>
+                    <td>$2000</td>
+                  
+                  </tr>
+                  <tr>
+                        <td>Equity</td>
+                        <td>Dipak Sapkal</td>
+                        <td>Dec 27, 2017</td>
+                        <td>$2000</td>
+                      
+                      </tr>
+                      <tr>
+                            <td>Equity</td>
+                            <td>Dipak Sapkal</td>
+                            <td>Dec 27, 2017</td>
+                            <td>$2000</td>
+                          
+                          </tr>
+    </tbody>
+</table>
+</div>
+<app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getfunds($event)"></app-pagination>

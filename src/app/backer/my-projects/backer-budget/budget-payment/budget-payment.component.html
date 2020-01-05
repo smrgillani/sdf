@@ -1,0 +1,68 @@
+<app-header class="position-static"></app-header> 
+<main>
+  
+  <div class="container saf_blue_theme">
+      <div class="heading">
+          <h1>Budget</h1>          
+      </div>
+
+      <div class="cardwrap">
+        <div class="card">
+        <h2>My Expenses</h2>
+        <div class="progress bg-voilet">
+          <div class="progress-bar bg-danger" [style.width]="(project.my_expences_percent <= 100 ? project.my_expences_percent : 100) +'%'">            
+          </div>              
+        </div>  
+        <div class="valuewrap">
+            <span class="value" [title]="project.expences" [style.left]="(project.my_expences_percent <= 100 ? project.my_expences_percent : 100)+'%'">{{project.expences}}</span>
+            <span class="totalvalue" [title]="project.receive_funds">{{project.receive_funds}}</span>     
+          </div>
+    
+      </div>     
+           
+
+        <div class="card">
+        <h2>My Payment</h2>
+        <div class="projects-search">
+            <div class="search-icon"></div>
+            <input class="form-control" type="text"
+                   placeholder="search here"
+                   [(ngModel)]="searchText"
+                   (input)="valueChange()"/>
+          </div>
+          <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Paid for</th>
+                <th>Receiver</th>
+                <th>Type</th>
+                <th width="120px">Payment Date </th>
+                <th width="120px">Amount</th>
+                <th width="120px"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of paymentInfoList">
+                <td>{{item.paid_for}}</td>
+                <td>{{item.reciver}}</td>
+                <td>{{item.type}}</td>
+                <td>{{item.payment_date}}</td>
+                <td>{{item.amount}}</td>
+                <td><i (click)="likedDisliked(item, true)" class="fa fa-thumbs-o-up" aria-hidden="true">{{item.thumbsup_count}}</i> | <i (click)="likedDisliked(item, false)" class="fa fa-thumbs-o-down" aria-hidden="true">{{item.thumbsdown_count}}</i></td>
+              </tr>             
+            </tbody>
+        </table>
+        </div>
+        <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getPaymentInfo($event)"></app-pagination>
+
+
+      </div>       
+
+      </div>
+    
+        <!-- <div class="projects-footer">
+          <div class="back-button" (click)="_location.back()">Back</div>
+        </div> -->
+   </div>
+</main>

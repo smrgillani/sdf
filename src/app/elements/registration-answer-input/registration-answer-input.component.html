@@ -1,0 +1,166 @@
+<div [ngSwitch]="getCardType(question)">
+  <div *ngSwitchCase="'text-multiline'">
+    <textarea rows="5" class="form-control" [(ngModel)]="question.answer" id="input-{{question.id}}"></textarea>
+    <p>SHIFT+ENTER to make a line break</p>
+  </div>
+
+  <div *ngSwitchCase="'text-number'">
+    <input type="number" class="form-control" [(ngModel)]="question.answer" id="input-{{question.id}}" />
+  </div>
+
+  <div *ngSwitchCase="'text-email'">
+    <input type="email" class="form-control" [(ngModel)]="question.answer" id="input-{{question.id}}" />
+  </div>
+
+  <div *ngSwitchCase="'text-tel'">
+    <input type="tel" class="form-control" [(ngModel)]="question.answer" id="input-{{question.id}}" />
+  </div>
+
+  <div *ngSwitchCase="'text'">
+    <!--<input type="text" class="form-control" [(ngModel)]="question.answer.response_text" (blur)="onBlur.emit()" id="input-{{question.id}}" />-->
+    <textarea id="input-{{question.id}}" class="form-control" [(ngModel)]="question.answer.response_text" (blur)="onBlur.emit()"
+      (keydown)="changeHeight($event)"></textarea> {{updateHeight()}}
+  </div>
+
+  <div *ngSwitchCase="'list'">
+    <!-- <pre>{{question.option_list |json}}</pre> -->
+    <p-dropdown class="form-control" [options]="question.option_list | formatSelectItem:'id':'title'" [(ngModel)]="question.answer.option_id" [lazy]="true"
+      [filter]="true" placeholder="Please Select" (ngModelChange)="onBlur.emit()"  appendTo="body"></p-dropdown>
+  </div>
+
+  <div *ngSwitchCase="'date'">
+    <app-date-input [(date)]="date" (dateChange)="onDateChange($event)"></app-date-input>
+  </div>
+
+  <div *ngSwitchCase="'ppt'" class="idea_files nobg">
+    <app-file-droppa id="input-{{question.pk}}" [dropZoneTemplate]="dropZoneFileTemplate" [url]="" [beforeAddFile]="beforeAddFile"
+      [multiple]="false" [autoUpload]="false" [showFilesList]="false" (filesUpdated)="filesUpdated($event)" [openTriggerId]="'droppa-' + question.pk">
+      <span *ngIf="question.answer.powerpoint" (click)="removeFile()" class="remove-image-icon"></span>
+      <p class="dropzone-help-text">Drop your PPT(x) file to the file area</p>
+      <div class="profile-buttons">
+        <div class="trigger" id="droppa-{{question.pk}}">
+          <!-- <span class="icon upload"></span>Upload <br> new file -->
+        </div>
+      </div>
+    </app-file-droppa>
+  </div>
+
+  <div *ngSwitchCase="'image'" class="idea_files">
+    <app-upload-capture-image 
+      [withFileDroppa]="true" 
+      [imageSrc] = "question.answer.image"
+      [dropTriggerId]="'droppa-' + question.pk" 
+      (filechanged)="imageChangeListener($event)">
+    </app-upload-capture-image>
+    <!-- <app-file-droppa id="input-{{question.id}}" [dropZoneTemplate]="uploadImageTemplate" [url]="" [multiple]="false" [showFilesList]="false"
+      [autoUpload]="false" (filesUpdated)="filesUpdated($event)" [openTriggerId]="'droppa-' + question.id" [class.has-image]="question.answer.image">
+      <span *ngIf="question.answer.image" (click)="removeImage()" class="remove-image-icon"></span>
+    </app-file-droppa>
+
+    <div class="dropzone-help-text">Drag & Drop new file to the file area or
+      <div id="droppa-{{question.id}}" class="trigger">
+        <span class="icon upload"></span>Upload</div>
+      <div class="trigger" (click)="notImplementedPopover.open()" appPopoverAutoPosition [popOverName]="notImplementedPopover"
+        [placement]="{desktop:'top', tablet:'top', mobile:'top'}" (shown)="closePopoverpWithDelay(2000, notImplementedPopover, 'timer')"
+        [triggers]="'none'" [container]="'body'" [ngbPopover]="notImplementedTemplate" #notImplementedPopover="ngbPopover">
+        <span class="icon take-photo"></span>Take photo</div>
+    </div>
+
+    <ng-template #notImplementedTemplate>
+      <div class="message">{{notImplementedMessage}}</div>
+      <div class="buttons">
+        <div class="btn btn-ok" (click)="notImplementedPopover.close()">Ok</div>
+      </div>
+    </ng-template> -->
+  </div>
+
+  <div *ngSwitchCase="'doc_drawing'">
+    <!-- <app-edit-drawing id="input-{{question.id}}"
+                        class="doc_drawing"
+                        [(ngModel)]="question.answer.diagram"
+                        (forceSave)="onForceSave()"
+      ></app-edit-drawing> -->
+
+    <app-vd-canvas #vdCanvas [options]="canvasOptions" (onSave)="onCanvasSave($event)" [(ngModel)]="question.answer.diagram">
+    </app-vd-canvas>
+  </div>
+
+  <div *ngSwitchCase="'diagram'">
+    <app-edit-drawing id="input-{{question.id}}"
+                        class="doc_drawing"
+                        [(ngModel)]="question.answer.response_text"
+                        (forceSave)="onForceSave()"
+      ></app-edit-drawing>
+  </div>
+
+  <div *ngSwitchCase="'doc_spreadsheet'">
+    <app-spreadsheet id="input-{{question.id}}" class="doc_spreadsheet" [(ngModel)]="question.answer.spreadsheet"></app-spreadsheet>
+  </div>
+  <!-- (change)="chooseRadio(val)" -->
+  <ul *ngSwitchCase="'radio'" class="radiogroup">
+    <li class="" *ngFor="let val of question.vals; let subindex = index; trackBy: trackByIndex;">
+      <label class="custom-control custom-radio">
+        <input type="radio" attr.name="radioGroup{{question.id}}" name="radioGroup{{question.id}}" (ngModelChange)="onBlur.emit()" class="custom-control-input" [(ngModel)]="question.answer.radio" [value]="val.id">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{val.value}}</span>
+      </label>
+    </li>
+  </ul>
+
+  <ul *ngSwitchCase="'boolean'" class="radiogroup">
+    <li class="">
+      <label class="custom-control custom-radio">
+        <input type="radio" attr.name="radioGroup{{question.id}}" name="radioGroup{{question.id}}" (ngModelChange)="onBlur.emit()" class="custom-control-input" [(ngModel)]="question.answer.boolean_text" [value]="true">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Yes</span>
+      </label>
+    </li>
+    <li class="">
+      <label class="custom-control custom-radio">
+        <input type="radio" attr.name="radioGroup{{question.id}}" name="radioGroup{{question.id}}" (ngModelChange)="onBlur.emit()" class="custom-control-input" [(ngModel)]="question.answer.boolean_text" [value]="false">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">No</span>
+      </label>
+    </li>
+  </ul>
+
+  <ul *ngSwitchCase="'checkbox'" class="radiogroup">
+    <li class="" *ngFor="let val of question.vals; let subindex = index; trackBy: trackByIndex;">
+      <label class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" (click)="chooseCheckbox(val, $event.target.checked)" [checked]="val.checked">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{val.value}}</span>
+      </label>
+    </li>
+  </ul>
+
+  <div *ngSwitchCase="'ocr'" class="">
+    <app-ocr-input id="input-{{question.id}}" [(ngModel)]="question.answer.ocr" (ngModelChange)="onOcrDataChange($event)" [isWorkArea]="false"></app-ocr-input>
+  </div>
+
+  <div *ngSwitchCase="'companysearch'" class="">
+    <app-search-company id="input-{{question.id}}" [(ngModel)]="question.answer.response_text"></app-search-company>
+  </div>
+
+  <div *ngSwitchCase="'productcomp'" class="searchinput">
+      <app-search-product id="input-{{question.pk}}" [(ngModel)]="question.answer.productcompare_answer" (ngModelChange)="onProductChange($event)"></app-search-product>
+  </div>
+
+  <div *ngSwitchCase="'companycomp'" class="searchinput">
+    <app-search-company-compare id="input-{{question.pk}}" [(ngModel)]="question.answer.productcompare_answer" (ngModelChange)="onProductChange($event)"></app-search-company-compare>
+  </div>
+
+  <div *ngSwitchCase="'business_address'" class="">
+    <app-business-address [(ngModel)]="question.answer.swot_answer" [isSummary]="false"></app-business-address>
+  </div>
+
+  <div *ngSwitchCase="'service_process'" class="">
+    <app-service-process [(ngModel)]="question.answer.swot_answer" [isSummary]="false"></app-service-process>
+  </div>
+
+  <div *ngSwitchDefault>
+    <div id="input-{{question.id}}">
+      Sorry, but question type '{{question.question_type}}' is not implemented yet.
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<label class="custom-control lg-checkbox custom-checkbox" *ngIf="!showNextButton">
+    <input type="checkbox" class="custom-control-input" checked disabled>
+    <span class="custom-control-indicator"></span>
+</label>
+<div class="heading">
+    <h1 (click)="isCollapsebuy=togglecollapse(isCollapsebuy)">Company buy offer</h1>
+</div>
+<form [formGroup]="frmFundDetails">
+    <div class="cardwrap"  *ngIf="isCollapsebuy">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Current valuation of company ($)</label>
+                    <!-- <input type="text" class="form-control" formControlName="current_valuation" [(ngModel)]="fundData.current_valuation.amount"> -->
+                    <p-spinner size="30" class="form-control" formControlName="current_valuation" [(ngModel)]="fundData.current_valuation.amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="current_valuation.errors && (current_valuation.touched || current_valuation.dirty)">
+                        <div class="errorwrap" *ngIf="current_valuation.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="current_valuation.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Details of the organization</label>
+                    <input type="text" class="form-control" formControlName="organization_details" [(ngModel)]="fundData.organization_details">
+                    <div class="form-control-feedback" *ngIf="organization_details.errors && (organization_details.touched || organization_details.dirty)">
+                        <div class="errorwrap" *ngIf="organization_details.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h5>T&Cs</h5>
+        <app-text-editor class="wrappertexteditor" formControlName="terms_condition" [(ngModel)]="fundData.terms_condition" height="125px"></app-text-editor>
+
+        <div class="post-buttons" *ngIf="showNextButton">
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">{{nextButtonText}}</button>
+        </div>
+    </div>
+</form>

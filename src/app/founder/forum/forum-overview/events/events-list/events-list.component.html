@@ -1,0 +1,192 @@
+<div class="cardwrap">
+  <div class="cardheading">
+    <div class="row">
+      <div class="col6">
+        <h3>Event List</h3>
+      </div>
+      <div class="col6">
+        <button class="saffron_btn royal-blue waves-effect waves-light" [routerLink]="['../add-event']" >
+            Add Event
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="cardbody">
+    <!-- <div class="cardwrapper">
+      Content Here
+    </div> -->
+
+    <div class="projects-search">
+      <div class="search-icon"></div>
+      <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+    </div>
+
+    <table class="table table-hover employee-table event-list-table">
+      <tbody>
+        <tr *ngFor="let item of eventInfoList let index = index" (click)="eventDetailsPopup(item,showEventDetails)">
+          <td>
+            <div class="media">
+              <div class="media-left">
+                <div class="mediaimg">
+                  <img *ngIf="item.image" [src]="item.image | safeUrl" alt="">
+                </div>
+              </div>
+              <div class="media-body">
+                <div class="Employee-title">
+                  <div class="employee-name">{{item.event_name}}</div>
+                  <div class="employee-budget">{{item.event_date | date: 'MMM dd, yyyy hh:mm'}}</div>
+                  <div class="employee-details">
+                    <div class="employee_des">({{item.event_type}})</div>
+                    <div class="employee_des" *ngIf="item.button && item.button.status == 'accept'">Status: <strong>Accepted</strong></div>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="Employee-oth">
+                <div class="row" (click)="attendedUserListPopUp(item.id,'accept',getInvitedUsersForm, $event)">
+                    <div class="col6">{{item.accepted_count}}</div>
+                    <div class="col6">Accepted</div>
+              </div>
+              <div class="row" (click)="attendedUserListPopUp(item.id,'new',getInvitedUsersForm, $event)">
+                    <div class="col6">{{item.not_accepted_count}}</div>
+                    <div class="col6">Not Accepted</div>
+              </div>
+            </div>
+          </td>
+          <!-- <td class="attached_file">
+            <i class="fa fa-paperclip" *ngIf="employee.rehire_envelop && employee.rehire_envelop != null && employee.rehire_envelop != ''"
+                (click)="checkDocuSign(employee, popUpForDocuSignMessage)" title="Appointment Letter"></i>
+          </td> -->
+          <td>
+            <div class="project-actions">
+              <div *ngIf="item.send_invitation">
+                  <button class="saffron_btn maya-blue waves-effect waves-light" (click)="inviteFriendsPopUp(item.id, addInviteFriendsForm, $event)">
+                      Invite Friends
+                  </button>
+              </div>
+              <div *ngIf="item.button && item.button.name == 'attend'">
+                  <button class="saffron_btn maya-blue waves-effect waves-light" (click)="AttendEvent(item.id, $event)">
+                      Attend
+                  </button>
+              </div>
+              <div *ngIf="item.button && item.button.name == 'accept'">
+                  <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="updateEventInfoStatus(item.button.invitation,'accept', $event)">
+                      Accept
+                  </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getEventList($event)"></app-pagination>
+  </div>
+</div>
+
+<ng-template #showEventDetails>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+    <div class="modal-header">
+      <h3 class="modal-title">Event Details</h3>
+    </div>
+    <div class="modal-body">
+      <table style="width:100%">
+        <colgroup>
+          <col style="width:130px;">
+          <col>
+        </colgroup>
+        <tr>
+          <td><strong>Name</strong></td>
+          <td style="word-break:break-word">{{selectedEvent.event_name}}</td>
+        </tr>
+        <tr>
+          <td><strong>Organizer</strong></td>
+          <td style="word-break:break-word">{{selectedEvent.owner_name}}</td>
+        </tr>
+        <tr>
+          <td><strong>Location</strong></td>
+          <td style="word-break:break-word">{{selectedEvent.location}}</td>
+        </tr>
+        <tr>
+          <td><strong>Date</strong></td>
+          <td style="word-break:break-word">{{selectedEvent.event_date | date: 'MMM dd, yyyy hh:mm a'}}</td>
+        </tr>
+        <tr>
+          <td><strong>Description</strong></td>
+          <td style="word-break:break-word">{{selectedEvent.description}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer event-detail-footer">
+        <div class="project-actions">
+          <div *ngIf="selectedEvent.send_invitation">
+            <button 
+              class="saffron_btn royal-blue waves-effect waves-light" 
+              [routerLink]="['../update-event']"
+              [queryParams]="{ selectedEvent:selectedEvent | json }">
+              Update Details
+            </button>
+
+          </div>
+
+          <div *ngIf="selectedEvent.button && selectedEvent.button.name == 'attend'">
+              <button class="saffron_btn maya-blue waves-effect waves-light" (click)="AttendEvent(selectedEvent.id, $event)">
+                  Attend
+              </button>
+          </div>
+
+          <div *ngIf="selectedEvent.button && selectedEvent.button.name == 'accept'">     
+            <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="updateEventInfoStatus(selectedEvent.button.invitation,'accept')">
+                Accept
+            </button>
+          </div>
+
+          <div *ngIf="selectedEvent.button && selectedEvent.button.status == 'accept'">     
+              <button class="saffron_btn pumpkin waves-effect waves-light" (click)="updateEventInfoStatus(selectedEvent.button.invitation,'cancel')">
+                  Change Mind
+              </button>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-template>
+
+<ng-template #addInviteFriendsForm>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+    <div class="modal-header">
+      <h3 class="modal-title">Invite Friends</h3>
+    </div>
+    <div class="modal-body">
+      <!-- <app-project-milestone-form class="milestone-form" [shownextform]="shownextform" [milestone]="milestone" [projectMilestones]="projectMilestones"
+          [categoryImageList]="categoryImageList"></app-project-milestone-form> -->
+      <app-invite-friends-event [selectedUserIds]="selectedUserIds" [selectedEventId]="selectedEventId"></app-invite-friends-event>
+    </div>
+    <div class="modal-footer">
+      <button class="saffron_btn dark-turquoise waves-effect waves-light" [disabled]="selectedUserIds.length <= 0" (click)="sendInvitation()">
+        Send Invitation
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #getInvitedUsersForm>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="modalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+    <div class="modal-header">
+      <h3 class="modal-title">User List</h3>
+    </div>
+     <div class="modal-body">
+      <app-event-attend-userlist [selectedEventId]="selectedEventId" [listFor]="listFor"></app-event-attend-userlist>
+    </div>
+
+  </div>
+</ng-template>

@@ -1,0 +1,57 @@
+
+@media (max-width: 499px) {
+
+  .container-logo {
+    height: 25px;
+  }
+
+  .container-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .container-button {
+    margin: 0px;
+    width: 130px;
+    height: 130px;
+
+    border-width: 1px;
+    border-radius: 70px;
+    border-style: solid;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 3px;
+
+    -webkit-filter:  blur(0px);
+    filter:  blur(0px);
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+
+    cursor: pointer;
+  }
+
+  .button-inner {
+    width: 120px;
+    height: 120px;
+
+    border-radius: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    font-size: 1.2em;
+  }
+
+  .container-footer {
+    color: #fff;
+    font-size: 0.8em;
+  }
+
+
+}

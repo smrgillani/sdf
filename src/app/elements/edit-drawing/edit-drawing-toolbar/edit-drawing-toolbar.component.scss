@@ -1,0 +1,142 @@
+.editor-tools-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background-color: #666666;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: subpixel-antialiased;
+  padding: 3px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 21px;
+
+  .section-group {
+    display: flex;
+    padding: 3px 0;
+  }
+
+  .section {
+    display: flex;
+    padding: 0 12px;
+    align-items: center;
+
+    &:not(:first-child) {
+      border-left: 1px solid #fff;
+    }
+
+    &.font-size {
+      text-align: center;
+
+      input {
+        height: 20px;
+        margin-left: 5px;
+        margin-top: -2px;
+        width: 35px;
+        text-align: center;
+      }
+
+      span {
+        margin-left: 5px;
+      }
+    }
+
+    &.text-alignment {
+      text-decoration: none;
+
+      i {
+        opacity: 0.7;
+
+        &.active {
+          opacity: 1;
+        }
+
+        &:not(:first-child) {
+          margin-left: 5px;
+        }
+      }
+    }
+
+    &.font-color .color {
+      width: 21px;
+      height: 21px;
+      cursor: pointer;
+
+      &.transparent {
+        background: url('/assets/img/transparent.jpg');
+        border: 0;
+      }
+    }
+
+    &.border {
+      input {
+        height: 20px;
+        margin-top: -2px;
+        width: 35px;
+        text-align: center;
+      }
+
+      .border-width {
+        padding: 0 5px;
+        text-align: center;
+      }
+
+      div {
+        cursor: pointer
+      }
+    }
+
+    &.border .color,
+    &.fill .color {
+      width: 21px;
+      height: 21px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      margin-left: 6px;
+
+      &.transparent {
+        background: url('/assets/img/transparent.jpg');
+        border: 0;
+      }
+    }
+
+    &.colors {
+      padding: 6px 9px;
+      font-size: 0;
+
+
+      .color {
+        display: inline-block;
+        width: 21px;
+        height: 21px;
+        border: 1px solid transparent;
+        cursor: pointer;
+
+        &.transparent {
+          background: url('/assets/img/transparent.jpg');
+          border: 0;
+        }
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    &.close {
+      border-left: 1px solid #aaaaaa;
+      width: 31px;
+      height: 31px;
+      background: url("/assets/img/close_btn.png") no-repeat center;
+      background-size: 50%;
+    }
+
+    .img-button {
+      height: 21px;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,110 @@
+<ng-container *ngIf="!stageState.done">
+    <div class="stage-progress-container">
+        <div class="stage-progress-items">
+          <div class="stage-progress">
+            <div>{{editingIndex}} of {{qa.length}} answered</div>
+            <div class="stage-progress-bar">
+              <div class="stage-complete"
+                   [style.width.%]="100 * editingIndex / qa.length"></div>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <div class="step-btn prev-btn"
+                 (click)="onPrev(editingIndex)"
+            >
+              <i class="fa fa-angle-left"></i>
+            </div>
+
+            <div class="step-btn next-btn"
+                 (click)="onNext(editingIndex)"
+                 [class.activated]="answerValidator.isValid(qa[editingIndex])"
+                 [class.deactivated]="!answerValidator.isValid(qa[editingIndex])"><i class="fa fa-angle-right"></i></div>
+          </div>
+        </div>
+      </div>
+
+    <div class="question-container"
+         [class.current]="editingIndex === index && index <= reachedStep + 1"
+         *ngFor="let question of qa; let index = index; trackBy: trackByIndex;"
+         id="card-container-{{index}}"
+    >
+      <div class="question ask"
+           id="card-{{index}}"
+      >
+
+        <div class="question-inner clearfix">
+          <p class="question-title">{{question.title}}</p>
+          <p class="question-subtitle">{{question.subtitle}}</p>
+
+          <app-registration-answer-input *ngIf="editingIndex === index"
+                            [question]="question" (onNext)="onNext(editingIndex)"
+                            (forceSave)="onForceSave()"
+          ></app-registration-answer-input>
+
+          <div class="pull-right private-question">
+            <!-- <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="qa[index].answer.is_private">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Make this answer private</span>
+              <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i>
+            </label> -->
+
+            <button [disabled]="!answerValidator.isValid(qa[editingIndex])"
+                    type="button"
+                    class="next-qst-btn"
+                    [class.orange]="question.question_type === 'image'"
+                    (click)="onNext(index)">Next</button>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+    </div>
+    </div>
+  </ng-container>
+
+  <div class="scrollbar-container" id="stage-summary" *ngIf="stageState.done">
+    <div class="question-container result" [ngClass]="{'speradsheet':question.question_type==='doc_spreadsheet'}"
+         *ngFor="let question of qa; let index = index; trackBy: trackByIndex;"
+         id="result-card-container-{{index}}"
+    >
+      <div class="question" id="card-{{index}}">
+        <div class="question-inner">
+          <p class="question-title">{{question.title}}</p>
+          <p class="question-subtitle">{{question.subtitle}}</p>
+
+          <app-registration-answer-input [question]="question"
+                            (onNext)="onNext(editingIndex)"
+                            (forceSave)="onForceSave()"
+          ></app-registration-answer-input>
+
+          <!-- <div class="pull-right private-question">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [(ngModel)]="question.answer.is_private">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Make this answer private</span>
+              <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i>
+            </label>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="done" class="done-container" [class.disabled]="isSubmitting">
+      <button class="done-btn" [ngClass]="{processing: processing}" [disabled]="isSubmitting" (click)="onSubmit($event)"><img src="/assets/img/hourglass.svg"></button>
+      <button class="done-btn-caption" (click)="onSubmit($event)">Done</button>
+      <div class="done-note">
+        Click "Done" to go next step<br/>
+        or <a (click)="changeAnswers($event)">Change answers</a>
+      </div>
+    </div> -->
+
+    <div id="done" class="done-container" [class.disabled]="isSubmitting">
+      <button class="done-btn" [ngClass]="{processing: processing}" type="button" (click)="onSubmit($event)">
+        Next
+      </button>
+      <div class="done-note">
+          Click "Next" to save<br/>
+          or <a (click)="changeAnswers($event)">Change answers</a>
+        </div>
+    </div>
+  </div>

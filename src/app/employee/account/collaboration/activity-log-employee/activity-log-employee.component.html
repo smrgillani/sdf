@@ -1,0 +1,56 @@
+<div class="scrol-activity-log">
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+
+    <div class="heading">
+      <h1>Activity Log</h1>
+    </div>
+
+    <ng-container>
+      <div class="card" *ngFor="let item of activityLogList; let index = index">
+        <div class="card-block">
+          <h3 class="card-title" (click)="toggleAccordian($event,index)">
+            <i class="icomoon icon-next-1"></i>
+            {{item.date}}
+            <span class="pull-right" [class.icon-up-arrow]="!isCollapsedArray[index]" [class.icon-down-arrow]="isCollapsedArray[index]"><span
+                [ngClass]="item.flag == false ? 'icon-mark': 'icon-close'"></span></span>
+          </h3>
+          <div class="card-text" [ngbCollapse]="isCollapsedArray[index]">
+            <table class="table table-hover  employee-table">
+              <tbody>
+                <tr *ngFor="let subItem of item.questions">
+                  <td>
+                    <div class="Employee-title">
+                      <div class="employee-name">{{subItem.question_title}}</div>
+                      <div class="employee-details">
+                        <div class="ava" *ngIf="subItem.boolean_text; else extensionRequest">No of Days: {{subItem.no_days}}</div>
+                        <ng-template #extensionRequest>
+                            <div *ngIf="subItem.boolean_text != undefined && !subItem.boolean_text" class="ava" >No</div>
+                        </ng-template>
+                        <div class="employee_des">{{subItem.response_text}}</div>
+                        <!-- <div class="ava">Availability : {{employee.availability_details[0].hours_per_day.title}} hours/day</div> -->
+                      </div>
+                    </div>
+                  </td>
+                  <!-- <td>
+                    <div class="Employee-oth">
+                    </div>
+                  </td>
+                  <td class="attached_file">
+                  </td>
+                  <td>
+                    <div class="project-actions">
+                    </div>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getUserActivityLogs($event)"></app-pagination>
+    </ng-container>
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</div>

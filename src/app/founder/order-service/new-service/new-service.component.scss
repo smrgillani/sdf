@@ -1,0 +1,38 @@
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  
+    h1 {
+      color: #2929e4;
+      font-size: 2.250em;
+      font-weight: 500;
+      line-height: 1.194em;
+      margin: 2px;
+    }
+  
+    
+  }
+  main {
+    padding: 0.625em 0 3.750em 0;
+    background-color: #f9f5f0;
+    min-height: calc(100% - 67px);
+}
+  .cardwrap {
+    background: #fff;
+     margin-bottom: 0.625em;
+     padding: 2.188em 2.500em;
+     &.summarysec{
+         padding:0.8em 2.500em 2.188em 0;
+          .cardwrap {
+             padding: 0;
+           }
+     }
+ }
+ 
+ /** New Styles */
+.errorwrap {
+  word-break: break-word;
+}

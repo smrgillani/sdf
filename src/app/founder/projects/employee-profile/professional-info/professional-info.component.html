@@ -1,0 +1,50 @@
+<div class="acc_content">
+
+  <div class="resumelink">
+    <div class="file_wrap">
+      <i class="fa fa-file-text-o" aria-hidden="true"></i>
+    </div>
+    <span *ngIf="resume.file_name != undefined && resume.file_name != null && resume.file_name != ''; else noResume" (click)="getResumeBasedOnId()" class="filetext">Full Resume</span>
+    <ng-template #noResume>
+      <span class="filetext">Resume not uploaded</span>
+    </ng-template>
+    
+    <!-- <a target="_blank" href="envPath/employee/resume/473/download" class="filetext">Full Resume</a> -->
+    <!-- <a (click)="openAttachment()" class="filetext">Full Resume</a> -->
+
+  </div>
+  <div *ngFor="let item of professionalInfo">
+    <div class="p_wrap">
+      <div class="p_question">Highest qualification</div>
+      <div class="p_answer">{{item.highest_qualification?.title}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">University </div>
+      <div class="p_answer">{{item.university?.title}}</div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Programs </div>
+      <div class="p_answer">{{item.programs?.title}}</div>
+    </div>
+    <!-- <div class="p_wrap">
+      <div class="p_question">Department </div>
+      <div class="p_answer">Freestyle football, Mushroom hunting/Mycology,</div>
+    </div>
+    <div class="p_wrap">
+      <div class="p_question">Total Experience </div>
+      <div class="p_answer">9 years </div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Key Skils </div>
+      <div class="p_answer">HTML, CSS 3.0, Jquery, javascrip, Angular js, bootstrap, wordpress, magento, </div>
+    </div>
+
+    <div class="p_wrap">
+      <div class="p_question">Hourly charges </div>
+      <div class="p_answer">100 $ Per Hours</div>
+    </div> -->
+  </div>
+</div>

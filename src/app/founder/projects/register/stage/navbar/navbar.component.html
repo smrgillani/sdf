@@ -1,0 +1,34 @@
+<nav class="bubbles">
+  <!-- <div class="bubble selector" (click)="backToEntitySelection()">
+    <div class="button-border">
+      <div class="button-icon bg-blue bg-back"></div>
+    </div>
+    <div class="caption next" title="Back to entity type selection">Back</div>
+  </div> -->
+
+  <div *ngFor="let stage of stages; let i = index" (shown)="registerPopover.closePopoverpWithDelay(2000, stagePopover, 'stageTimer-' + stage.title)"
+    [triggers]="'none'" [container]="'body'" [ngbPopover]="stagePopoverTemplate" #stagePopover="ngbPopover"
+    appPopoverAutoPosition [popOverName]="stagePopover" [placement]="{desktop:'bottom', tablet:'bottom', mobile:'none'}"
+    class="bubble" [class.selector]="stage.enabled" [class.done]="stage.state.done" (click)="navigateToIfComplete(stage, i, stagePopover)">
+
+    <ng-template #stagePopoverTemplate>
+      <div class="message">Please complete the <span class="text-capitalize">"{{registerPopover.uncompletedStage}}"</span>
+        before you go next.</div>
+      <div class="buttons">
+        <div class="btn btn-ok" (click)="stagePopover.close()">Ok</div>
+      </div>
+    </ng-template>
+
+    <div class="button-border" [class.active]="stage.url == currentStage">
+      <div class="button-icon {{stage.icon}}"><span class="icomoon"></span></div>
+    </div>
+    <div class="caption {{stage.enabled ? '' : 'disabled'}}">{{stage.title}}</div>
+  </div>
+
+  <div class="bubble">
+    <div class="button-border">
+      <div class="button-icon bg-blue bg-next"></div>
+    </div>
+    <div class="caption next">Next<span class="disabled-mobile"> Stage</span></div>
+  </div>
+</nav>

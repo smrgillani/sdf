@@ -1,0 +1,22 @@
+<nav class="navbar navbar-dark navbar-inverse bg-trans navbar-toggleable-sm fixed-top justify-content-end">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navBar"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Menu">
+    <span class="navbar-toggler-icon" (click)="toggleState()"></span>
+  </button>
+
+  <a class="navbar-brand" style="color: #FFF">Saffron</a>
+
+  <div class="collapse navbar-collapse justify-content-end" [ngClass]="{'show' : isMenuExpanded}">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="btn-round justify-content-center align-items-center activated"><span>Creator</span></div>
+      </li>
+      <li class="nav-item">
+        <div class="btn-round justify-content-center align-items-center deactivated"><span>Investor</span></div>
+      </li>
+      <li class="nav-item">
+        <div class="btn-round justify-content-center align-items-center deactivated"><span>Employee</span></div>
+      </li>
+    </ul>
+  </div>
+</nav>

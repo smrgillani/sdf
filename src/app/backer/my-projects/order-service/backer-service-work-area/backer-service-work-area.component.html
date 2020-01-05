@@ -1,0 +1,55 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Services'}"></app-header>
+
+<main>
+  <aside class="processes" [class.open]="isProcessesOpen" [class.mobile_open]="activeMobileView === 'menu'">
+    <span class="open_trigger" (click)="isProcessesOpen = !isProcessesOpen"><i class="icomoon icon-menu2"></i></span>
+    <div class="processes-scroll" *ngIf="isProcessesOpen">
+
+      <div class="public_channels" *ngIf="isProcessesOpen">
+        <h3>
+          Title:
+        </h3>
+
+        <ul>
+          <li><span>{{orderServiceInfo.title}}</span></li>
+        </ul>
+
+        <h3>
+          Urgency:
+        </h3>
+        <ul>
+          <li><span>{{orderServiceInfo.urgency?.title}}</span></li>
+        </ul>
+
+        <h3>
+          Extensiveness:
+        </h3>
+        <ul>
+          <li><span>{{orderServiceInfo.extensiveness?.title}}</span></li>
+        </ul>
+
+        <h3>
+          Expertise:
+        </h3>
+        <ul>
+          <li><span>{{orderServiceInfo.expertise}}</span></li>
+        </ul>
+
+        <h3>
+          Status:
+        </h3>
+        <ul class="orderstatus">
+          <li [ngClass]="{'active':orderServiceInfo.status=='open' || orderServiceInfo.status=='work' || orderServiceInfo.status=='review' || orderServiceInfo.status=='closed'}"><span><i class="icomoon icon-check2"></i>Placed Order</span></li>
+          <li [ngClass]="{'active':orderServiceInfo.status=='open' || orderServiceInfo.status=='work' || orderServiceInfo.status=='review' || orderServiceInfo.status=='closed'}"><span [ngClass]="{'active':orderServiceInfo.status=='open'}"><i class="icomoon icon-check2"></i>Provide Requirement</span></li>
+          <li [ngClass]="{'active':orderServiceInfo.status=='work' || orderServiceInfo.status=='review' || orderServiceInfo.status=='closed'}"><span [ngClass]="{'active':orderServiceInfo.status=='work'}"><i class="icomoon icon-check2"></i>Order in Progress</span><span>The writer is now working on the service you requested.</span></li>
+          <li [ngClass]="{'active':orderServiceInfo.status=='review' || orderServiceInfo.status=='closed'}"><span [ngClass]="{'active':orderServiceInfo.status=='review'}"><i class="icomoon icon-check2"></i>Review the Delivery</span></li>
+          <li [ngClass]="{'active':orderServiceInfo.status=='closed'}"><span [ngClass]="{'active':orderServiceInfo.status=='closed'}"><i class="icomoon icon-check2"></i>Order Complete</span></li>
+        </ul>
+
+      </div>
+    </div>
+  </aside>
+  <div class="file-browser-container">
+    <router-outlet></router-outlet>
+  </div>
+</main>

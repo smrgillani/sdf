@@ -1,0 +1,34 @@
+<!-- <app-header [backNavOptions]="{caption: 'Dashboard' , route: ['./']}"></app-header> -->
+<app-header class="position-static"></app-header>
+<main>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Order Service List</h1>
+        </div>
+        <div class="cardwrap tabwrap">
+            <ngb-tabset>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Current Orders</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-backer-service-orders [orderType]="'current'" [projectId]="projectId"></app-backer-service-orders>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Past Orders</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-backer-service-orders [orderType]="'past'" [projectId]="projectId"></app-backer-service-orders>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>All Orders</ng-template>
+                    <ng-template ngbTabContent>
+                        <app-backer-service-orders [projectId]="projectId"></app-backer-service-orders>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+        <!-- <div class="projects-footer">
+            <div class="back-button" (click)="_location.back()">Back</div>
+        </div> -->
+    </div>
+</main>

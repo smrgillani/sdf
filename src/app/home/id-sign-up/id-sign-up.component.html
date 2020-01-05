@@ -1,0 +1,228 @@
+<div class="login-box container idsignup" [ngClass]="{'capturePhotoStage':isStage=='capturePhoto'}">
+  <div class="close-btn hidden-sm-up" [routerLink]="['/']"></div>
+  <div *ngIf="isStage=='getIdStage'">
+    <div class="container-title">Identity Verification</div>
+    <form name="form" (ngSubmit)="f.form.valid && setIdentificationInfo(f)" #f="ngForm" novalidate>
+      <div class="row VCenter" *ngIf="idmethod=='passport'">
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group">
+            <label>MRZ Number</label>
+            <input type="text" class="form-control" placeholder="MRZ Number" [(ngModel)]="signUpInfo.line1" name="line1" #line1="ngModel">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="MRZ Number" [(ngModel)]="signUpInfo.line2" name="line2" #line2="ngModel">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="MRZ Number" [(ngModel)]="signUpInfo.line3" name="line3" #line3="ngModel">
+          </div>
+        </div>
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group form-inputs">
+            <label>Upload ID Proof</label>
+            <div class="file_dropzone drop_files">
+              <div [ngClass]="{'imageselected':flagPassportID}">
+                <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'signupIdUploadTrigger'" [imageSrc]="selectedphoto" (filechanged)="imageChangeListener($event,'passport_photo')">
+                </app-upload-capture-image>
+                <input type="hidden" [(ngModel)]="signUpInfo.frontImage" name="frontImage" #frontImage="ngModel" required>
+                <div *ngIf="f.submitted && frontImage.errors?.required" class="errorwrap">ID Proof is required</div>
+                <div *ngIf="f.submitted && frontImage?.errors && objKeyMessage && objKeyMessage['frontImage']" class="errorwrap">{{objKeyMessage['frontImage'][0]}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row VCenter" *ngIf="idmethod=='driving_license'">
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group form-inputs">
+            <label>Upload ID Proof Front</label>
+            <div class="file_dropzone drop_files">
+              <div [ngClass]="{'imageselected':flagPassportID}">
+                <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'signupIdUploadTrigger'" [imageSrc]="selectedphoto" (filechanged)="imageChangeListener($event,'passport_photo')">
+                </app-upload-capture-image>
+                <input type="hidden" [(ngModel)]="signUpInfo.frontImage" name="frontImage" #frontImage="ngModel" required>
+                <div *ngIf="f.submitted && frontImage.errors?.required" class="errorwrap">ID Proof is required</div>
+                <div *ngIf="f.submitted && frontImage?.errors && objKeyMessage && objKeyMessage['frontImage']" class="errorwrap">{{objKeyMessage['frontImage'][0]}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group form-inputs">
+            <label>Upload ID Proof Back</label>
+            <div class="file_dropzone drop_files">
+              <div [ngClass]="{'imageselected':flagPassportID}">
+                <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'signupIdUploadTrigger'" [imageSrc]="selectedphotoback"
+                  (filechanged)="imageChangeListenerback($event,'passport_photo')">
+                </app-upload-capture-image>
+                <input type="hidden" [(ngModel)]="signUpInfo.backImage" name="backImage" #backImage="ngModel" required>
+                <div *ngIf="f.submitted && backImage.errors?.required" class="errorwrap">ID Proof Back is required</div>
+                <div *ngIf="f.submitted && backImage?.errors && objKeyMessage && objKeyMessage['backImage']" class="errorwrap">{{objKeyMessage['backImage'][0]}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row VCenter" *ngIf="idmethod=='otherid'">
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group form-inputs">
+              <label>Upload ID Proof Front</label>
+            <div class="file_dropzone drop_files">
+              <div [ngClass]="{'imageselected':flagPassportID}">
+                <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'signupIdUploadTrigger'" [imageSrc]="selectedphoto" (filechanged)="imageChangeListener($event,'passport_photo')">
+                </app-upload-capture-image>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 border  pad30">
+          <div class="form-group form-inputs">
+              <label>Upload ID Proof Back</label>
+            <div class="file_dropzone drop_files">
+              <div [ngClass]="{'imageselected':flagPassportID}">
+                <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'signupIdUploadTrigger'" [imageSrc]="selectedphotoback" (filechanged)="imageChangeListenerback($event,'passport_photo')">
+                </app-upload-capture-image>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <input type="hidden" [(ngModel)]="signUpInfo.frontImage" name="frontImage" #frontImage="ngModel" required>
+      <div *ngIf="f.submitted && amount.errors && objKeyMessage && objKeyMessage['amount']" class="errorwrap">{{objKeyMessage['amount'][0]}}</div> -->
+
+      <div class="row  mt-20">
+        <div class="col-12">
+          <div class="btn-border pull-right">
+            <button class="enter-btn" type="submit">Next</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+
+
+
+  <div *ngIf="isStage=='captureInfo'">
+    <div class="container-title">Capture Information</div>
+    <div class="row">
+
+      <div class="col-sm-6 pad30">
+        <img class="selectedimage" [src]="selectedphoto">
+      </div>
+
+      <div class="col-sm-6 pad30">
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="signUpInfo.capturedInfo.fullname" placeholder="Full Name" readonly>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="signUpInfo.capturedInfo.id_number" placeholder="Licenses #" readonly>
+        </div>
+        <!-- <div class="form-group">
+          <input type="text" class="form-control" placeholder="Date of Issue" readonly>
+        </div> -->
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="signUpInfo.capturedInfo.expirationdate" placeholder="Date of Expire"
+            readonly>
+        </div>
+        <!-- <div class="form-group">
+          <input type="text" class="form-control" placeholder="Date of Birth" readonly>
+        </div> -->
+      </div>
+    </div>
+    <div class="row  mt-20">
+      <div class="col-12">
+        <div class="btn-border pull-right">
+          <button class="enter-btn" type="submit" (click)="isStage='faceVerification'">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="isStage=='faceVerification'">
+    <div class="container-title">Face Verification</div>
+    <form name="form" (ngSubmit)="f.form.valid && verifyFaceWithDocumentInfo(f)" #f="ngForm" novalidate>
+      <div class="row">
+        <div class="col-sm-6 pad30">
+          <div class="form-group form-inputs">
+            <img class="selectedimage" [src]="selectedphoto">
+          </div>
+        </div>
+        <div class="col-sm-6 pad30">
+          <div class="form-group">
+            <div class="photowrapper">
+              <img *ngIf="signUpInfo.capturedImage && signUpInfo.capturedImage != ''; else defaultImg" [src]="signUpInfo.capturedImage">
+              <ng-template #defaultImg>
+                <img src="">
+              </ng-template>
+              <button class="btn" (click)="isStage='capturePhoto'"></button>
+            </div>
+            <input type="hidden" [(ngModel)]="signUpInfo.capturedImage" name="capturedImage" #capturedImage="ngModel" required>
+            <div *ngIf="f.submitted && capturedImage.errors?.required" class="errorwrap">Take a photo for verification.</div>
+            <div *ngIf="f.submitted && capturedImage.errors && objKeyMessage['capturedImage']" class="errorwrap">{{objKeyMessage['capturedImage']}}</div>
+          </div>
+          <div *ngIf="isVerified" class="verificationStatus text-center success">
+              Verified
+            </div>
+            <div *ngIf="isVerifiedError" class="verificationStatus text-center error">
+                Not Verified
+            </div>
+        </div>
+      </div>
+      <div class="row mt-20">
+        <div class="col-12">
+          <div *ngIf="!isVerified else verified" class="btn-border pull-right">
+            <button class="enter-btn" type="submit">Verify</button>
+          </div>
+          <ng-template #verified>
+            <div class="btn-border pull-right">
+              <button class="enter-btn" type="button" (click)="senddata()">Next</button>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+
+
+  <div class="edit-photo" *ngIf="isStage=='capturePhoto'">
+    <div class="edit-photo-header">Take a Photo
+      <span (click)="backToEdit()">&times;</span>
+    </div>
+    <div class="edit-photo-body">
+      <div class="row">
+        <div class="col-12 pad30">
+
+          <div class="webcampicture">
+            <!-- <img [src]="image" *ngIf="image"> -->
+            <div [ngClass]="{'imageselected':flagPassportID}">
+              <ack-webcam *ngIf="!makeImage" [(ref)]="webcam" [options]="options" (onSuccess)="onCamSuccess($event)" (onError)="onCamError($event)"></ack-webcam>
+              <img [src]="signUpInfo.capturedImage" *ngIf="makeImage && signUpInfo.capturedImage && signUpInfo.capturedImage != ''">
+              <div class="webcambtns" *ngIf="!webCamMissing">
+                <button class="btn capturepic" *ngIf="!makeImage" (click)="makeWebCameraPhoto()"></button>&nbsp;
+                <button class="btn deletepic" *ngIf="makeImage" (click)="deleteCameraPhoto()"></button>
+                <button class="btn savepic" *ngIf="makeImage" (click)="savepic()">
+                  <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="webcamerro" *ngIf="webCamMissing">
+              <div class="errorwrap"> Please Check your Web Camera</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

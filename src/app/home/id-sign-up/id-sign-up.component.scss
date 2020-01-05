@@ -1,0 +1,159 @@
+
+  label {
+    color:#fff !important; 
+  }
+
+  .login-box {
+    &.capturePhotoStage {
+      padding: 0;
+    }
+  }
+  .edit-photo {
+    width: 100%;
+    margin: 0;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  
+    .edit-photo-header {
+      background-color: #FE5F5B;
+      color: #FFFFFF;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 60px;
+      padding: 0 30px;
+  
+      span {
+        display: none;
+      }
+    }
+  
+    .edit-photo-body {
+      padding: 30px;
+      background-color: #fff;
+    }
+  
+    .col-6 + .col-6 {
+      border-left: 1px solid #ddd;
+    }
+  
+    .photo-canvas {
+      display: inline-block;
+      height: 170px;
+      background-color: #F2EADF;
+      margin-bottom: 15px;
+    }
+  
+    p {
+      color: #7C7C7C;
+      font-size: 18px;
+      line-height: 24px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  
+    .profile-buttons {
+      text-align: center;
+  
+      .trigger {
+        display: inline-block;
+        position: relative;
+        margin: 0 33px;
+        color: #4342E6;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+  
+      &:hover {
+        text-decoration: none;
+      }
+  
+      .icon {
+        display: block;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin: 0 auto 6px;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.35);
+        cursor: pointer;
+  
+        &.upload {
+          background: #6A9DF6 url(/assets/img/upload_new_photo.png) no-repeat center;
+        }
+  
+        &.take {
+          background: #24D7C8 url(/assets/img/take_photo.png) no-repeat center;
+        }
+      }
+    }
+  
+    h3 {
+      color: #4342E6;
+      font-size: 24px;
+      line-height: 32px;
+      text-align: center;
+      margin-bottom: 11px;
+    }
+  
+    .profile-photo {
+      height: 124px;
+      width: 124px;
+      border-radius: 50%;
+      border: 4px solid #F9F5F0;
+      background:  #F9F5F0 url(/assets/img/founder/user.png) no-repeat center;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+      margin: 0 auto 12px;
+  
+      img {
+        border-radius: 50%;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
+  .pad30 { padding: 0 30px;}
+  .border + .border { border-left: 2px solid #786c98; }
+  .VCenter {
+    align-items: center;
+  }
+  .selectedimage {
+    max-width: 100%;
+  }
+  .mt-20 { margin-top: 20px; }
+  .photowrapper{
+    width: 160px; height: 160px;
+    border-radius: 360px; border:2px solid #6035e6; background: #3f1bb1;
+    position: relative;margin: auto;
+  }
+  .photowrapper .btn
+  {
+    width: 54px; height: 54px; border-radius: 360px;
+    background: #24D7C8 url(/assets/img/take_photo.png) no-repeat center;
+    position: absolute;
+    right: -20px;
+    top: 0;
+  }
+  .verificationStatus {
+    font-size: 22px;
+    &.success {
+      color:#25d7c9;
+    }
+    &.error{
+      color:#ff5a5a;
+    }
+  }
+  .webcamerro {
+    padding: 30px;
+  }
+
+
+  @media (max-width: 577px) {
+    .border + .border{
+      border-left: 0;
+      padding-top:15px; margin-top: 15px;
+    }
+    .selectedimage{
+      margin-bottom: 30px;
+    }
+  }

@@ -1,0 +1,157 @@
+.profile-menu-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  padding: 0px;
+
+  &:after {
+    display: none;
+  }
+}
+
+.profile-icon {
+  display: inline-block;
+  vertical-align: middle;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background: #ccc url(/assets/img/navbar-noavatar-icon.png) no-repeat center;
+  margin: 2px 4px 4px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+}
+
+.profile-caption {
+  padding: 4px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.toggle-icon {
+  color: #dddddd;
+  padding: 4px;
+  margin-left: 15px;
+}
+
+.profile-name {
+  color: #f5f5f5;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 115px;
+}
+
+.profile-role {
+  color: #cccccc;
+  font-size: 12px;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.dropdown-menu {
+  background-color: #ffffff;
+  border-radius: 0;
+  left: auto;
+  right: 0;
+  padding: 0;
+  max-width: 200px;
+
+  .separator {
+    border: 1px solid #a1a0f2;
+    width: 188px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.dropdown-item.profile-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 57px;
+  cursor: pointer;
+  padding: 5px 10px;
+
+}
+
+.profile-item-icon {
+  height: 39px;
+  width: 39px;
+  margin: 4px;
+}
+
+.profile-item-caption {
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-item-name {
+  color: #4230e6;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-item-subtitle {
+  color: #fe6f6b;
+  font-size: 14px;
+  text-align: left;
+}
+
+.dropdown-item {
+  color: #5554e8;
+  font-size: 18px;
+  font-weight: 600;
+
+  height: 39px;
+  padding: 5px 20px 5px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.menu-icon {
+  font-size: 15px;
+  margin-right: 15px;
+
+  &.employee {
+    color: #679BF9;
+  }
+
+  &.creator {
+    color: #FF6C24;
+  }
+
+  &.backer {
+    color: #00D8C9;
+  }
+}
+
+.fa-check {
+  float: right;
+  line-height: 29px;
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  .toggle-icon{
+    margin: 0;
+  }
+  .profile-icon {height: 28px;  width: 28px; }
+  .profile-name {max-width: 100px;font-size: 14px; }
+  .profile-item-name { max-width: 125px;
+    text-overflow: ellipsis;
+    overflow: hidden;}
+}

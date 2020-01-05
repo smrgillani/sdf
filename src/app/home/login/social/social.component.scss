@@ -1,0 +1,142 @@
+.social-button-wrapper{
+  position: relative;
+  max-width: 330px;
+  margin: auto;
+}
+
+.social-button-wrapper .row {
+  margin-bottom: 0;
+}
+
+@media(max-width: 499px) {
+  .social-button-wrapper {
+    max-width: 230px;
+    .button-social{
+      margin: 4px;
+    }
+  }
+}
+
+@media(min-width: 200px) {
+  .button-social {
+    color:  #ffffff;
+    display: block;
+    width: 164px;
+    height: 39px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 40px;
+    margin: 8px;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+
+    cursor:pointer;
+
+    .icon {
+      display: inline-block;
+      height: 23px;
+      width: 23px;
+      text-align: center;
+      vertical-align: middle;
+      background-repeat: no-repeat;
+    }
+  }
+
+
+  .container-buttons{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    justify-items: center;
+
+    align-items: center;
+
+    max-width: 400px;
+  }
+
+
+}
+
+.container-main {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.facebook-btn {
+  background-color:  #397dc9;
+
+  .icon {
+    background-image: url('/assets/img/social/fb.png');
+  }
+}
+
+.twitter-btn {
+  background-color:  #62b3e5;
+
+  .icon {
+    background-image: url('/assets/img/social/twitter.png');
+  }
+}
+
+.google-btn {
+  background-color:  #dc5f41;
+
+  .icon {
+    background-image: url('/assets/img/social/google.png');
+  }
+}
+
+.linkedin-btn {
+  background-color:  #006fbd;
+
+  .icon {
+    background-image: url('/assets/img/social/ln.png');
+  }
+}
+
+.paypal-btn {
+  background-color:  #0070ba;
+
+  .icon {
+    background-image: url('/assets/img/social/paypal.png');
+  }
+}
+
+.angellist-btn {
+  background-color:  #000000;
+
+  .icon {
+    background-image: url('/assets/img/social/angellist.png');
+  }
+}
+
+.snapchat-btn {
+  background-color:  #fffd00;
+
+  a {
+    color: #000000;
+  }
+
+  .icon {
+    background-image: url('/assets/img/social/snapchat.png');
+  }
+}
+
+a {
+  color: #fff;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+a:hover { color: #fff}
+
+
+.form-group .row {
+  margin-bottom: 0;
+}

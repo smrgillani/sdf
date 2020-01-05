@@ -1,0 +1,94 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="popheading">{{type}} request </div>
+
+  <div class="cardwrap tabwrap">
+    <div class="cardwrap">
+      <div class="s-box">
+        <div class="s-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody *ngIf="id && type == 'Bonus'">
+                <tr>
+                  <td colspan="2"><strong>Bonus Amount:</strong> ${{bonusRequestInfo?.bonus?.amount}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Requested Date:</strong> {{bonusRequestInfo?.create_date | date: 'MMM dd, yyyy'}}</td>
+                </tr>
+                <tr *ngIf="bonusRequestInfo?.status != 'new'">
+                  <td colspan="2"><strong>Status:</strong> <span [ngClass]="{ 'accept': bonusRequestInfo?.status == 'accept', 'reject': bonusRequestInfo?.status != 'accept' }" class="status">{{bonusRequestInfo?.status}}</span></td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="id && type == 'Hike'">
+                <tr>
+                  <td colspan="2"><strong>Hike per hour:</strong> ${{hikeRequestInfo?.hike?.amount}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Requested Date:</strong> {{hikeRequestInfo?.create_date | date: 'MMM dd, yyyy'}}</td>
+                </tr>
+                <tr *ngIf="hikeRequestInfo?.status != 'new'">
+                  <td colspan="2"><strong>Status:</strong> <span [ngClass]="{ 'accept': hikeRequestInfo?.status == 'accept', 'reject': hikeRequestInfo?.status != 'accept' }" class="status">{{hikeRequestInfo?.status}}</span></td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="(id && quitJobRequestInfo && type == 'QuitJob' && openFrom == null) || (id && quitJobRequestInfo && type == 'QuitJob' && completed)">
+                <tr>
+                  <td colspan="2"><strong>Reason:</strong> {{quitJobRequestInfo?.reason}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Requested Date:</strong> {{quitJobRequestInfo?.create_date | date: 'MMM dd, yyyy'}}</td>
+                </tr>
+                <tr *ngIf="status == 'new'">
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label>Notice Period in day(s)</label>
+                            <input type="number" class="form-control" [(ngModel)]="quitJobRequestInfo.notice_period" />
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="status !== 'new'">
+                  <td colspan="2"><strong>Notice Period in day(s):</strong> {{quitJobRequestInfo?.notice_period}}</td>
+                </tr>
+                <tr *ngIf="quitJobRequestInfo?.status != 'new'">
+                  <td colspan="2"><strong>Status:</strong> <span [ngClass]="{ 'accept': quitJobRequestInfo?.status == 'accept', 'reject': quitJobRequestInfo?.status != 'accept' }" class="status">{{quitJobRequestInfo?.status}}</span></td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="id && quitJobRequestInfo && type == 'QuitJob' && openFrom == 'notifications' && !completed">
+                <tr>
+                  <td colspan="2"><strong>Reason:</strong> {{quitJobRequestInfo?.reason}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Requested Date:</strong> {{quitJobRequestInfo?.create_date | date: 'MMM dd, yyyy'}}</td>
+                </tr>
+                <tr *ngIf="status == 'new'">
+                    <td colspan="2">
+                        <div class="form-group">
+                            <label>Notice Period in day(s)</label>
+                            <input type="number" class="form-control" [(ngModel)]="quitJobRequestInfo.notice_period" />
+                        </div>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="project-actions" *ngIf="status == 'new' && openFrom == null">
+    <!-- <div class="btn-border skyblue" (click)="updateRequestStatus('accept')">
+      <div class="btn skyblue-btn">Accept</div>
+    </div>
+    <div class="btn-border red" (click)="updateRequestStatus('decline')">
+      <div class="btn red-btn">Decline</div>
+    </div> -->
+
+    <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus('accept')">Accept</button>
+    <button class="saffron_btn bittersweet waves-effect waves-light" (click)="updateRequestStatus('decline')">Decline</button>
+  </div>
+
+  <div class="project-actions" *ngIf="openFrom == 'notifications' && !completed" style="text-align: right;">
+    <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="updateRequestStatus('accept')">Submit</button>
+  </div>
+</div>

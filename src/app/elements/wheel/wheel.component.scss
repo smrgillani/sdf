@@ -1,0 +1,17 @@
+.wheel-tire {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.wheel-hub {
+  height: calc(100% - 4px);
+  width: calc(100% - 4px);
+  margin: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-size: 58%;
+}

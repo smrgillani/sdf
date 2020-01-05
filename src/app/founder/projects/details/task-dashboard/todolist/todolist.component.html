@@ -1,0 +1,451 @@
+<main>
+  <app-header
+    class="position-static"
+    [backNavOptions]="{caption: 'Task dashboard', route: ['founder', 'projects', project_id]}"
+  ></app-header>
+
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>To-Do List</h1>
+    </div>
+
+    <div class="form-container cardwrap" *ngIf="!addtask">
+      <div class="row">
+        <div class="col-md-12">
+          <button class="btn btn-link addqualification" type="button" (click)="addeditTodoList()">
+            <span class="icomoon icon-add-song"></span>Add more Tasks
+          </button>
+          <perfect-scrollbar class="taskwrap">
+            <ul>
+              <li *ngFor="let listItem of todotaskInfoList">
+                <div class="taskdesc">
+                  <div class="taskname">
+                    <label class="custom-control custom-checkbox">
+                      <input class="custom-control-input" (change)="completedTask(isCompleteTask.checked, listItem)"
+                             #isCompleteTask type="checkbox">
+                      <span class="custom-control-indicator"></span>
+                      {{listItem.task}}
+                    </label>
+                  </div>
+                  <div class="taskinfo">
+                    <div class="taskshow">Today at {{listItem.start_on}}</div>
+                  </div>
+                </div>
+                <div class="taskaction">
+                  <button class="editbtn" (click)="editTask(listItem)">
+                    <i class="icon-draw"></i>
+                  </button>
+                  <button class="deletebtn" (click)="deleteTask(listItem)">
+                    <i class="icon-delete_btn"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
+
+          <app-pagination
+            class="my-pagination"
+            [pageSize]="pageSize"
+            [pagesQuantity]="count"
+            (pageChanged)="getToDoList($event)"
+          ></app-pagination>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="completedTodotaskInfoList && completedTodotaskInfoList.length > 0">
+        <div class="col-md-12">
+          <div class="btn btn-link addqualification">Completed task</div>
+          <perfect-scrollbar class="taskwrap">
+            <ul>
+              <li *ngFor="let listCItem of completedTodotaskInfoList">
+                <div class="taskdesc">
+                  <div class="taskname">
+                    {{listCItem.task}}
+                  </div>
+                  <div class="taskinfo">
+                    <div class="taskshow">Today at {{listCItem.start_on}}</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </perfect-scrollbar>
+
+          <app-pagination
+            class="my-pagination"
+            [pageSize]="pageSize1"
+            [pagesQuantity]="count1"
+            (pageChanged)="getCompletedToDoList($event)"
+          ></app-pagination>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-container cardwrap" *ngIf="addtask">
+      <form [formGroup]="complexForm" (ngSubmit)="submitToDoList(complexForm.value)">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="form-group">
+                  <label>Task</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Task Name"
+                    [(formControl)]="complexForm.controls['task']"
+                    required
+                  >
+                  <div *ngIf="complexForm.controls['task'].hasError('required') && complexForm.controls['task'].touched"
+                       class="errorwrap">Task is required.
+                  </div>
+                  <input type="hidden" [(formControl)]="complexForm.controls['project']">
+                  <input type="hidden" [(formControl)]="complexForm.controls['id']">
+                  <input type="hidden" [(formControl)]="complexForm.controls['is_complete']">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label>Task Description</label>
+                  <textarea
+                    class="form-control"
+                    [(formControl)]="complexForm.controls['task_description']"
+                    placeholder="Task Description"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="radiogroup">
+                    <label class="mainlabel">Remind Me</label>
+                    <label class="custom-control custom-radio" *ngFor="let remindmeItem of todoListTempInfo.remindMeList">
+                      <input
+                        class="custom-control-input"
+                        [(formControl)]="complexForm.controls['remind_me']"
+                        name="remind_me" type="radio"
+                        [checked]="todoListInfo.remind_me == remindmeItem.key"
+                        value="{{remindmeItem.key}}"
+                      >
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">{{remindmeItem.value}}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="remindoption">
+              <ul>
+                <li *ngFor="let remindInfo of todoListTempInfo.remindList">
+                  <button
+                    class="saffron_btn red_btn"
+                    type="button"
+                    [ngClass]="{'active': remindInfo.key == todoListInfo.remind}"
+                    (click)="todoListInfo.remind = remindInfo.key"
+                  >{{remindInfo.value}}</button>
+                </li>
+              </ul>
+            </div>
+            <hr>
+
+            <label class="mainlablebox">Duration</label>
+            <div class="row durationbox">
+              <div class="col-6">
+                <div class="form-group row">
+                  <label class="col-sm-3">Start on</label>
+                  <div class="datetime-container col-sm-9">
+                    <!-- <app-date-input class="date-picker" [minDate]="minDateValue" [(date)]="todoListInfo.start_on"></app-date-input> -->
+                    <p-calendar
+                      class="form-control"
+                      [(formControl)]="complexForm.controls['start_on']"
+                      [minDate]="minDateValue"
+                      [monthNavigator]="true"
+                      [yearNavigator]="true"
+                      yearRange="1970:2050"
+                      required="true"
+                      #fromDate
+                      (onClose)="checkDateValidation(fromDate,toDate)"
+                    ></p-calendar>
+
+                    <div
+                      *ngIf="complexForm.controls['start_on'].hasError('required') && complexForm.controls['start_on'].touched"
+                      class="errorwrap"
+                    >Start On is required.
+                    </div>
+
+                    <div
+                      *ngIf="complexForm.controls['start_on'].errors && objKeyMessage"
+                      class="errorwrap"
+                    >{{objKeyMessage['start_on'][0]}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6" *ngIf="!complexForm.controls['never_end'].value">
+                <div class="form-group row">
+                  <label class="col-sm-3">End On</label>
+                  <div class="datetime-container col-sm-9">
+                    <p-calendar
+                      class="form-control"
+                      [(formControl)]="complexForm.controls['end_on']"
+                      [minDate]="complexForm.controls['start_on'].value"
+                      [monthNavigator]="true"
+                      [yearNavigator]="true"
+                      yearRange="1970:2050"
+                      required="true"
+                      #toDate
+                    ></p-calendar>
+
+                    <div
+                      *ngIf="complexForm.controls['end_on'].hasError('required') && complexForm.controls['due_date'].touched"
+                      class="errorwrap"
+                    >End On is required.</div>
+
+                    <div *ngIf="complexForm.controls['end_on'].errors && objKeyMessage" class="errorwrap">
+                      {{objKeyMessage['end_on'][0]}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <label class="mainlablebox">Or</label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="custom-control custom-checkbox">
+                    <input
+                      class="custom-control-input"
+                      [(formControl)]="complexForm.controls['never_end']"
+                      type="checkbox"
+                    >
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Set end date to never end.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr *ngIf="todoListInfo.remind == 'weekly' || todoListInfo.remind == 'monthly'">
+
+            <div class="row" *ngIf="todoListInfo.remind == 'weekly' || todoListInfo.remind == 'monthly'">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Repeat</label>
+                  <!-- <p-dropdown class="form-control"></p-dropdown> -->
+                  <!-- <p-dropdown class="form-control" [options]="todoListInfo.repeat_dayList" placeholder="Choose" optionLabel="title" [(formControl)]="complexForm.controls['repeat_days']"
+  (onChange)="onFrequencySelect($event.value)"></p-dropdown> -->
+                  <p-multiSelect
+                    *ngIf="todoListInfo.remind == 'weekly'"
+                    class="form-control"
+                    [options]="todoListTempInfo.repeat_dayList"
+                    placeholder="Choose"
+                    optionLabel="title"
+                    [(formControl)]="complexForm.controls['repeat_days']"
+                    (onChange)="onDaySelect($event.value)"
+                  >
+                    <ng-template let-day pTemplate="item">
+                      <div style="font-size: 14px; float: right; margin-top: 4px">{{day.title}}</div>
+                    </ng-template>
+                  </p-multiSelect>
+
+                  <div
+                    *ngIf="todoListInfo.remind == 'weekly' && complexForm.controls['repeat_days'].hasError('required') && complexForm.controls['repeat_days'].touched"
+                    class="errorwrap"
+                  >Repeat is required.</div>
+
+                  <div
+                    *ngIf="todoListInfo.remind == 'weekly' && complexForm.controls['repeat_days'].errors && objKeyMessage"
+                    class="errorwrap"
+                  >{{objKeyMessage['repeat_days'][0]}}</div>
+
+                  <p-multiSelect
+                    *ngIf="todoListInfo.remind == 'monthly'"
+                    class="form-control"
+                    [options]="todoListTempInfo.repeat_monthList"
+                    placeholder="Choose"
+                    optionLabel="title"
+                    [(formControl)]="complexForm.controls['repeat_months']"
+                    (onChange)="onMonthSelect($event.value)"
+                  >
+                    <ng-template let-day pTemplate="item">
+                      <div style="font-size: 14px; float: right; margin-top: 4px">{{day.title}}</div>
+                    </ng-template>
+                  </p-multiSelect>
+
+                  <div
+                    *ngIf="todoListInfo.remind == 'monthly' && complexForm.controls['repeat_months'].hasError('required') && complexForm.controls['repeat_months'].touched"
+                    class="errorwrap"
+                  >Repeat is required.</div>
+
+                  <div
+                    *ngIf="todoListInfo.remind == 'monthly' && complexForm.controls['repeat_months'].errors && objKeyMessage"
+                    class="errorwrap"
+                  >{{objKeyMessage['repeat_months'][0]}}</div>
+                </div>
+              </div>
+
+            </div>
+            <hr>
+            <div class="row" *ngIf="!complexForm.controls['let_system_do_it'].value">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Frequency</label>
+                  <p-dropdown
+                    class="form-control"
+                    [options]="todoListTempInfo.frequencyList"
+                    placeholder="Choose"
+                    optionLabel="title"
+                    [(formControl)]="complexForm.controls['frequency']"
+                    (onChange)="onFrequencySelect($event.value)"
+                  ></p-dropdown>
+                  <!-- <div *ngIf="complexForm.controls['frequency'].errors && objKeyMessage" class="errorwrap">{{objKeyMessage['frequency'][0]}}</div> -->
+                </div>
+              </div>
+
+            </div>
+            <div class="row" *ngIf="!complexForm.controls['let_system_do_it'].value">
+              <div class="col-md-12">
+                <div class="form-group freq">
+                  <label class=" w25">@</label>
+                  <p-calendar
+                    timeOnly="true"
+                    hourFormat="24"
+                    *ngIf="todoListInfo.frequency >= 1"
+                    [minDate]="minDateTimeValue"
+                    [maxDate]="maxDateTimeValue"
+                    formControlName="frequency_time1"
+                    class="form-control w25"
+                  ></p-calendar>
+
+                  <input
+                    type="hidden"
+                    *ngIf="todoListInfo.frequency >= 1"
+                    [(formControl)]="complexForm.controls['frequency_id1']"
+                  >
+
+                  <p-calendar
+                    timeOnly="true"
+                    hourFormat="24"
+                    *ngIf="todoListInfo.frequency >= 2"
+                    [minDate]="minDateTimeValue"
+                    [maxDate]="maxDateTimeValue"
+                    [(formControl)]="complexForm.controls['frequency_time2']"
+                    class="form-control w25"
+                  ></p-calendar>
+
+                  <input
+                    type="hidden"
+                    *ngIf="todoListInfo.frequency >= 2"
+                    [(formControl)]="complexForm.controls['frequency_id2']"
+                  >
+
+                  <p-calendar
+                    timeOnly="true"
+                    hourFormat="24"
+                    *ngIf="todoListInfo.frequency > 2"
+                    [minDate]="minDateTimeValue"
+                    [maxDate]="maxDateTimeValue"
+                    [(formControl)]="complexForm.controls['frequency_time3']"
+                    class="form-control w25"
+                  ></p-calendar>
+
+                  <input
+                    type="hidden"
+                    *ngIf="todoListInfo.frequency > 2"
+                    [(formControl)]="complexForm.controls['frequency_id3']"
+                  >
+                </div>
+              </div>
+            </div>
+
+            <label class="mainlablebox">Or</label>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="custom-control custom-checkbox">
+                    <input
+                      class="custom-control-input"
+                      [(formControl)]="complexForm.controls['let_system_do_it']"
+                      type="checkbox"
+                    >
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Let the system do it.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="mainlabel">Snooze Option</label>
+                  <label class="custom-control custom-radio" *ngFor="let item of todoListTempInfo.snoozeList">
+                    <input
+                      class="custom-control-input"
+                      [(formControl)]="complexForm.controls['snooze_option']"
+                      name="snooze_option"
+                      type="radio"
+                      [checked]="todoListInfo.snooze_option == item.key"
+                      value="{{item.key}}"
+                    >
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">{{item.value}}</span>
+                  </label>
+                  <!-- <label class="custom-control custom-checkbox">
+                      <input class="custom-control-input" [(formControl)]="complexForm.controls['snooze_option']"
+                          type="checkbox">
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Snooze Option.</span>
+                  </label> -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" *ngIf="complexForm.controls['snooze_option'].value == 'yes'">
+                  <label>Snooze Time</label>
+                  <p-dropdown
+                    class="form-control"
+                    [options]="todoListTempInfo.snoozeOptionList"
+                    placeholder="Choose"
+                    optionLabel="title"
+                    [(formControl)]="complexForm.controls['snooze_time']"
+                    (onChange)="onSnoozeTimeSelect($event.value)"
+                  ></p-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="errorMessage && errorMessage.length > 0">
+          <div class="error-notification">
+            <div class="alert-badge-border">
+              <div class="alert-badge"></div>
+            </div>
+            <div class="error-message-wrapper">{{errorMessage}}</div>
+          </div>
+        </div>
+        <div class="post-buttons">
+          <!-- <button class="saffron_btn red_btn" type="submit" (click)="addtask=!addtask">Cancel</button> -->
+          <button class="saffron_btn red_btn" type="reset" (click)="addtask=!addtask">Cancel</button>
+          <button class="saffron_btn skyblue_btn" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForConfirmationMessage>
+  <div class="modal-body">Are you sure you want to close task?</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="completedTask()">Yes</div>
+    </div>
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="closeConfirmMessage()">No</div>
+    </div>
+  </div>
+</ng-template>

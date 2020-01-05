@@ -1,0 +1,51 @@
+<app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> 
+<main>
+  
+  <div class="container saf_blue_theme">
+      <div class="heading">
+          <h1>Budget</h1>          
+      </div>
+
+      <div class="cardwrap">
+        <div class="card">
+        <h2>My Expenses</h2>
+        <div class="progress bg-voilet">
+          <div class="progress-bar bg-danger" style="width:60%">            
+          </div>              
+        </div>  
+        <div class="valuewrap">
+            <span class="value" style="left:60%">$60,000</span>
+            <span class="totalvalue">$100,000</span>     
+          </div>
+    
+        </div>     
+           
+
+        <div class="card">
+        <h2>Material Cost</h2>    
+          <div class="generatebtnwrap">
+              <button class="btn btn-blue">Generate Fund</button>
+          </div>
+        
+
+        <ngb-tabset>
+            <ngb-tab>
+                <ng-template ngbTabTitle>ISX Funding</ng-template>
+                <ng-template ngbTabContent>
+                    <app-isx-funding></app-isx-funding> 
+
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>X Funding</ng-template>
+                <ng-template ngbTabContent>
+                    <app-x-funding></app-x-funding>
+
+                </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+      </div>       
+
+      </div>
+   </div>
+</main>

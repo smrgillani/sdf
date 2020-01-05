@@ -1,0 +1,111 @@
+<app-header class="position-static" (onBackClicked)="onBack()"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Transactions</h1>
+    </div>
+
+    <div class="cardwrap transitionWrap">
+      <div class="pull-left fundWrap">
+        <h5 *ngIf="!is_changeProject">
+          <div class="fundBtn pull-left">
+            <button type="text" class="btn skyblue">
+              <span class="icomoon icon-coins"></span>
+            </button>
+          </div>
+
+          <div class="pull-left">
+            {{walletAmount}} mata Credits
+            <span class="dabcoin">(Ex. 1 Dabcoin is equal to 1 USD)</span>
+            <span class="dabcoin" title="Change the project" *ngIf="currentRole == 'creator'">
+              For Project {{selectedProjectTitle}}
+              <i class="fa fa-edit" (click)="is_changeProject = !is_changeProject"></i>
+            </span>
+          </div>
+        </h5>
+
+        <div class="form-group" *ngIf="currentRole == 'creator' && is_changeProject" style="min-width: 250px;">
+          <label>Project</label>
+
+          <p-dropdown
+            class="form-control"
+            [(ngModel)]="selectedProject"
+            [options]="currentUserProjectList"
+            (onChange)="onSelectedProject()"
+            placeholder="Personal"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="pull-right transactionList" *ngIf="!is_fund">
+        <ul class="fundList">
+          <li class="fundWrap">
+            <a href="javascript:void(0);" (click)="selectedFundType('deposit')">
+              <div class="fundBtn pull-left">
+                <button type="text" class="btn purple">
+                  <span class="icomoon icon-wallet"></span>
+                </button>
+              </div>
+              Deposit Funds </a>
+          </li>
+
+          <li class="fundWrap">
+            <a href="javascript:void(0);" (click)="selectedFundType('withdrawal')">
+              <div class="fundBtn pull-left">
+                <button type="text" class="btn orange">
+                  <span class="icomoon icon-withdraw"></span>
+                </button>
+              </div>
+              Withdraw Funds </a>
+          </li>
+
+          <li class="fundWrap">
+            <a href="javascript:void(0);" (click)="navToTransferFund()">
+              <div class="fundBtn pull-left">
+                <button type="text" class="btn orange">
+                  <span class="icomoon icon-withdraw"></span>
+                </button>
+              </div>
+              Transfer Funds </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <ngb-tabset *ngIf="!is_fund">
+        <ngb-tab>
+          <ng-template ngbTabTitle>Pending Transactions</ng-template>
+          <ng-template ngbTabContent>
+            <app-pending-transactions [selectedProject]="selectedProject"></app-pending-transactions>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Completed Transactions</ng-template>
+          <ng-template ngbTabContent>
+            <app-completed-transactions [selectedProject]="selectedProject"></app-completed-transactions>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+
+      <div *ngIf="is_fund">
+        <app-deposit-withdraw-fund
+          [selectedType]="selectedType"
+          (completedTransaction)="getTransactionList($event)"
+          (canceled)="onCanceled()"
+        ></app-deposit-withdraw-fund>
+      </div>
+    </div>
+
+    <!-- <div class="projects-footer" *ngIf="!is_fund">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+
+    <div class="projects-footer" *ngIf="is_fund">
+      <div class="back-button" (click)="is_fund = !is_fund">Back</div>
+    </div> -->
+  </div>
+</main>

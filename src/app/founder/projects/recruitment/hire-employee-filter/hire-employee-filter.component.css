@@ -1,0 +1,16 @@
+.saffron_btn {
+    font-weight: 500;
+    transition: .3s ease-in-out;
+    padding: 1px 18px;
+    min-width: 5.5em;
+    white-space: nowrap;
+    outline: none;
+    font-size: 1.125em;
+    font-family: ProximaNova, sans-serif;
+}
+
+.saffron_btn.maya-blue {
+    background-color :#2f35e5;
+    border: 2px solid #2f35e5;
+    margin: 0 0 10px 0;
+  }

@@ -1,0 +1,17 @@
+<div class="new-message">
+  <input type="hidden" [(ngModel)]="decisionPollOption.id">
+
+  <textarea
+    placeholder="{{placeholderText}}"
+    [(ngModel)]="decisionPollOption.option"
+    (keydown)="onTextInputKeyDown()"
+    (keyup)="onTextInputKeyUp()"
+  ></textarea>
+  <!-- <div class="empty-add-btn" (click)="addPollOption()">+</div> -->
+
+  <div class="empty-add-btn" *ngIf="decisionPollOption.addOption; else removeOption" (click)="addPollOption()">+</div>
+
+  <ng-template #removeOption>
+    <div class="empty-add-btn" (click)="removePollOption()">-</div>
+  </ng-template>
+</div>

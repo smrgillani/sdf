@@ -1,0 +1,284 @@
+<app-header [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header> 
+
+
+<main>  
+  <div class="container saf_blue_theme">
+      <div class="heading">
+          <h1>{{project.title}}</h1>
+      </div>
+
+
+<div class="cardwrap maingraph">
+    <div class="s-box">
+        <div class="s-box-heading">
+          <div class="row">
+            <div class="col-6">
+                <h2>Stock Information</h2>
+            </div>
+            <div class="col-6 text-right">
+          
+                <div class="form-group graph-option">
+                    <select class="form-control">
+                        <option>10 Min</option>
+                      </select>
+                      <select class="form-control">
+                          <option>Chart</option>
+                        </select>
+                </div>
+            </div>
+
+          </div>
+   
+          </div>
+          <div class="s-box-body">
+            <img src="/assets/img/graph.jpg">
+          </div>
+     
+    </div>
+  </div>
+
+  <div class="cardwrap">
+    <div class="row">
+      <div class="col-md-4">
+          <div class="s-box">
+          <div class="s-box-heading">
+              <h2>Order Book</h2>
+            </div>
+            <div class="form-group">
+        <select class="form-control">
+          <option>Market</option>
+        </select>
+      </div>
+    </div>
+      </div>
+
+      <div class="col-md-8 text-right">
+          <div class="saffron_btn orange_btn"  [routerLink]="['../funding']">More Funding</div>
+      </div>
+    </div>
+
+
+      <div class="row">
+          <div class="col-md-6 dividerpipe">
+              <div class="s-box">
+                  <div class="s-box-heading">
+                    <h2>Buy</h2>
+                  </div>
+                  <div class="s-box-body">
+                      <div class="form-group">
+                          <label>Price</label>
+                          <input type="text" class="form-control">
+                      </div>
+                      <div class="form-group">
+                          <label>Quantity</label>
+                          <input type="text" class="form-control">
+                      </div>
+  
+                  </div>
+                  <div class="s-box-footer">
+                      <div class="saffron_btn skyblue_btn">Buy</div>
+                  </div>
+              </div>
+          </div>
+  
+  
+          <div class="col-md-6">
+              <div class="s-box">
+                  <div class="s-box-heading">
+                    <h2>Sell</h2>
+                  </div>
+                  <div class="s-box-body">
+                      <div class="form-group">
+                          <label>Price</label>
+                          <input type="text" class="form-control">
+                      </div>
+                      <div class="form-group">
+                          <label>Quantity</label>
+                          <input type="text" class="form-control">
+                      </div>
+  
+                  </div>
+                  <div class="s-box-footer">
+                      <div class="saffron_btn skyblue_btn">Sell</div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+<div class="cardwrap">
+      <div class="row">
+        <div class="col-md-6 dividerpipe">
+            <div class="s-box">
+                <div class="s-box-heading">
+                  <h2>Bid</h2>
+                </div>
+                <div class="s-box-body">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>pRICE</th>
+                            <th>qUANTITY</th>
+                            <th>tOTAL</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>                     
+                     
+                    </tbody>
+                    </table>
+
+                </div>
+               
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="s-box">
+                <div class="s-box-heading">
+                  <h2>Ask</h2>
+                </div>
+                <div class="s-box-body">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>pRICE</th>
+                            <th>qUANTITY</th>
+                            <th>tOTAL</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>$5000</td>
+                        </tr>                     
+                     
+                    </tbody>
+                    </table>
+
+                </div>
+              
+            </div>
+        </div>
+      </div>
+      </div>
+
+
+      <div class="cardwrap">
+      <div class="s-box">
+          <div class="s-box-heading">
+            <h2>Stock History</h2>
+          </div>
+          <div class="s-box-body">
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>qUANTITY</th>
+                      <th>Buy/Sell</th>
+                      <th>Bid/Ask</th>
+                      <th>tOTAL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  <tr>
+                      <td>February 2, 2018</td>
+                      <td>100</td>
+                      <td>Buy</td>
+                      <td>0.09989910</td>
+                      <td>$5000</td>
+                    </tr>
+                    <tr>
+                        <td>February 2, 2018</td>
+                        <td>100</td>
+                        <td>Buy</td>
+                        <td>0.09989910</td>
+                        <td>$5000</td>
+                      </tr>
+                      <tr>
+                          <td>February 2, 2018</td>
+                          <td>100</td>
+                          <td>Buy</td>
+                          <td>0.09989910</td>
+                          <td>$5000</td>
+                        </tr>
+                        <tr>
+                            <td>February 2, 2018</td>
+                            <td>100</td>
+                            <td>Buy</td>
+                            <td>0.09989910</td>
+                            <td>$5000</td>
+                          </tr>
+                          <tr>
+                              <td>February 2, 2018</td>
+                              <td>100</td>
+                              <td>Buy</td>
+                              <td>0.09989910</td>
+                              <td>$5000</td>
+                            </tr>
+
+</tbody>
+              </table>
+          </div>
+        
+      </div>
+    </div>
+
+
+
+
+      
+   
+
+        <div class="projects-footer">
+           <div class="back-button" (click)="_location.back()">Back</div>         
+        </div>
+   </div>
+</main>

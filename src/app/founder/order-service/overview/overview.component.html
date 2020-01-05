@@ -1,0 +1,38 @@
+<app-header class="position-static" [backNavOptions]="{ caption: 'Services', route: ['founder', 'projects'] }"></app-header>
+
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Order Service List</h1>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <div class="mysharebtn">
+        <button class="saffron_btn blue_btn neworderbtn" routerLink="../new">New Order</button>
+      </div>
+
+      <ngb-tabset>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Current Orders</ng-template>
+          <ng-template ngbTabContent>
+            <app-current-past-all-orders [orderType]="'current'" [projectId]="projectId"></app-current-past-all-orders>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>Past Orders</ng-template>
+          <ng-template ngbTabContent>
+            <app-current-past-all-orders [orderType]="'past'" [projectId]="projectId"></app-current-past-all-orders>
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab>
+          <ng-template ngbTabTitle>All Orders</ng-template>
+          <ng-template ngbTabContent>
+            <app-current-past-all-orders [projectId]="projectId"></app-current-past-all-orders>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

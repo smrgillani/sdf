@@ -1,0 +1,29 @@
+<div class="interviewpopup saf_blue_theme">
+        <div class="close_popup" (click)="activeModal.dismiss('Cross click')">
+          <i class="icon-close"></i>
+        </div>      
+        <div class="popheading">Stop Timer</div>    
+        <div class="row">
+            <div class="col-6">
+                    <div class="form-group">
+                            <label>Hours</label>
+                            <p-spinner size="30" max="99" min="0"  [(ngModel)]="hours" class="form-control"></p-spinner>
+                            <!-- <input class="form-control" type="number" max="99" min="0" [(ngModel)]="hours">       -->
+                          </div>
+            </div>
+            <div class="col-6">
+                    <div class="form-group">
+                            <label>Minutes</label>
+                            <p-spinner size="30" max="59" min="0"  [(ngModel)]="mins" class="form-control"></p-spinner>
+                            <!-- <input class="form-control" type="number" max="59" min="0" [(ngModel)]="mins">               -->
+                          </div>
+                </div>
+        </div>  
+       
+        
+        <div class="project-actions">  
+          <button class="btn-border skyblue" (click)="stopTimer()">
+                <div class="btn skyblue-btn">Stop</div>
+          </button>
+        </div>
+      </div>

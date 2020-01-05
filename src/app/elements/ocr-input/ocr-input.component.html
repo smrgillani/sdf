@@ -1,0 +1,77 @@
+<div class="row form-row drop_files ">
+  <div class="col-12" [hidden]="editorOpened">
+    <div class="editor-toggle" (click)="openEditor()">Text editor &rarr;</div>
+    <!--    <div class="close" *ngIf='flagFile && !viewOnly'>-->
+    <!--      <a (click)="removeID()">-->
+    <!--        <i class="fa fa-trash-o" aria-hidden="true"></i>-->
+    <!--      </a>-->
+    <!--    </div>-->
+    <div class="file-upload-wrapper">
+      <div class="radiogroup" *ngIf="!viewOnly">
+        <label class="custom-control custom-radio">
+          <input class="custom-control-input" name="is_handwriting" [(ngModel)]="isHandwriting" type="radio"
+                 [value]="false" (change)="selectToFileType($event)">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Not a hand written</span>
+        </label>
+
+        <label class="custom-control custom-radio">
+          <input class="custom-control-input" name="is_handwriting" [(ngModel)]="isHandwriting" type="radio"
+                 [value]="true" (change)="selectToFileType($event)">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">Hand Written</span>
+        </label>
+      </div>
+      <!-- <app-file-droppa #fileDroppa [dropZoneTemplate]="dropZoneFileTemplate" [url]="" [multiple]="false" [autoUpload]="false" [showFilesList]="false"
+        (filesUpdated)="filesUpdated($event)" [openTriggerId]="'passportTrigger'" [beforeAddFile]="beforeAddFile">
+
+        <p class="dropzone-help-text">Drop your image file to the file area</p>
+        <div class="profile-buttons">
+          <div class="trigger" id="passportTrigger">
+          </div>
+        </div>
+      </app-file-droppa> -->
+
+      <span class="ocr-error" *ngIf="ocrError">OCR Error: {{ ocrError }}</span>
+      <app-upload-capture-image class="file-upload" [withFileDroppa]="true" [dropTriggerId]="'ocrTrigger'" [viewOnly]="viewOnly"
+                                [imageSrc]="fileDetail.document"
+                                (filechanged)="imageChangeListener($event)"></app-upload-capture-image>
+
+      <!-- <div class="text-center" *ngIf="!flagSave">
+        <button type="button" class="saffron_btn blue_btn" (click)="updateFile()">Upload File</button>
+      </div>
+      <div class="text-center" *ngIf='flagSave'>
+        <button type="button" class="saffron_btn orange_btn" (click)="saveGeneratedFile()">Save generated File</button>
+      </div> -->
+<!--      <pre class="file-container" #returnContentId></pre>-->
+    </div>
+  </div>
+
+  <div class="col-12" [hidden]="!editorOpened">
+    <div class="editor-toggle" (click)="closeEditor()">&larr; Image upload</div>
+    <!--button class="saffron_btn blue_btn" *ngIf="content && content.content && readOnly && !viewOnly && documentid" (click)="edithContent()">Edit</button>
+    <button class="saffron_btn blue_btn" *ngIf="content && content.content && !readOnly" (click)="saveChanges()">Save</button-->
+    <app-text-editor *ngIf="content" class="output-editor" [documentid]="documentid" [(ngModel)]="content.content" [isCollab]="isCollab"
+                     [docInfo]="docInfo" (forceSave)="onForceSave()" [readOnly]="readOnly"
+                     (remoteOcrImageChange)="onRemoteImageChange($event)" [isOcr]="true"
+                     [ocrTextChanging]="ocrTextChanging" (ocrTextWritten)="onOcrTextWritten()"></app-text-editor>
+  </div>
+</div>
+
+<ng-template #popUpForShowInterestMessage>
+  <div class="modal-body">Generated result saved successfully.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForFileTypeMessage>
+  <div class="modal-body">Please select image file.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

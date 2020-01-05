@@ -1,0 +1,69 @@
+<main>
+    <app-header class="position-static"></app-header>
+    <div class="container saf_blue_theme">
+        <div class="heading">
+            <h1>Notarization</h1>
+        </div>
+        <div class="cardwrap">
+            <form [formGroup]="complexForm" (ngSubmit)="sendProjectNotarizeInfo(complexForm.value)">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-file-droppa id="filedroppatemplate" [dropZoneTemplate]="dropZoneChartTemplate" [url]="" [multiple]="true" [autoUpload]="false" [showFilesList]="true" [beforeAddFile]="beforeAddFile" (filesUpdated)="FilesUpdated($event)" [openTriggerId]="'passportTrigger'">
+                            <div class="profile-buttons">
+                                <div class="trigger" id="passportTrigger">
+                                </div>
+                            </div>
+                        </app-file-droppa>
+                        <!-- <app-file-droppa id="filedroppatemplate" [dropZoneTemplate]="dropZoneChartTemplate" [url]="" [multiple]="true" [autoUpload]="false"
+            [showFilesList]="false" [beforeAddFile]="beforeAddFile" (filesUpdated)="FilesUpdated($event)" [openTriggerId]="'passportTrigger'">
+              <div class="profile-buttons">
+                <div class="trigger" id="passportTrigger">
+                </div>
+              </div>
+            </app-file-droppa> -->
+                        <div class="headigntext" *ngIf="notarizeResponse.uploaded_documents && notarizeResponse.uploaded_documents.length > 0">Previous file Uploded</div>
+                        <div id="filedroppatemplate">
+                            <div class="file-list">
+                                <div class="file-container" *ngFor="let docItem of notarizeResponse.uploaded_documents; let index = index">
+                                    <div class="flex-block file-preview">
+                                        <div class="flex-block file-preview-ext ">.pdf</div>
+                                        <div class="flex-block file-name">{{docItem.document_name}}</div>
+                                        <progress class="file-progress" max="100" value="0"></progress>
+                                    </div>
+                                    <div class="file-remove">
+                                        <span class="remove">
+                      <a href="javascript:void(0)" (click)="removeSelectedDoc(index)"></a>
+                    </span>
+                                    </div>
+                                    <div class="flex-block"> Byte</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" [(formControl)]="complexForm.controls['transaction_id']">
+                    <input type="hidden" [(formControl)]="complexForm.controls['documentsCount']">
+                    <input type="hidden" [(formControl)]="complexForm.controls['is_draft']">
+                    <div *ngIf="complexForm.controls['documentsCount'].errors && objKeyMessage" class="errorwrap">{{objKeyMessage['documentsCount'][0]}}</div>
+                    <div class="errorwrap" *ngIf="is_fileSizeExceed">The file size exceeds the limit.</div>
+                    <div class="errorwrap" *ngIf="currentSize == 0 && complexForm.controls['email'].touched" style="margin-left:15px;">Please upload pdf files.</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <label>Email</label>
+                        <input type="text" class="form-control" [(formControl)]="complexForm.controls['email']" required email>
+                        <div *ngIf="complexForm.controls['email'].hasError('required') && complexForm.controls['email'].touched" class="errorwrap">Email is required.</div>
+                        <div *ngIf="complexForm.controls['email'].hasError('email') && !complexForm.controls['email'].hasError('required')" class="errorwrap">Invalid Email.</div>
+                        <input type="hidden" [(formControl)]="complexForm.controls['common']">
+                    </div>
+                </div>
+                <div class="post-buttons text-right">
+                    <!-- <div class="saffron_btn skyblue_btn" routerLink="../sentnotarization">Send to Verification</div> -->
+                    <button class="saffron_btn skyblue_btn" (click)="complexForm.controls['is_draft'].setValue(false)">Send to Verification</button>
+
+                    <button class="saffron_btn orange_btn" (click)="complexForm.controls['is_draft'].setValue(true)">Send to Draft</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>

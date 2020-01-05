@@ -1,0 +1,81 @@
+<!-- <p-growl [value]="msgs"></p-growl>
+
+<button type="button" pButton (click)="showSuccsess()" label="Success" class="ui-button-success"></button> -->
+
+<!-- <p-autoComplete [(ngModel)]="brand" [suggestions]="filteredBrands" (completeMethod)="filterBrands($event)" [size]="30"
+    [minLength]="1" placeholder="Hint: type 'v' or 'f'" [dropdown]="true" forceSelection="true" (onSelect)="test($event)">
+</p-autoComplete> -->
+
+<!-- <input type="textarea" [(ngModel)]="wsMessage">
+<button (click)="sendWebSocketMessage()">Send Message</button> -->
+
+<p>{{wsMessage}}</p>
+
+<textarea id="textarea" #textarea (keyup)="keyuptextarea()" style="width:350px; height:200px"></textarea>
+
+<span style="margin-left:50px">Brand: {{brand||'none'}}</span>
+
+<p-dropdown [options]="cities1" [(ngModel)]="selectedCity1"></p-dropdown>
+<pre>{{selectedCity1 | json}}</pre>
+
+<p-dropdown [options]="returninform" [(ngModel)]="selectedreturninform"></p-dropdown>
+<pre>{{selectedreturninform | json}}</pre>
+
+<!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="title"></p-dropdown>
+<pre>{{selectedCity | json}}</pre>
+
+<p-dropdown [options]="cities3" [(ngModel)]="selectedCity3" optionLabel="name"></p-dropdown>
+<pre>{{selectedCity3 | json}}</pre> -->
+
+
+<h3 class="first">Single</h3>
+<p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name"></p-dropdown>
+<p>Selected City: {{selectedCity ? selectedCity.name : 'none'}}</p>
+
+
+<app-upload-capture-image></app-upload-capture-image>
+
+
+<!-- <h5>Button Formatting</h5>
+<div class="">
+<button class="saffron_btn">Default Btn</button>
+<button class="saffron_btn blue_btn">Blue Btn</button>
+<button class="saffron_btn red_btn">Red Btn</button>
+<button class="saffron_btn orange_btn">Orange Btn</button>
+<button class="saffron_btn skyblue_btn">Skyblue Btn</button>
+<button class="saffron_btn purple_btn">VoiletBlue Btn</button>
+</div>
+
+<h5>Button Sizing -small</h5>
+<div class="">
+<button class="saffron_btn btn-sm">Default Btn</button>
+<button class="saffron_btn blue_btn btn-sm">Blue Btn</button>
+<button class="saffron_btn red_btn btn-sm">Red Btn</button>
+<button class="saffron_btn orange_btn btn-sm">Orange Btn</button>
+<button class="saffron_btn skyblue_btn btn-sm">Skyblue Btn</button>
+<button class="saffron_btn purple_btn btn-sm">VoiletBlue Btn</button>
+</div>
+
+
+<h5>Button Sizing -Large</h5>
+<div class="">
+<button class="saffron_btn btn-lg">Default Btn</button>
+<button class="saffron_btn blue_btn btn-lg">Blue Btn</button>
+<button class="saffron_btn red_btn btn-lg">Red Btn</button>
+<button class="saffron_btn orange_btn btn-lg">Orange Btn</button>
+<button class="saffron_btn skyblue_btn btn-lg">Skyblue Btn</button>
+<button class="saffron_btn purple_btn btn-lg">VoiletBlue Btn</button>
+</div> -->
+
+<!-- this is the financial chart -->
+<div>
+    <wj-financial-chart #flexChart>
+        <!-- <wj-financial-chart-series name="Open" binding="open"></wj-financial-chart-series>
+        <wj-financial-chart-series name="Close" binding="close"></wj-financial-chart-series> -->
+        <wj-financial-chart-series name="Close" binding="high,low,open,close"></wj-financial-chart-series>
+    </wj-financial-chart>
+</div>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/78NW2yxg5UZMM3"></iframe>
+
+<iframe src="http://www.africau.edu/images/default/sample.pdf"></iframe>

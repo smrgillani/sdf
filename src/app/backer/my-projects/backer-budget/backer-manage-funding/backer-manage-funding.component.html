@@ -1,0 +1,53 @@
+<!-- <app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['backer', 'my-projects', project.id]}"></app-header> -->
+<app-header class="position-static"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Budget</h1>
+    </div>
+    <div class="cardwrap">
+      <div class="card">
+        <!-- <div class="projects-search">
+            <div class="search-icon"></div>
+            <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+        </div> -->
+        <div>Manage fund list</div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Fund Type</th>
+                <th>Funded By</th>
+                <th width="125px">Amount</th>
+                <th>Output</th>
+                <th width="150px">Funded On</th>
+                <th width="150px">DUE On</th>
+                <th width="150px">Expiry</th>
+                <!-- <th>Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fund of fundsList">
+                <td>{{fund.fund_type}}</td>
+                <td>{{fund.funded_by}}</td>
+                <td>{{fund.amount}}</td>
+                <td>{{fund.output}}</td>
+                <td>{{fund.funded_on}}</td>
+                <td>{{fund.due_on}}</td>
+                <td>{{fund?.expiry_date_string}}</td>
+                <!-- <td>
+                    <button class="saffron_btn orange_btn" *ngIf="!fund.having_open_interest && fund.is_loan_type && !fund.is_closed" (click)="closeLoan(fund.id)">Close loan</button>
+                    <button class="saffron_btn skyblue_btn" *ngIf="fund.having_open_interest && fund.is_loan_type" (click)="interestPay(fund.id)">Interest Pay</button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getfunds($event)"></app-pagination>
+      </div>
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>

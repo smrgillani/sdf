@@ -1,0 +1,43 @@
+@media (max-width: 499px) {
+    .login-box{
+      margin-top: 0;
+      overflow-y: visible;
+    }
+    .container-title {
+      font-size: 1.5em;
+      color: #fff
+    }
+  
+    .btn {
+      width: 200px;
+      height: 35px;
+      margin: 5px;
+    }
+  
+    input {
+      width: 200px;
+      height: 35px;
+      margin: 5px;
+    }
+  
+  
+    div.separator {
+      background-color: rgba(255, 255, 255, 0.25);
+      width: 200px;
+      height: 1px;
+      margin: 8px 0px;
+    }
+    .container-other-buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 0; 
+    }
+  
+  
+    div.link {
+      font-size: 0.8em;
+      padding: 5px;
+    }
+  }
+  

@@ -1,0 +1,21 @@
+<div class="clearfix">
+  <jqxKanban
+    *ngIf="columns.length"
+    #myKanbanboard
+    (onItemMoved)="myKanbanboardOnItemMoved($event)"
+    [height]="600"
+    [template]="template"
+    [source]="dataAdapter"
+    [columns]="columns"
+    [resources]="resourcesAdapterFunc()"
+    [itemRenderer]="itemRenderer"
+    [columnRenderer]="columnRenderer"
+  ></jqxKanban>
+</div>
+
+<ul class="list-group legends-ul">
+  <li class="list-group-item" style="background-color:red">0 to 50 % work done</li>
+  <li class="list-group-item" style="background-color:orange">51 to 75 % work done</li>
+  <li class="list-group-item" style="background-color:yellow">76 to 99 % work done</li>
+  <li class="list-group-item" style="background-color:green">100 % work done</li>
+</ul>

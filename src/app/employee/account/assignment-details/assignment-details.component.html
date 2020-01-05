@@ -1,0 +1,111 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Project List', route: ['/employee/account/project-list']}"></app-header>
+<main>
+
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Order Details</h1>
+    </div>
+
+    <div class="cardwrap">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Order No</label>
+            <div>{{orderServiceInfo.id}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Subject</label>
+            <div class="">
+              {{orderServiceInfo.subject?.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Title for Paper</label>
+            <div>{{orderServiceInfo.title}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Urgency</label>
+            <div>{{orderServiceInfo.urgency?.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Extensiveness</label>
+            <div>{{orderServiceInfo.extensiveness?.title}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Level of Expertise</label>
+            <div class="">
+              {{orderServiceInfo.expertise}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Payable</label>
+            <div>${{orderServiceInfo.employee_amount?.amount || 0}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Status</label>
+            <div>{{orderServiceInfo.status}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Work Summary</label>
+              <div [innerHtml]="orderServiceInfo.work_summary"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Special Instructions</label>
+              <div [innerHtml]="orderServiceInfo.special_instructions"></div>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label>Sample Attachment</label>
+            <div id="filedroppatemplate">
+              <div class="file-list">
+                <div class="file-container" *ngFor="let doc of orderServiceInfo.sample_attachments">
+                  <div class="flex-block file-preview">
+                    <div class="flex-block file-preview-ext ">file</div>
+                    <a class="flex-block file-name" [href]="doc.document | safeUrl" [download]="doc.document_name">{{doc.document_name}}</a>
+                    <progress class="file-progress" max="100" value="0"></progress>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div> -->
+  </div>
+</main>

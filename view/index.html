@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <title>
+    Main page
+  </title>
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
+</head>
+
+</html>
+
+<body>
+  <h1>Main page</h1>
+  <div id="login"></div>
+  <hr>
+  <p><a href="/login/facebook/">Facebook login</a></p>
+  <p><a href="/auth/google/">Google login</a></p>
+  <p><a href="/auth/linkedin">Linkedin login</a></p>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        type: 'GET',
+        url: '/getUserStatus',
+        success: function (data) {
+            if (data.LoginStatus) {
+                $('#login').append('<span>Hello, ' + data.firstName + ', ' +  data.email + '</span>');
+            } else {
+                $('#login').append('<span>Hello, anon</span>');
+            }
+        },
+        error: function (xhr, str) {
+          alert('Error: ' + xhr.responseText);
+        }
+      });
+    });
+
+  </script>
+</body>

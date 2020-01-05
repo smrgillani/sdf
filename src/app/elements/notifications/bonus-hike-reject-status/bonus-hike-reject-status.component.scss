@@ -1,0 +1,86 @@
+:host {
+    font-size: 14px;
+}
+
+.saffron-popupcontent {
+    padding:15px;
+}
+
+.saffron-popupcontent .popheading {
+    font-size: 1.7em;
+    margin: 10px 10px 15px 10px;
+    font-weight: bold;
+}
+
+td strong {
+    float: left;
+}
+
+td {
+    text-align: right;
+    font-size: 1.2em;
+}
+
+span.status {
+    text-transform: capitalize;
+}
+
+span.status {
+    color:red;
+}
+
+span.status.accept {
+    color:green;
+}
+
+.saffron_btn {
+    font-weight: 400;
+    transition: .3s ease-in-out;
+    padding: 4px 18px;
+    min-width: 7.222em;
+    white-space: nowrap;
+    outline: none;
+    font-size: 1.125em;
+    font-family: ProximaNova, sans-serif;
+}
+
+.saffron_btn:active {
+    outline: none;
+}
+
+.saffron_btn.dark-turquoise {
+    background-color: #00d8c9;
+    border: 2px solid #00d8c9;
+}
+
+.saffron_btn.bittersweet {
+    background-color: #FE5F5B;
+    border: 2px solid #FE5F5B;
+}
+
+.project-actions {
+    width: 100%;
+    text-align: center;
+    display:block;
+}
+
+.project-actions button {
+    width:49%;
+}
+
+.form-group {
+    text-align: left;
+}
+
+@media only screen and (max-width: 340px) {
+    :host {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .saffron-popupcontent::after {
+        top:-19px;
+    }
+}
+  

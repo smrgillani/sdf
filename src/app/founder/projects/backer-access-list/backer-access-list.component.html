@@ -1,0 +1,75 @@
+<app-header
+  class="position-static"
+  [backNavOptions]="{caption: 'Summary', route: ['founder', 'projects', projectId, 'summary']}"
+></app-header>
+
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Access List to process</h1>
+    </div>
+
+    <div class="card-wrapper">
+      <div class="table-responsive">
+        <table class="table table-hover projects-table transaction-table">
+          <thead>
+          <tr>
+            <!-- <th>Id</th> -->
+            <!-- <th>Project Id</th> -->
+            <th>User</th>
+            <th>Chat</th>
+            <th>Operations</th>
+            <th>Budget</th>
+            <th>Rating</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let item of list">
+            <!-- <td>{{item.id}}</td> -->
+            <!-- <td>{{item.project}}</td> -->
+            <td class="clickable" (click)="navigateToRate(item)">
+              {{item.user_name}}
+            </td>
+
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [disabled]="item.lsx_launch"
+                       [(ngModel)]="item.chat_access" (change)="isChatOrWorkAccess($event, item)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [disabled]="item.lsx_launch"
+                       [(ngModel)]="item.operation_access" (change)="isChatOrWorkAccess($event, item)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+
+            <td>
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="form-control custom-control-input" [disabled]="item.lsx_launch"
+                       [(ngModel)]="item.budget_access" (change)="isChatOrWorkAccess($event, item)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </td>
+
+            <td>
+              <ngb-rating [(rate)]="item.rating" [readonly]="true" max="5"></ngb-rating>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <app-pagination
+        class="my-pagination"
+        [pageSize]="pageSize"
+        [pagesQuantity]="count"
+        (pageChanged)="getBackerAccessList($event)"
+      ></app-pagination>
+    </div>
+  </div>
+</main>

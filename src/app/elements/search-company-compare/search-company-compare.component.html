@@ -1,0 +1,490 @@
+<ng-container *ngIf="!showCompare && !readOnly">
+  <ng-container *ngIf="!addingManually">
+    <div class="searchwith radiogroup">
+      <h3>Search with </h3>
+
+      <label class="custom-control custom-radio">
+        <input type="radio" [(ngModel)]="isTicker" attr.name="ticker" (change)="checkIsTickerChange()" [value]="false"
+               name="ticker" class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Name</span>
+      </label>
+
+      <label class="custom-control custom-radio">
+        <input type="radio" [(ngModel)]="isTicker" attr.name="ticker" (change)="checkIsTickerChange()" name="ticker"
+               [value]="true" class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Ticker</span>
+      </label>
+    </div>
+
+    <div class="productsearchbox">
+      <div class="projects-search">
+        <div class="search-icon"></div>
+        <input class="form-control" type="text" placeholder="Search competitors" [(ngModel)]="searchText"
+               (ngModelChange)="modelChange()"/>
+      </div>
+      <div *ngIf="searchResult && searchResult.length > 0" class="searchresult">
+        <perfect-scrollbar class="productlist">
+          <ul>
+            <li *ngFor="let company of searchResult" (click)="returnSelectedCompany(company)">
+              <div class="productrow">
+                <div class="prod_img">
+                  <!-- <img *ngIf="company.thumbnailImage" [src]='product.thumbnailImage'> -->
+                </div>
+                <div class="prod_name">{{company.name}}</div>
+              </div>
+            </li>
+          </ul>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <!-- End Search Result -->
+
+    <!-- Start Compare Box -->
+    <div class="comparewrap">
+      <div class="row">
+        <!-- Start Product box -->
+        <div class="col-md-3 col-sm-6" *ngFor="let selectedCompany of selectedCompanies;let index=index">
+          <div class="productrow">
+            <div class="delete_prod" (click)="removeCompany(index)">
+              <span class="icon-close"></span>
+            </div>
+            <div class="prod_img">
+              <!-- <img *ngIf="selectedCompany.thumbnailImage" [src]='selectedCompany.thumbnailImage'> -->
+            </div>
+            <div class="prod_name">{{selectedCompany.organization_name}}</div>
+          </div>
+        </div>
+        <!-- End Product box -->
+        <!-- Start Compare Button -->
+        <div class="col-md-3 col-sm-6" *ngIf="selectedCompanies.length>=2">
+          <div class="comparebtn">
+            <div class="circle_btn_wrap" (click)="compareCompanies()">
+              <div class="circle_btn">
+                <i aria-hidden="true" class="icon-compare"></i>
+              </div>
+              <span class="circle_btn_text">Compare</span>
+            </div>
+          </div>
+        </div>
+        <!-- End Compare Button -->
+      </div>
+    </div>
+    <!-- End Compare Box -->
+
+    <!-- Start Add Manual and By URL Field -->
+    <div class="materialcost-footer" *ngIf="!manualCompanyAdded && selectedCompanies.length < 3">
+      <div class="form-group">
+        <label>As additional option you can add company manually</label>
+        <!-- <input type="text" [(ngModel)]="productUrl" class="form-control" placeholder="Add your url here"> -->
+        <div class="footer-extrabtn">
+          <!-- <button class="btn btn-blue btn-sm" (click)="addByProductUrl()">Add</button>
+            <span> or </span> -->
+          <button class="btn btn-blue  btn-sm" (click)="addingManually = true">Add Manually</button>
+        </div>
+      </div>
+    </div>
+    <!-- End Add Manual and By URL Field-->
+  </ng-container>
+
+  <!-- Start Add Manual and By URL -->
+  <ng-container *ngIf="addingManually">
+    <!-- <div class="row">
+      <div class="col-sm-12 fullwidth">
+        <app-upload-capture-image [withFileDroppa]="true" [dropTriggerId]="'passportUploadTrigger'" [imageSrc]="manualCompanyImg"
+          (filechanged)="imageChangeListener($event,'manualCompanyImg')">
+        </app-upload-capture-image>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Company Name</label>
+
+          <input type="text" class="form-control" [(ngModel)]="manualCompanyName">
+        </div>
+      </div>
+    </div>
+    <div class="text-right mb30">
+      <button class="saffron_btn red_btn" type="button" (click)="addingManually = false">Back</button>
+      <button class="saffron_btn skyblue_btn" type="button" (click)="saveCustomCompany()">Submit</button>
+    </div>
+  </ng-container>
+  <!-- End Add Manual and By URL -->
+</ng-container>
+
+
+<!-- Start Compare Screen -->
+<div class="compareprojects" *ngIf="showCompare || readOnly">
+  
+  <div class="row" style="border-bottom: 2px solid #eceeef; ">
+
+  <div class="col-md-4 col-sm-4" style="background: #f8f7f5;">
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+            <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+              <div class="productrow">
+                <div class="prod_img">
+                  <!-- <img *ngIf="selectedCompany.thumbnailImage" [src]='selectedCompany.thumbnailImage'> -->
+                </div>
+                <div class="prod_name">{{selectedCompany.organization_name}}</div>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>  
+        <!-- End Compare Button -->
+
+
+  <div class="row compnay_Status__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Status
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Status__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                  <input type="text" class="form-control" [(ngModel)]="selectedCompany.activity_status">
+                </div>
+
+                <ng-template #other_content>{{selectedCompany.activity_status}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+  <div class="row compnay_Fax__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        Fax
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Fax__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <input type="text" class="form-control" [(ngModel)]="selectedCompany.fax_number">
+              </div>
+
+              <ng-template #other_content>{{selectedCompany.fax_number}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+  <div class="row compnay_Founding_Date__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+        <div class="additional-field">
+        Founding Date
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Founding_Date__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <!-- <p-spinner size="30" class="form-control" [(ngModel)]="selectedCompany.founding_date" [min]="0"></p-spinner> -->
+                <!-- <input type="text" class="form-control" [(ngModel)]="selectedCompany.founding_date"> (onSelect)="onSelectfounding_date($event)" [dataType]="date" -->
+                <p-calendar class="form-control" [(ngModel)]="selectedCompany.founding_date" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" icon="icon-menu" showIcon="true"></p-calendar>
+              </div>
+              <ng-template #other_content>{{selectedCompany.founding_date | date: 'yyyy-MM-dd'}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row compnay_Holding_Classification__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+        <div class="additional-field">
+        Holding Classification
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Holding_Classification__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <input type="text" class="form-control" [(ngModel)]="selectedCompany.holding_classification">
+              </div>
+              <ng-template #other_content>{{selectedCompany.holding_classification}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+  <div class="row compnay_HQ_Address__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        HQ Address
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_HQ_Address__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <textarea class="form-control" [(ngModel)]="selectedCompany.hq_address"></textarea>
+              </div>
+              <ng-template #other_content>{{selectedCompany.hq_address}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row compnay_HQ_Phone__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+         <div class="additional-field">
+          HQ Phone
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_HQ_Phone__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <!-- <input type="text" class="form-control"  [(ngModel)]="selectedCompany.hq_phone_number"> -->
+                <app-phone-input [(ngModel)]="selectedCompany.hq_phone_number"></app-phone-input>
+              </div>
+              <ng-template #other_content>{{selectedCompany.hq_phone_number}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+  <div class="row compnay_IPO_Date__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+         <div class="additional-field">
+         IPO Date
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_IPO_Date__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                <!-- <input type="text" class="form-control"  [(ngModel)]="selectedCompany.ipo_date"> (onSelect)="onSelectipo_date($event)"-->
+                <p-calendar class="form-control" [(ngModel)]="selectedCompany.ipo_date" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" icon="icon-menu" showIcon="true"></p-calendar>
+              </div>
+              <ng-template #other_content>{{selectedCompany.ipo_date | date: 'yyyy-MM-dd'}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+ <div class="row compnay_Organization_Name__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+        <div class="additional-field">
+         Organization Name
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Organization_Name__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+              <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                  <input type="text" class="form-control" [(ngModel)]="selectedCompany.organization_name">
+                </div>
+                <ng-template #other_content>{{selectedCompany.organization_name}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+  <div class="row compnay_Registered_Address__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+         Registered Address
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Registered_Address__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+               <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                  <textarea class="form-control" [(ngModel)]="selectedCompany.registered_address"></textarea>
+                </div>
+                <ng-template #other_content>{{selectedCompany.registered_address}}</ng-template>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row compnay_Registered_Phone__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+        <div class="additional-field">
+         Registered Phone
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.compnay_Registered_Phone__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedCompany of selectedCompanies; let index=index">
+   
+               <div *ngIf="!readOnly && selectedCompany.isCustomCompany == true && selectedCompany.isCompanyAdded == false; else other_content">
+                  <!-- <input type="text" class="form-control"  [(ngModel)]="selectedCompany.registered_phone_number"> -->
+                  <app-phone-input [(ngModel)]="selectedCompany.registered_phone_number"></app-phone-input>
+                </div>
+                <ng-template #other_content>{{selectedCompany.registered_phone_number}}</ng-template>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  <table class="table">
+    <thead>
+    <!-- <tr>
+      <th class="comparepart"></th>
+
+      <th *ngFor="let selectedCompany of selectedCompanies; let index=index">
+        <div class="productrow">
+          <div class="prod_img">
+            <img *ngIf="selectedCompany.thumbnailImage" [src]='selectedCompany.thumbnailImage'>
+          </div>
+          <div class="prod_name">{{selectedCompany.organization_name}}</div>
+        </div>
+      </th>
+    </tr> -->
+    </thead>
+    <tbody>
+
+
+
+    </tbody>
+  </table>
+</div>
+<div *ngIf="showCompare && !isOnlyBack && !readOnly" class="text-right mb30">
+  <button class="saffron_btn red_btn" type="button" (click)="showCompare = !showCompare; isOnlyBack = !isOnlyBack">
+    Back
+  </button>
+  <button class="saffron_btn skyblue_btn" type="button" (click)="updateCompany()">Submit</button>
+</div>
+
+<div *ngIf="isOnlyBack && showCompare && !readOnly" class="text-right mb30">
+  <button class="saffron_btn red_btn" type="button" (click)="editIfCustom()">Back</button>
+</div>
+<!-- End Compare Screen -->
+
+<ng-template #popUpForShowInterestMessage>
+  <div class="modal-body">Not more than 3 companys can be compared.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

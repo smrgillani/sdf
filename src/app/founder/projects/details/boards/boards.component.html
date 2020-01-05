@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header class="position-absolute no-bg"></app-header>
+      <h1>MileStones</h1>
+      <h3 (click)='addMilestone()' class='milestone' >Add new milestone</h3><br/>
+      <div *ngFor="let milestone of milestones; let i = index" (click)='openMilestone(milestone.id)' class='milestone' >
+        {{milestone.title}}
+      </div>
+    </div>
+  </div>
+</div>
+
+

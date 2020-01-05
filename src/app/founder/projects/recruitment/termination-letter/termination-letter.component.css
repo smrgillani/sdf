@@ -1,0 +1,43 @@
+.appoitmentpage                     { padding: 25px 50px; font-size: 18px; color:#151515; position: relative; }
+.form-control                       { border: 0; box-shadow: 0; border-bottom: 1px solid #6b72ff; min-width: 245px; width: auto; color:#2b29ad; background: transparent; font-size: 18px; padding: .2rem .75rem; border-radius: 0;  }
+.contactbox                         { width: 250px; }
+.contactbox .form-control           { padding: .2rem 0;}
+.heading-text                       { font-weight: 500; font-size: 24px;margin: 20px 0;}
+.mt-20                              { margin-top: 20px;}
+.mb-20                              { margin-bottom: 20px;}
+.appointmentcontent .form-control   { display: inline-block; vertical-align: text-bottom; padding: 0; min-width:150px; }
+.appointmentcontent p  { line-height: 28px; font-size: inherit; margin: 20px 0;}
+.personname  { margin-bottom: 20px;}
+.close_popup  { position: absolute; top:20px; right: 20px; color:#ff3333; font-size: 24px; cursor: pointer;  }
+.close_popup:hover {color:#f32323; }
+.texteditable u { text-decoration:none;border-bottom: 1px solid #6b72ff; color:#2b29ad }
+
+.conpanyinfo        { margin-bottom: 50px;}
+.companylogo        { display: inline-block; vertical-align: middle; }
+.companylogo img    { width: 100%; height: auto;}
+.companyname        { display: inline-block; vertical-align: middle; }
+.companyname h1     { margin: 0; padding: 0; font-size: 30px; color:#0f0f0d; }
+.companyname span     { margin: 0; padding: 0; font-size: 12px;color:#999999; display: block; text-align: center; }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #2b29ad;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #2b29ad;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #2b29ad;
+}
+.signaturebox  { width: 300px; height: 70px; border:1px solid #ebebeb; }
+.saf_blue_theme .project-actions{ display: inline-block; display: block; text-align: right; }
+.saf_blue_theme .project-actions .btn-border {  height: 38px; display: inline-block;  width: auto;}
+.saf_blue_theme .project-actions .btn-border .btn {height: 32px; }
+.datetimetextbox        { display: inline-block; vertical-align: middle; min-width: 250px;}
+.datetimetextbox .iconmoon { bottom: 18px;font-size: 15px;}
+.datetimetextbox .iconmoon.icon-close { bottom: 18px; font-size: 11px;}
+.editabletext { border-bottom: 1px solid #6b72ff; color:#2b29ad;}
+.editabletext.sm span { display: inline-block; vertical-align: middle; min-width: 150px;}
+.editabletext:focus,
+.editabletext span:focus { outline: none;}

@@ -1,0 +1,159 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <app-header class="position-absolute"></app-header>
+
+      <div class="container subheader_summary">
+        <!-- <span (click)="location.back()" class="back-button">Back</span> -->
+        <!-- <div class="icon"></div> -->
+        <a [routerLink]="['photo']" class="icon" [class.white]="project.photo_crop">
+          <img *ngIf="project.photo_crop" [src]="project.photo_crop" alt="">
+          <span>
+            Edit
+          </span>
+        </a>
+
+        <h2>
+          <span class="form-group" *ngIf="editProjectTitle">
+            <input class="form-control" [(ngModel)]="projectTitle">
+          </span>
+          <span *ngIf="!editProjectTitle">{{project.title}}</span>
+
+          <span
+            class="project-visibility fa"
+            [class.fa-lock]="!project.is_visible"
+            [class.fa-unlock]="project.is_visible"
+            (click)="setProjectVisibility()"
+          ></span>
+          <span
+            class="fa"
+            [class.fa-edit]="!editProjectTitle"
+            [class.fa-check-circle]="editProjectTitle"
+            (click)="toggleEditProjectTitle()"
+          ></span>
+          <span  class="fa fa-trash" (click)="openModal(confirmDeletingMessage)"></span>
+        </h2>
+
+        <div class="text-center">
+          <!-- <div *ngIf="!project.add_nda"  class="addndabtn"><a [routerLink]="['../', 'nda']">NDA</a></div> -->
+          <div class="addndabtn"><a href="javascript:void(0);" (click)="checkNda(popUpForDocuSignMessage)">NDA</a></div>
+          <div class="shownda" *ngIf="project.add_nda">
+            <!-- Rounded switch -->
+            <label class="switch" title="Set NDA visibility">
+              <input type="checkbox" [(ngModel)]="project.show_nda" (change)="setProjectNDAVisibility()">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <!-- <div *ngIf="project.add_nda" class="text-center">
+            <div class="addndabtn">
+              <a href="javascript:void(0);" (click)="checkNda(popUpForDocuSignMessage)">NDA</a>
+            </div>
+          </div>
+          <span [routerLink]="['../', 'backer-access']" class="icon-transport"></span> -->
+        </div>
+        <div class="created" *ngIf="project.owner">
+          Created by
+
+          <span class="owner-photo">
+            <img *ngIf="project.owner.photo_crop" [src]="project.owner.photo_crop" alt="">
+          </span>
+
+          <i *ngIf="project?.owner?.is_kyc_complete" class="icon-check2 verified"></i>
+
+          <span class="name" *ngIf="project.owner.first_name || project.owner.last_name; else email">
+            {{ project.owner.first_name }} {{ project.owner.last_name }}
+          </span>
+
+          <ng-template #email>
+            <span class="name">{{project.owner.email || project.owner.phone_number}}</span>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="container container-summary">
+        <ng-container *ngFor="let stage of projectStages">
+          <h2 *ngIf="qaList[stage.key].length > 0">{{stage.title}}</h2>
+          <div class="card" *ngFor="let item of qaList[stage.key]; let index = index">
+            <div class="card-block">
+              <h3 class="card-title" [class.skipped]="item.isAnySkipped" (click)="item.isCollapsed = !item.isCollapsed">
+                {{questionGroups[item.group]}}
+                <span class="pull-right">
+                  <i
+                    class="fa"
+                    [class.fa-caret-down]="!item.isCollapsed"
+                    [class.fa-caret-left]="item.isCollapsed"
+                  ></i>
+                </span>
+              </h3>
+              <div class="card-text" [ngbCollapse]="item.isCollapsed">
+                <div class="qa-item  clearfix" *ngFor="let question of item.list">
+                  <h3>{{question.title}}</h3>
+                  <p>{{question.subtitle}}</p>
+
+                  <app-answer-input
+                    *ngIf="!item.isCollapsed"
+                    [question]="question"
+                    [autoFocus]="false"
+                    [saveAnswer]="true"
+                    (onBlur)="saveProjectAnswers(stage.key)"
+                  ></app-answer-input>
+
+                  <div class="pull-right">
+                    <label class="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        [(ngModel)]="question.answer.is_private"
+                        (change)="saveProjectAnswers(stage.key)"
+                      >
+                      <span class="custom-control-indicator"></span>
+                      <span class="custom-control-description">Make this answer private</span>
+                      <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="summary-buttons">
+          <div class="button blue" *ngIf="!project.is_registered" [ngClass]="{'disabled':project.is_registered}"
+               (click)="openRegister()">Register
+          </div>
+          <div class="button blue" *ngIf="project.is_registered" [ngClass]="{'disabled':!project.is_registered}"
+               (click)="downloadRegistrationDetails()">Download Registration Details</div>
+          <!-- <div class="button orange" (click)="openLaunch()">Apply</div> -->
+          <div
+            *ngIf="this.firstSkippedQuestion" class="button orange" (click)="goToSkipped()">
+            Answer skipped questions
+          </div>
+          <div
+            *ngIf="project.stage == 'idea' && !this.firstSkippedQuestion" class="button red" (click)="goToStartup()">
+            Go to startup
+          </div>
+          <div class="button red" (click)="goToProject()">Go to service</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #popUpForDocuSignMessage>
+  <div class="modal-body">DocuSign is pending on either side.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForDocuSignModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmDeletingMessage>
+  <div class="modal-body">Are you sure you want to delete this project?</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-cancel" (click)="modalRef.close()">Cancel</div>
+      <div class="btn btn-ok" (click)="deleteProject(project)">Ok</div>
+    </div>
+  </div>
+</ng-template>

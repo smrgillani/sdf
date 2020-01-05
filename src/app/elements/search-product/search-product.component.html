@@ -1,0 +1,679 @@
+<div *ngIf="!showCompare && !readOnly">
+  <div *ngIf="!addingManually">
+    <!-- Start Search Result -->
+    <div class="productsearchbox">
+      <div class="projects-search">
+        <div class="search-icon"></div>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search competitors"
+          [(ngModel)]="searchText"
+          (ngModelChange)="modelChange()"
+        />
+      </div>
+      <div *ngIf="searchResult" class="searchresult">
+        <perfect-scrollbar class="productlist">
+          <ul>
+            <li *ngFor="let product of searchResult" (click)="selectProduct(product)">
+              <div class="productrow">
+                <div class="prod_img">
+                  <img *ngIf="product.thumbnailImage" [src]='product.thumbnailImage'>
+                </div>
+                <div class="prod_name">{{product.name}}</div>
+              </div>
+            </li>
+          </ul>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <!-- End Search Result -->
+
+    <!-- Start Compare Box -->
+    <div class="comparewrap">
+      <div class="row">
+        <!-- Start Product box -->
+        <div class="col-md-4 col-sm-6" *ngFor="let selectedProduct of selectedProducts;let index=index">
+          <div class="productrow">
+            <div class="delete_prod" (click)="removeProduct(index)">
+              <span class="icon-close"></span>
+            </div>
+            <div class="prod_img">
+              <img *ngIf="selectedProduct.thumbnailImage" [src]='selectedProduct.thumbnailImage'>
+            </div>
+            <div class="prod_name">{{selectedProduct.name}}</div>
+          </div>
+        </div>
+        <!-- End Product box -->
+        <!-- Start Compare Button -->
+        <div class="col-md-4 col-sm-6" *ngIf="selectedProducts.length>=2">
+          <div class="comparebtn">
+            <div class="circle_btn_wrap" (click)="compareProducts()">
+              <div class="circle_btn">
+                <i aria-hidden="true" class="icon-compare"></i>
+              </div>
+              <span class="circle_btn_text">Compare</span>
+            </div>
+          </div>
+        </div>
+        <!-- End Compare Button -->
+      </div>
+    </div>
+    <!-- End Compare Box -->
+
+    <!-- Start Add Manual and By URL Field -->
+    <div class="materialcost-footer" *ngIf="!manualProductAdded">
+      <div class="form-group">
+        <label>As additional option you can add url of the product or add product manually</label>
+        <input type="text" [(ngModel)]="productUrl" class="form-control" placeholder="Add your url here">
+        <div class="footer-extrabtn">
+          <button class="btn btn-blue btn-sm" (click)="addByProductUrl()">Add</button>
+          <span> or </span>
+          <button class="btn btn-blue btn-sm" (click)="addManually()">Add Manually</button>
+        </div>
+      </div>
+    </div>
+    <div class="errorwrap" *ngFor="let error of errorMessages">
+      {{error}}
+    </div>
+    <!-- End Add Manual and By URL Field-->
+  </div>
+
+  <!-- Start Add Manual and By URL -->
+  <div *ngIf="addingManually">
+    <div class="row">
+      <div class="col-sm-12 fullwidth">
+        <app-upload-capture-image
+          [withFileDroppa]="true"
+          [dropTriggerId]="'passportUploadTrigger'"
+          [imageSrc]="manualProductImg"
+          (filechanged)="imageChangeListener($event,'manualProductImg')"
+        ></app-upload-capture-image>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Product Name</label>
+
+          <input type="text" class="form-control" [(ngModel)]="manualProductName">
+        </div>
+      </div>
+    </div>
+
+    <div class="text-right mb30">
+      <button class="saffron_btn red_btn" type="button" (click)="addingManually = false;">Back</button>
+      <button class="saffron_btn skyblue_btn" type="button" (click)="saveCustomProduct()">Submit</button>
+    </div>
+  </div>
+  <!-- End Add Manual and By URL -->
+</div>
+
+<!-- Start Compare Screen -->
+<div class="compareprojects" *ngIf="showCompare || readOnly">
+  
+
+  <div class="row" style="border-bottom: 2px solid #eceeef; ">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;">
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+            <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+              <div class="productrow">
+          <div class="prod_img">
+            <img *ngIf="selectedProduct.thumbnailImage" [src]='selectedProduct.thumbnailImage'>
+          </div>
+          <div class="prod_name">
+            {{selectedProduct.name}} 
+             <span
+              (click)="toggleEditCustomProduct(index)"
+              class="fa"
+              [class.fa-edit]="selectedProduct.isProductAdded"
+              [class.fa-close]="!selectedProduct.isProductAdded"
+            ></span>
+          </div>
+        </div>
+            </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="row products_Brand__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+     <div class="additional-field">
+        Brand Name
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Brand__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                <input type="text" class="form-control" [(ngModel)]="selectedProduct.brandName" (ngModelChange)="allowSubmit = true" >
+              </div>
+        
+              <ng-template #other_content>{{selectedProduct.brandName}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+  <div class="row products_MSRP__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5; text-align: center; padding: 10px 0 10px 0;">
+     <div class="additional-field">
+        MSRP
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_MSRP__')"></i>
+        </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <!-- <input type="text" class="form-control"  [(ngModel)]="selectedProduct.msrp"> -->
+          <p-spinner
+            size="30"
+            class="form-control"
+            [(ngModel)]="selectedProduct.msrp"
+            [min]="0"
+            (ngModelChange)="allowSubmit = true"
+          ></p-spinner>
+        </div>
+        <ng-template #other_content>{{selectedProduct.msrp}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="row products_Price__" style="border-bottom: 2px solid #eceeef;">
+
+  <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+     <div class="additional-field">
+        Price
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Price__')"></i>
+      </div>
+  </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+             <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <!-- <input type="text" class="form-control"  [(ngModel)]="selectedProduct.price"> -->
+          <p-spinner
+            size="30"
+            class="form-control"
+            [(ngModel)]="selectedProduct.price"
+            [min]="0"
+            (ngModelChange)="allowSubmit = true"
+          ></p-spinner>
+        </div>
+        <ng-template #other_content>{{selectedProduct.price}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+  <div class="row products_Path_Category__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+          Category Path
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Path_Category__')"></i>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+          <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="selectedProduct.categoryPath"
+            (ngModelChange)="allowSubmit = true"
+          >
+          </div>
+          <ng-template #other_content>{{selectedProduct.categoryPath}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  <div class="row products_Category_Mode__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        Category Node
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Category_Mode__')"></i>
+       </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+          <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="selectedProduct.categoryNode"
+            (ngModelChange)="allowSubmit = true"
+          >
+        </div>
+        <ng-template #other_content>{{selectedProduct.categoryNode}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row products_Description__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        Description
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Description__')"></i>
+       </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+          <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <textarea
+            class="form-control"
+            [(ngModel)]="selectedProduct.shortDescription"
+            (ngModelChange)="allowSubmit = true"
+          ></textarea>
+          </div>
+          <ng-template #other_content>{{selectedProduct.shortDescription}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row products_Color__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        Color
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Color__')"></i>
+       </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+          <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="selectedProduct.color"
+            (ngModelChange)="allowSubmit = true"
+          >
+          </div>
+          <ng-template #other_content>{{selectedProduct.color}}</ng-template>
+          
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+  <div class="row products_Customer_Rating__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+       <div class="additional-field">
+        Customer Rating
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Customer_Rating__')"></i>
+       </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+          <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+          <ngb-rating
+            [(rate)]="selectedProduct.customerRating"
+            [readonly]="false"
+            (rateChange)="allowSubmit = true"
+          ></ngb-rating>
+        </div>
+        <ng-template #other_content>
+          <ngb-rating [rate]="selectedProduct.customerRating"></ngb-rating>
+        </ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <div class="row products_No_of_Reviews__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Customer Rating
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_No_of_Reviews__')"></i>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                  <!-- <input type="text" class="form-control"  [(ngModel)]="selectedProduct.numReviews"> -->
+                  <p-spinner
+                    size="30"
+                    class="form-control"
+                    [(ngModel)]="selectedProduct.numReviews" [min]="0"
+                    (ngModelChange)="allowSubmit = true"
+                  ></p-spinner>
+                </div>
+                <ng-template #other_content>{{selectedProduct.numReviews}}</ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+  <div class="row products_Bundle__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Bundle
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Bundle__')"></i>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                <label class="custom-control custom-checkbox" *ngIf="manualProductAdded">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [(ngModel)]="selectedProduct.bundle"
+                    (ngModelChange)="allowSubmit = true"
+                  >
+                  <span class="custom-control-indicator"></span>
+                </label>
+              </div>
+              <ng-template #other_content>
+                <span [ngClass]="selectedProduct.bundle === true ? 'icon-check2': 'icon-close'"></span>
+              </ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+
+  <div class="row products_Attributes__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Attributes
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Attributes__')"></i>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                <label class="custom-control custom-checkbox" *ngIf="manualProductAdded">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    [(ngModel)]="selectedProduct.attributes"
+                    (ngModelChange)="allowSubmit = true"
+                  >
+                  <span class="custom-control-indicator"></span>
+                </label>
+              </div>
+              <ng-template #other_content>
+                <span [ngClass]="selectedProduct.attributes === true ? 'icon-check2': 'icon-close'"></span>
+              </ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+  <div class="row products_Gender__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Gender
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Gender__')"></i>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="selectedProduct.gender"
+                  (ngModelChange)="allowSubmit = true"
+                >
+              </div>
+              <ng-template #other_content>{{selectedProduct.gender}}</ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  <div class="row products_Age__" style="border-bottom: 2px solid #eceeef;">
+
+    <div class="col-md-4 col-sm-4 comparepart" style="background: #f8f7f5;text-align: center; padding: 10px 0 10px 0;">
+      <div class="additional-field">
+        Age
+        <i class="fa fa-minus-circle" (click)="removeAdditionalField_('.products_Age__')"></i>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8">
+      <div class="row">
+            <!-- Start Product box -->
+         <div class="col-md-6 col-sm-6" *ngFor="let selectedProduct of selectedProducts; let index=index">
+   
+              <div *ngIf="!readOnly && selectedProduct.isCustomProduct === true && selectedProduct.isProductAdded === false; else other_content">
+                  <!-- <input type="text" class="form-control" [(ngModel)]="selectedProduct.age"> -->
+                  <p-spinner
+                    size="30"
+                    class="form-control"
+                    [(ngModel)]="selectedProduct.age"
+                    [min]="0"
+                    [max]="100"
+                    (ngModelChange)="allowSubmit = true"
+                  ></p-spinner>
+                </div>
+                <ng-template #other_content>{{selectedProduct.age}}</ng-template>
+          
+         </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  <table class="table">
+    
+
+    <tbody>
+
+
+
+    
+
+    <tr *ngFor="let field of additionalFields; let fieldIndex=index">
+      <td>
+        <div class="additional-field">
+          {{field.name}} 
+          <i class="fa fa-minus-circle" (click)="removeAdditionalField()"></i>
+        </div>
+      </td>
+      <td *ngFor="let selectedProduct of selectedProducts; let index=index">
+        <div *ngIf="!readOnly && selectedProduct.isProductAdded === false; else other_content">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="selectedProduct[field.id]"
+            (ngModelChange)="allowSubmit = true"
+          >
+        </div>
+        <ng-template #other_content>{{selectedProduct[field.id]}}</ng-template>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <div class="additional-field">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="newAdditionalFieldName"
+          >
+          <i class="fa fa-plus-circle" (click)="createAdditionalField()"></i>
+        </div>
+        <span class="error" *ngIf="newAdditionalFieldError">{{newAdditionalFieldError}}</span>
+      </td>
+      <td *ngFor="let selectedProduct of selectedProducts"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!readOnly && !addingManually" class="text-right mb30">
+  <button *ngIf="showCompare" class="saffron_btn red_btn" type="button" (click)="goBack()">Back</button>
+  <button *ngIf="allowSubmit" class="saffron_btn skyblue_btn" type="button" (click)="updateProduct()">Submit</button>
+</div>
+
+
+<!-- End Compare Screen -->
+
+<ng-template #popUpForShowInterestMessage>
+  <div class="modal-body">Not more than 5 products can be compared.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

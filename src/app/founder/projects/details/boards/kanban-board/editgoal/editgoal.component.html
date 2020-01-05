@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <div class="container-main">
+        <!-- <app-header [backNavOptions]="{caption: project.title, route: ['founder', 'projects', project.id]}"></app-header> -->
+        <app-header class="position-static"></app-header>
+        <div class="content-main">
+
+            <div class="content-main-header">
+                <div class="title">Edit Goal</div>
+                <div class="btn-group">
+
+                </div>
+            </div>
+            <div class="content-main-body">
+                <!-- <form> -->
+                <div style="display:flex;align-items:center; justify-content: space-between;">
+                    <h3>{{goal.title}}</h3>
+                    <a class="delete-btn" (click)="confirmDeleteTask(confirmDeletingMessage)"></a>
+                </div>
+                <h3>Title</h3>
+                <p><input type="text" class="width-50" placeholder="Goal title" [(ngModel)]="goal.title" /></p>
+
+                <h3>Description</h3>
+                <p> <input type="text" class="width-100" placeholder="Goal description" [(ngModel)]="goal.description" />
+                </p>
+                <div class="process_list">
+                    <div class="header">
+                        <h3>Processes</h3>
+                        <div class="empty-add-btn" (click)="addProcessBtnClicked();">+</div>
+                    </div>
+                    <app-process *ngFor="let process of subtasks; let pIndex = index" [subtask]="process" [subtasks]="subtasks" [pIndex]="pIndex" [currentMilestone]="currentMilestone"></app-process>
+                </div>
+                <div class="process_list">
+                    <div class="header">
+                        <h3>Dependencies</h3>
+                        <div class="empty-add-btn" (click)="addDependencyBtnClicked();">+</div>
+                    </div>
+                    <div class="dependencies-list">
+                        <div *ngFor="let eDependency of eDependencies; let i = index">
+                            <p>{{eDependency.milestone.title}} - {{eDependency.task.title}} -
+                                <a class="delete-btn" (click)="deleteDependency(eDependency.id, i)"></a>
+                            </p>
+                        </div>
+                    </div>
+                    <app-dependency *ngFor="let dependency of dependencies;let dIndex = index;" [dependency]="dependency" [milestones]="milestones" [dIndex]="dIndex" [dependencies]="dependencies" [projectId]="project_id" [currentgoal]="goal"></app-dependency>
+                </div>
+                <app-validation-message [msgArray]="msgArray"></app-validation-message>
+                <div class="content-footer">
+                    <div class="create-btn">
+                        <div class="inner-section" (click)="updateTask()">
+                            Update
+                        </div>
+                    </div>
+                </div>
+                <!-- </form> -->
+            </div>
+            <!-- <div class="back-btn" (click)="backBtnClicked();"><span><img src="../../assets/img/left-arrow-blue.png" width="20px" /></span><a>Back</a></div> -->
+        </div>
+
+    </div>
+
+</div>
+<ng-template #confirmDeletingMessage>
+    
+    <div class="modal-body">
+        <h4>Do you want to delete this?</h4>
+        
+        <div><strong>This goal is belonged to</strong> "{{dependGoalName}}". </div>
+   
+    </div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <div class="btn btn-cancel" (click)="confirmDeletingModalRef.close()">Cancel</div>
+            <div class="btn btn-ok" (click)="deleteTask()">Ok</div>
+        </div>
+    </div>
+</ng-template>

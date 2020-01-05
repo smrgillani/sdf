@@ -1,0 +1,38 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="popheading">Extension request for service </div>
+
+  <div class="cardwrap tabwrap">
+    <div class="cardwrap">
+      <div class="s-box">
+        <div class="s-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody *ngIf="id">
+                <tr>
+                  <td colspan="2"><strong>Service:</strong> {{extensionInfo?.service_title}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Revised Date:</strong> {{extensionInfo?.revised_date_in_string}}</td>
+                </tr>
+                <tr *ngIf="extensionInfo?.status != 'new'">
+                  <td colspan="2"><strong>Status:</strong> {{extensionInfo?.status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="project-actions" *ngIf="extensionInfo?.status == 'new'">
+    <div class="btn-border skyblue" (click)="updateExtensionStatus('accept')">
+      <div class="btn skyblue-btn">Accept</div>
+    </div>
+    <div class="btn-border red" (click)="updateExtensionStatus('decline')">
+      <div class="btn red-btn">Decline</div>
+    </div>
+  </div>
+</div>

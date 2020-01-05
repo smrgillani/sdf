@@ -1,0 +1,403 @@
+.kanbonboard {
+  .container-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .container-main::after {
+    display: none;
+  }
+
+  .container-logo {
+    height: 40px;
+  }
+
+  .bg-image {
+    background-image: url(/assets/img/circle2.png);
+    background-repeat: no-repeat;
+    background-size: 620px 540px;
+    background-position: 0px -10px;
+  }
+
+  .container-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container-title {
+    color: #f9f5f0;
+    // font-size: 48px;
+    font-weight: 300;
+  }
+
+  .container-button {
+    margin: 0px;
+    width: 170px;
+    height: 170px;
+    border-width: 3px;
+    border-radius: 85px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    transition: .2s ease-in-out;
+    cursor: pointer;
+    margin: 22px;
+  }
+
+  header {
+    // background-color: transparent;
+    min-height: 67px;
+    // padding: 0 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .content-main {
+    min-height: calc(100% - 60px);
+    background-color: #f9f5f0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0% 4%;
+    overflow-y: auto;
+  }
+
+  .container-footer {
+    color: #f9f5f0;
+    font-size: 26px;
+    letter-spacing: -2px;
+  }
+
+  .content-main-header {
+    // height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+  }
+
+  .content-main-header .title {
+    font-size: 2.250em;
+    padding: 0px 10px;
+    color: #4342e6;
+    font-family: ProximaNova;
+    font-weight: 500;
+  }
+
+  .jqx-kanban-item-color-status {
+    width: 100%;
+    height: 25px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    position: relative;
+    margin-top: 0;
+    overflow: hidden;
+    top: 0;
+  }
+
+  .jqx-kanban-item {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .jqx-kanban-item-text {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: #444;
+  }
+
+  .jqx-kanban-item-text li {
+    margin-left: 0;
+    list-style-type: none;
+    color: #4342e6;
+  }
+
+  .jqx-kanban-item-avatar {
+    top: 9px;
+  }
+
+  .jqx-kanban-template-icon {
+    position: absolute;
+    right: 3px;
+    top: 12px;
+  }
+
+  .jqx-kanban-column-container {
+    margin: 1px;
+    overflow-y: auto;
+    padding: 10px;
+    height: auto !important;
+    max-height: 70vh;
+  }
+
+  .jqx-kanban {
+    width: 100% !important;
+  }
+
+  .jqx-kanban-column {
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    float: left;
+    /* padding: 5px; */
+    /* border: none; */
+    margin: 10px;
+    width: calc(25% - 20px) !important;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 0 10px 5px;
+    height: auto !important;
+  }
+
+  .jqx-kanban-column-header-title {
+    font-size: 1.3rem;
+    color: #6c6c83;
+    margin-left: 5px;
+    font-family: ProximaNova;
+    font-weight: 400;
+  }
+
+
+  .edit-svg-btn {
+    background: url(/assets/img/edit_icon.png);
+    background-repeat: no-repeat;
+    color: white;
+    background-size: 55%;
+    background-position: center;
+    width: 35px;
+    height: 35px;
+    background-color: #00d8c9;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 6px 1px;
+
+    &.close_btn {
+      background: url(/assets/img/close_btn.png);
+      background-repeat: no-repeat;
+      background-size: 55%;
+      background-position: center;
+      background-color: #fa5f5e;
+      border-radius: 50%;
+    }
+  }
+
+  .jqx-kanban-column-header {
+    border-width: 1px;
+    border-style: solid;
+    margin: 1px;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    border-top: solid 5px #679bf9;
+    margin: 0px;
+    padding: 8px 5px;
+    margin-bottom: -10px;
+  }
+
+  .jqx-kanban-column-header-button,
+  .jqx-kanban-column-header-custom-button {
+    display: none;
+  }
+
+  .jqx-kanban-item {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    min-height: 150px;
+    background-color: #f8cc50;
+    border-radius: 3px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 5px 2px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  .jqx-kanban-item-color-status {
+    background-color: transparent;
+    font-size: 18px;
+    font-family: ProximaNova;
+    font-weight: 600;
+    color: #444444;
+  }
+
+  .jqx-icon-close {
+    display: none;
+  }
+
+  .btn-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-group a {
+    margin-right: 10px;
+    zoom: 0.87;
+  }
+
+  @media (max-width: 992px) {
+    .bg-image {
+      background-size: contain;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .container-center {
+      flex-direction: row;
+
+      .container-title {
+        font-size: 24px;
+      }
+
+      .container-buttons {
+        flex-direction: column;
+        margin: 0;
+
+        .container-button {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+
+          .button-inner {
+            width: calc(100% - 12px);
+            height: calc(100% - 12px);
+            font-size: 24px;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 499px) {
+    .container-center {
+      .container-title {
+        font-size: 20px;
+      }
+    }
+
+    .container-footer {
+      &.choose-role-footer {
+        font-size: 16px;
+        letter-spacing: -1px;
+      }
+    }
+  }
+
+  @media (min-width: 500px) {
+    .container-buttons {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 100px;
+    }
+    .container-button:hover {
+      -webkit-filter: blur(0px);
+      filter: blur(0px);
+      -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+      transform: scale(1.1);
+      transition: .2s ease-in-out;
+    }
+  }
+
+  @media screen and (max-width: 768px) and (orientation: landscape) {
+    .container-center {
+      flex-direction: column;
+
+      .container-buttons {
+        flex-direction: row;
+        margin: 0;
+
+        .container-button {
+          width: 120px;
+          height: 120px;
+
+          .button-inner {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .button-inner {
+    width: 158px;
+    height: 158px;
+    border-radius: 79px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #f9f5f0;
+    font-size: 34px;
+    font-weight: bold;
+  }
+
+  .border-green {
+    border-color: #00d8c9;
+  }
+
+  .border-blue {
+    border-color: #679bf9;
+  }
+
+  .border-orange {
+    border-color: #ff6c24;
+  }
+
+  .back-green {
+    background-color: #00d8c9;
+  }
+
+  .back-blue {
+    background-color: #679bf9;
+  }
+
+  .back-orange {
+    background-color: #ff6c24;
+  }
+
+  .add_btn {
+    background-color: #fe5f5b;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-image: url(/assets/img/add.png);
+    background-repeat: no-repeat;
+    background-size: 40px;
+    background-position: 50% 58%;
+    /* padding-top: 5px; */
+    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 6px 1px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
+
+.kanbonboard .content-main {
+  @media (max-width: 767px) {
+    min-height: auto;
+  }
+}
+
+.kanbonboard .jqx-kanban-column {
+  @media (max-width: 767px) {
+    width: calc(33.33% - 20px) !important;
+  }
+
+  @media (max-width: 640px) {
+    width: calc(50% - 20px) !important;
+  }
+
+  @media (max-width: 480px) {
+    width: calc(100% - 20px) !important;
+  }
+}

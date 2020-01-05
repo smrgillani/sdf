@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="container-main">
+    <div class="container-border">
+      <!-- <app-navbar></app-navbar> -->
+      <app-header class="position-absolute no-bg"></app-header>
+
+      <div class="container subheader_summary">
+        <!-- <span (click)="location.back()" class="back-button">Back</span> -->
+        <div class="icon"></div>
+
+        <h2>{{project.title}}</h2>
+        <div class="text-center" *ngIf="project.show_nda && project.add_nda">
+          <div class="addndabtn"><a href="javascript:void(0);" (click)="checkNda(popUpForDocuSignMessage)">NDA</a></div>
+        </div>
+        <div class="created" *ngIf="project.owner">
+          Created by
+          <img *ngIf="project.owner.photo_crop" [src]="project.owner.photo_crop" alt="">
+          <span class="name" *ngIf="project.owner.first_name || project.owner.last_name; else email"> {{
+            project.owner.first_name }} {{ project.owner.last_name }}</span>
+          <ng-template #email>
+            <span class="name">{{project.owner.email || project.owner.phone_number}}</span>
+          </ng-template>
+        </div>
+      </div>
+      <div *ngIf="isNdaPending" class="container container-summary">
+        DocuSign is pending on either side, please check your Email.
+      </div>
+      <div *ngIf="!isNdaPending" class="container container-summary">
+        <ng-container *ngFor="let stage of projectStages">
+          <h2>{{stage.title}}</h2>
+          <div class="card" *ngFor="let item of qaList[stage.key]; let index = index">
+            <div class="card-block">
+              <h3 class="card-title">
+                {{questionGroups[item.group]}}
+                <span class="pull-right" [class.open]="!item.isCollapsed" [class.close]="item.isCollapsed" (click)="item.isCollapsed = !item.isCollapsed"></span>
+              </h3>
+              <div class="card-text" [ngbCollapse]="item.isCollapsed">
+                <div class="qa-item clearfix" *ngFor="let question of item.list">
+                  <div *ngIf="question.answer && !question.answer.is_private">
+                    <h3>{{question.title}}</h3>
+                    <app-answer-input *ngIf="!item.isCollapsed" [isViewOnly]="true" [question]="question" [autoFocus]="false"></app-answer-input>
+                    <!-- <div [ngSwitch]="question.question_type">
+                      <p *ngSwitchCase="'text'">{{question.answer.response_text}}</p>
+                      <p class="image_answer" *ngSwitchCase="'image'">
+                        <img [src]="question.answer.image" alt="">
+                      </p>
+                      <div *ngSwitchCase="'doc_drawing'">
+                        <app-vd-canvas [imageUrl]="question.answer.diagram" [viewOnly]="true">
+                        </app-vd-canvas>
+                      </div>
+                      <div *ngSwitchCase="'doc_spreadsheet'">
+                        <div class="testTest" *ngIf="!item.isCollapsed">
+                          <app-spreadsheet class="doc_spreadsheet" [isReadOnly]="true" [(ngModel)]="question.answer.spreadsheet"></app-spreadsheet>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+</div>
+<ng-template #popUpForDocuSignMessage>
+  <div class="modal-body">DocuSign is pending on either side.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForDocuSignModalRef.close()">Ok</div>
+    </div>
+  </div>
+</ng-template>

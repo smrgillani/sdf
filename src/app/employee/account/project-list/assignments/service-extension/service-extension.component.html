@@ -1,0 +1,28 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+  <div class="popheading">Extension for Service</div>
+
+  <form name="form" (ngSubmit)="f.form.valid && extensionService(f)" #f="ngForm" novalidate>
+    <div class="form-group datetimetextbox">
+      <label>Order Service No. </label>      
+      <div class="form-group">
+        <label>Date</label>
+        <app-date-input [(date)]="updateOrderServiceInfo.revised_date"></app-date-input>
+        <app-time-input [(ngModel)]="updateOrderServiceInfo.revised_date" [ngModelOptions]="{standalone: true}"></app-time-input>
+        <input type="hidden" name="revised_date" #revised_date="ngModel" [(ngModel)]="updateOrderServiceInfo.revised_date">
+        <div *ngIf="f.submitted && revised_date.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['revised_date'][0]}}</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" class="btn btn-ok">
+        Request
+      </button>
+    </div>
+
+  
+  </form>
+
+
+</div>

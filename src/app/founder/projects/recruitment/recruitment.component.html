@@ -1,0 +1,44 @@
+<app-header class="position-static" [backNavOptions]="{caption: project.title, route: ['founder', 'projects', projectId]}"></app-header>
+
+<main>
+  <div class="container recruitment-wrap saf_blue_theme" id="recruitment-wrap">
+    <div class="heading">
+      <h1>Recruitment</h1>
+    </div>
+
+    <div class="cardwrap tabwrap">
+      <ngb-tabset [class.mobile-open]="isMobileOpen" (click)="tabClicked($event)" (tabChange)="tabChanged()">
+        <ngb-tab>
+          <ng-template ngbTabTitle>Post a Job</ng-template>
+          <ng-template ngbTabContent>
+            <app-post-job [projectId]="projectId"></app-post-job>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Hire Employees</ng-template>
+          <ng-template ngbTabContent>
+            <app-hire-employees [projectId]="projectId"></app-hire-employees>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Proposals</ng-template>
+          <ng-template ngbTabContent>
+            <app-proposals [projectId]="projectId"></app-proposals>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>My Employees</ng-template>
+          <ng-template ngbTabContent>
+            <app-my-employee [projectId]="projectId" [rateFor]="rateFor"></app-my-employee>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>Previous Employees</ng-template>
+          <ng-template ngbTabContent>
+            <app-previous-employees [projectId]="projectId" [rateFor]="rateFor"></app-previous-employees>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+    </div>
+  </div>
+</main>

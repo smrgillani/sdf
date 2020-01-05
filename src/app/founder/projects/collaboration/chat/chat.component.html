@@ -1,0 +1,142 @@
+<aside
+  #process_details
+  class="process_details"
+  [class.closed]="isProcessesOpen"
+  [class.mobile_open]="activeMobileView === 'chat'"
+  [style.width.px]="chatWidth"
+>
+  <app-element-resize class="resize-trigger" [externalSize]="chatWidth" (sizeChanged)="setChatWidth($event)"
+                      (resizeBegin)="fixChatWidth()" (resizeEnd)="fixChatWidth($event)"></app-element-resize>
+
+  <div class="chatwrap">
+    <div class="switcher">
+      <div class="open-chat" [class.hidden]="isChatOpen" (click)="openChat()">Go to
+        <b>Discussion &rarr;</b>
+      </div>
+
+      <div class="open-details" [class.hidden]="!isChatOpen" (click)="isChatOpen = !isChatOpen">
+        <b>&larr;</b> Back to
+        <b>Details</b>
+      </div>
+    </div>
+
+    <div class="top-bar">
+      <div class="btn videocall-btn" (click)="startVideoCall()"></div>
+      <div class="btn acitivityPop" (click)="actionButtonActivityLogPopup()">
+        <span class="icon-clock"></span>
+      </div>
+      <app-chat-filters *ngIf="isChatOpen" (filtersChanged)="onChatFiltersChanged($event)"></app-chat-filters>
+    </div>
+
+    <div class="details" [class.open]="!isChatOpen">
+      <h4>Details</h4>
+      <div class="users">
+        <a href="#" (click)="$event.preventDefault()" *ngFor="let user of users">
+          <img *ngIf="user.photo_crop" src="{{user.photo_crop}}" alt="">
+        </a>
+      </div>
+      <app-chat-participants *ngIf="process.participants" [process]="process" [is_complete]="is_complete"
+                             (reassignProcess)="reassignProcessEvent($event)"></app-chat-participants>
+
+      <!-- <div class="details-text">
+        <p>Photographs are a way of preserving a moment in our lives for the rest of our lives.</p>
+      </div> -->
+
+      <div class="details-date">
+        <b>Due on</b>{{process.due_date | date: 'MMM dd, yyyy HH:mm'}}
+      </div>
+      <div class="details-date">
+        <b>Goal Description</b>{{process.goal_description}}
+      </div>
+
+      <div class="details-rules">
+        <h4>Rules</h4>
+        <ul *ngIf="process.rules && process.rules.length > 0">
+          <li *ngFor="let rule of process?.rules">{{rule.title}}</li>
+        </ul>
+      </div>
+      <div class="form-group private-question">   <!-- *ngIf="process.process_percentage >= 100" -->
+        <label class="custom-control custom-checkbox">
+          <input type="checkbox" class="form-control custom-control-input" [(ngModel)]="is_complete" [disabled]="is_complete"
+                 (change)="isProcessComplete($event)">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description"> is Complete</span>
+          <!-- <i class="fa fa-lock font-large ml-1" aria-hidden="true"></i> -->
+        </label>
+      </div>
+    </div>
+
+    <div class="chat" [class.open]="isChatOpen">
+      <div class="chat-section">
+        <app-chat-messages-list
+          class="chat-messages-list"
+          *ngIf="chatRoom"
+          [overDoubleWidth]="chatWidth >= 600"
+          [chatRoom]="chatRoom"
+          [isChatOpen]="isChatOpen"
+          [filters]="chatFilters"
+        ></app-chat-messages-list>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<ng-template #popUpForAddEmailMessage>
+  <div class="modal-body">Email is mandatory to initiate chat session. Please add your email.</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="goToAccount()">Ok</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #popUpForConfirmationMessage>
+  <div class="modal-body">Are you sure you want to close task?</div>
+  <div class="modal-footer">
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="isComplete()">Yes</div>
+    </div>
+    <div class="buttons">
+      <div class="btn btn-ok" (click)="popUpForShowInterestModalRef.close()">No</div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #getActionButtonActivityLog>
+  <div class="saffron-popupcontent">
+    <div class="close_popup" (click)="popUpForShowInterestModalRef.dismiss('Cross click')">
+      <i class="icon-close"></i>
+    </div>
+    <div class="projects-container">
+      <table class="table table-hover projects-table">
+        <thead>
+        <tr>
+          <th width="160px">Date Time</th>
+          <th>Action</th>
+          <th>Statement</th>
+          <th width="80px" style="text-align:right">Done By</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let activityFeed of activityFeedList">
+          <td>
+            {{activityFeed.timestamp | date: 'MM/dd/yyyy hh:mm:ss'}}
+          </td>
+          <td>
+            {{activityFeed.selected_action}}
+          </td>
+          <td [innerHTML]="activityFeed.description">
+          </td>
+          <td>
+            <div class="profile-icon">
+              <img *ngIf="activityFeed.actor.photo_crop" [src]="activityFeed.actor.photo_crop" alt="" title="{{activityFeed.actor.first_name}} {{activityFeed.actor.last_name}}">
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="actionButtonActivityLogData($event)"></app-pagination>
+    </div>
+
+  </div>
+</ng-template>

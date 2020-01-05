@@ -1,0 +1,75 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header>
+<main>
+  <form #ndaForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="ndaData.docusign_status == 'No Nda'; else showDoc">
+    <div class="container saf_blue_theme">
+      <div class="heading">
+        <h1>{{project.title}}</h1>
+      </div>
+      <div class="cardwrap" *ngIf="defaultNDA; else creatorNDA">      
+        <h2>Non-Disclosure Agreement</h2>
+        <div class="ndacontent">
+          <ol>
+            <li>This Nondisclosure Agreement is entered into by and between Batis Samadian with his principal office at Sennhofstrasse.24 – 8125 Zollikerberg and for the purpose of preventing the unauthorized disclosure of Confidential Information as defined below. The parties agree to enter into a confidential relationship with respect to the disclosure of certain proprietary and confidential information - "All drawings, codes and ideas, concepts, designs, innovations, and all other material relating to the concept and idea of Saffron. This includes both physical and verbal information.”</li>
+            <li>Definition of Confidential Information. For purposes of this Agreement, "Confidential Information" shall include all information or material that has or could have commercial value or other utility in the business in which Disclosing Party is engaged. If Confidential Information is in written form, the Disclosing Party shall label or stamp the materials with the word "Confidential" or some similar warning. If Confidential Information is transmitted orally, the Disclosing Party shall promptly provide a writing indicating that such oral communication constituted Confidential Information.            </li>
+            <li>Obligations of Receiving Party. Receiving Party shall hold and maintain the Confidential Information in strictest confidence for the sole and exclusive benefit of the Disclosing Party. Receiving Party shall carefully restrict access to Confidential Information to employees, contractors and third parties as is reasonably required and shall require those persons to sign nondisclosure restrictions at least as protective as those in this Agreement. Receiving Party shall not, without prior written approval of Disclosing Party, use for Receiving Party's own benefit, publish, copy, or otherwise disclose to others, or permit the use by others for their benefit or to the detriment of Disclosing Party, any Confidential Information. Receiving Party shall return to Disclosing Party any and all records, notes, and other written, printed, or tangible materials in its possession pertaining to Confidential Information immediately if Disclosing Party requests it in writing.</li>
+            <li>termination of this Agreement and Receiving Party's duty to hold Confidential Information in confidence shall remain in effect until the Confidential Information no longer qualifies as a trade secret or until Disclosing Party sends Receiving Party written notice releasing Receiving Party from this Agreement, whichever occurs first.</li>
+            <li>Relationships. Nothing contained in this Agreement shall be deemed to constitute either party a partner, joint venturer or employee of the other party for any purpose.</li>
+            <li>Severability. If a court finds any provision of this Agreement invalid or unenforceable, the remainder of this Agreement shall be interpreted so as best to effect the intent of the parties. </li>
+            <li>Integration. This Agreement expresses the complete understanding of the parties with respect to the subject matter and supersedes all prior proposals, agreements, representations and understandings. This Agreement may not be amended except in a writing signed by both parties.</li>
+            <li>Waiver. The failure to exercise any right provided in this Agreement shall not be a waiver of prior or subsequent rights.</li>
+          </ol>
+          <p>This Agreement and each party's obligations shall be binding on the representatives, assigns and successors of such
+            party. Each party has signed this Agreement through its authorized representative.</p>
+        </div>
+        <div class="form-group nda_aggrement">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" name="is_agree" [(ngModel)]="ndaData.is_agree" #is_agree="ngModel">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">I agree to the terms outlined in the Non-Disclosure Agreement.</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <div class="projects-filter" class="col-sm-4 pull-right">
+            <span class="projects-filter-caption">Email</span>
+            <input class="form-control" type="text" name="email" [(ngModel)]="ndaData.backer_email" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$">
+            <div *ngIf="email.errors?.required" class="errorwrap">Email is required</div>
+            <div *ngIf="email.errors?.pattern && email.touched" class="errorwrap">Invalid Email</div>
+          </div>
+        </div>        
+      </div>
+      <ng-template #creatorNDA>
+        <div class="cardwrap ndatextarea">
+          <!-- <div class="ndacontent" [innerHtml]="ndaData.description"></div> -->
+          <app-text-editor [(ngModel)]="ndaData.description" name="ndaContent" #ndaContent="ngModel"></app-text-editor>
+          <div class="form-group nda_aggrement">
+            <label class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" name="is_agree" [(ngModel)]="ndaData.is_agree" #is_agree="ngModel">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">I agree to the terms outlined in the Non-Disclosure Agreement.</span>
+            </label>
+          </div>
+          <div class="form-group clearfix">
+            <div class="projects-filter" class="col-sm-4 pull-right">
+              <span class="projects-filter-caption">Email</span>
+              <input class="form-control" type="text" name="email" [(ngModel)]="ndaData.backer_email" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$">
+              <div *ngIf="email.errors?.required" class="errorwrap">Email is required</div>
+              <div *ngIf="email.errors?.pattern && email.touched" class="errorwrap">Invalid Email</div>
+            </div>
+          </div> 
+        </div>
+      </ng-template>
+  
+      <div class="projects-footer">
+        <div class="post-buttons pull-right">
+          <!-- <div class="saffron_btn skyblue_btn" [routerLink]="['../project-trading']">Submit</div> -->
+          <button class="saffron_btn skyblue_btn" [disabled]="!ndaForm.valid || !ndaData.is_agree" type="submit">Submit</button>          
+        </div>
+        <!-- <div class="back-button" (click)="_location.back()">Back</div> -->
+      </div>
+    </div>  
+  </form>
+  <ng-template #showDoc>
+    <app-docu-signdocpreview *ngIf="ndaData.docusign_status" [URL]="ndaData.docusign_status.url"></app-docu-signdocpreview>
+  </ng-template>
+  
+</main>

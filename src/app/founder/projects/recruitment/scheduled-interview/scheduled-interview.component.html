@@ -1,0 +1,38 @@
+
+<div class="interviewpopup saf_blue_theme">
+<div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+
+<div class="popheading">Interview</div>
+
+<div class="form-group datetimetextbox">
+<label>Schedule Interview for {{name}} </label>
+
+  <!-- <input ng2-datetime-picker class="form-control textfeild " [(ngModel)]="scheduleOn"
+    date-format="MM-DD-YYYY HH:MM"  [close-on-select]="false" #scheduleDate (onChange)="checkDateValidation()"/> -->
+    <p-calendar  class="form-control" [(ngModel)]="scheduleOn" [minDate]="todaysDate" showTime="true" hourFormat="24"
+    [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2050" required="true" dateFormat="mm-dd-yy" #scheduleDate (onClose)="checkDateValidation()"></p-calendar>
+    <i class="iconmoon icon-menu"></i>
+    <i class="iconmoon icon-close" (click)="scheduleOn=''"></i>
+</div>
+<div *ngIf="isValidDate" class="errorwrap">Please enter date greater than today's date and time</div>
+<div class="" *ngIf="isJobList">
+  <div class="form-group">
+    <label>Job Title</label>
+      <p-dropdown class="form-control" [options]="jobList" placeholder="Choose" optionLabel="title" [(ngModel)]="selectedjobId" (onChange)="onJobSelect($event.value)"></p-dropdown><!--required="true"-->
+  </div>
+   
+
+    <div class="form-group">
+      <label>Message</label>
+        <textarea  textareahgt class="form-control" [(ngModel)]="selectedjobDescription"></textarea>
+      </div>
+
+   
+</div>
+<!-- (click)="activeModal.close('Close click')" -->
+<div class="project-actions">
+<div class="btn-border skyblue" (click)="scheduleIt()">  
+    <div class="btn skyblue-btn">Confirm</div>
+  </div>
+</div>
+</div>

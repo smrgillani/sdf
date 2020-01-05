@@ -1,0 +1,84 @@
+<main>
+  <app-header></app-header>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>{{currentEmployeeRatingInfo.first_name}} {{currentEmployeeRatingInfo.last_name}} Rating</h1>
+
+      <div>
+        <ngb-rating
+          [(rate)]="currentEmployeeRatingInfo.average_rating"
+          [readonly]="true"
+          max="5"
+          (click)="submitrating=!submitrating"
+        ></ngb-rating>
+      </div>
+    </div>
+
+    <div class="cardwrap emp_rating" *ngIf="submitrating">
+      <p-accordion>
+        <p-accordionTab *ngFor="let item of projectTaskList; let i = index" class="card">
+          <p-header>
+            <h3 class="card-title">
+              <i class="icomoon icon-next-1"></i> {{item.title}}
+              <span class="pull-right icon-down-arrow"></span>
+            </h3>
+          </p-header>
+
+          <div class="taskmainwrap">
+            <p-accordion (onOpen)="selected = i">
+              <p-accordionTab *ngFor="let task of item.subtasks" class="taskcardwrap">
+                <p-header>
+                  <div class="taskwrap">
+                    <h4>{{task.title}}</h4>
+                    <div class="text-right">
+                      <ngb-rating [(rate)]="task.average_rating" [readonly]="true" max="5"></ngb-rating>
+                    </div>
+                    <span class="tabcollapse pull-right close"></span>
+                  </div>
+                </p-header>
+
+                <app-task-attributes
+                  *ngIf="selected == i"
+                  [employeeRatings]="task.employee_ratings"
+                  [rated_to]="rated_to"
+                  [taskId]="task.id"
+                  [empId]="currentEmployeeRatingInfo.user"
+                  [currentParameterInfoList]="parameterInfoList"
+                  (isSubmitted)="isSubmitted($event)"
+                ></app-task-attributes>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
+    <div class="cardwrap ratingview" *ngIf="!submitrating">
+      <div class="cardbody">
+        <table class="table">
+          <tbody>
+          <tr *ngFor="let attribute of currentEmployeeRatingInfo.rating_details; let index = index">
+            <td>{{attribute.parameter}}</td>
+            <td>
+              <ngb-rating [(rate)]="attribute.rating" [readonly]="true" max="5"></ngb-rating>
+              <!-- <ngb-rating  [(rate)]="4"></ngb-rating> -->
+            </td>
+
+            <td>
+              Rated by {{attribute.employer_count}} Employers
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="projects-footer" *ngIf="!submitrating">
+      <div class="back-button" (click)="submitrating=!submitrating">Back</div>
+    </div>
+
+    <div class="projects-footer" *ngIf="submitrating">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>

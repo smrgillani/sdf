@@ -1,0 +1,124 @@
+<!-- <app-header [backNavOptions]="{caption: 'Services' , route: ['/founder/services']}"></app-header> -->
+<app-header [backNavOptions]="{caption: 'Services' , route: ['founder/projects', projectId, 'services']}"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Request a service</h1>
+    </div>
+    <div class="cardwrap">      
+      <form [formGroup]="myNewServiceForm" novalidate (ngSubmit)="saveNewService(myNewServiceForm)">
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="project">              
+        <!-- value: {{myNewServiceForm.value | json}} -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Subject</label>
+              <p-dropdown class="form-control" [options]="subjectList" formControlName="subject" required></p-dropdown>
+              <div *ngIf="issubmitted && f.subject.errors?.required" class="errorwrap">Subject is required</div>
+              <!-- <div *ngIf="issubmitted && f.subject.errors && objKeyMessage && objKeyMessage['subject']" class="errorwrap">{{objKeyMessage['subject'][0]}}</div> -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Title for Paper</label>
+              <input type="text" class="form-control" formControlName="title" required>
+              <div *ngIf="issubmitted && f.title.errors?.required" class="errorwrap">Title is required</div>
+              <!-- <div *ngIf="issubmitted && f.title.errors && objKeyMessage && objKeyMessage['title']" class="errorwrap">{{objKeyMessage['title'][0]}}</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Explain your Expectations</label>
+              <textarea class="form-control" formControlName="expectations"></textarea>
+              <!-- <div *ngIf="issubmitted && f.expectations.errors && objKeyMessage && objKeyMessage['expectations']" class="errorwrap">{{objKeyMessage['expectations'][0]}}</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Complexity</label>
+              <p-dropdown class="form-control" [options]="complexityList" formControlName="complexity" (onChange)="getPayable()" required></p-dropdown>
+              <div *ngIf="issubmitted && f.complexity.errors?.required" class="errorwrap">Complexity is required</div>
+              <small class="form-text text-muted">1- Easy 5- Difficult </small>
+              <!-- <div *ngIf="issubmitted && f.complexity.errors && objKeyMessage && objKeyMessage['complexity']" class="errorwrap">{{objKeyMessage['complexity'][0]}}</div> -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Work Limits</label>
+              <p-dropdown class="form-control" [options]="workLimitList" formControlName="word_limit" (onChange)="getPayable()" required></p-dropdown>
+              <input type="hidden" formControlName="rate_slab">
+              <div *ngIf="issubmitted && f.word_limit.errors?.required" class="errorwrap">Word Limit is required</div>
+              <small class="form-text text-muted"  style="cursor: pointer;"  (click)="rateSlabPopUp()">Rate Slab <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </small>
+              <!-- <div *ngIf="issubmitted && f.word_limit.errors && objKeyMessage && objKeyMessage['word_limit']" class="errorwrap">{{objKeyMessage['word_limit'][0]}}</div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" formGroupName="creator_amount">
+            <div class="form-group">
+              <label>Payable</label>
+              <!-- <p-spinner size="30" class="form-control" [min]="1" formControlName="amount" [step]="1" required readonly></p-spinner> -->
+              <input type="text" class="form-control" formControlName="amount" readonly>
+              <input type="hidden" formControlName="currency">              
+              <div *ngIf="issubmitted && f.creator_amount.controls['amount'].errors?.required" class="errorwrap">Payable
+                is required</div>
+              <!-- <div *ngIf="issubmitted && f.creator_amountcontrols['amount'].errors && objKeyMessage && objKeyMessage['creator_amount']" class="errorwrap">{{objKeyMessage['creator_amount'][0]}}</div> -->
+              <small class="form-text text-muted" style="cursor: pointer;" (click)="getBreakUpPopUp()">See Break-up <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Sample Attachment</label>
+              <app-file-droppa  class="pdfwithdoc" id="filedroppatemplate" [dropZoneTemplate]="dropZoneChartTemplate" [url]="" [multiple]="true" [autoUpload]="false"
+                [showFilesList]="true" [beforeAddFile]="beforeAddFile" (filesUpdated)="FilesUpdated($event)" [openTriggerId]="'passportTrigger'">
+                <div class="profile-buttons">
+                  <div class="trigger" id="passportTrigger">
+                  </div>
+                </div>
+              </app-file-droppa>
+              <!-- <div id="filedroppatemplate">
+                <div class="file-list" formArrayName="sample_attachments">
+                  <div class="file-container" *ngFor="let docItem of sampleAttForm.controls; let i = index" [formGroupName]="i">
+                      <input type="hidden" formControlName="document_name">
+                      <input type="hidden" formControlName="document">
+                      <input type="hidden" formControlName="size">
+                    <div class="flex-block file-preview">
+                      <div class="flex-block file-preview-ext ">{{docItem.ext}}
+                        <input type="hidden" formControlName="ext">
+                      </div>
+                      <div class="flex-block file-name">{{docItem.document_name}}</div>
+                      <progress class="file-progress" max="100" value="0"></progress>
+                    </div>
+                    <div class="file-remove">
+                      <span class="remove">
+                        <a href="javascript:void(0)" (click)="deleteSampleAtt(i)"></a>
+                      </span>
+                    </div>
+                    <div class="flex-block"> Byte</div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="errorwrap" *ngIf="is_fileSizeExceed">The file size exceeds the limit.</div>
+            </div>
+          </div>
+        </div>
+        <div class="post-buttons text-right">
+          <button class="saffron_btn skyblue_btn" type="submit">Submit</button>
+          <button class="saffron_btn orange_btn" type="button" (click)="resetForm()">Reset</button>
+        </div>
+      </form>
+    </div>
+    <div class="projects-footer">
+      <div class="back-button" (click)="_location.back()">Back</div>
+    </div>
+  </div>
+</main>

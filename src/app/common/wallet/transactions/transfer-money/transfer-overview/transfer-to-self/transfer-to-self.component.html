@@ -1,0 +1,91 @@
+<form name="form" action="." #f="ngForm" novalidate>
+  <div class="cardwrap">
+    <form name="form" (ngSubmit)="f.form.valid && saveTransactionInfo(f)" #f="ngForm" novalidate>
+      <input type="hidden" [(ngModel)]="transactionInfo.id" name="transactionInfoId" #bankId="ngModel">
+      <input type="hidden" [(ngModel)]="transactionInfo.user_to_user" name="non_field_errors" #non_field_errors="ngModel">
+
+      <div class="row">
+        <div class="col-md-5 transfer-from">
+          <div class="form-group personal" *ngIf="transactionInfo.mode === 'withdrawal'">
+            <label><strong>From</strong> Personal Wallet</label>
+            <p>{{walletAmount}} mata Credits</p>
+          </div>
+
+          <div class="form-group" *ngIf="transactionInfo.mode === 'deposit'">
+            <label><strong>From</strong> Project</label>
+            <p-dropdown
+              class="form-control"
+              [options]="currentUserProjectList"
+              [(ngModel)]="transactionInfo.project"
+              name="project"
+              #project="ngModel"
+              placeholder="Select"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="col-md-2 transfer-switch">
+          <div class="form-group">
+            <button class="saffron_btn" type="button" (click)="switchTransactionMode()">
+              <i class="fa fa-exchange"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-md-5 transfer-to">
+          <div class="form-group personal" *ngIf="transactionInfo.mode === 'deposit'">
+            <label><strong>To</strong> Personal Wallet</label>
+            <p>1234567 mata Credits</p>
+          </div>
+
+          <div class="form-group" *ngIf="transactionInfo.mode === 'withdrawal'">
+            <label><strong>To</strong> Project</label>
+            <p-dropdown
+              class="form-control"
+              [options]="currentUserProjectList"
+              [(ngModel)]="transactionInfo.project"
+              name="project"
+              #project="ngModel"
+              placeholder="Select"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Amount</label>
+            <p-spinner
+              size="30"
+              class="form-control"
+              [min]="1"
+              [(ngModel)]="transactionInfo.amount.amount"
+              [step]="1"
+              name="amount"
+              #amount="ngModel"
+              required
+            ></p-spinner>
+
+            <div *ngIf="f.submitted && amount?.errors?.required" class="errorwrap">Amount is required</div>
+            <div *ngIf="f.submitted && amount?.errors?.min" class="errorwrap"> Amount must be greater than 0</div>
+            <div *ngIf="amount?.errors && objKeyMessage && objKeyMessage['amount']" class="errorwrap">
+              {{objKeyMessage['amount'][0]}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Remark</label>
+            <input type="text" class="form-control" [(ngModel)]="transactionInfo.remark" name="remark" #remark="ngModel">
+          </div>
+        </div>
+      </div>
+
+      <div class="post-buttons">
+        <button type="button" class="saffron_btn orange_btn" (click)="reset()">Reset</button>
+        <button type="submit" class="saffron_btn skyblue_btn">Add Transaction</button>
+      </div>
+    </form>
+  </div>
+</form>

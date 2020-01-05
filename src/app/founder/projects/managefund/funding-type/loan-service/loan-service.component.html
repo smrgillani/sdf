@@ -1,0 +1,52 @@
+<label class="custom-control lg-checkbox custom-checkbox" *ngIf="!showNextButton">
+    <input type="checkbox" class="custom-control-input" checked disabled>
+    <span class="custom-control-indicator"></span>
+</label>
+<div class="heading">
+    <h1 (click)="isCollapseloan=togglecollapse(isCollapseloan)">Loan Services</h1>
+</div>
+<form [formGroup]="frmFundDetails">
+    <div class="cardwrap" *ngIf="isCollapseloan">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Amount of Loan ($)</label>
+                    <!-- <input type="text" class="form-control" formControlName="loan_amount" [(ngModel)]="fundData.loan_amount.amount"> -->
+                    <p-spinner size="30" class="form-control" formControlName="loan_amount" [(ngModel)]="fundData.loan_amount.amount"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="loan_amount.errors && (loan_amount.touched || loan_amount.dirty)">
+                        <div class="errorwrap" *ngIf="loan_amount.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="loan_amount.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Type of Payment</label>
+                    <p-dropdown class="form-control" [options]="paymentTypes" formControlName="payment_type" placeholder="-- Select --" [(ngModel)]="fundData.payment_type"></p-dropdown>
+                    <div class="form-control-feedback" *ngIf="payment_type.errors && (payment_type.touched || payment_type.dirty)">
+                        <div class="errorwrap" *ngIf="payment_type.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Interest rate, which you wish to pay (%)</label>
+                    <!-- <input type="text" class="form-control" formControlName="interest_rate" [(ngModel)]="fundData.interest_rate"> -->
+                    <p-spinner size="30" class="form-control" formControlName="interest_rate" [(ngModel)]="fundData.interest_rate"></p-spinner>
+                    <div class="form-control-feedback" *ngIf="interest_rate.errors && (interest_rate.touched || interest_rate.dirty)">
+                        <div class="errorwrap" *ngIf="interest_rate.errors.required">Required</div>
+                        <div class="errorwrap" *ngIf="interest_rate.errors.invalidNumber">Invalid input, enter number only.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5>T&Cs</h5>
+        <app-text-editor class="wrappertexteditor" formControlName="terms_condition" [(ngModel)]="fundData.terms_condition" height="125px"></app-text-editor>
+
+        <div class="post-buttons" *ngIf="showNextButton">
+            <button type="button" class="saffron_btn skyblue_btn" (click)="next()">{{nextButtonText}}</button>
+        </div>
+    </div>
+</form>

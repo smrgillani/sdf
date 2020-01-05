@@ -1,0 +1,120 @@
+<aside
+  #process_details
+  class="process_details"
+  [class.closed]="isProcessesOpen"
+  [class.mobile_open]="activeMobileView === 'chat'"
+  [style.width.px]="chatWidth"
+>
+  <app-element-resize class="resize-trigger" [externalSize]="chatWidth" (sizeChanged)="setChatWidth($event)"
+                      (resizeBegin)="fixChatWidth()" (resizeEnd)="fixChatWidth($event)"></app-element-resize>
+
+  <div class="chatwrap">
+    <div class="switcher">
+      <div class="open-chat" [class.hidden]="isChatOpen" (click)="openChat()">Go to
+        <b>Discussion &rarr;</b>
+      </div>
+
+      <div class="open-details" [class.hidden]="!isChatOpen" (click)="isChatOpen = !isChatOpen">
+        <b>&larr;</b> Back to
+        <b>Details</b>
+      </div>
+    </div>
+
+    <div class="details" [class.hidden]="isChatOpen" [class.open]="activeMobileView === 'details'">
+      <h4>Details</h4>
+
+      <div class="details-date">
+        <b>Work Summary</b>
+        {{orderServiceInfo.work_summary}}
+      </div>
+
+      <div class="details-rules">
+        <b>Special Instructions</b>
+        {{orderServiceInfo.special_instructions}}
+      </div>
+      <br>
+
+      <div class="form-group private-question">
+        <label class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="form-control custom-control-input"
+            [checked]="orderServiceInfo.status == 'review' || orderServiceInfo.status == 'complete' ? true : false"
+            [disabled]="orderServiceInfo.status == 'review' || orderServiceInfo.status == 'complete' ? true : false"
+            (change)="isComplete($event)">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description"> is Complete</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="chat" [class.hidden]="!isChatOpen" [class.open]="activeMobileView === 'chat'">
+      <h4>Discussion</h4>
+      <app-chat-filters class="chat-filters" (filtersChanged)="onChatFiltersChanged($event)"></app-chat-filters>
+
+      <div class="chat-section">
+        <div class="chat-messages">
+          <perfect-scrollbar>
+            <div class="scrollingcontent">
+              <div class="message" *ngFor="let message of messages">
+                <ng-container *ngIf="!showOnlyStarred || isStarred(message)">
+                  <div class="user" *ngIf="message.message_by">
+                    <span class="user-photo">
+                      <!-- <img *ngIf="message.user.photo_crop" [src]="message.user.photo_crop" alt=""> -->
+                    </span>
+
+                    <span class="user-name" [attr.title]="message.message_by">
+                      <a class="star-message" (click)="starToggle(message)">
+                        <i
+                          class="fa"
+                          [class.fa-star]="isStarred(message)"
+                          [class.fa-star-o]="!isStarred(message)"
+                        ></i>
+                      </a>
+
+                      <span class="username">{{message.message_by}}</span>
+                      <span class="message-time">{{message.time | date:'shortTime'}}</span>
+
+                      <span class="message-action-buttons" *ngIf="message.editable">
+                        <i *ngIf="message.text" class="fa fa-pencil pull-right" aria-hidden="true" (click)="setEditMessage(message)"></i>
+                        <i class="fa fa-trash pull-right" aria-hidden="true" (click)="deleteMessage(message.id)"></i>
+                      </span>
+
+                      <span class="message-type" *ngIf="message.message_type != undefined && message.message_type != null && message.message_type != '' && (message.message_type == 'decision_poll' || message.is_reply)">
+                        {{message.message_type}}
+                      </span>
+                    </span>
+                  </div>
+
+                  <div *ngFor="let attachment of message.attachments" class="replyfor">
+                    <small>{{attachment.title}}</small>
+                    <img *ngIf="attachment.image_url" [src]="attachment.image_url | safeUrl" alt="" height="200">
+                    <a *ngIf="attachment.image_url" [href]="attachment.image_url | safeUrl" target="_blank">Download</a>
+                  </div>
+
+                  <div [ngSwitch]="message.message_type" style="display: flex;justify-content: space-between;">
+                    <p *ngSwitchDefault class="message-body" [innerHTML]="message.text"></p>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+
+        <app-chat-action-bar
+          class="chat-action-bar"
+          [enableMessageTypes]="false"
+          [editMessage]="editMessage"
+          [overDoubleWidth]="chatWidth >= 600"
+          [fileUploadErrors]="fileUploadErrors"
+          (typingOccurred)="onTypingOccurred()"
+          (typingStarted)="onTypingStarted()"
+          (typingEnded)="onTypingEnded()"
+          (messageSent)="sendMessage($event)"
+          (fileSent)="sendFile($event)"
+          (resetEditMessage)="editMessage = null"
+        ></app-chat-action-bar>
+      </div>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,19 @@
+<div class="folder-select" *ngIf="item">
+  <img
+    (click)="back()"
+    class="icon"
+    src="/assets/img/document-explorer/folder-open.svg"
+  />
+  <div ngbDropdown class="d-inline-block" #menu="ngbDropdown">
+    <div class="title" ngbDropdownToggle>{{item.title}}</div>
+    <div class="dropdown-menu" ngbDropdownMenu>
+      <button
+        class="dropdown-item"
+        *ngFor="let folder of path; let index = index"
+        (click)="navigateTo(folder)"
+      >
+        <div class="shift{{index}}">{{folder.title}}</div>
+      </button>
+    </div>
+  </div>
+</div>

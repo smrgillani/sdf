@@ -1,0 +1,67 @@
+<app-header class="position-static" [backNavOptions]="{caption: 'Projects', route: ['backer', 'projects']}"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div [ngSwitch]="currentFund.fund" *ngIf="!showSummary">
+      <div *ngSwitchCase="fundTypes.CrowdFunding">
+        <app-backer-crowd-equity [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-crowd-equity>
+      </div>
+      <div *ngSwitchCase="fundTypes.LoanServices">
+        <app-backer-loan-service [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-loan-service>
+      </div>
+      <div *ngSwitchCase="fundTypes.NormalCrowdFunding">
+        <app-backer-crowd-normal [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-crowd-normal>
+      </div>
+      <div *ngSwitchCase="fundTypes.P2PLoan">
+        <app-backer-p2p-loan-lend [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-p2p-loan-lend>
+      </div>
+      <div *ngSwitchCase="fundTypes.CompanyBuyOffer">
+        <app-backer-company-buy-offer [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-company-buy-offer>
+      </div>
+      <div *ngSwitchCase="fundTypes.OfferBuyRole">
+        <app-backer-offer-role [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-offer-role>
+      </div>
+      <div *ngSwitchCase="fundTypes.SplitEquity">
+        <app-backer-split-equity [showActions]="true" [fundData]="currentFund" (onNext)="onNext()"></app-backer-split-equity>
+      </div>
+      <div *ngSwitchDefault>
+        <div>
+          Sorry, but fund type {{currentFund.fund_title}} is not implemented yet.
+        </div>
+      </div>
+    </div>
+    <div class="heading" *ngIf="showSummary">
+      <h1>Manage Funding</h1>
+    </div>
+    <div class="cardwrap summarysec" *ngIf="showSummary">
+      <ng-container>
+        <div class="card" *ngFor="let item of selectedFundTypes; let index = index">
+          <div class="card-block">
+            <app-backer-crowd-equity *ngIf="item.fundType.fund == fundTypes.CrowdFunding" [fundData]="item.fundType"></app-backer-crowd-equity>
+            <app-backer-loan-service *ngIf="item.fundType.fund == fundTypes.LoanServices" [fundData]="item.fundType"></app-backer-loan-service>
+            <app-backer-crowd-normal *ngIf="item.fundType.fund == fundTypes.NormalCrowdFunding" [fundData]="item.fundType"></app-backer-crowd-normal>
+            <app-backer-p2p-loan-lend *ngIf="item.fundType.fund == fundTypes.P2PLoan" [fundData]="item.fundType"></app-backer-p2p-loan-lend>
+            <app-backer-company-buy-offer *ngIf="item.fundType.fund == fundTypes.CompanyBuyOffer" [fundData]="item.fundType"></app-backer-company-buy-offer>
+            <app-backer-offer-role *ngIf="item.fundType.fund == fundTypes.OfferBuyRole" [fundData]="item.fundType"></app-backer-offer-role>
+            <app-backer-split-equity *ngIf="item.fundType.fund == fundTypes.SplitEquity" [fundData]="item.fundType"></app-backer-split-equity>
+          </div>
+        </div>
+      </ng-container>
+      <div class="post-buttons">
+        <div class="saffron_btn skyblue_btn" (click)="submitFundingTypes()">Confirm & Submit</div>
+      </div>
+    </div>
+    <div *ngFor="let errors of serverSideErrors">
+      <div *ngIf="isArray(errors); else nonArray">
+        <div *ngFor="let msg of errors.non_field_errors">
+          <div class="errorwrap">{{msg}}</div>
+        </div>
+      </div>
+      <ng-template #nonArray>
+        <div class="errorwrap">{{errors}}</div>
+      </ng-template>
+    </div>
+    <div class="projects-footer">
+      <div class="back-button" (click)="goBack()">Back</div>
+    </div>
+  </div>
+</main>

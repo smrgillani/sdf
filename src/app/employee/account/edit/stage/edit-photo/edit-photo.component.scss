@@ -1,0 +1,236 @@
+$primary-color: #4342e6;
+
+.container-main {
+  height: auto;
+  background:
+    url(/assets/img/summary_header_dots.png) top center no-repeat,
+    -webkit-linear-gradient(top, $primary-color, $primary-color 210px, rgb(249,245,240) 210px, rgb(249,245,240) 100%);
+
+
+      &::after
+    {
+      border-color: #333;
+    }
+  .container-border {
+    display: block;
+ //   border-color: #333;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .container-main {    
+    background: url(/assets/img/summary_header_dots.png) top center no-repeat,
+      -webkit-linear-gradient(top, $primary-color, $primary-color 156px, rgb(249,245,240) 156px, rgb(249,245,240) 100%);
+  
+  }
+}
+
+.container {
+  width: 798px;
+}
+
+.edit-photo {
+  width: 768px;
+  margin: 119px auto 6px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+
+  .edit-photo-header {
+    background-color: #FE5F5B;
+    color: #FFFFFF;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 60px;
+    padding: 0 30px;
+
+    span {
+      display: none;
+    }
+  }
+
+  .edit-photo-body {
+    padding: 30px;
+    background-color: #fff;
+  }
+
+  .col-6 + .col-6 {
+    border-left: 1px solid #ddd;
+  }
+
+  .photo-canvas {
+    display: inline-block;
+    height: 170px;
+    background-color: #F2EADF;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #7C7C7C;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .profile-buttons {
+    text-align: center;
+
+    .trigger {
+      display: inline-block;
+      position: relative;
+      margin: 0 33px;
+      color: #4342E6;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    .icon {
+      display: block;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      box-shadow: 0 1px 4px 0 rgba(0,0,0,0.35);
+
+      &.upload {
+        background: #6A9DF6 url(/assets/img/upload_new_photo.png) no-repeat center;
+      }
+
+      &.take {
+        background: #24D7C8 url(/assets/img/take_photo.png) no-repeat center;
+      }
+    }
+  }
+
+  h3 {
+    color: #4342E6;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    margin-bottom: 11px;
+  }
+
+  .profile-photo {
+    height: 124px;
+    width: 124px;
+    border-radius: 50%;
+    border: 4px solid #F9F5F0;
+    background:  #F9F5F0 url(/assets/img/founder/user.png) no-repeat center;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    margin: 0 auto 12px;
+
+    img {
+      border-radius: 50%;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.hidden-input {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+}
+
+.back-button {
+  margin-left: 30px;
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    max-width: 798px;
+    width: auto;
+  }
+  .edit-photo {
+    max-width: 672px;
+    width: auto;
+    margin: 124px auto 30px;
+
+    .photo-canvas {
+      display: block;
+      height: 290px;
+    }
+
+    .edit-photo-body {
+      .row {
+        display: block;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .col-6 {
+        display: block;
+        max-width: 100%;
+      }
+
+      .col-6 + .col-6 {
+        border-left: 0;
+        border-top: 1px solid #ddd;
+      }
+    }
+
+    .profile-buttons {
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      font-weight: normal;
+    }
+  }
+
+  .back-button {
+    margin-bottom: 30px;
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .edit-photo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    overflow-y: scroll;
+    width: 100%;
+    margin: 0;
+    z-index: 100;
+    background-color: #fff;
+
+    h3 {
+      margin-top: 29px;
+    }
+
+    .edit-photo-header {
+      font-weight: normal;
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        display: inline-block;
+        font-weight: 100;
+      }
+    }
+
+    .profile-buttons {
+      .trigger {
+        margin: 0 20px;
+      }
+    }
+
+    .photo-canvas {
+      display: block;
+      height: 170px;
+    }
+  }
+}

@@ -1,0 +1,163 @@
+<app-header class="position-static"></app-header>
+<main>
+  <div class="container saf_blue_theme">
+    <div class="heading">
+      <h1>Request a service</h1>
+    </div>
+    <div class="cardwrap">
+      <form [formGroup]="myNewServiceForm" novalidate (ngSubmit)="saveNewService(myNewServiceForm)">
+        <input type="hidden" formControlName="id">
+        <input type="hidden" formControlName="project">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Subject</label>
+              <p-dropdown
+                class="form-control"
+                [options]="subjectList"
+                formControlName="subject"
+                (onChange)="getExtensivenessBySubjectId($event)"
+                required
+              ></p-dropdown>
+              <div *ngIf="isSubmitted && f.subject.errors?.required" class="errorwrap">Subject is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Title for Paper</label>
+              <input type="text" class="form-control" formControlName="title" required>
+              <div *ngIf="isSubmitted && f.title?.errors && errorObject && errorObject['title']" class="errorwrap">
+                Ensure this field has no more than 100 characters.
+              </div>
+              <div *ngIf="isSubmitted && f.title.errors?.required" class="errorwrap">Title is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Urgency</label>
+              <p-dropdown
+                class="form-control"
+                [options]="urgencyList"
+                formControlName="urgency"
+                (onChange)="getPayable()"
+                required
+              ></p-dropdown>
+              <div *ngIf="isSubmitted && f.urgency.errors?.required" class="errorwrap">Urgency is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Extensiveness</label>
+              <p-dropdown
+                class="form-control"
+                [options]="extensivenessList"
+                formControlName="extensiveness"
+                (onChange)="getPayable()"
+                required
+              ></p-dropdown>
+              <div *ngIf="isSubmitted && f.extensiveness.errors?.required" class="errorwrap">Extensiveness is required
+              </div>
+              <small class="form-text text-muted" style="cursor: pointer;" (click)="getServicePackagePopUp()">Package
+                Info <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Level of Expertise</label>
+              <p-dropdown
+                class="form-control"
+                [options]="expertiseList"
+                formControlName="expertise"
+                (onChange)="getPayable()"
+                required
+              ></p-dropdown>
+              <input type="hidden" formControlName="rate_slab" required>
+              <div *ngIf="isSubmitted && f.rate_slab?.errors" class="errorwrap">
+                There is no rate slab for the selected subject/urgency/expertise/expensiveness.
+              </div>
+              <div *ngIf="isSubmitted && f.expertise.errors?.required" class="errorwrap">Expertise is required</div>
+              <small class="form-text text-muted" style="cursor: pointer;" (click)="rateSlabPopUp()">
+                Rate Slab
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </small>
+            </div>
+          </div>
+          <div class="col-md-6" formGroupName="creator_amount">
+            <div class="form-group">
+              <label>Payable</label>
+              <input type="text" class="form-control" formControlName="amount" readonly>
+              <input type="hidden" formControlName="currency">
+              <div *ngIf="isSubmitted && f.creator_amount.controls['amount'].errors?.required" class="errorwrap">
+                Payable is required
+              </div>
+              <small class="form-text text-muted" style="cursor: pointer;" (click)="getBreakUpPopUp()">
+                See Break-up
+                <i class="fa fa-question-circle" aria-hidden="true"></i>
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Work Summary</label>
+              <textarea class="form-control" formControlName="work_summary"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Special Instructions</label>
+              <textarea class="form-control" formControlName="special_instructions"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Sample Attachment</label>
+              <app-file-droppa
+                class="pdfwithdoc"
+                id="filedroppatemplate"
+                [dropZoneTemplate]="dropZoneChartTemplate"
+                [url]=""
+                [multiple]="true"
+                [autoUpload]="false"
+                [showFilesList]="true"
+                [beforeAddFile]="beforeAddFile"
+                (filesUpdated)="filesUpdated($event)"
+                [openTriggerId]="'passportTrigger'"
+              >
+                <div class="profile-buttons">
+                  <div class="trigger" id="passportTrigger"></div>
+                </div>
+              </app-file-droppa>
+
+              <div class="errorwrap" *ngIf="is_fileSizeExceed">The file size exceeds the limit.</div>
+            </div>
+          </div>
+        </div>
+        <div class="errorwrap" *ngIf="isSubmitted && noSufficientBalanceError">{{otherErrMsg}}</div>
+        <div class="post-buttons text-right">
+          <button class="saffron_btn orange_btn" type="button" (click)="resetForm()">Reset</button>
+          <button class="saffron_btn skyblue_btn" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<ng-template #popUpForServicePackage>
+  <div class="interviewpopup saf_blue_theme">
+    <div class="close_popup" (click)="modalRef.close()"><i class="icon-close"></i></div>
+    <div class="popheading">Package Information</div>
+    <div [innerHTML]="extensivenessDescription"></div>
+    <div *ngIf="errorMsg && errorMsg != ''" class="errorwrap">{{errorMsg}}</div>
+  </div>
+</ng-template>

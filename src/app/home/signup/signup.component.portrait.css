@@ -1,0 +1,70 @@
+.radiogroup li { display: inline-block; vertical-align: middle; }
+.radiogroup .custom-control
+{
+  margin-right: 18px !important;padding-left: 30px;
+}
+
+.radiogroup .custom-control .custom-control-indicator {     width: 20px;
+  height: 20px;
+  border-color: #24d7c8;
+  background: rgb(57, 27, 162);}
+.custom-control .custom-control-description{
+  color: rgb(180, 164, 239);
+  }
+  .radiogroup .custom-radio .custom-control-input:checked ~ .custom-control-indicator, 
+  .radiogroup .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator  { font-size: 10px;
+    line-height: 18px;}
+
+    .radiogroup .custom-checkbox .custom-control-indicator { border-radius: 0;-moz-border-radius: 0;-ms-border-radius: 0;-webkit-border-radius: 0;}
+    app-id-sign-up { width: 100%;}
+@media (max-width: 991px) {
+.signup-box { margin-bottom: 35px; }
+}
+@media (max-width: 499px) {
+  .signup-box{
+    padding: 20px 25px 10px 25px;
+    margin-top: 0;
+    overflow-y: visible;
+
+  }
+  .container-title {
+    font-size: 1.5em;
+    color: #fff
+  }
+
+  .btn {
+    width: 200px;
+    height: 35px;
+    margin: 5px;
+  }
+
+  input {
+    width: 200px;
+    height: 35px;
+    margin: 5px;
+  }
+
+
+  div.separator {
+    background-color: rgba(255, 255, 255, 0.25);
+    width: 200px;
+    height: 1px;
+    margin: 8px 0px;
+  }
+  .container-other-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  div.link {
+    font-size: 0.8em;
+    padding: 5px;
+  }
+}
+.idpic {
+  min-height: 69px;
+}
+.idpic img {
+  width: 100%;
+}

@@ -1,0 +1,32 @@
+<div class="container saf_blue_theme">
+  <div>
+    <h3 class="pageheading">Extension Hours</h3>
+    <form [formGroup]="frmExtensionHours">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <!-- <label>Hourly Rate ($)</label> -->
+            <input type="text" class="form-control" formControlName="extended_hours" [(ngModel)]="extensionInfo.extended_hours">
+            <div class="form-control-feedback" *ngIf="extended_hours.errors && (extended_hours.touched || extended_hours.dirty)">
+              <div class="errorwrap" *ngIf="extended_hours.errors.required">Required</div>
+              <div class="errorwrap" *ngIf="extended_hours.errors.invalidNumber">Invalid input, enter number only.</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- <div class="form-group">
+            <label>Logged in hours</label>
+            <input type="text" class="form-control" readonly formControlName="loggedInHours" [(ngModel)]="pay.loggedin_hours">
+            <div class="form-control-feedback" *ngIf="loggedInHours.errors && (loggedInHours.touched || loggedInHours.dirty)">
+              <div class="errorwrap" *ngIf="loggedInHours.errors.required">Required</div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="post-buttons">
+        <!-- <button type="button" class="saffron_btn skyblue_btn" (click)="clear()">Cancel</button> -->
+        <button type="button" class="saffron_btn skyblue_btn" (click)="submit()">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<!-- <p>
+  edit-photo works!
+</p> -->
+
+<div class="container-main">
+  <div class="container-border">
+    <app-header class="position-static no-bg"></app-header>
+    <!-- <app-navbar></app-navbar> -->
+    <div class="container">
+      <div class="edit-photo">
+        <div class="edit-photo-header">Edit Profile Photo
+          <span (click)="backToEdit()">&times;</span>
+        </div>
+        <div class="edit-photo-body">
+          <div class="row">
+            <div class="col-6">
+              <img-cropper [image]="data" [settings]="cropperSettings" (onCrop)="cropped($event)" class="photo-canvas">
+              </img-cropper>
+
+              <p>Drag frame to adjust photo</p>
+              <app-upload-capture-image (filechanged)="imageChangeListener($event)" ></app-upload-capture-image>
+            </div>
+            <div class="col-6">
+              <h3>Your Profile Photo</h3>
+              <div class="profile-photo">
+                <img *ngIf="data.image" [src]="data.image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <span class="back-button" (click)="backToEdit()">Back</span> -->
+    </div>
+  </div>
+</div>

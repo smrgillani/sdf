@@ -1,0 +1,10 @@
+<div class="trigger" (mousedown)="beginResize($event)">
+  <i class="icomoon icon-menu2"></i>
+</div>
+
+<div class="trigger-overlay" [class.open]="isMouseDown"
+     (mousemove)="resize($event)"
+     (mouseup)="endResize()"
+     (mouseleave)="endResize()"
+>
+</div>

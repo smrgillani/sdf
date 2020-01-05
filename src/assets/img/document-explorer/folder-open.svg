@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="16px" viewBox="0 0 22 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>folder-open</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Process" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Messenger-Draw" transform="translate(-304.000000, -83.000000)" fill-rule="nonzero" fill="#FF6C24">
+            <g id="folder-open" transform="translate(304.000000, 83.000000)">
+                <path d="M17,16 L2,16 C0.89,16 0,15.1 0,14 L0,2 C0,0.89 0.89,0 2,0 L8,0 L10,2 L17,2 C18.1045695,2 19,2.8954305 19,4 L19,4 L2,4 L2,14 L4.14,6 L21.21,6 L18.93,14.5 C18.7,15.37 17.92,16 17,16 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,148 @@
+$bg-color: #4342e6;
+$bg-color-2: #f9f5f0;
+$side-padding: 30px;
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.container-fluid {
+  height: auto;
+  background-image: -webkit-linear-gradient(top, $bg-color, $bg-color 211px, $bg-color-2 211px, $bg-color-2 100%);
+}
+
+.container-main {
+  position: relative;
+}
+
+.container-main::after {
+  border-color: #404040;
+}
+
+.container-main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 211px;
+  background-image: url('/assets/img/founder/bg_home.svg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 840px;
+}
+
+.container-border {
+  justify-content: flex-start;
+  min-height: calc(100vh - 60px);
+}
+
+.projects-container {
+  background-color: #ffffff;
+  margin-top: 121px;
+  width: 80%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+
+  .projects-header {
+    color: #ffffff;
+    background-color: #fe5f5b;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: $side-padding;
+    padding-right: $side-padding;
+
+    .project-header-text {
+      width: calc(100% - 100px);
+
+      .projects-header-caption {
+        font-size: 30px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      padding: 0 20px 20px;
+
+      &.projects-filter {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .projects-filter-caption {
+          white-space: nowrap;
+          font-size: 18px;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+.projects-footer {
+  width: 80%;
+
+  .back-button {
+    clear: both;
+    margin: 6px $side-padding;
+  }
+}
+
+@media (max-width: 767px) {
+  .projects-container {
+    width: 95%;
+    margin-top: 136px;
+
+    .table {
+      width: 95%;
+      margin: auto;
+    }
+
+    .projects-header {
+      .project-header-text {
+        width: 100%;
+
+        .projects-header-caption, .projects-filter-caption {
+          width: 100%;
+          float: left;
+
+          &.projects-header-caption {
+            font-size: 20px;
+          }
+
+          &.projects-filter-caption {
+            line-height: 22px;
+          }
+        }
+      }
+    }
+  }
+
+  .projects-footer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    .form-group {
+      flex-direction: column;
+      align-items: center;
+
+      > div {
+        &.projects-filter {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

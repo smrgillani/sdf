@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2>California Agent's First Name (if agent is not a corporation)</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+            <label>Suffix:</label>
+            <input type="text" class="form-control" readonly [(ngModel)]="service_process.CaliforniaAgentName.Suffix"
+                id="spCaSuffix" (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+            <label>First Name:</label>
+            <input type="text" class="form-control" readonly [(ngModel)]="service_process.CaliforniaAgentName.FirstName"
+                id="spCaFirstName" (blur)="onDataChange()">
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+            <label>Middle Name:</label>
+            <input type="text" class="form-control" readonly [(ngModel)]="service_process.CaliforniaAgentName.MiddleName"
+                id="spCaMiddleName" (blur)="onDataChange()">
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+            <label>Last Name:</label>
+            <input type="text" class="form-control" readonly [(ngModel)]="service_process.CaliforniaAgentName.LastName"
+                id="spCaLastName" (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2>Mailing Address</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Address:</label>
+            <input type="text" class="form-control" [(ngModel)]="service_process.MailingAddress.Address" id="mailingaddress"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>City:</label>
+            <input type="text" class="form-control" [(ngModel)]="service_process.MailingAddress.City" id="maCity"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>State:</label>
+            <input type="text" class="form-control" [(ngModel)]="service_process.MailingAddress.State" id="maState"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Zipcode:</label>
+            <input type="text" class="form-control" [(ngModel)]="service_process.MailingAddress.ZipCode" id="maZipCode"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2>CORPORATION</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>California Registered Corporate Agent’s Name (if agent is a corporation):</label>
+            <input type="text" class="form-control" [(ngModel)]="service_process.Corporation" id="spCorporation" (blur)="onDataChange()">
+        </div>
+    </div>
+</div>

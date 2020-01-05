@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="container-main">
+        <div class="container-border">
+            <app-header class="position-absolute no-bg" [backNavOptions]="{ route: ['/founder/projects'] }"></app-header>
+            <div class="projects-container">
+                <div class="projects-header">
+                    <div class="project-header-text">
+                        <span class="projects-header-caption">Register</span>
+                    </div>
+                </div>
+                <div class="entitywrap" myMatchHeight="eqalheight">
+                    <div class="row" myMatchHeight="entitybox">
+                        <div *ngFor="let entity of entities; let i=index" class="col-md-3 col-sm-6 entitybox">
+                            <div class="entitytitle">{{entity.title}}</div>
+                            <div class="entitydesc eqalheight"><p>{{entity.description}}</p></div>
+                            <div class="entityamount">Pricing starts<span>{{entity.amount}}</span></div>
+                            <div class="entitybtn"><button class="btn btn-orange" (click)="onSelectEntity(entity)">Select</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

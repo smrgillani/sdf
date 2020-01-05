@@ -1,0 +1,46 @@
+
+        <div class="projects-container">
+          <table class="table table-hover projects-table">
+              <thead>
+                  <tr>
+                    <th width="154px">Date Time</th>
+                    <th>Activity</th>
+                    <th width="125px">Done By</th>
+                  </tr>
+                </thead>
+            <tbody>
+              <tr *ngFor="let activityFeed of activityFeedList">
+                <td>
+                    {{activityFeed.timestamp | date: 'MM/dd/yyyy hh:mm:ss'}}
+                </td>
+                <td>
+                    {{activityFeed.message}}
+                </td>
+                <td>
+                    <div class="profile-icon">
+                        <img *ngIf="activityFeed.actor.photo_crop" [src]="activityFeed.actor.photo_crop" alt="" title="{{activityFeed.actor.first_name}} {{activityFeed.actor.last_name}}">
+                      </div>
+                      <!-- <span class="action-user-name">{{activityFeed.actor.first_name}} {{activityFeed.actor.last_name}}</span> -->
+                </td>
+                <!-- <td>
+                  <div class="project-title">
+                    <div class="profile-icon">
+                      <img *ngIf="activityFeed.actor.photo_crop" [src]="activityFeed.actor.photo_crop" alt="">
+                    </div>
+                    <div class="project-name">
+                        <span class="action-user-name">{{activityFeed.actor.first_name}} {{activityFeed.actor.last_name}}</span>
+                      {{activityFeed.message}}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="project-visibility">
+                    <span class="icon-clock"></span>
+                    <div class="project-name">{{activityFeed.timestamp | formatRelativeTime}}</div>
+                  </div>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+          <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getActivityLog($event)"></app-pagination> 
+        </div>

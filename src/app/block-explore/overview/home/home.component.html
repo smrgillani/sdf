@@ -1,0 +1,39 @@
+<div class="projects-search">
+  <div class="search-icon"></div>
+  <input class="form-control" type="text" placeholder="search here" [(ngModel)]="searchText" (input)="valueChange()" />
+  <button (click)="searchBlockTxAddress()" class="saffron_btn orange_btn">Search</button>
+</div>
+<div *ngIf="errorMessage" class="errorwrap">{{errorMessage}}</div>
+<div class=" table-responsive">
+  <table class="table table-hover projects-table">
+    <thead>
+      <tr>
+        <th>Block #</th>
+        <th>Block Hash</th>
+        <th>Difficulty</th>
+        <th>Miner</th>
+        <th>Size</th>
+        <th>Date</th>
+        <th># of TXs</th>
+        <th>Gas used</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of blockListinfoModel.block_list">
+        <td (click)="selectedBlock(item.block)">{{item.block}}</td>
+        <td>{{item.block_hash}}</td>
+        <td>{{item.difficulty}}</td>
+        <td>{{item.miner}}</td>
+        <td>{{item.size}}</td>
+        <td>{{item.date}}</td>
+        <td>{{item.transaction_count}}</td>
+        <td>{{item.gas_used}}</td>
+        <!-- <td>
+            <button class="button blue">Resolve</button>
+          </td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getOngoingProjects($event)"></app-pagination> -->

@@ -1,0 +1,27 @@
+<div
+  *ngIf="webRTCRoomId && !((isDockedModeActive | async) && (isCallStarted | async))"
+  class="webRTCWindow"
+  [ngClass]="{'minimize': isMinimize, 'bottom': !isMinimizeUp, 'call-started': (isCallStarted | async)}"
+>
+  <div class="minwindowbtn">
+    <button (click)="isMinimize=!isMinimize">
+      <i class="fa fa-window-maximize" aria-hidden="true" *ngIf="isMinimize" title="Fullscreen mode"></i>
+      <i class="fa fa-window-restore" aria-hidden="true" *ngIf="!isMinimize" title="Floating mode"></i>
+    </button>
+
+    <button (click)="openDockedMode()" *ngIf="isDockedModeRegistered | async">
+      <i class="fa fa-window-minimize" aria-hidden="true" title="Docked mode"></i>
+    </button>
+
+    <button (click)="isMinimizeUp=!isMinimizeUp" *ngIf="isMinimize">
+      <i class="fa fa-arrow-up" aria-hidden="true" *ngIf="!isMinimizeUp" title="Move to bottom"></i>
+      <i class="fa fa-arrow-down" aria-hidden="true" *ngIf="isMinimizeUp" title="Move to top"></i>
+    </button>
+  </div>
+
+  <!-- <app-webrtc [roomId]="webRTCRoomId" [incomingMessage]="incomingMessage"></app-webrtc> -->
+  <app-webrtc-main
+    *ngIf="callData"
+    [callData]="callData"
+  ></app-webrtc-main>
+</div>

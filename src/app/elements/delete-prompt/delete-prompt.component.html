@@ -1,0 +1,11 @@
+<div class="interviewpopup saf_blue_theme saffron-popupcontent">
+  <div class="close_popup" (click)="activeModal.dismiss('Cross click')"><i class="icon-close"></i></div>
+  <div class="popheading"><i class="material-icons">report_problem</i> <span>Delete</span></div>
+  <div class="cardwrap">
+      {{message}}<br/>{{moreMessage}}
+  </div>
+  <div class="project-actions">
+    <button class="saffron_btn dark-turquoise waves-effect waves-light" (click)="activeModal.dismiss('Cross click')">No</button>
+    <button class="saffron_btn bittersweet waves-effect waves-light" (click)="delete()">Yes</button>
+  </div>
+</div>

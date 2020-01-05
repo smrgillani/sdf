@@ -1,0 +1,32 @@
+<div class="container-fluid  saf_blue_theme">
+  <div class="container-main">
+    <div class="container-border startupscreens">
+      <app-header
+        class="position-absolute no-bg burnt-orange"
+        [backNavOptions]="{ route: ['founder', 'startup', projectId]}"
+      ></app-header>
+
+      <div class="container-header">
+        <app-founder-startup-bubble-toolbar
+          [currentStage]="stageState.stage"
+          [projectId]="projectId"
+          (onClicked)="onToolbarClicked($event)">
+        </app-founder-startup-bubble-toolbar>
+
+        <div class="sectionheadings">
+          <h1 class="d-inline hero-title">{{title}}</h1>
+          <h3 class="d-inline hero-subtitle">{{subtitle}}</h3>
+        </div>
+      </div>
+
+      <app-idea-qa
+        *ngIf="loadStage"
+        [stageState]="stageState"
+        projectStage="startup"
+        (done)="onDone($event)"
+        (skip)="onSkip()"
+      >
+      </app-idea-qa>
+    </div>
+  </div>
+</div>

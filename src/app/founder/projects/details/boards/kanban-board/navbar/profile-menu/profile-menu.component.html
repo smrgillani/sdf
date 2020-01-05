@@ -1,0 +1,52 @@
+<div ngbDropdown class="d-inline-block" #menu="ngbDropdown">
+  <div class="btn profile-menu-btn" ngbDropdownToggle>
+    <div class="profile-icon" [ngbPopover]="notification" triggers="">
+      <img
+        *ngIf="photo"
+        [src]="photo"
+      >
+      <div class="profile-user-status"></div>
+    </div>
+    <div class="profile-caption hidden-sm-down">
+      <div class="profile-name">{{name}}</div>
+      <div class="profile-role">{{role}}</div>
+    </div>
+    <i class="fa toggle-icon"
+       [class.fa-caret-up]="menu.isOpen()"
+       [class.fa-caret-down]="!menu.isOpen()"></i>
+  </div>
+  <div class="dropdown-menu">
+    <div class="profile-item dropdown-item" (click)="openProfile()">
+      <div class="profile-icon">
+        <img
+          *ngIf="photo"
+          [src]="photo"
+        >
+      </div>
+      <div class="profile-item-caption">
+        <div class="profile-item-name">{{name}}</div>
+        <div class="profile-item-subtitle">My Profile</div>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <button class="dropdown-item" (click)="setRole(Roles.Employee)"><i class="fa fa-circle menu-icon employee"></i> Employee
+      <i class="fa fa-check" *ngIf="role == Roles.Employee"></i>
+    </button>
+    <button class="dropdown-item" (click)="setRole(Roles.Creator)"><i class="fa fa-circle menu-icon creator"></i> Creator
+      <i class="fa fa-check" *ngIf="role == Roles.Creator"></i>
+    </button>
+    <!-- <button class="dropdown-item" (click)="setRole(Roles.Backer)"><i class="fa fa-circle menu-icon backer"></i> Backer
+      <i class="fa fa-check" *ngIf="role == Roles.Backer"></i>
+    </button> -->
+    <div class="separator"></div>
+    <button class="dropdown-item" (click)="signOut()"><i class="fa fa-sign-out menu-icon"></i> Sign out</button>
+  </div>
+</div>
+
+<ng-template #notification>
+  <div class="message">{{message}}</div>
+  <div class="buttons">
+    <div class="btn btn-cancel" (click)="popover.close()">Do it later</div>
+    <div class="btn btn-ok" (click)="editProfile()">Ok</div>
+  </div>
+</ng-template>

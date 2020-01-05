@@ -1,0 +1,69 @@
+<div class="hire_employees">
+
+
+    <div class="projects-search">
+        <div class="search-icon"></div>
+        <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Start typing to search" (input)="valueChange()"
+        />
+
+        <!-- <div class="width220">
+            Records per page
+            <div class="pull-right recordTop">
+                <p-dropdown class="form-control" name="roles" [options]="transactionCount"></p-dropdown>
+       
+            </div>
+            <div class="clearfix"></div>
+        </div> -->
+
+    </div>
+
+    <div class=" table-responsive">
+        <table class="table table-hover projects-table transaction-table">
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Funding Type</th>
+                    <th>Funded Amount</th>
+                    <th>Stake Percentage</th>
+                    <th>Funding Date</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let item of mySharesList">
+                    <td>
+                        <div class="companyiconwrap">
+                            <span class="companyicon">{{item.funded_to[0]}}</span>
+                            <span class="companyname" [title]="item.funded_to">{{item.funded_to}}</span>
+                        </div>
+                    </td>
+                    <td>{{item.fund_type}}</td>
+                    <td>{{item.amount}}</td>
+                    <td>{{item.output}}</td>
+                    <td>{{item.funded_on}}</td>
+                    <td>
+                        <div class="buttonwrap">
+                            <button class="saffron_btn purple_btn" *ngIf="item.download" (click)="downloadMyShares(item.id)">Download</button>
+                            <button class="saffron_btn blue_btn" [routerLink]="['../../my-projects',item.project_id]">Message</button>
+                            <button class="saffron_btn orange_btn" [routerLink]="['../../my-projects',item.project_id]">Operation</button>
+                            <button class="saffron_btn skyblue_btn" [routerLink]="['../../my-projects',item.project_id,'summary']">Inside</button>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- <app-pagination class="my-pagination" [pageReset]="paginationReset" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getNewProjectList($event)"></app-pagination> -->
+    <app-pagination class="my-pagination" [pageSize]="pageSize" [pagesQuantity]="count" (pageChanged)="getMyShare($event)"></app-pagination>
+    <!-- <div class="note">
+    Reference No's. are usually obtained in the response of Gateway API.
+    Details are also subject to the conditions for an example IFT/0232/3SDS could be an example. if amount is withdrawn, target account no will be mentioned. In case of deposit, the account from which the deposit has been done will be shown. In cases, when the details are not there NA will appear there.
+</div> -->
+
+</div>

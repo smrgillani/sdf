@@ -1,0 +1,98 @@
+<div class="cardwrap">
+    <div class="cardheading">
+      <h3>Create New Thread</h3>
+    </div>
+    <div class="cardbody">
+  
+      <form name="form" (ngSubmit)="f.form.valid && updateEvent(f)" #f="ngForm" novalidate>
+      <!-- <form name="form"> -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Event Type</label>
+              <div class="radiogroup">
+                <label class="custom-control custom-radio">
+                  <input class="custom-control-input" [(ngModel)]="selectedEvent.event_type" name="event_type" #event_type="ngModel"
+                    type="radio" value="private">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Private</span>
+                </label>              
+                <label class="custom-control custom-radio">
+                  <input class="custom-control-input" [(ngModel)]="selectedEvent.event_type" name="event_type" #event_type="ngModel"
+                    type="radio" value="public">
+                  <span class="custom-control-indicator"></span>
+                  <span class="custom-control-description">Public</span>
+                </label>
+                <div *ngIf="f.submitted && event_type.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['event_type'][0]}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Event Name</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedEvent.event_name" name="event_name" #event_name="ngModel"
+                required>
+              <div *ngIf="f.submitted && event_name.errors?.required" class="errorwrap">Event Name is required</div>           
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group idea_files nobg">
+              <label>Upload Image</label>
+              <app-file-droppa #fileDroppa [dropZoneTemplate]="dropZoneTemplate" [url]="" [multiple]="false" [autoUpload]="false"
+                [beforeAddFile]="beforeAddFile" [showFilesList]="false" (filesUpdated)="filesUpdated($event)"
+                [openTriggerId]="dropTriggerId" [class.has-image]="selectedEvent.image">
+
+                <span *ngIf="selectedEvent.image" (click)="removeImage()" class="remove-image-icon"></span>
+
+              </app-file-droppa>
+              <input type="hidden" [(ngModel)]="selectedEvent.image" name="image" #image="ngModel" required>
+              <div *ngIf="f.submitted && image.errors?.required" class="errorwrap">Image is required</div>
+              <div *ngIf="f.submitted && image.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['image'][0]}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedEvent.location" name="location" #location="ngModel" required>
+              <div *ngIf="f.submitted && location.errors?.required" class="errorwrap">Location is required</div>
+              <div *ngIf="f.submitted && location.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['location'][0]}}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Date</label>
+              <app-date-input [(date)]="selectedEvent.event_date"></app-date-input>
+              <app-time-input [(ngModel)]="selectedEvent.event_date" [ngModelOptions]="{standalone: true}"></app-time-input>
+              <input type="hidden" name="event_date" #event_date="ngModel" [(ngModel)]="selectedEvent.event_date">
+              <div *ngIf="f.submitted && event_date.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['event_date'][0]}}</div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Enter Description</label>
+              <div class="document">
+                <textarea class="form-control" [(ngModel)]="selectedEvent.description" name="description" #description="ngModel"
+                  ></textarea>
+                <!-- <div *ngIf="f.submitted && description.errors?.required" class="errorwrap">Description is required</div> -->
+                <div *ngIf="f.submitted && description.errors && objKeyMessage" class="errorwrap">{{objKeyMessage['description'][0]}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="post-buttons">
+          <button type="button" class="saffron_btn orange_btn" (click)="resetForm(f)">Cancel</button>
+          <button type="button" class="saffron_btn skyblue_btn" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="projects-footer">
+    <div class="back-button" [routerLink]="['../list']">Back</div>
+  </div>

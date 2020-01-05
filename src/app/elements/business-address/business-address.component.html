@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2>Designated Office Address in California</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Address:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.DesignatedOfficeAddressInCA.Address"
+                id="doaInCA" (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>City:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.DesignatedOfficeAddressInCA.City" id="doaCityInCA"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label>State:</label>
+                <input type="text" class="form-control" readonly [(ngModel)]="business_address.DesignatedOfficeAddressInCA.State"
+                    id="doaStateInCA" (blur)="onDataChange()">
+            </div>
+        </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Zipcode:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.DesignatedOfficeAddressInCA.ZipCode"
+                id="doaZipCodeInCA" (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h2>Mailing Address</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Address:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.MailingAddress.Address" id="mailingaddress"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>City:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.MailingAddress.City" id="maCity"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <label>State:</label>
+                <input type="text" class="form-control" [(ngModel)]="business_address.MailingAddress.State" id="maState"
+                    (blur)="onDataChange()">
+            </div>
+        </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label>Zipcode:</label>
+            <input type="text" class="form-control" [(ngModel)]="business_address.MailingAddress.ZipCode" id="maZipCode"
+                (blur)="onDataChange()">
+        </div>
+    </div>
+</div>
