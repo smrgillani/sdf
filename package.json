@@ -71,7 +71,7 @@
     "jszip": "^2.6.1",
     "lodash": "^4.17.11",
     "mammoth": "^1.4.8",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "morgan": "^1.9.1",
     "mxgraph": "^3.9.12",
     "ng-circle-progress": "^1.0.0",
