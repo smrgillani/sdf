@@ -55,7 +55,7 @@
     "connect-multiparty": "^2.0.0",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
-    "debug": "^2.6.3",
+    "debug": "^2.6.9",
     "file-droppa": "git+https://github.com/yadim4ik/fileDroppa.git",
     "file-saver": "^2.0.1",
     "firebase": "^4.5.0",
